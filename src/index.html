@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Portal plugins test</title>
+    <meta name="vtex-version" content="1.0.0.0">
+    <link rel="stylesheet" href="style/v2-portal-sku-selector.css"/>
+</head>
+<body>
+
+<li layout="85e23371-f0a2-43c2-a6ac-e5464c462fb3" class="produtos-para-caes-|-meu-amigo-pet---tudo-para-seu-cao">
+    <!-- <a title="PEITORAL E GUIA B&#193;SICO - PATAS - MULTIPATAS" class="highlight" href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"></a> -->
+
+    <a class="productImage" title="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS"
+       href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p">
+        <img
+                src="http://meuamigopet.vtexcommercebeta.com.br/arquivos/ids/181179-160-160/Coleira_vermelha_basica.jpg"
+                width="160" height="160" alt="Coleira_vermelha_basica" id="">
+    </a>
+    <!-- Foto do produto -->
+
+    <h2>
+        <a title="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS"
+           href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p">
+            PEITORAL
+            E GUIA BÁSICO - PATAS - MULTIPATAS
+        </a>
+    </h2>
+    <!-- Nome do produto -->
+
+    <div id="rating-produto-6934" class="rating-produto avaliacao0">0</div>
+    <!-- Estrelas -->
+
+    <p class="brand">
+        <a class="texto brand multipatas" href="http://meuamigopet.vtexcommercebeta.com.br/Multipatas">Multipatas</a>
+    </p>
+    <!-- Marca produto -->
+
+    <div class="data">
+
+        <div class="discount"></div>
+        <p class="price">
+            <a title="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS"
+               href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p">
+                <span class="newPrice"><span>A partir de: </span><em>R$ 31,10</em></span>
+                <em class="installment">
+                    à vista
+                </em>
+            </a>
+        </p>
+
+        <!-- <p class="category"><a href="http://meuamigopet.vtexcommercebeta.com.br/caes/coleiras-e-guias">Coleiras e Guias</a></p> -->
+    </div>
+    <div class="view" style="display: none;">
+        <a href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"
+           alt="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS" class="botaoDetalhes" rel="nofollow">Espiar
+        </a>
+        <!-- a href="/quick-view/?idproduto=6934?KeepThis=true&amp;TB_iframe=true&amp;width=766&amp;height=450" alt="PEITORAL E GUIA B&#193;SICO - PATAS - MULTIPATAS" class="thickbox botaoDetalhes" rel="nofollow">Espiar</a -->
+    </div>
+    <!-- Fecha view -->
+    <div class="wrapper-buy-button-asynchronous bba6937">
+        <input type="hidden" value="Produto incluído no carrinho"
+               class="buy-button-asynchronous-product-message-success">
+        <input
+                type="hidden" value="Produto não incluído no carrinho"
+                class="buy-button-asynchronous-product-message-fail">
+        <input
+                type="hidden" value="6937" class="buy-button-asynchronous-product-id">
+        <input type="hidden"
+               value="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"
+               class="buy-button-asynchronous-product-url-6937">
+        <span class="add">
+        <a href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"
+           class="btn-not-clicked asynchronousBuyButton btn-add-buy-button-asynchronous actionActivated vtexsm_activated .btover-active"
+           style="cursor:pointer" id="idprod6937">Comprar Produto sugerido
+        </a>
+        </span>
+        <input type="hidden"
+               value="product"
+               class="buy-button-asynchronous-go-to-cart-6937">
+
+        <div class="buy-button-asynchronous message-user6937"></div>
+    </div>
+</li>
+
+<div id="placeholder">
+
+</div>
+
+<script src="http://localhost:35729/livereload.js"></script>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="js/v2-portal-sku-selector.js"></script>
+<script type="text/javascript">
+    var mock = 0;
+    $.get = function (url) {
+        console.log("mock:", url);
+        return {
+            done: function (callback) {
+                callback(mocks[mock ? mock : Math.floor(Math.random()*mocks.length)]);
+            },
+            fail: function(){}
+        }
+    };
+</script>
+<script type="text/javascript" src="js/v2-portal-sku-selector-popup.js"></script>
+<script type="text/javascript">
+    $(document).trigger('ajaxStop');
+</script>
+<!--<script type="text/javascript" src="js/v2-portal-sku-selector-product.js"></script>-->
+
+<!-- PREPARATION CODE -->
+<script type="text/javascript">
+    var PORTAL_HOST = 'http://meuamigopet.vtexcommercebeta.com.br';
+    mocks = [ {
+        "dimensions": [],
+        "name": "Colchonete para Cães - Joy Art",
+        "skus": [
+            {"sku": "1234", "dimensions": [], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"}
+      ]
+    }
+        , {
+        "dimensions": ["Peso (kg)"],
+        "name": "Colchonete para Cães - Joy Art",
+        "skus": [
+            {"sku": "1234", "dimensions": [{"Key":"Peso (kg)", "Value": "4 kg"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+            {"sku": "1235", "dimensions": [{"Key":"Peso (kg)", "Value": "5 kg"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+            {"sku": "1237", "dimensions": [{"Key":"Peso (kg)", "Value": "6 kg"}], "available": false, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+            {"sku": "1230", "dimensions": [{"Key":"Peso (kg)", "Value": "7 kg"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"}
+        ]
+    }
+        ,	{
+            "dimensions": ["Peso (kg)", "Tamanho"],
+            "name": "Colchonete para Cães - Joy Art",
+            "skus": [
+                {"sku": "1234", "dimensions": [{"Key":"Peso (kg)", "Value": "4 kg"}, {"Key":"Tamanho", "Value": "40"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1235", "dimensions": [{"Key":"Peso (kg)", "Value": "5 kg"}, {"Key":"Tamanho", "Value": "40"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1236", "dimensions": [{"Key":"Peso (kg)", "Value": "5 kg"}, {"Key":"Tamanho", "Value": "42"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1237", "dimensions": [{"Key":"Peso (kg)", "Value": "6 kg"}, {"Key":"Tamanho", "Value": "42"}], "available": false, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1238", "dimensions": [{"Key":"Peso (kg)", "Value": "7 kg"}, {"Key":"Tamanho", "Value": "43"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1230", "dimensions": [{"Key":"Peso (kg)", "Value": "7 kg"}, {"Key":"Tamanho", "Value": "44"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"}
+            ]
+        }
+        ,	{
+            "dimensions": ["Peso (kg)", "Tamanho", "Cor"],
+            "name": "Colchonete para Cães - Joy Art",
+            "skus": [
+                {"sku": "1234", "dimensions": [{"Key":"Peso (kg)", "Value": "4 kg"}, {"Key":"Tamanho", "Value": "40"}, {"Key":"Cor", "Value":"Vermelho"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1235", "dimensions": [{"Key":"Peso (kg)", "Value": "5 kg"}, {"Key":"Tamanho", "Value": "40"}, {"Key":"Cor", "Value":"Vermelho"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1236", "dimensions": [{"Key":"Peso (kg)", "Value": "5 kg"}, {"Key":"Tamanho", "Value": "42"}, {"Key":"Cor", "Value":"Verde Vivo"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1237", "dimensions": [{"Key":"Peso (kg)", "Value": "6 kg"}, {"Key":"Tamanho", "Value": "42"}, {"Key":"Cor", "Value":"Verde Vivo"}], "available": false, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1238", "dimensions": [{"Key":"Peso (kg)", "Value": "7 kg"}, {"Key":"Tamanho", "Value": "43"}, {"Key":"Cor", "Value":"Verde Vivo"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1239", "dimensions": [{"Key":"Peso (kg)", "Value": "7 kg"}, {"Key":"Tamanho", "Value": "43"}, {"Key":"Cor", "Value":"Vermelho"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"},
+                {"sku": "1230", "dimensions": [{"Key":"Peso (kg)", "Value": "7 kg"}, {"Key":"Tamanho", "Value": "44"}, {"Key":"Cor", "Value":"Vermelho"}], "available": true, "listPrice": 110, "bestPrice": 100, "installments": 5, "installmentValue": 20, "installmentRate": 5, "image": "http://www.meuamigopet.com.br/arquivos/ids/183912-160-160/regata_para_caes_estampa_gueixa_joy_art.jpg"}
+            ]
+        }];
+</script>
+</body>
+</html>

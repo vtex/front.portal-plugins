@@ -1,0 +1,26 @@
+{
+	"remote": {
+		"host": "meuamigopet.vtexcommercebeta.com.br",
+		"port": 80
+	},
+	"proxy": {
+		"host": "meuamigopet.vtexlocal.com.br",
+		"port": 80
+	},
+	"server": {
+		"host": "localhost",
+		"port": 9001
+	},
+	"headers": {
+	},
+	"bounces":[
+		"lib/.*",
+		"js/.*",
+		"style/.*",
+		"/$",
+		"index.html"
+	],
+	"mapping": false,
+	"mappings": {
+	}
+}
