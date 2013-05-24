@@ -1,0 +1,1 @@
+window.jQuery = Zepto; window.jQuery.support = {};
