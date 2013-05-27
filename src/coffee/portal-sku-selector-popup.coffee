@@ -29,7 +29,7 @@ addSkuToCart = (sku) ->
 # You can use it as a default with the popup flavor of the sku selector.
 buyButtonClickHandler = (event) ->
 	event.preventDefault()
-	id = $(event.target).parents('li').find('h2').next().attr('id').replace('rating-produto-', '')
+	id = $(event.target).attr('id').replace('buy-btn-product-id-', '')
 	# Opens the popup
 	$.skuSelector.$placeholder.skuSelector(
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
@@ -53,4 +53,4 @@ $(window).ready ->
 	$.skuSelector "popup" if $("meta[name=vtex-version]").length > 0
 
 $(document).ajaxStop ->
-	bindClickHandlers "btn-add-buy-button-asynchronous" if $("meta[name=vtex-version]").length > 0
+	bindClickHandlers "add-skuselector-buy-btn" if $("meta[name=vtex-version]").length > 0
