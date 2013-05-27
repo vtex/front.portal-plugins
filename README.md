@@ -2,3 +2,7 @@
 
 - Sku Selector
 - Minicart
+
+### TODO
+
+- Tests
