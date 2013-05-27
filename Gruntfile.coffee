@@ -5,7 +5,6 @@ module.exports = (grunt) ->
 	pacha = grunt.file.readJSON('tools/pachamama/pachamama.config')[0]
 	# Project configuration.
 	grunt.initConfig
-		resourceToken: process.env['RESOURCE_TOKEN'] or '/io'
 		gitCommit: process.env['GIT_COMMIT'] or 'GIT_COMMIT'
 		deployDirectory: path.normalize(process.env['DEPLOY_DIRECTORY'] ? 'deploy')
 		relativePath: ''
@@ -38,7 +37,7 @@ module.exports = (grunt) ->
 			env:
 				expand: true
 				cwd: '<%= deployDirectory %>/<%= gitCommit %>/'
-				src: ['**/*.*']
+				src: ['**']
 				dest: '<%= deployDirectory %>/<%= versionName() %>/'
 
 		coffee:
@@ -72,24 +71,6 @@ module.exports = (grunt) ->
 				src: ['build/<%= relativePath %>/lib/zepto/zepto.js', 'build/<%= relativePath %>/js/**/*.js']
 				options:
 					specs: 'build/<%= relativePath %>/spec/*Spec.js'
-
-		'string-replace':
-			deploy:
-				files:
-					'<%= deployDirectory %>/<%= versionName() %>/index.html': ['<%= deployDirectory %>/<%= versionName() %>/index.html']
-					'<%= deployDirectory %>/<%= versionName() %>/index.debug.html': ['<%= deployDirectory %>/<%= versionName() %>/index.debug.html']
-
-				options:
-					replacements: [
-						pattern: /src="(\.\.\/)?(?!http|\/|\/\/|\#)/ig
-						replacement: 'src="<%= resourceToken %>/<%= acronym %>/'
-					,
-						pattern: /href="(\.\.\/)?(?!http|\/|\/\/|\#)/ig
-						replacement: 'href="<%= resourceToken %>/<%= acronym %>/'
-					,
-						pattern: '<script src="http://localhost:35729/livereload.js"></script>'
-						replacement: ''
-					]
 
 		connect:
 			dev:
@@ -143,9 +124,8 @@ module.exports = (grunt) ->
 		grunt.log.writeln 'Deploying to environmentType: '.cyan + grunt.config('environmentType').green
 		grunt.log.writeln 'Directory: '.cyan + grunt.config('versionName')().green
 		grunt.log.writeln 'Version set to: '.cyan + grunt.config('gitCommit').green
-		grunt.log.writeln 'Rersource token set to: '.cyan + grunt.config('resourceToken').green
 		grunt.log.writeln 'Deploy folder: '.cyan + grunt.config('deployDirectory').green
-		grunt.task.run ['copy:env', 'string-replace:deploy']
+		grunt.task.run ['copy:env']
 
 	# Deploy - creates deploy folder structure
 	grunt.registerTask 'deploy', ->
