@@ -122,7 +122,6 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-contrib-less'
 	grunt.loadNpmTasks 'grunt-contrib-uglify'
 	grunt.loadNpmTasks 'grunt-contrib-cssmin'
-	grunt.loadNpmTasks 'grunt-contrib-jasmine'
 	grunt.loadNpmTasks 'grunt-contrib-watch'
 	grunt.loadNpmTasks 'grunt-usemin'
 	grunt.loadNpmTasks 'grunt-string-replace'
@@ -136,10 +135,6 @@ module.exports = (grunt) ->
 	# Prod - minifies files
 	grunt.registerTask 'prod', ['dev', 'copy:debug', 'useminPrepare', 'concat', 'uglify', 'usemin']
 	grunt.registerTask 'prod-watch', ['prod', 'connect', 'remote', 'watch:prod']
-
-	# Test
-	grunt.registerTask 'test', ['dev', 'jasmine']
-	grunt.registerTask 'test-watch', ['test', 'watch:test']
 
 	# Generates version folder
 	grunt.registerTask 'gen-version', ->
