@@ -59,13 +59,13 @@ module.exports = (grunt) ->
 		less:
 			main:
 				files:
-					'build/<%= relativePath %>/style/v2-portal-sku-selector.css': 'src/style/v2-portal-sku-selector.less'
+					'build/<%= relativePath %>/style/portal-sku-selector.css': 'src/style/portal-sku-selector.less'
 
 		useminPrepare:
-			html: 'build/<%= relativePath %>/index.html'
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
 
 		usemin:
-			html: 'build/<%= relativePath %>/index.html'
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
 
 		jasmine:
 			test:
@@ -134,7 +134,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files
-	grunt.registerTask 'prod', ['dev', 'copy:debug', 'useminPrepare', 'concat', 'uglify', 'cssmin', 'usemin']
+	grunt.registerTask 'prod', ['dev', 'copy:debug', 'useminPrepare', 'concat', 'uglify', 'usemin']
 	grunt.registerTask 'prod-watch', ['prod', 'connect', 'remote', 'watch:prod']
 
 	# Test

@@ -16,17 +16,11 @@ $.fn.skuSelector = (options = {}) ->
 	$.skuSelector.$placeholder.addClass('sku-selector-loading')
 	console.log('fn.skuSelector', $.skuSelector.$placeholder, opts)
 
-	# Called when we receive the json to render.
-	skuVariationsDoneHandler = opts.skuVariationsDoneHandler
-
-	# Called when we failed to receive variations.
-	skuVariationsFailHandler = opts.skuVariationsFailHandler
-		
 	if opts.skuVariations
 		skuVariationsDoneHandler opts, opts.skuVariations
 	else if opts.skuVariationsPromise
-		opts.skuVariationsPromise.done (json) -> skuVariationsDoneHandler(opts, json)
-		opts.skuVariationsPromise.fail (reason) -> skuVariationsFailHandler(opts, reason)
+		opts.skuVariationsPromise.done (json) -> opts.skuVariationsDoneHandler(opts, json)
+		opts.skuVariationsPromise.fail (reason) -> opts.skuVariationsFailHandler(opts, reason)
 	else
 		console.error 'You must either provide a JSON or a Promise'
 
@@ -34,41 +28,13 @@ $.fn.skuSelector.defaults =
 	skuVariationsPromise: undefined
 	skuVariations: undefined
 	selectFirstAvailable: false
-
-	# Called when we receive the json to render.
-	skuVariationsDoneHandler: (options, json) ->
-		$.skuSelector.$placeholder.removeClass('sku-selector-loading')
-		# If this item doesn't have variations, add it to the cart directly.
-		if json.dimensions.length == 0
-			options.addSkuToCart json.skus[0].sku
-		else
-			# Render the sku selector, passing the options with templates
-			skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options)
-			$.skuSelector.$placeholder.html(skuSelector)
-			$.skuSelector.$placeholder.showPopup?()
+	addSkuToCartPreventDefault: true
 
 	# Called when we failed to receive variations.
 	skuVariationsFailHandler: (options, reason) ->
 		$.skuSelector.$placeholder.removeClass('sku-selector-loading')
 		console.error(reason)
 		window.location.href = options.productUrl if options.productUrl
-
-	# Adds a given sku to the cart. On success, shows the mini-cart
-	# On failure, redirects the user to the cart.
-	addSkuToCart: (sku) ->
-		$.skuSelector.$placeholder.hidePopup?()
-		console.log 'Adding SKU to cart:', sku
-		promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, false)
-		promise.done (data) ->
-			vtexMinicartShowMinicart() if window.vtexMinicartShowMinicart
-			console.log 'Item adicionado com sucesso', sku, data
-		promise.fail (jqXHR, status) ->
-			console.log jqXHR?.status, status
-			console.log 'Erro ao adicionar item', sku
-			window.location.href = $.skuSelector.getAddUrlForSku(sku)
-		return false
-
-	addSkuToCartPreventDefault: true
 
 	mainTemplate: """
 		<div class="sku-selector-wrap">
@@ -95,7 +61,7 @@ $.fn.skuSelector.defaults =
 									<div class="newPrice"></div>
 									<div class="installment"></div>
 								</div>
-								<a href="#" class="sku-selector-buyButton">Comprar</a>
+								<a href="#" class="sku-selector-buy-button">Comprar</a>
 						</div>
 				</div>
 		</div>
@@ -129,7 +95,7 @@ $.fn.skuSelector.defaults =
 # Usage example:
 # $popup = $.skuSelector("popup", {popupId: "id", popupClass: "class1 class2"});
 $.skuSelector = (action = "popup", options = {}) ->
-	opts = $.extend(options, $.skuSelector.defaults)
+	opts = $.extend($.skuSelector.defaults, options)
 	console.log('skuSelector', opts)
 
 	$.skuSelector.$overlay = $(opts.overlayTemplate)
@@ -181,26 +147,6 @@ $.skuSelector.getSkusForProduct = (productId) ->
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	'//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
-
-# A sample buy button click handler
-# You can use it as a default with the popup flavor of the sku selector.
-$.skuSelector.buyButtonClickHandler = (event) ->
-	event.preventDefault()
-	id = $(event.target).parents('li').find('h2').next().attr('id').replace('rating-produto-', '')
-	$.skuSelector.$placeholder.skuSelector(
-		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
-		productUrl: $(event.target).attr('href')
-	)
-	return false
-
-# An utilitary function to bind element's with the given class.
-# The class will be removed from the element.
-# You should use a "disposable" class, such as "add-buy-button".
-$.skuSelector.bindClickHandlers = (className) ->
-	$elements = $('.'+className)
-	console.log 'Binding to', $elements.length
-	$elements.removeClass className
-	$elements.click $.skuSelector.buyButtonClickHandler
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
 $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
