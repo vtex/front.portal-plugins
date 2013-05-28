@@ -37,55 +37,58 @@ $.fn.skuSelector.defaults =
 		window.location.href = options.productUrl if options.productUrl
 
 	mainTemplate: """
-		<div class="sku-selector-wrap">
-				<span class="sku-selector-exit-button">X</span>
-				<div class="sku-selector-content" style="background-image: none;">
-						<div class="selectSkuTitle">Selecione a variação do produto</div>
-						<div class="sku-selector-prodTitle">{{productName}}</div>
-						<div class="sku-selector-product-unavailable" style="display: none">
-						<span>Produto indisponível</span>
-						</div>
-						<div class="sku-selector-skusWrap">
-							<div class="sku-selector-skuProductImage">
-									<img src="{{image}}"
-										width="160" height="160" alt="{{productAlt}}">
-							</div>
-								<div class="skuListWrap_">
-										{{dimensionLists}}
-								</div>
-								<div class="sku-selector-text-warning"></div>
-						</div>
-						<div class="sku-selector-buttonWrap clearfix">
-								<div class="sku-selector-skuProductPrice">
-									<span id="skuPrice"></span>
-									<div class="newPrice"></div>
-									<div class="installment"></div>
-								</div>
-								<a href="#" class="sku-selector-buy-button">Comprar</a>
-						</div>
+		<div class="vtex-plugin skuselector">
+			<a href="javascript:void(0);" title="Fechar" class="skuselector-close">Fechar</a>
+			<div class="skuselector-content">
+				<div class="skuselector-title">Selecione a variação do produto:</div>
+				<p class="skuselector-product-name">{{productName}}</p>
+				<p class="skuselector-product-unavailable" style="display: none">
+					Produto indisponível
+				</p>
+				<div class="skuselector-price" style="display:none;">
+					<p class="skuselector-list-price">
+						<span class="text">De: </span>
+						<span class="value"></span>
+					</p>
+					<p class="skuselector-best-price">
+						<span class="text">Por: </span>
+						<span class="value"></span>
+					</p>
+					<p class="skuselector-installment"></p>
 				</div>
+				<div class="skuselector-sku">
+					<p class="skuselector-image">
+						<img src="{{image}}" width="160" height="160" alt="{{productAlt}}" />
+					</p>
+					<div class="skuselector-dimensions">
+						{{dimensionLists}}
+					</div>
+					<p class="skuselector-warning"></p>
+				</div>
+				<div class="skuselector-buy-btn-wrap">
+					<a href="javascript:void(0);" class="skuselector-buy-btn btn btn-success btn-large">Comprar</a>
+				</div>
+			</div>
 		</div>
 		"""
 
 	dimensionListTemplate: """
-		<ul class="topic {{dimensionSanitized}} dimension-{{dimensionIndex}}">
-			<li class="specification">
+		<div class="dimension dimension-{{dimensionIndex}} dimension-{{dimensionSanitized}}">
+			<p class="skuselector-specification">
 				{{dimension}}
-			</li>
-			<li class="select skuList">
-			<span class="group">
+			</p>
+			<ul class="skuselector-sepecification-list unstyled">
 				{{skuList}}
-			</span>
-			</li>
-		</ul>
+			</ul>
+		</div>
 		"""
 
 	skuDimensionTemplate: """
-		<span class="dimension-wrap">
+		<li class="skuselector-specification-item item-dimension-{{dimensionSanitized}} item-spec-{{index}} item-dimension-{{dimensionSanitized}}-spec-{{index}}">
 			<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
-				class="sku-selector skuespec_{{dimensionSanitized}}_opcao_{{valueSanitized}} dimension dimension-{{dimensionSanitized}}" id="espec_{{dimensionSanitized}}_opcao_{{index}}" value="{{valueSanitized}}">
-			<label for="espec_{{dimensionSanitized}}_opcao_{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
-		</span>
+				class="skuselector-specification-label input-dimension-{{dimensionSanitized}}" id="dimension-{{dimensionSanitized}}-spec-{{index}}" value="{{valueSanitized}}">
+			<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
+		</li>
 		"""
 
 #
@@ -122,7 +125,7 @@ $.skuSelector = (action = "popup", options = {}) ->
 	$.skuSelector.$overlay.click $.skuSelector.$placeholder.hidePopup
 
 	# Binds the exit handler
-	$.skuSelector.$placeholder.on 'click', '.sku-selector-exit-button', ->
+	$.skuSelector.$placeholder.on 'click', '.skuselector-close', ->
 		$.skuSelector.$placeholder.hidePopup()
 		console.log 'Exiting sku selector'
 
@@ -176,20 +179,22 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 	# Checks if there are no available options
 	available = (sku for sku in skus when sku.available is true)
 	if available.length is 0
-		$('.sku-selector-product-unavailable', $template).show()
-		$('.sku-selector-buyButton', $template).hide()
+		$('.skuselector-product-unavailable', $template).show()
+		$('.skuselector-buy-btn', $template).hide()
 	# TODO refactor
 	else if available.length is 1
 		selectedSkuObj = available[0]
+		listPrice = formatCurrency selectedSkuObj.listPrice
 		price = formatCurrency selectedSkuObj.bestPrice
 		installments = selectedSkuObj.installments
 		installmentValue = formatCurrency selectedSkuObj.installmentsValue
 
 		# Modifica href do botão comprar
-		$('.sku-selector-buyButton', $template).attr('href', $.skuSelector.getAddUrlForSku(selectedSkuObj.sku))
-		$('div.newPrice', $template).text('Por: R$ ' + price)
-		$('div.installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
-		$('.sku-selector-skuProductPrice', $template).fadeIn()
+		$('.skuselector-buy-btn', $template).attr('href', $.skuSelector.getAddUrlForSku(selectedSkuObj.sku))
+		$('.skuselector-list-price value', $template).text('R$ ' + listPrice)
+		$('.skuselector-best-price value', $template).text('R$ ' + price)
+		$('.skuselector-installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
+		$('.skuselector-price', $template).fadeIn()
 
 
 	# Handler for the buy button
@@ -199,18 +204,20 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 			return options.addSkuToCart(sku.sku)
 		else
 			errorMessage = 'Por favor, escolha: ' + findUndefinedDimensions(selectedDimensionsMap)[0]
-			$('.sku-selector-text-warning', $template).show().text(errorMessage)
+			$('.skuselector-warning', $template).show().text(errorMessage)
 			return false
 
 	# Handles changes in the dimension inputs
 	dimensionChangeHandler = ->
 		dimensionName = $(this).attr('data-dimension')
 		dimensionValue = $(this).attr('data-value')
+
+		console.log 'dimensionChangeHandler: ' + $(this).attr('data-value')
 	
 		# Limpa classe de selecionado para todos dessa dimensao
-		$('label.dimension-' + sanitize(dimensionName)).removeClass('checked')
+		$('item-dimension-' + sanitize(dimensionName)).removeClass('checked')
 		# Adiciona classe de selecionado para seu label
-		$('label[for="' + $(this).attr('id') + '"]', $template).addClass('checked')
+		$(this).parent().addClass('checked')
 	
 		console.log 'Change dimension!', dimensionName, dimensionValue
 		selectedDimensionsMap[dimensionName] = dimensionValue
@@ -231,26 +238,29 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 				$('input:enabled[dimension="' + sanitize(undefinedDimensions[0]) + '"]',
 					$template).attr('checked', 'checked').change()
 
+			listPrice = formatCurrency selectedSkuObj.listPrice
 			price = formatCurrency selectedSkuObj.bestPrice
 			installments = selectedSkuObj.installments
 			installmentValue = formatCurrency selectedSkuObj.installmentsValue
 
 			# Modifica href do botão comprar
-			$('.sku-selector-buyButton', $template).attr('href', $.skuSelector.getAddUrlForSku(selectedSkuObj.sku))
-			$('div.newPrice', $template).text('Por: R$ ' + price)
-			$('div.installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
-			$('.sku-selector-skuProductPrice', $template).fadeIn()
+			$('.skuselector-buy-btn', $template).attr('href', $.skuSelector.getAddUrlForSku(selectedSkuObj.sku))
+			$('.skuselector-list-price', $template).text('De: R$ ' + listPrice)
+			$('.skuselector-best-price', $template).text('Por: R$ ' + price)
+			$('.skuselector-installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
+			$('.skuselector-price', $template).fadeIn()
 		else
-			$('.sku-selector-skuProductPrice', $template).fadeOut()
+			$('.skuselector-price', $template).fadeOut()
 
 	# Binds handlers
-	$('ul.' + sanitize(dimension) + ' input', $template).change(dimensionChangeHandler) for dimension in dimensions
-	$('.sku-selector-buyButton', $template).click(buyButtonHandler)
+	console.log 'bind: ' + '.input-' + sanitize(dimension) for dimension in dimensions
+	$('.input-dimension-' + sanitize(dimension), $template).change(dimensionChangeHandler) for dimension in dimensions
+	$('.skuselector-buy-btn', $template).click(buyButtonHandler)
 
 	# Select first available item
 	if options.selectFirstAvailable
 		for dimension in dimensions
-			dim = $('ul.' + sanitize(dimension) + ' input:enabled', $template)
+			dim = $('.' + sanitize(dimension) + ' input:enabled', $template)
 			if dim.length > 0
 				$(dim[0]).attr('checked', 'checked').change()
 
@@ -358,10 +368,10 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 	# Add disabled class and matching attr disabled
 	$('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"]', $template).attr('disabled',
 		'disabled')
-	$('ul label.dimension-' + sanitize(firstUndefinedDimensionName), $template).addClass('disabled')
+	$('.dimension-' + sanitize(firstUndefinedDimensionName) + ' label', $template).addClass('disabled')
 	# Remove checked class and matching removeAttr checked
 	$('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"]', $template).removeAttr('checked')
-	$('ul label.dimension-' + sanitize(firstUndefinedDimensionName), $template).removeClass('checked')
+	$('.dimension-' + sanitize(firstUndefinedDimensionName) + ' label', $template).removeClass('checked')
 
 	# Third, enable all selectable options in this row
 	for value in uniqueDimensionsMap[firstUndefinedDimensionName]
@@ -374,13 +384,13 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 					$template)
 				$value.removeAttr('disabled')
 				# Remove disabled class, matching removeAttr disabled
-				$('ul label[for="' + $value.attr('id') + '"]', $template).removeClass('disabled')
+				$('label[for="' + $value.attr('id') + '"]', $template).removeClass('disabled')
 
 	# Fourth, disable next dimensions
 	for dimension in undefinedDimensions[1..]
 		$('input[dimension="' + sanitize(dimension) + '"]', $template).each ->
 			console.log 'Disabling next dimensions', this
 			$(this).attr('disabled', 'disabled')
-			$('ul label.dimension-' + sanitize(dimension), $template).addClass('disabled')
+			$('.dimension-' + sanitize(dimension) + ' label', $template).addClass('disabled')
 			$(this).removeAttr('checked')
-			$('ul label.dimension-' + sanitize(dimension), $template).removeClass('checked')
+			$('.dimension-' + sanitize(dimension) + ' label', $template).removeClass('checked')

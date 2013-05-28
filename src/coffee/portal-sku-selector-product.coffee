@@ -10,7 +10,7 @@ addSkuToCart = (sku) ->  true
 
 $(window).ready ->
 	if $("meta[name=vtex-version]").length > 0
-		productId = $('#product-id').val()
+		productId = $("#sku-selector-placeholder").data('product-id')
 		$("#sku-selector-placeholder").skuSelector
 			skuVariationsPromise: $.skuSelector.getSkusForProduct(productId)
 			skuVariationsDoneHandler: skuVariationsDoneHandler
