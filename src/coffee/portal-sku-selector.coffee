@@ -212,8 +212,6 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 		dimensionName = $(this).attr('data-dimension')
 		dimensionValue = $(this).attr('data-value')
 
-		console.log 'dimensionChangeHandler: ' + $(this).attr('data-value')
-	
 		# Limpa classe de selecionado para todos dessa dimensao
 		$('item-dimension-' + sanitize(dimensionName)).removeClass('checked')
 		# Adiciona classe de selecionado para seu label
@@ -389,7 +387,6 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 	# Fourth, disable next dimensions
 	for dimension in undefinedDimensions[1..]
 		$('input[dimension="' + sanitize(dimension) + '"]', $template).each ->
-			console.log 'Disabling next dimensions', this
 			$(this).attr('disabled', 'disabled')
 			$('.dimension-' + sanitize(dimension) + ' label', $template).addClass('disabled')
 			$(this).removeAttr('checked')
