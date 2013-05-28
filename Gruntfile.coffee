@@ -59,6 +59,7 @@ module.exports = (grunt) ->
 			main:
 				files:
 					'build/<%= relativePath %>/style/portal-sku-selector.css': 'src/style/portal-sku-selector.less'
+					'build/<%= relativePath %>/style/product-listing-mock.css': 'src/style/product-listing-mock.less'
 
 		useminPrepare:
 			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']

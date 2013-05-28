@@ -53,4 +53,4 @@ $(window).ready ->
 	$.skuSelector "popup" if $("meta[name=vtex-version]").length > 0
 
 $(document).ajaxStop ->
-	bindClickHandlers "btn-add-buy-button-asynchronous" if $("meta[name=vtex-version]").length > 0
+	bindClickHandlers "add-skuselector-buy-btn" if $("meta[name=vtex-version]").length > 0
