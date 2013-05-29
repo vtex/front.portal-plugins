@@ -82,14 +82,15 @@ module.exports = (grunt) ->
 					base: 'build/'
 
 		watch:
-			options:
-				livereload: true
-
 			dev:
+				options:
+					livereload: true
 				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less']
 				tasks: ['dev']
 
 			prod:
+				options:
+					livereload: true
 				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less']
 				tasks: ['prod']
 
@@ -121,6 +122,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'prod-watch', ['prod', 'connect', 'remote', 'watch:prod']
 
 	# Test
+	grunt.registerTask 'test', ['dev', 'karma:deploy']
 	grunt.registerTask 'test-watch', ['dev', 'karma:unit', 'watch:test']
 
 	# Generates version folder
@@ -150,7 +152,7 @@ module.exports = (grunt) ->
 			grunt.log.writeln 'Skipping build process and generating environmentType folder.'.cyan
 			grunt.task.run ['clean', 'gen-version']
 		else
-			grunt.task.run ['prod', 'copy:deploy', 'gen-version']
+			grunt.task.run ['prod', 'karma:deploy', 'copy:deploy', 'gen-version']
 
 	#	Remote task
 	grunt.registerTask 'remote', 'Run Remote proxy server', ->
