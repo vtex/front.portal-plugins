@@ -1,35 +1,36 @@
 {
-	"name": "speedbag",
-	"version": "0.2.0",
-	"readmeFilename": "README.md",
-	"description": "A grunt coffee/less/live-reload/cssmin/uglify/connect/bootstrap/zepto/lodash boilerplate.",
-	"main": "index.html",
-	"dependencies": {
-		"grunt": "~0.4.1",
-		"grunt-contrib-clean": "~0.4.0",
-		"grunt-contrib-coffee": "~0.6.4",
-		"grunt-contrib-connect": "~0.2.0",
-		"grunt-contrib-copy": "~0.4.1",
-		"grunt-contrib-cssmin": "~0.5.0",
-		"grunt-contrib-less": "~0.5.0",
-		"grunt-contrib-uglify": "~0.2.0",
-		"grunt-contrib-concat": "~0.2.0",
-		"grunt-contrib-watch": "~0.4.0",
-		"grunt-string-replace": "~0.2.4",
-		"grunt-usemin": "~0.1.10",
-		"coffee-script": "~1.6.2",
-		"remote": "~0.2.5"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git://github.com/vtex/speedbag.git"
-	},
-	"keywords": [
-		"grunt",
-		"coffee",
-		"less",
-		"livereload"
-	],
-	"author": "Guilherme Rodrigues <gadr90@gmail.com>",
-	"license": "MIT"
+  "name": "speedbag",
+  "version": "0.2.0",
+  "readmeFilename": "README.md",
+  "description": "A grunt coffee/less/live-reload/cssmin/uglify/connect/bootstrap/zepto/lodash boilerplate.",
+  "main": "index.html",
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-clean": "~0.4.0",
+    "grunt-contrib-coffee": "~0.6.4",
+    "grunt-contrib-connect": "~0.2.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-cssmin": "~0.5.0",
+    "grunt-contrib-less": "~0.5.0",
+    "grunt-contrib-uglify": "~0.2.0",
+    "grunt-contrib-concat": "~0.2.0",
+    "grunt-contrib-watch": "~0.4.0",
+    "grunt-string-replace": "~0.2.4",
+    "grunt-usemin": "~0.1.10",
+    "coffee-script": "~1.6.2",
+    "remote": "~0.2.5",
+    "grunt-karma": "~0.4.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vtex/speedbag.git"
+  },
+  "keywords": [
+    "grunt",
+    "coffee",
+    "less",
+    "livereload"
+  ],
+  "author": "Guilherme Rodrigues <gadr90@gmail.com>",
+  "license": "MIT"
 }

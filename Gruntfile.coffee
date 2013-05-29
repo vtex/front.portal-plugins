@@ -67,11 +67,13 @@ module.exports = (grunt) ->
 		usemin:
 			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
 
-		jasmine:
-			test:
-				src: ['build/<%= relativePath %>/lib/zepto/zepto.js', 'build/<%= relativePath %>/js/**/*.js']
-				options:
-					specs: 'build/<%= relativePath %>/spec/*Spec.js'
+		karma:
+			options:
+				configFile: 'karma.conf.js'
+			unit:
+				background: true
+			deploy:
+				singleRun: true
 
 		connect:
 			dev:
@@ -93,8 +95,7 @@ module.exports = (grunt) ->
 
 			test:
 				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**/*.coffee']
-				tasks: ['test']
-				spawn: true
+				tasks: ['dev', 'karma:unit:run']
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -107,6 +108,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-contrib-watch'
 	grunt.loadNpmTasks 'grunt-usemin'
 	grunt.loadNpmTasks 'grunt-string-replace'
+	grunt.loadNpmTasks 'grunt-karma'
 
 	grunt.registerTask 'default', ['dev-watch']
 
@@ -117,6 +119,9 @@ module.exports = (grunt) ->
 	# Prod - minifies files
 	grunt.registerTask 'prod', ['dev', 'copy:debug', 'useminPrepare', 'concat', 'uglify', 'usemin']
 	grunt.registerTask 'prod-watch', ['prod', 'connect', 'remote', 'watch:prod']
+
+	# Test
+	grunt.registerTask 'test-watch', ['dev', 'karma:unit', 'watch:test']
 
 	# Generates version folder
 	grunt.registerTask 'gen-version', ->
