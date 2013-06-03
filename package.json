@@ -1,8 +1,8 @@
 {
-  "name": "speedbag",
-  "version": "0.2.0",
+  "name": "front.portal-plugins",
+  "version": "0.1.0",
   "readmeFilename": "README.md",
-  "description": "A grunt coffee/less/live-reload/cssmin/uglify/connect/bootstrap/zepto/lodash boilerplate.",
+  "description": "Portal plugins.",
   "main": "index.html",
   "dependencies": {
     "grunt": "~0.4.1",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/vtex/speedbag.git"
+    "url": "git://github.com/vtex/front.portal-plugins.git"
   },
   "keywords": [
     "grunt",
