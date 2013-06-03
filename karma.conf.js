@@ -6,6 +6,5 @@ files = [
 	'build/spec/**/*.js'
 ];
 browsers = [
-	'Firefox',
-    'Chrome'
+	'PhantomJS'
 ];
