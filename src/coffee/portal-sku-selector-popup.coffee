@@ -3,7 +3,7 @@ skuVariationsDoneHandler = (options, json) ->
 	$.skuSelector.$placeholder.removeClass('sku-selector-loading')
 	# If this item doesn't have variations, add it to the cart directly.
 	if json.dimensions.length == 0
-		options.addSkuToCart json.skus[0].sku
+		return options.addSkuToCart json.skus[0].sku
 	else
 		# Render the sku selector, passing the options with templates
 		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options)
@@ -29,15 +29,18 @@ addSkuToCart = (sku) ->
 # You can use it as a default with the popup flavor of the sku selector.
 buyButtonClickHandler = (event) ->
 	event.preventDefault()
-	id = $(event.target).data('product-id')
+	id = $(event.target).parents('li').find('h2').next().attr('id').replace('rating-produto-', '')
 	# Opens the popup
-	$.skuSelector.$placeholder.skuSelector(
+	$.skuSelector.$placeholder.skuSelector
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
 		skuVariationsDoneHandler: skuVariationsDoneHandler
 		addSkuToCart: addSkuToCart
 		selectFirstAvailable: true
 		productUrl: $(event.target).attr('href')
-	)
+		mainTemplate: mainTemplate
+		dimensionListTemplate: dimensionListTemplate
+		skuDimensionTemplate: skuDimensionTemplate
+
 	return false
 
 # An utilitary function to bind element's with the given class.
@@ -53,4 +56,59 @@ $(window).ready ->
 	$.skuSelector "popup" if $("meta[name=vtex-version]").length > 0
 
 $(document).ajaxStop ->
-	bindClickHandlers "add-skuselector-buy-btn" if $("meta[name=vtex-version]").length > 0
+	bindClickHandlers "btn-add-buy-button-asynchronous" if $("meta[name=vtex-version]").length > 0
+
+mainTemplate = """
+	<div class="vtex-plugin skuselector">
+		<a href="javascript:void(0);" title="Fechar" class="skuselector-close">Fechar</a>
+		<div class="skuselector-content">
+			<div class="skuselector-title">Selecione a variação do produto:</div>
+			<p class="skuselector-product-name">{{productName}}</p>
+			<p class="skuselector-product-unavailable" style="display: none">
+				Produto indisponível
+			</p>
+			<div class="skuselector-price" style="display:none;">
+				<p class="skuselector-list-price">
+					<span class="text">De: </span>
+					<span class="value"></span>
+				</p>
+				<p class="skuselector-best-price">
+					<span class="text">Por: </span>
+					<span class="value"></span>
+				</p>
+				<p class="skuselector-installment"></p>
+			</div>
+			<div class="skuselector-sku">
+				<p class="skuselector-image">
+					<img src="{{image}}" width="160" height="160" alt="{{productAlt}}" />
+				</p>
+				<div class="skuselector-dimensions">
+					{{dimensionLists}}
+				</div>
+				<p class="skuselector-warning"></p>
+			</div>
+			<div class="skuselector-buy-btn-wrap">
+				<a href="javascript:void(0);" class="skuselector-buy-btn btn btn-success btn-large">Comprar</a>
+			</div>
+		</div>
+	</div>
+	"""
+
+dimensionListTemplate = """
+	<div class="dimension dimension-{{dimensionIndex}} dimension-{{dimensionSanitized}}">
+		<p class="skuselector-specification">
+			{{dimension}}
+		</p>
+		<ul class="skuselector-sepecification-list unstyled">
+			{{skuList}}
+		</ul>
+	</div>
+	"""
+
+skuDimensionTemplate = """
+	<li class="skuselector-specification-item item-dimension-{{dimensionSanitized}} item-spec-{{index}} item-dimension-{{dimensionSanitized}}-spec-{{index}}">
+		<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
+			class="skuselector-specification-label input-dimension-{{dimensionSanitized}}" id="dimension-{{dimensionSanitized}}-spec-{{index}}" value="{{valueSanitized}}">
+		<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
+	</li>
+	"""

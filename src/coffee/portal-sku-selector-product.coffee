@@ -10,11 +10,60 @@ addSkuToCart = (sku) ->  true
 
 $(window).ready ->
 	if $("meta[name=vtex-version]").length > 0
-		productId = $("#sku-selector-placeholder").data('product-id')
-		$("#sku-selector-placeholder").skuSelector
+		$(".skuTamanho").html('').hide().addClass('sku-selector-container');
+
+		productId = $('#___rc-p-id').val()
+		$(".sku-selector-container").skuSelector
 			skuVariationsPromise: $.skuSelector.getSkusForProduct(productId)
 			skuVariationsDoneHandler: skuVariationsDoneHandler
 			addSkuToCart: addSkuToCart
 			selectFirstAvailable: true
+			mainTemplate: mainTemplate
+			dimensionListTemplate: dimensionListTemplate
+			skuDimensionTemplate: skuDimensionTemplate
+			updateBuyButtonURL: updateBuyButtonURL
 
-		$("#sku-selector-placeholder").on 'skuSelected', (e, sku, selectedDimension) -> console.log 'Selected:', sku, selectedDimension
+		$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
+			console.log 'Selected:', sku, selectedDimension
+			if window.FireSkuChangeImage
+				FireSkuChangeImage(sku.sku)
+
+mainTemplate = """
+	<div class="vtex-plugin skuselector">
+		<div class="skuselector-content">
+			<div class="skuselector-title">Selecione a variação do produto:</div>
+			<p class="skuselector-product-unavailable" style="display: none">
+				Produto indisponível
+			</p>
+			<div class="skuselector-sku">
+				<div class="skuselector-dimensions">
+					{{dimensionLists}}
+				</div>
+				<p class="skuselector-warning"></p>
+			</div>
+		</div>
+	</div>
+	"""
+
+dimensionListTemplate = """
+	<div class="dimension dimension-{{dimensionIndex}} dimension-{{dimensionSanitized}}">
+		<p class="skuselector-specification">
+			{{dimension}}
+		</p>
+		<ul class="skuselector-sepecification-list unstyled">
+			{{skuList}}
+		</ul>
+	</div>
+	"""
+
+skuDimensionTemplate = """
+	<li class="skuselector-specification-item item-dimension-{{dimensionSanitized}} item-spec-{{index}} item-dimension-{{dimensionSanitized}}-spec-{{index}}">
+		<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
+			class="skuselector-specification-label input-dimension-{{dimensionSanitized}}" id="dimension-{{dimensionSanitized}}-spec-{{index}}" value="{{valueSanitized}}">
+		<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
+	</li>
+	"""
+
+
+updateBuyButtonURL = (url)->
+	$('.buy-button').attr('href', url)

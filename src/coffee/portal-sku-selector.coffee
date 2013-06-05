@@ -16,6 +16,9 @@ $.fn.skuSelector = (options = {}) ->
 	$.skuSelector.$placeholder.addClass('sku-selector-loading')
 	console.log('fn.skuSelector', $.skuSelector.$placeholder, opts)
 
+	unless opts.mainTemplate and opts.dimensionListTemplate and opts.skuDimensionTemplate
+		throw new Error('Required option not given.')
+
 	if opts.skuVariations
 		skuVariationsDoneHandler opts, opts.skuVariations
 	else if opts.skuVariationsPromise
@@ -29,67 +32,15 @@ $.fn.skuSelector.defaults =
 	skuVariations: undefined
 	selectFirstAvailable: false
 	addSkuToCartPreventDefault: true
+	buyButtonSelector: ''
+	updateBuyButtonURL: (url, template)->
+		$('.skuselector-buy-btn', template).attr('href', url)
 
 	# Called when we failed to receive variations.
 	skuVariationsFailHandler: (options, reason) ->
 		$.skuSelector.$placeholder.removeClass('sku-selector-loading')
 		console.error(reason)
 		window.location.href = options.productUrl if options.productUrl
-
-	mainTemplate: """
-		<div class="vtex-plugin skuselector">
-			<a href="javascript:void(0);" title="Fechar" class="skuselector-close">Fechar</a>
-			<div class="skuselector-content">
-				<div class="skuselector-title">Selecione a variação do produto:</div>
-				<p class="skuselector-product-name">{{productName}}</p>
-				<p class="skuselector-product-unavailable" style="display: none">
-					Produto indisponível
-				</p>
-				<div class="skuselector-price" style="display:none;">
-					<p class="skuselector-list-price">
-						<span class="text">De: </span>
-						<span class="value"></span>
-					</p>
-					<p class="skuselector-best-price">
-						<span class="text">Por: </span>
-						<span class="value"></span>
-					</p>
-					<p class="skuselector-installment"></p>
-				</div>
-				<div class="skuselector-sku">
-					<p class="skuselector-image">
-						<img src="{{image}}" width="160" height="160" alt="{{productAlt}}" />
-					</p>
-					<div class="skuselector-dimensions">
-						{{dimensionLists}}
-					</div>
-					<p class="skuselector-warning"></p>
-				</div>
-				<div class="skuselector-buy-btn-wrap">
-					<a href="javascript:void(0);" class="skuselector-buy-btn btn btn-success btn-large">Comprar</a>
-				</div>
-			</div>
-		</div>
-		"""
-
-	dimensionListTemplate: """
-		<div class="dimension dimension-{{dimensionIndex}} dimension-{{dimensionSanitized}}">
-			<p class="skuselector-specification">
-				{{dimension}}
-			</p>
-			<ul class="skuselector-sepecification-list unstyled">
-				{{skuList}}
-			</ul>
-		</div>
-		"""
-
-	skuDimensionTemplate: """
-		<li class="skuselector-specification-item item-dimension-{{dimensionSanitized}} item-spec-{{index}} item-dimension-{{dimensionSanitized}}-spec-{{index}}">
-			<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
-				class="skuselector-specification-label input-dimension-{{dimensionSanitized}}" id="dimension-{{dimensionSanitized}}-spec-{{index}}" value="{{valueSanitized}}">
-			<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
-		</li>
-		"""
 
 #
 # SkuSelector Popup Creator.
@@ -149,7 +100,8 @@ $.skuSelector.getSkusForProduct = (productId) ->
 	$.get '/api/catalog_system/pub/products/variations/' + productId
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
-	'https://' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
+	protocol = if window.location.host.indexOf('vtexlocal') isnt -1 then 'http' else 'https'
+	protocol + '://' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
 $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
@@ -190,7 +142,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 		installmentValue = formatCurrency selectedSkuObj.installmentsValue
 
 		# Modifica href do botão comprar
-		$('.skuselector-buy-btn', $template).attr('href', $.skuSelector.getAddUrlForSku(selectedSkuObj.sku))
+		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(selectedSkuObj.sku), $template)
 		$('.skuselector-list-price value', $template).text('R$ ' + listPrice)
 		$('.skuselector-best-price value', $template).text('R$ ' + price)
 		$('.skuselector-installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
@@ -242,7 +194,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 			installmentValue = formatCurrency selectedSkuObj.installmentsValue
 
 			# Modifica href do botão comprar
-			$('.skuselector-buy-btn', $template).attr('href', $.skuSelector.getAddUrlForSku(selectedSkuObj.sku))
+			options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(selectedSkuObj.sku), $template)
 			$('.skuselector-list-price', $template).text('De: R$ ' + listPrice)
 			$('.skuselector-best-price', $template).text('Por: R$ ' + price)
 			$('.skuselector-installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
