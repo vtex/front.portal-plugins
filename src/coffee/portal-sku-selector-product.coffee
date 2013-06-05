@@ -19,7 +19,7 @@ $(window).ready ->
 			skuVariationsPromise: $.skuSelector.getSkusForProduct(productId)
 			skuVariationsDoneHandler: skuVariationsDoneHandler
 			addSkuToCart: addSkuToCart
-			selectFirstAvailable: true
+			selectFirstAvailableOnStart: true
 			mainTemplate: mainTemplate
 			dimensionListTemplate: dimensionListTemplate
 			skuDimensionTemplate: skuDimensionTemplate
@@ -27,9 +27,9 @@ $(window).ready ->
 
 		$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
 			console.log 'Selected:', sku, selectedDimension
-			window.FireSkuChangeImage?(sku.sku)
-			window.FireSkuDataReceived?(sku.sku)
-			window.FireSkuSelectionChanged?(sku.sku)
+			#window.FireSkuChangeImage?(sku.sku)
+			#window.FireSkuDataReceived?(sku.sku)
+			#window.FireSkuSelectionChanged?(sku.sku)
 
 mainTemplate = """
 	<div class="vtex-plugin skuselector">

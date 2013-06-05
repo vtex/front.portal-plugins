@@ -32,7 +32,8 @@ $.fn.skuSelector = (options = {}) ->
 $.fn.skuSelector.defaults =
 	skuVariationsPromise: undefined
 	skuVariations: undefined
-	selectFirstAvailable: false
+	selectFirstAvailableOnStart: true
+	selectFirstAvailableDimensions: true
 	addSkuToCartPreventDefault: true
 	buyButtonSelector: ''
 	selectors:
@@ -42,6 +43,7 @@ $.fn.skuSelector.defaults =
 		price: (template) -> $('.skuselector-price', template)
 		warning: (template) -> $('.skuselector-warning', template)
 		itemDimensionListItem: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName), template)
+		itemDimensionInputEnabled: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input:enabled', template)
 
 	updateBuyButtonURL: (url, template)->
 		$('.skuselector-buy-btn', template).attr('href', url)
@@ -133,8 +135,15 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 		# Trigger event for interested scripts
 		$.skuSelector.$placeholder.trigger 'skuSelected', [selectedSkuObj, dimensionName] if selectedSkuObj
 
-		if selectedSkuObj and undefinedDimensions.length <= 1
-			# Só existe uma possibilidade na próxima dimensão - vamos escolhê-la.
+		if options.selectFirstAvailableDimensions
+			for dimension in undefinedDimensions
+				dim = options.selectors.itemDimensionInputEnabled(dimension, $template)
+				if dim.length > 0
+					$(dim[0]).attr('checked', 'checked').change()
+
+			updatePrice(selectedSkuObj, options, $template)
+		# Só existe uma possibilidade na próxima dimensão - vamos escolhê-la.
+		else if selectedSkuObj and undefinedDimensions.length <= 1
 			if undefinedDimensions.length is 1
 				$('input:enabled[dimension="' + sanitize(undefinedDimensions[0]) + '"]',
 					$template).attr('checked', 'checked').change()
@@ -149,9 +158,9 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 	$('.skuselector-buy-btn', $template).click(buyButtonHandler)
 
 	# Select first available item
-	if options.selectFirstAvailable
+	if options.selectFirstAvailableOnStart
 		for dimension in dimensions
-			dim = $('.' + sanitize(dimension) + ' input:enabled', $template)
+			dim = options.selectors.itemDimensionInputEnabled(dimension, $template)
 			if dim.length > 0
 				$(dim[0]).attr('checked', 'checked').change()
 
