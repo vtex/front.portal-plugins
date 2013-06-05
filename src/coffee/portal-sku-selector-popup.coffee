@@ -52,12 +52,6 @@ bindClickHandlers = (className) ->
 	$elements.removeClass className
 	$elements.click buyButtonClickHandler
 
-$(window).ready ->
-	$.skuSelector "popup" if $("meta[name=vtex-version]").length > 0
-
-$(document).ajaxStop ->
-	bindClickHandlers "btn-add-buy-button-asynchronous" if $("meta[name=vtex-version]").length > 0
-
 mainTemplate = """
 	<div class="vtex-plugin skuselector">
 		<a href="javascript:void(0);" title="Fechar" class="skuselector-close">Fechar</a>
@@ -112,3 +106,57 @@ skuDimensionTemplate = """
 		<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
 	</li>
 	"""
+
+#
+# SkuSelector Popup Creator.
+#
+
+# Usage example:
+# $popup = $.skuSelectorPopup({popupId: "id", popupClass: "class1 class2"});
+$.skuSelectorPopup = (options = {}) ->
+	opts = $.extend($.skuSelectorPopup.defaults, options)
+	console.log('skuSelector', opts)
+
+	$.skuSelector.$overlay = $(opts.overlayTemplate)
+	$.skuSelector.$overlay.addClass(opts.overlayClass) if opts.overlayClass
+	$.skuSelector.$overlay.attr('id', opts.overlayId) if opts.overlayId
+	$.skuSelector.$placeholder = $(opts.popupTemplate)
+	$.skuSelector.$placeholder.addClass(opts.popupClass) if opts.popupClass
+	$.skuSelector.$placeholder.attr('id', opts.popupId) if opts.popupId
+
+	$('body').append($.skuSelector.$overlay) # Adds the overlay
+	$('body').append($.skuSelector.$placeholder) # Adds the placeholder
+
+	# Adds show function
+	$.skuSelector.$placeholder.showPopup = ->
+		$.skuSelector.$overlay?.fadeIn()
+		$.skuSelector.$placeholder?.fadeIn()
+
+	# Adds hide function
+	$.skuSelector.$placeholder.hidePopup = ->
+		$.skuSelector.$overlay?.fadeOut()
+		$.skuSelector.$placeholder?.fadeOut()
+
+	# Hide the popup on overlay click
+	$.skuSelector.$overlay.click $.skuSelector.$placeholder.hidePopup
+
+	# Binds the exit handler
+	$.skuSelector.$placeholder.on 'click', '.skuselector-close', ->
+		$.skuSelector.$placeholder.hidePopup()
+		console.log 'Exiting sku selector'
+
+	return $.skuSelector.$placeholder
+
+$.skuSelectorPopup.defaults =
+	popupTemplate: '<div style="display: none; position:fixed"></div>'
+	overlayTemplate: '<div></div>'
+	overlayId: 'sku-selector-overlay'
+	overlayClass: undefined
+	popupId: 'sku-selector-popup'
+	popupClass: 'sku-selector'
+
+$(window).ready ->
+	$.skuSelectorPopup() if $("meta[name=vtex-version]").length > 0
+
+$(document).ajaxStop ->
+	bindClickHandlers "btn-add-buy-button-asynchronous" if $("meta[name=vtex-version]").length > 0

@@ -8,6 +8,8 @@ skuVariationsDoneHandler = (options, json) ->
 
 addSkuToCart = (sku) ->  true
 
+$(".skuTamanho").html('').hide().addClass('sku-selector-container');
+
 $(window).ready ->
 	if $("meta[name=vtex-version]").length > 0
 		$(".skuTamanho").html('').hide().addClass('sku-selector-container');
@@ -25,8 +27,9 @@ $(window).ready ->
 
 		$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
 			console.log 'Selected:', sku, selectedDimension
-			if window.FireSkuChangeImage
-				FireSkuChangeImage(sku.sku)
+			window.FireSkuChangeImage?(sku.sku)
+			window.FireSkuDataReceived?(sku.sku)
+			window.FireSkuSelectionChanged?(sku.sku)
 
 mainTemplate = """
 	<div class="vtex-plugin skuselector">
@@ -63,7 +66,6 @@ skuDimensionTemplate = """
 		<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
 	</li>
 	"""
-
 
 updateBuyButtonURL = (url)->
 	$('.buy-button').attr('href', url)
