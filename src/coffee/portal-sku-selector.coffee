@@ -98,17 +98,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 	# TODO refactor
 	else if available.length is 1
 		selectedSkuObj = available[0]
-		listPrice = formatCurrency selectedSkuObj.listPrice
-		price = formatCurrency selectedSkuObj.bestPrice
-		installments = selectedSkuObj.installments
-		installmentValue = formatCurrency selectedSkuObj.installmentsValue
-
-		# Modifica href do botão comprar
-		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(selectedSkuObj.sku), $template)
-		options.selectors.listPriceValue($template).text('R$ ' + listPrice)
-		options.selectors.bestPriceValue($template).text('R$ ' + price)
-		options.selectors.installment($template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
-		options.selectors.price($template).fadeIn()
+		updatePrice(selectedSkuObj, options, $template)
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
@@ -149,17 +139,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 				$('input:enabled[dimension="' + sanitize(undefinedDimensions[0]) + '"]',
 					$template).attr('checked', 'checked').change()
 
-			listPrice = formatCurrency selectedSkuObj.listPrice
-			price = formatCurrency selectedSkuObj.bestPrice
-			installments = selectedSkuObj.installments
-			installmentValue = formatCurrency selectedSkuObj.installmentsValue
-
-			# Modifica href do botão comprar
-			options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(selectedSkuObj.sku), $template)
-			$('.skuselector-list-price', $template).text('De: R$ ' + listPrice)
-			$('.skuselector-best-price', $template).text('Por: R$ ' + price)
-			$('.skuselector-installment', $template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
-			$('.skuselector-price', $template).fadeIn()
+			updatePrice(selectedSkuObj, options, $template)
 		else
 			$('.skuselector-price', $template).fadeOut()
 
@@ -181,9 +161,19 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 # PRIVATE FUNCTIONS
 #
 
-# Selectors
+updatePrice = (sku, options, template) ->
+	listPrice = formatCurrency sku.listPrice
+	price = formatCurrency sku.bestPrice
+	installments = sku.installments
+	installmentValue = formatCurrency sku.installmentsValue
 
-	
+	# Modifica href do botão comprar
+	options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
+	options.selectors.listPriceValue(template).text('R$ ' + listPrice)
+	options.selectors.bestPriceValue(template).text('R$ ' + price)
+	options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
+	options.selectors.price(template).fadeIn()
+
 # Sanitizes text - "Caçoá (teste 2)" becomes "cacoateste2"
 sanitize = (str = this) ->
 	specialChars =  "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź"
