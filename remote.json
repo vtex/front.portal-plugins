@@ -17,10 +17,14 @@
 		"lib/.*",
 		"js/.*",
 		"style/.*",
-		"/$",
 		"index.html"
 	],
 	"mapping": false,
 	"mappings": {
+	    ".*arquivos/v2-portal-sku-selector.js.*":"build/js/portal-sku-selector.js",
+	    ".*arquivos/v2-portal-sku-selector-init-pro.*":"build/js/portal-sku-selector-product.js",
+	    ".*arquivos/v2-portal-sku-selector-init.js.*":"build/js/portal-sku-selector-popup.js",
+		".*Scripts/jquery.livequery.min.js.*":"build/js/portal-totalizers.js",
+	    ".*Scripts/prettyPhoto/js/jquery.prettyPhoto.js.*":"build/js/portal-minicart.js"
 	}
 }
