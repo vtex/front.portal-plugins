@@ -1,31 +1,13 @@
-// o ponto-e-vírgula antes de invocar a função é uma prática segura contra scripts
-// concatenados e/ou outros plugins que não foram fechados corretamente.
 ;(function ( $, window, document, undefined ) {
-
-    // 'undefined' é usado aqui como a variável global 'undefined', no ECMAScript 3 é
-    // mutável (ou seja, pode ser alterada por alguém). 'undefined' não está sendo
-    // passado na verdade, assim podemos assegurar que o valor é realmente indefinido.
-    // No ES5, 'undefined' não pode mais ser modificado.
-
-    // 'window' e 'document' são passados como variáveis locais ao invés de globais,
-    // assim aceleramos (ligeiramente) o processo de resolução e pode ser mais eficiente
-    // quando minificado (especialmente quando ambos estão referenciados corretamente).
-
-    // Cria as propriedades padrão
     var pluginName = "vtexCartItems",
         defaults = {
+            scriptId: '#vtex-minicart',
             orderFormId: 0,
-            timeoutToHide:0
+            timeoutToHide: 0,
         };
-
-    // O verdadeiro construtor do plugin
     function vtexCartItems( element, options ) {
         this.element = element;
 
-        // jQuery tem um método 'extend' que mescla o conteúdo de dois ou
-        // mais objetos, armazenando o resultado no primeiro objeto. O primeiro
-        // objeto geralmente é vazio já que não queremos alterar os valores
-        // padrão para futuras instâncias do plugin
         this.options = $.extend( {}, defaults, options );
 
         this._defaults = defaults;
@@ -37,22 +19,16 @@
     vtexCartItems.prototype = {
 
         init: function() {
-            // Coloque a lógica de inicialização aqui
-            // Você já possui acesso ao elemento do DOM e as opções da instância
-            // exemplo: this.element e this.options
-
             this.getData(true);
-            $('body').on('miniCartMouseEnter',function(){
+            $('body').on('miniCartMouseEnter',function() {
                 $('.vtexsc-cart').slideDown();
                 clearTimeout(self.options.timeoutToHide);
-                console.log('entrouOver');
             });
-            $('body').on('miniCartMouseLeave',function(){
+            $('body').on('miniCartMouseLeave',function() {
                 clearTimeout(self.options.timeoutToHide);
                 self.options.timeoutToHide = setTimeout(function() {
                     $('.vtexsc-cart').slideUp();
                 }, 800);
-                console.log('entrouOut');
             });
         },
 
@@ -68,22 +44,20 @@
                 type: 'POST'
             });
 
-            data = minicartJson;
-            // promise.done(function(data) {
-
+            // data = minicartJson;
+            promise.done(function(data) {
                 self.options.orderFormId = data.orderFormId;
 
                 if (items) self.insertCartItems(data);
                 self.changeCartValues(data);
                 if (!items) self.updateItems(data);
-            // });
+            });
             promise.fail(function(jqXHR, textStatus, errorThrown) {
                 console.log('Error Message: '+textStatus);
                 console.log('HTTP Error: '+errorThrown);
             });
-            //return promise;
-            console.log(minicartJson);
-            return JSON.stringify(minicartJson);
+            return promise;
+            // return JSON.stringify(minicartJson);
         },
         insertCartItems: function(data) {
             self = this;
@@ -97,11 +71,19 @@
                     total += t.value;
                 });
 
-                var miniCart = '<div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded">\
+                var miniCart = '<div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded" style="display: none;">\
                     <div class="vtexsc-bt"></div>\
                         <div class="vtexsc-center">\
                             <div class="vtexsc-wrap">\
                                 <table class="vtexsc-productList">\
+                                    <thead style="display: none;">\
+                                        <tr>\
+                                            <th class="cartSkuName" colspan="2">Produto</th>\
+                                            <th class="cartSkuPrice">Preço</th>\
+                                            <th class="cartSkuQuantity">Quantidade</th>\
+                                            <th class="cartSkuActions">Excluir</th>\
+                                        </tr>\
+                                    </thead>\
                                     <tbody></tbody>\
                                 </table>\
                             </div>\
@@ -118,7 +100,7 @@
                         <div class="vtexsc-bb"></div>\
                     </div>';
 
-                $(self.element).prepend(miniCart);
+                $(self.options.scriptId).after(miniCart);
 
                 self.updateItems(data);
 
@@ -153,7 +135,7 @@
                         </td>\
                         <td class="cartSkuPrice">\
                             <div class="cartSkuUnitPrice">\
-                                <span class="bestPrice">' + self.formatCurrency(c.price) + '</span>\
+                                <span class="bestPrice">R$ ' + self.formatCurrency(c.price) + '</span>\
                             </div>\
                         </td>\
                         <td class="cartSkuQuantity">\
@@ -162,7 +144,9 @@
                             </div>\
                         </td>\
                         <td class="cartSkuActions">\
-                            <span class="cartSkuRemove" data-index="'+ i +'"></span>\
+                            <span class="cartSkuRemove" data-index="'+ i +'">\
+                                <a href="javascript:void(0);" class="text" style="display: none;">excluir</a>\
+                            </span>\
                         </td>\
                     </tr>';
 
@@ -201,7 +185,7 @@
                     total += t.value;
                 });
 
-                $('.vtexsc-totalCart .vtexsc-text').text(this.formatCurrency(total));
+                $('.vtexsc-totalCart .vtexsc-text').text('R$ ' + this.formatCurrency(total));
                 $('.carrinhoCompras > a, .linkCart').attr('href', '/checkout/#/cart');
             }
         },
@@ -234,4 +218,4 @@
     };
 
 })( jQuery, window, document );
-$('.header').vtexCartItems();
+$('body').vtexCartItems();

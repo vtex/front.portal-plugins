@@ -19,12 +19,12 @@
 		"style/.*",
 		"index.html"
 	],
-	"mapping": true,
+	"mapping": false,
 	"mappings": {
-    ".*Scripts/jquery.pager.js.*":"build/js/portal-totalizers.js",
-    ".*arquivos/v2-portal-sku-selector.js.*":"build/js/portal-sku-selector.js",
-    ".*arquivos/v2-portal-sku-selector-init-pro.*":"build/js/portal-sku-selector-product.js",
-    ".*arquivos/v2-portal-sku-selector-init.js.*":"build/js/portal-sku-selector-popup.js",
-    ".*arquivos/v2-portal-minicart.js.*":"build/js/v2-portal-minicart.js"
+	    ".*arquivos/v2-portal-sku-selector.js.*":"build/js/portal-sku-selector.js",
+	    ".*arquivos/v2-portal-sku-selector-init-pro.*":"build/js/portal-sku-selector-product.js",
+	    ".*arquivos/v2-portal-sku-selector-init.js.*":"build/js/portal-sku-selector-popup.js",
+		".*Scripts/jquery.livequery.min.js.*":"build/js/portal-totalizers.js",
+	    ".*Scripts/prettyPhoto/js/jquery.prettyPhoto.js.*":"build/js/portal-minicart.js"
 	}
 }

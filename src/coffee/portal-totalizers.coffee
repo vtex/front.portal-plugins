@@ -1,7 +1,10 @@
 (($, window, document) ->
 
-  pluginName = "vtexTotalizers"
-  defaults = {}
+  pluginName = 'vtexTotalizers'
+  defaults = {
+    scriptId: '#vtex-totalizers'
+    # scriptId: '#barra_flutuante'
+  }
 
   class vtexTotalizers
     constructor: (@element, options) ->
@@ -22,23 +25,23 @@
             <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
             <ul class="cart-info">
               <li class="amount-products">
-                <strong><span id="MostraTextoXml2">Total de Produtos:</span></strong> <em class="amount-products-em"></em>
+                <strong><span id="MostraTextoXml2">Total de Produtos:</span></strong> <em class="amount-products-em">0</em>
               </li>
               <li class="amount-items">
-                <strong><span id="MostraTextoXml3">Itens:</span></strong> <em class="amount-items-em"></em>
+                <strong><span id="MostraTextoXml3">Itens:</span></strong> <em class="amount-items-em">0</em>
               </li>
               <li class="amount-kits">
                 <strong><span id="MostraTextoXml4">Total de Kits:</span></strong> <em class="amount-kits-em">0</em>
               </li>
               <li class="total-cart">
-                <strong><span id="MostraTextoXml5">Valor Total:</span></strong> R$ <em class="total-cart-em"></em>
+                <strong><span id="MostraTextoXml5">Valor Total:</span></strong> R$ <em class="total-cart-em">0,00</em>
               </li>
             </ul>
           </div>
         </div>
       </div>
       """
-      $(self.element).html template
+      $(self.options.scriptId).after template
 
       self.selectors = {
         amountProducts: $('.amount-products-em')
@@ -79,16 +82,16 @@
       promise.done (data) ->
         $('.amount-items-in-cart').removeClass 'amount-items-in-cart-loading'
 
-      data = totalizersJson
-      # promise.success (data) ->
-      amountProducts = data.items.length
-      amountItems = 0;
-      amountItems += item.quantity for item in data.items
-      totalCart = self.formatCurrency data.value
+      # data = totalizersJson
+      promise.success (data) ->
+        amountProducts = data.items.length
+        amountItems = 0;
+        amountItems += item.quantity for item in data.items
+        totalCart = self.formatCurrency data.value
 
-      self.selectors.amountProducts.html amountProducts
-      self.selectors.amountItems.html amountItems
-      self.selectors.totalCart.html totalCart
+        self.selectors.amountProducts.html amountProducts
+        self.selectors.amountItems.html amountItems
+        self.selectors.totalCart.html totalCart
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
         console.log 'Error Message: ' + textStatus;
@@ -103,4 +106,4 @@
 
 )( jQuery, window, document )
 
-$('.amount-items-in-cart-wrapper').vtexTotalizers()
+$('body').vtexTotalizers()
