@@ -51,6 +51,11 @@
       $('body').on 'cartUpdate', ->
         self.getCartData()
 
+      $('.amount-items-in-cart').mouseenter ->
+        $('body').trigger 'miniCartMouseEnter'
+      $('.amount-items-in-cart').mouseleave ->
+        $('body').trigger 'miniCartMouseLeave'
+
     formatCurrency: (value) ->
       if value is '' or not value? or isNaN value
         num = 0.00
@@ -74,15 +79,16 @@
       promise.done (data) ->
         $('.amount-items-in-cart').removeClass 'amount-items-in-cart-loading'
 
-      promise.success (data) ->
-        amountProducts = data.items.length
-        amountItems = 0;
-        amountItems += item.quantity for item in data.items
-        totalCart = self.formatCurrency data.value
+      data = totalizersJson
+      # promise.success (data) ->
+      amountProducts = data.items.length
+      amountItems = 0;
+      amountItems += item.quantity for item in data.items
+      totalCart = self.formatCurrency data.value
 
-        self.selectors.amountProducts.html amountProducts
-        self.selectors.amountItems.html amountItems
-        self.selectors.totalCart.html totalCart
+      self.selectors.amountProducts.html amountProducts
+      self.selectors.amountItems.html amountItems
+      self.selectors.totalCart.html totalCart
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
         console.log 'Error Message: ' + textStatus;

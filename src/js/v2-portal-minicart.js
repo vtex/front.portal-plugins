@@ -42,8 +42,18 @@
             // exemplo: this.element e this.options
 
             this.getData(true);
-
-
+            $('body').on('miniCartMouseEnter',function(){
+                $('.vtexsc-cart').slideDown();
+                clearTimeout(self.options.timeoutToHide);
+                console.log('entrouOver');
+            });
+            $('body').on('miniCartMouseLeave',function(){
+                clearTimeout(self.options.timeoutToHide);
+                self.options.timeoutToHide = setTimeout(function() {
+                    $('.vtexsc-cart').slideUp();
+                }, 800);
+                console.log('entrouOut');
+            });
         },
 
         getData: function(items) {
@@ -58,18 +68,22 @@
                 type: 'POST'
             });
 
-            promise.done(function(data) {
+            data = minicartJson;
+            // promise.done(function(data) {
+
                 self.options.orderFormId = data.orderFormId;
 
                 if (items) self.insertCartItems(data);
                 self.changeCartValues(data);
                 if (!items) self.updateItems(data);
-            });
+            // });
             promise.fail(function(jqXHR, textStatus, errorThrown) {
                 console.log('Error Message: '+textStatus);
                 console.log('HTTP Error: '+errorThrown);
             });
-            return promise;
+            //return promise;
+            console.log(minicartJson);
+            return JSON.stringify(minicartJson);
         },
         insertCartItems: function(data) {
             self = this;
@@ -108,14 +122,10 @@
 
                 self.updateItems(data);
 
-                $('.carrinhoCompras, .linkCart, .vtexsc-cart').mouseenter(function() {
-                    $('.vtexsc-cart').slideDown();
-                    clearTimeout(self.options.timeoutToHide);
+                $('.vtexsc-cart').mouseenter(function() {
+                    $('body').trigger('miniCartMouseEnter');
                 }).mouseleave(function() {
-                    clearTimeout(self.options.timeoutToHide);
-                    self.options.timeoutToHide = setTimeout(function() {
-                        $('.vtexsc-cart').slideUp();
-                    }, 800);
+                    $('body').trigger('miniCartMouseLeave');
                 });
             }
         },
@@ -169,9 +179,10 @@
                         contentType: 'application/json; charset=utf-8',
                         type: 'POST'
                     });
-                    promise.done(function(data) {
+                    promise.success(function(data) {
                         self.changeCartValues(data);
                         self.updateItems(data);
+                        $('body').trigger('cartUpdate');
                     });
                     promise.fail(function(jqXHR, textStatus, errorThrown) {
                         console.log('Error Message: '+textStatus);
