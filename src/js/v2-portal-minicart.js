@@ -224,7 +224,3 @@
 
 })( jQuery, window, document );
 $('.header').vtexCartItems();
-
-$('body')on("cartItems", function(event){
-  alert($(this).text());
-});
