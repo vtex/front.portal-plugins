@@ -43,7 +43,12 @@ $.fn.skuSelector.defaults =
 		price: (template) -> $('.skuselector-price', template)
 		warning: (template) -> $('.skuselector-warning', template)
 		itemDimensionListItem: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName), template)
-		itemDimensionInputEnabled: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input:not(.item_unavaliable)', template)
+		itemDimensionInputEnabled: (dimensionName, template) ->
+			inp = $('.item-dimension-' + sanitize(dimensionName) + ' input:not(.item_unavaliable)', template)
+			if inp.length > 0
+				return inp
+			else
+				return $('.item-dimension-' + sanitize(dimensionName) + ' input', template)
 
 	updateBuyButtonURL: (url, template)->
 		$('.skuselector-buy-btn', template).attr('href', url)
@@ -163,10 +168,8 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 	if options.selectFirstAvailableOnStart
 		for dimension in dimensions
 			dim = options.selectors.itemDimensionInputEnabled(dimension, $template)
-
 			if dim.length > 0
 				$(dim[0]).attr('checked', 'checked').change()
-
 	return $template
 
 #
@@ -174,7 +177,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 #
 
 updatePrice = (sku, options, template) ->
-	if sku.available
+	if sku and sku.available
 		listPrice = formatCurrency sku.listPrice
 		price = formatCurrency sku.bestPrice
 		installments = sku.installments
