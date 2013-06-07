@@ -3,7 +3,7 @@
   pluginName = 'vtexTotalizers'
   defaults = {
     # scriptId: '#vtex-totalizers'
-    scriptId: '#container'
+    scriptId: '#vtex-totalizers'
   }
 
   class vtexTotalizers
