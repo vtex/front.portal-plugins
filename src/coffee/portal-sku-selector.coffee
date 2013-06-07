@@ -37,8 +37,8 @@ $.fn.skuSelector.defaults =
 	addSkuToCartPreventDefault: true
 	buyButtonSelector: ''
 	selectors:
-		listPriceValue: (template) -> $('.skuselector-list-price value', template)
-		bestPriceValue: (template) -> $('.skuselector-best-price value', template)
+		listPriceValue: (template) -> $('.skuselector-list-price .value', template).add('.skuListPrice')
+		bestPriceValue: (template) -> $('.skuselector-best-price .value', template).add('.skuBestPrice')
 		installment: (template) -> $('.skuselector-installment', template)
 		price: (template) -> $('.skuselector-price', template)
 		warning: (template) -> $('.skuselector-warning', template)
@@ -118,9 +118,9 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 		dimensionValue = $(this).attr('data-value')
 
 		# Limpa classe de selecionado para todos dessa dimensao
-		options.selectors.itemDimensionListItem(dimensionName, $template).removeClass('checked')
+		options.selectors.itemDimensionListItem(dimensionName, $template).removeClass('checked sku-picked')
 		# Adiciona classe de selecionado para seu label
-		$(this).parent().addClass('checked')
+		$(this).parent().addClass('checked sku-picked')
 	
 		console.log 'Change dimension!', dimensionName, dimensionValue
 		selectedDimensionsMap[dimensionName] = dimensionValue
@@ -150,7 +150,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 
 			updatePrice(selectedSkuObj, options, $template)
 		else
-			$('.skuselector-price', $template).fadeOut()
+			options.selectors.price.fadeOut()
 
 	# Binds handlers
 	console.log 'bind: ' + '.input-' + sanitize(dimension) for dimension in dimensions
@@ -171,17 +171,28 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 #
 
 updatePrice = (sku, options, template) ->
-	listPrice = formatCurrency sku.listPrice
-	price = formatCurrency sku.bestPrice
-	installments = sku.installments
-	installmentValue = formatCurrency sku.installmentsValue
+	if sku
+		listPrice = formatCurrency sku.listPrice
+		price = formatCurrency sku.bestPrice
+		installments = sku.installments
+		installmentValue = formatCurrency sku.installmentsValue
 
-	# Modifica href do botão comprar
-	options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
-	options.selectors.listPriceValue(template).text('R$ ' + listPrice)
-	options.selectors.bestPriceValue(template).text('R$ ' + price)
-	options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
-	options.selectors.price(template).fadeIn()
+		# Modifica href do botão comprar
+		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
+		options.selectors.listPriceValue(template).text('R$ ' + listPrice)
+		options.selectors.bestPriceValue(template).text('R$ ' + price)
+		options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
+		options.selectors.price(template).fadeIn()
+		$('.descricao-preco, .buy-button').fadeIn();
+		$('.notifyme').hide();
+	else
+		# Modifica href do botão comprar
+		options.updateBuyButtonURL('javascript:void(0);', template)
+		options.selectors.price(template).hide()
+		$('.notifyme-skuid').val()
+		$('.descricao-preco, .buy-button').hide();
+		$('.notifyme').fadeIn();
+
 
 # Sanitizes text - "Caçoá (teste 2)" becomes "cacoateste2"
 sanitize = (str = this) ->
@@ -279,11 +290,12 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 	# Second, disable all options in this row
 
 	# Add disabled class and matching attr disabled
-	$('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"]', $template).attr('disabled',	'disabled')
-	$('.dimension-' + sanitize(firstUndefinedDimensionName) + ' label', $template).addClass('disabled')
+	# $('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"]', $template).attr('disabled', 'disabled')
+	$('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"]', $template).addClass('item_unavaliable')
+	$('label.dimension-' + sanitize(firstUndefinedDimensionName), $template).addClass('disabled item_unavaliable')
 	# Remove checked class and matching removeAttr checked
 	$('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"]', $template).removeAttr('checked')
-	$('.dimension-' + sanitize(firstUndefinedDimensionName) + ' label', $template).removeClass('checked')
+	$('label.dimension-' + sanitize(firstUndefinedDimensionName), $template).removeClass('checked sku-picked')
 
 	# Third, enable all selectable options in this row
 	for value in uniqueDimensionsMap[firstUndefinedDimensionName]
@@ -294,14 +306,16 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 			if skuDimensionValue is value and sku.available
 				$value = $('input[dimension="' + sanitize(firstUndefinedDimensionName) + '"][value="' + sanitize(value) + '"]',
 					$template)
-				$value.removeAttr('disabled')
+				# $value.removeAttr('disabled')
+				$value.removeClass('item_unavaliable')
 				# Remove disabled class, matching removeAttr disabled
-				$('label[for="' + $value.attr('id') + '"]', $template).removeClass('disabled')
+				$('label[for="' + $value.attr('id') + '"]', $template).removeClass('disabled item_unavaliable')
 
 	# Fourth, disable next dimensions
 	for dimension in undefinedDimensions[1..]
 		$('input[dimension="' + sanitize(dimension) + '"]', $template).each ->
-			$(this).attr('disabled', 'disabled')
-			$('.dimension-' + sanitize(dimension) + ' label', $template).addClass('disabled')
+			# $(this).attr('disabled', 'disabled')
+			$(this).addClass('item_unavaliable')
+			$('label.dimension-' + sanitize(dimension), $template).addClass('disabled item_unavaliable')
 			$(this).removeAttr('checked')
-			$('.dimension-' + sanitize(dimension) + ' label', $template).removeClass('checked')
+			$('label.dimension-' + sanitize(dimension), $template).removeClass('checked sku-picked')
