@@ -34,9 +34,9 @@ $(window).ready ->
 mainTemplate = """{{dimensionLists}}"""
 
 dimensionListTemplate = """
-	<ul class="topic {{dimensionSanitized}} item-dimension-{{dimensionSanitized}}">
+	<ul class="topic {{dimensionSanitized}}">
 		<li class="specification">{{dimension}}</li>
-		<li class="select skuList">
+		<li class="select skuList item-dimension-{{dimensionSanitized}}">
 			<span class="group_{{dimensionIndex}}">
 				{{skuList}}
 			</span>
