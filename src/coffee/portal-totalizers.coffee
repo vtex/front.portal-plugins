@@ -2,8 +2,8 @@
 
   pluginName = 'vtexTotalizers'
   defaults = {
-    scriptId: '#vtex-totalizers'
-    # scriptId: '#barra_flutuante'
+    # scriptId: '#vtex-totalizers'
+    scriptId: '#container'
   }
 
   class vtexTotalizers
@@ -20,24 +20,22 @@
 
       template = """
       <div class="amount-items-in-cart amount-items-in-cart-loading">
-        <div class="ajax-content-loader">
-          <div class="cartInfoWrapper">
-            <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
-            <ul class="cart-info">
-              <li class="amount-products">
-                <strong><span id="MostraTextoXml2">Total de Produtos:</span></strong> <em class="amount-products-em">0</em>
-              </li>
-              <li class="amount-items">
-                <strong><span id="MostraTextoXml3">Itens:</span></strong> <em class="amount-items-em">0</em>
-              </li>
-              <li class="amount-kits">
-                <strong><span id="MostraTextoXml4">Total de Kits:</span></strong> <em class="amount-kits-em">0</em>
-              </li>
-              <li class="total-cart">
-                <strong><span id="MostraTextoXml5">Valor Total:</span></strong> R$ <em class="total-cart-em">0,00</em>
-              </li>
-            </ul>
-          </div>
+        <div class="cartInfoWrapper">
+          <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
+          <ul class="cart-info">
+            <li class="amount-products">
+              <strong><span id="MostraTextoXml2">Total de Produtos:</span></strong> <em class="amount-products-em">0</em>
+            </li>
+            <li class="amount-items">
+              <strong><span id="MostraTextoXml3">Itens:</span></strong> <em class="amount-items-em">0</em>
+            </li>
+            <li class="amount-kits">
+              <strong><span id="MostraTextoXml4">Total de Kits:</span></strong> <em class="amount-kits-em">0</em>
+            </li>
+            <li class="total-cart">
+              <strong><span id="MostraTextoXml5">Valor Total:</span></strong> R$ <em class="total-cart-em">0,00</em>
+            </li>
+          </ul>
         </div>
       </div>
       """
@@ -53,11 +51,17 @@
 
       $('body').on 'cartUpdate', ->
         self.getCartData()
+        return
 
       $('.amount-items-in-cart').mouseenter ->
         $('body').trigger 'miniCartMouseEnter'
+        return
+
       $('.amount-items-in-cart').mouseleave ->
         $('body').trigger 'miniCartMouseLeave'
+        return
+
+      return
 
     formatCurrency: (value) ->
       if value is '' or not value? or isNaN value
@@ -81,6 +85,7 @@
 
       promise.done (data) ->
         $('.amount-items-in-cart').removeClass 'amount-items-in-cart-loading'
+        return
 
       # data = totalizersJson
       promise.success (data) ->
@@ -92,17 +97,23 @@
         self.selectors.amountProducts.html amountProducts
         self.selectors.amountItems.html amountItems
         self.selectors.totalCart.html totalCart
+        return
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
         console.log 'Error Message: ' + textStatus;
         console.log 'HTTP Error: ' + errorThrown;
+        return
 
-  # A really lightweight plugin wrapper around the constructor,
-  # preventing against multiple instantiations
+      return
+
   $.fn[pluginName] = (options) ->
     @each ->
       if !$.data(this, "plugin_#{pluginName}")
         $.data(@, "plugin_#{pluginName}", new vtexTotalizers(@, options))
+      return
+    return
+
+  return
 
 )( jQuery, window, document )
 
