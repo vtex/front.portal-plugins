@@ -27,8 +27,8 @@ $(window).ready ->
 	$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
 		console.log 'Selected:', sku, selectedDimension
 		window.FireSkuChangeImage?(sku.sku)
-		#window.FireSkuDataReceived?(sku.sku)
-		#window.FireSkuSelectionChanged?(sku.sku)
+		window.FireSkuDataReceived?(sku.sku)
+		window.FireSkuSelectionChanged?(sku.sku)
 
 mainTemplate = """{{dimensionLists}}"""
 
