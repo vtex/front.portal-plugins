@@ -21,9 +21,9 @@
 	],
 	"mapping": true,
 	"mappings": {
-	    ".*arquivos/v2-portal-sku-selector.js.*":"build/js/portal-totalizers.js",
 		".*arquivos/v2-vtex-product-sku-selector.css.*":"build/nada.css",
-	    ".*arquivos/v2-portal-sku-selector-init.js.*":"build/js/portal-sku-selector-product.jss",
-	    ".*arquivos/v2-portal-sku-selector-init-pro.*":"build/js/portal-sku-selector-product.jss"
+	    ".*arquivos/v2-portal-sku-selector.js.*":"build/js/portal-sku-selector.js",
+	    ".*arquivos/v2-portal-sku-selector-init.js.*":"build/js/portal-sku-selector-product.js",
+	    ".*arquivos/v2-portal-sku-selector-init-pro.*":"build/js/portal-sku-selector-product.js"
 	}
 }

@@ -130,6 +130,8 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 			selectableSkus(skus, selectedDimensionsMap),
 			$template)
 		selectedSkuObj = selectedSku(skus, selectedDimensionsMap)
+		console.log selectedSkuObj
+
 		undefinedDimensions = findUndefinedDimensions(selectedDimensionsMap)
 
 		# Trigger event for interested scripts
@@ -142,6 +144,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 					$(dim[0]).attr('checked', 'checked').change()
 
 			updatePrice(selectedSkuObj, options, $template)
+
 		# Só existe uma possibilidade na próxima dimensão - vamos escolhê-la.
 		else if selectedSkuObj and undefinedDimensions.length <= 1
 			if undefinedDimensions.length is 1
@@ -171,7 +174,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 #
 
 updatePrice = (sku, options, template) ->
-	if sku
+	if sku.available
 		listPrice = formatCurrency sku.listPrice
 		price = formatCurrency sku.bestPrice
 		installments = sku.installments
@@ -179,19 +182,14 @@ updatePrice = (sku, options, template) ->
 
 		# Modifica href do botão comprar
 		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
-		options.selectors.listPriceValue(template).text('R$ ' + listPrice)
-		options.selectors.bestPriceValue(template).text('R$ ' + price)
-		options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
-		options.selectors.price(template).fadeIn()
-		$('.descricao-preco, .buy-button').fadeIn();
-		$('.notifyme').hide();
+		# options.selectors.listPriceValue(template).text('R$ ' + listPrice)
+		# options.selectors.bestPriceValue(template).text('R$ ' + price)
+		# options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
 	else
 		# Modifica href do botão comprar
 		options.updateBuyButtonURL('javascript:void(0);', template)
 		options.selectors.price(template).hide()
-		$('.notifyme-skuid').val()
-		$('.descricao-preco, .buy-button').hide();
-		$('.notifyme').fadeIn();
+		# $('.notifyme-skuid').val()
 
 
 # Sanitizes text - "Caçoá (teste 2)" becomes "cacoateste2"
@@ -248,7 +246,8 @@ selectableSkus = (skus, selectedDimensionsMap) ->
 			if skuDimensionValue isnt dimensionValue
 				match = false
 				continue
-		selectableArray.splice(i, 1) unless match and sku.available
+		selectableArray.splice(i, 1) unless match
+		# selectableArray.splice(i, 1) unless match and sku.available
 	return selectableArray
 
 selectedSku = (skus, selectedDimensionsMap) ->
