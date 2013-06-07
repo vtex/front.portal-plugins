@@ -201,10 +201,11 @@ sanitize = (str = this) ->
 	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczz"
 	regex = new RegExp '[' + specialChars + ']', 'g'
 	str += ""
-	return str.replace(regex, (char) ->
+	sanitized = str.replace(regex, (char) ->
 		plain.charAt (specialChars.indexOf char))
 		.replace(/\s/g, '').replace(/\(|\)|\'|\"/g, '')
 		.toLowerCase()
+	return sanitized.charAt(0).toUpperCase() + sanitized.slice(1)
 
 # Format currency to brazilian reais
 formatCurrency = (value) ->

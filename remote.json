@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "meuamigopet.vtexcommercebeta.com.br",
+		"host": "develop-electrolux.vtexcommercebeta.com.br",
 		"port": 80
 	},
 	"proxy": {
-		"host": "meuamigopet.vtexlocal.com.br",
+		"host": "electrolux.vtexlocal.com.br",
 		"port": 80
 	},
 	"server": {
@@ -22,8 +22,8 @@
 	"mapping": true,
 	"mappings": {
 		".*arquivos/v2-vtex-product-sku-selector.css.*":"build/nada.css",
-	    ".*arquivos/v2-portal-sku-selector.js.*":"build/js/portal-sku-selector.js",
-	    ".*arquivos/v2-portal-sku-selector-init.js.*":"build/js/portal-sku-selector-product.js",
-	    ".*arquivos/v2-portal-sku-selector-init-pro.*":"build/js/portal-sku-selector-product.js"
+	    ".*arquivos/portal-sku-selector.js.*":"build/js/portal-sku-selector.js",
+	    ".*Scripts/prettyPhoto/js/jquery.prettyPhoto.js.*":"build/js/portal-sku-selector.js",
+	    ".*Scripts/prettyPhoto/js/lean-prettyPhoto.js.*":"build/js/portal-sku-selector-product.js"
 	}
 }
