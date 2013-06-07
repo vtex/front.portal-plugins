@@ -5,6 +5,7 @@ skuVariationsDoneHandler = (options, json) ->
 		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options)
 		$.skuSelector.$placeholder.html(skuSelector)
 		$.skuSelector.$placeholder.fadeIn()
+		$('body').trigger('skuSelectorReady')
 
 addSkuToCart = (sku) ->  true
 
@@ -33,7 +34,7 @@ $(window).ready ->
 mainTemplate = """{{dimensionLists}}"""
 
 dimensionListTemplate = """
-	<ul class="topic {{dimensionSanitized}}">
+	<ul class="topic {{dimensionSanitized}} item-dimension-{{dimensionSanitized}}">
 		<li class="specification">{{dimension}}</li>
 		<li class="select skuList">
 			<span class="group_{{dimensionIndex}}">

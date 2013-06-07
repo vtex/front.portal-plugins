@@ -43,7 +43,7 @@ $.fn.skuSelector.defaults =
 		price: (template) -> $('.skuselector-price', template)
 		warning: (template) -> $('.skuselector-warning', template)
 		itemDimensionListItem: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName), template)
-		itemDimensionInputEnabled: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input:enabled', template)
+		itemDimensionInputEnabled: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input:not(.item_unavaliable)', template)
 
 	updateBuyButtonURL: (url, template)->
 		$('.skuselector-buy-btn', template).attr('href', url)
@@ -130,8 +130,6 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 			selectableSkus(skus, selectedDimensionsMap),
 			$template)
 		selectedSkuObj = selectedSku(skus, selectedDimensionsMap)
-		console.log selectedSkuObj
-
 		undefinedDimensions = findUndefinedDimensions(selectedDimensionsMap)
 
 		# Trigger event for interested scripts
@@ -140,6 +138,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 		if options.selectFirstAvailableDimensions
 			for dimension in undefinedDimensions
 				dim = options.selectors.itemDimensionInputEnabled(dimension, $template)
+
 				if dim.length > 0
 					$(dim[0]).attr('checked', 'checked').change()
 
@@ -164,6 +163,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 	if options.selectFirstAvailableOnStart
 		for dimension in dimensions
 			dim = options.selectors.itemDimensionInputEnabled(dimension, $template)
+
 			if dim.length > 0
 				$(dim[0]).attr('checked', 'checked').change()
 
