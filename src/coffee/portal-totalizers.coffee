@@ -1,10 +1,7 @@
 (($, window, document) ->
 
   pluginName = 'vtexTotalizers'
-  defaults = {
-    # scriptId: '#vtex-totalizers'
-    scriptId: '#vtex-totalizers'
-  }
+  defaults = {}
 
   class vtexTotalizers
     constructor: (@element, options) ->
@@ -18,7 +15,7 @@
     init: ->
       self = this
 
-      template = """
+      template = $ """
       <div class="amount-items-in-cart amount-items-in-cart-loading">
         <div class="cartInfoWrapper">
           <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
@@ -39,13 +36,16 @@
         </div>
       </div>
       """
-      $(self.options.scriptId).after template
 
       self.selectors = {
-        amountProducts: $('.amount-products-em')
-        amountItems: $('.amount-items-em')
-        totalCart: $('.total-cart-em')
+        amountProducts: $('.amount-products-em', template)
+        amountItems: $('.amount-items-em', template)
+        totalCart: $('.total-cart-em', template)
       }
+
+      $(self.element)
+        .removeAttr('id')
+        .after template
 
       self.getCartData()
 
@@ -106,15 +106,15 @@
 
       return
 
-  $.fn[pluginName] = (options) ->
-    @each ->
-      if !$.data(this, "plugin_#{pluginName}")
-        $.data(@, "plugin_#{pluginName}", new vtexTotalizers(@, options))
+    $.fn[pluginName] = (options) ->
+      @each ->
+        if !$.data(this, "plugin_#{pluginName}")
+          $.data(@, "plugin_#{pluginName}", new vtexTotalizers(@, options))
+        return
       return
-    return
 
   return
 
 )( jQuery, window, document )
 
-$('body').vtexTotalizers()
+$ -> $('script#vtex-totalizers').vtexTotalizers()
