@@ -203,7 +203,9 @@ sanitize = (str = this) ->
 	str += ""
 	sanitized = str.replace(regex, (char) ->
 		plain.charAt (specialChars.indexOf char))
-		.replace(/\s/g, '').replace(/\(|\)|\'|\"/g, '')
+		.replace(/\s/g, '')
+		.replace(/\//g, '-')
+		.replace(/\(|\)|\'|\"/g, '')
 		.toLowerCase()
 	return sanitized.charAt(0).toUpperCase() + sanitized.slice(1)
 
