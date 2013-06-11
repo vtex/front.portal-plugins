@@ -9,10 +9,12 @@ skuVariationsDoneHandler = (options, json) ->
 
 addSkuToCart = (sku) ->  true
 
-$(".skuTamanho").html('').hide().addClass('sku-selector-container');
+$(".skuTamanho:last").after('<div class="sku-selector-container" />');
+$(".skuTamanho:last").remove();
 
 $(window).ready ->
-	$(".skuTamanho").html('').hide().addClass('sku-selector-container');
+	$(".skuTamanho:last").after('<div class="sku-selector-container" />');
+	$(".skuTamanho:last").remove();
 
 	productId = $('#___rc-p-id').val()
 	$(".sku-selector-container").skuSelector

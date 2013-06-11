@@ -53,58 +53,54 @@ bindClickHandlers = (className) ->
 	$elements.click buyButtonClickHandler
 
 mainTemplate = """
-	<div class="vtex-plugin skuselector">
-		<a href="javascript:void(0);" title="Fechar" class="skuselector-close">Fechar</a>
-		<div class="skuselector-content">
-			<div class="skuselector-title">Selecione a variação do produto:</div>
-			<p class="skuselector-product-name">{{productName}}</p>
-			<p class="skuselector-product-unavailable" style="display: none">
-				Produto indisponível
-			</p>
-			<div class="skuselector-price" style="display:none;">
-				<p class="skuselector-list-price">
-					<span class="text">De: </span>
-					<span class="value"></span>
-				</p>
-				<p class="skuselector-best-price">
-					<span class="text">Por: </span>
-					<span class="value"></span>
-				</p>
-				<p class="skuselector-installment"></p>
-			</div>
-			<div class="skuselector-sku">
-				<p class="skuselector-image">
-					<img src="{{image}}" width="160" height="160" alt="{{productAlt}}" />
-				</p>
-				<div class="skuselector-dimensions">
-					{{dimensionLists}}
+	<div class="boxPopUp2-wrap">
+		<span class="boxPopUp2-close boxPopUp2-clickActive sku-selector-sku"></span>
+		<div class="boxPopUp2-content vtexsm-popupContent freeContentPopup" style="position: fixed;">
+			<div class="skuWrap_ freeContent vtexsc-selectSku">
+				<div class="selectSkuTitle">
+					Selecione a variação do produto
 				</div>
-				<p class="skuselector-warning"></p>
-			</div>
-			<div class="skuselector-buy-btn-wrap">
-				<a href="javascript:void(0);" class="skuselector-buy-btn btn btn-success btn-large">Comprar</a>
+				<div class="vtexsm-prodTitle">{{productName}}</div>
+				<p class="skuselector-product-unavailable" style="display: none">Produto indisponível</p>
+				<div class="vtexsc-skusWrap">
+					<div class="vtexsc-skuProductImage">
+						<img src="{{image}}" width="160" height="160" alt="{{productAlt}}" />
+					</div>
+					<div class="skuListWrap_">
+						{{dimensionLists}}
+					</div>
+					<div class="vtexsc-skuProductPrice skuselector-price">
+						<div class="regularPrice skuselector-list-price">
+							De: <span class="value"></span>
+						</div>
+						<div class="newPrice skuselector-best-price">
+							Por: <span class="value"></span>
+						</div>
+						<div class="installment"></div>
+					</div>
+				</div>
+				<p class="skuselector-warning" style="display: none;"></p>
+				<div class="vtexsc-buttonWrap clearfix skuselector-buy-btn-wrap">
+					<a href="#" class="vtexsc-buyButton skuselector-buy-btn"></a>
+				</div>
 			</div>
 		</div>
 	</div>
 	"""
 
 dimensionListTemplate = """
-	<div class="dimension dimension-{{dimensionIndex}} dimension-{{dimensionSanitized}}">
-		<p class="skuselector-specification">
-			{{dimension}}
-		</p>
-		<ul class="skuselector-sepecification-list unstyled">
-			{{skuList}}
-		</ul>
-	</div>
+	<ul class="topic {{dimensionSanitized}} item-dimension-{{dimensionSanitized}}">
+		<li class="specification">{{dimension}}</li>
+		<li class="select skuList">
+			<span class="group_{{dimensionIndex}}">{{skuList}}</span>
+		</li>
+	</ul>
 	"""
 
 skuDimensionTemplate = """
-	<li class="skuselector-specification-item item-dimension-{{dimensionSanitized}} item-spec-{{index}} item-dimension-{{dimensionSanitized}}-spec-{{index}}">
-		<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
-			class="skuselector-specification-label input-dimension-{{dimensionSanitized}}" id="dimension-{{dimensionSanitized}}-spec-{{index}}" value="{{valueSanitized}}">
-		<label for="dimension-{{dimensionSanitized}}-spec-{{index}}" class="dimension-{{dimensionSanitized}}">{{value}}</label>
-	</li>
+	<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
+		class="skuselector-specification-label input-dimension-{{dimensionSanitized}} sku-selector skuespec_{{valueSanitized}} change-image" id="espec_{{dimensionIndex}}_opcao_{{index}}" value="{{valueSanitized}}" specification="{{valueSanitized}}">
+	<label for="espec_{{dimensionIndex}}_opcao_{{index}}" class="dimension-{{dimensionSanitized}} espec_{{dimensionIndex}} skuespec_{{valueSanitized}}">{{value}}</label>
 	"""
 
 #
@@ -148,8 +144,8 @@ $.skuSelectorPopup = (options = {}) ->
 	return $.skuSelector.$placeholder
 
 $.skuSelectorPopup.defaults =
-	popupTemplate: '<div style="display: none; position:fixed"></div>'
-	overlayTemplate: '<div></div>'
+	popupTemplate: '<div class="boxPopUp2 vtexsm-popupContent freeContentMain popupOpened" style="display: none;"></div>'
+	overlayTemplate: '<div class="boxPopUp2-overlay boxPopUp2-clickActive"></div>'
 	overlayId: 'sku-selector-overlay'
 	overlayClass: undefined
 	popupId: 'sku-selector-popup'

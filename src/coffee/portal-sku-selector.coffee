@@ -185,9 +185,10 @@ updatePrice = (sku, options, template) ->
 
 		# Modifica href do botão comprar
 		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
-		# options.selectors.listPriceValue(template).text('R$ ' + listPrice)
-		# options.selectors.bestPriceValue(template).text('R$ ' + price)
-		# options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
+		options.selectors.price(template).show()
+		options.selectors.listPriceValue(template).text('R$ ' + listPrice)
+		options.selectors.bestPriceValue(template).text('R$ ' + price)
+		options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
 	else
 		# Modifica href do botão comprar
 		options.updateBuyButtonURL('javascript:void(0);', template)
