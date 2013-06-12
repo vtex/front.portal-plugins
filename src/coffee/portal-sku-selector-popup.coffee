@@ -152,7 +152,7 @@ $.skuSelectorPopup.defaults =
 	popupClass: 'sku-selector'
 
 $(window).ready ->
-	$.skuSelectorPopup() if $("meta[name=vtex-version]").length > 0
+	$.skuSelectorPopup()
 
 $(document).ajaxStop ->
-	bindClickHandlers "btn-add-sku" if $("meta[name=vtex-version]").length > 0
+	bindClickHandlers "btn-add-sku"
