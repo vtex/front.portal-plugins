@@ -10,11 +10,11 @@ skuVariationsDoneHandler = (options, json) ->
 addSkuToCart = (sku) ->  true
 
 ref = $('.product-sku-selector-ref');
-
 ref.after('<div class="sku-selector-container" />');
 ref.remove();
 
 $(window).ready ->
+	ref = $('.product-sku-selector-ref');
 	ref.after('<div class="sku-selector-container" />');
 	ref.remove();
 
