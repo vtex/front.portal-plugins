@@ -17,7 +17,7 @@ addSkuToCart = (sku) ->
 	console.log 'Adding SKU to cart:', sku
 	promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, false)
 	promise.done (data) ->
-		vtexMinicartShowMinicart() if window.vtexMinicartShowMinicart
+		$(window).trigger 'cartUpdated'
 		console.log 'Item adicionado com sucesso', sku, data
 	promise.fail (jqXHR, status) ->
 		console.log jqXHR?.status, status

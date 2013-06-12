@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "develop-meuamigopet.vtexcommercebeta.com.br",
+		"host": "177.72.244.129",
 		"port": 80
 	},
 	"proxy": {
-		"host": "meuamigopet.vtexlocal.com.br",
+		"host": "vtex-io.s3.amazonaws.com",
 		"port": 80
 	},
 	"server": {
@@ -20,7 +20,8 @@
 	],
 	"mapping": true,
 	"mappings": {
-	    ".*vtex.commerce.search.js": "build/js/portal-sku-selector-popup.min.js",
-	    ".*v2-portal-sku-selector.css": "do-not-show"
+	    ".*portal-totalizers.js.*": "build/js/portal-totalizers.js",
+	    ".*portal-minicart.js.*": "build/js/portal-minicart.js",
+	    ".*portal-sku-selector-product.min.js.*": "build/js/portal-sku-selector.min.js"
 	}
 }

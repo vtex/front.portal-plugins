@@ -1,7 +1,6 @@
 ;(function ( $, window, document, undefined ) {
     var pluginName = "vtexCartItems",
         defaults = {
-            scriptId: '#vtex-minicart',
             orderFormId: 0,
             timeoutToHide: 0,
         };
@@ -20,15 +19,21 @@
 
         init: function() {
             this.getData(true);
-            $('body').on('miniCartMouseEnter',function() {
+            $(window).on('miniCartMouseOver',function() {
                 $('.vtexsc-cart').slideDown();
                 clearTimeout(self.options.timeoutToHide);
             });
-            $('body').on('miniCartMouseLeave',function() {
+            $(window).on('miniCartMouseOut',function() {
                 clearTimeout(self.options.timeoutToHide);
                 self.options.timeoutToHide = setTimeout(function() {
-                    $('.vtexsc-cart').slideUp();
+                    $('.vtexsc-cart').stop(true, true).slideUp();
                 }, 800);
+            });
+            $(window).on('cartUpdated',function() {
+                $('.vtexsc-cart').slideDown();
+                self.options.timeoutToHide = setTimeout(function() {
+                    $('.vtexsc-cart').stop(true, true).slideUp();
+                }, 2000);
             });
         },
 
@@ -100,14 +105,14 @@
                         <div class="vtexsc-bb"></div>\
                     </div>';
 
-                $(self.options.scriptId).after(miniCart);
+                $(self.element).after(miniCart);
 
                 self.updateItems(data);
 
-                $('.vtexsc-cart').mouseenter(function() {
-                    $('body').trigger('miniCartMouseEnter');
-                }).mouseleave(function() {
-                    $('body').trigger('miniCartMouseLeave');
+                $('.vtexsc-cart').mouseover(function() {
+                    $(window).trigger('miniCartMouseOver');
+                }).mouseout(function() {
+                    $(window).trigger('miniCartMouseOut');
                 });
             }
         },
@@ -166,7 +171,7 @@
                     promise.success(function(data) {
                         self.changeCartValues(data);
                         self.updateItems(data);
-                        $('body').trigger('cartUpdate');
+                        $(window).trigger('cartUpdated');
                     });
                     promise.fail(function(jqXHR, textStatus, errorThrown) {
                         console.log('Error Message: '+textStatus);
@@ -218,4 +223,4 @@
     };
 
 })( jQuery, window, document );
-$('body').vtexCartItems();
+$('script#vtex-minicart').vtexCartItems();

@@ -49,16 +49,16 @@
 
       self.getCartData()
 
-      $('body').on 'cartUpdate', ->
+      $(window).on 'cartUpdated', ->
         self.getCartData()
         return
 
-      $('.amount-items-in-cart').mouseenter ->
-        $('body').trigger 'miniCartMouseEnter'
+      $('.amount-items-in-cart, .show-minicart-on-hover').mouseover ->
+        $(window).trigger 'miniCartMouseOver'
         return
 
-      $('.amount-items-in-cart').mouseleave ->
-        $('body').trigger 'miniCartMouseLeave'
+      $('.amount-items-in-cart, .show-minicart-on-hover').mouseout ->
+        $(window).trigger 'miniCartMouseOut'
         return
 
       return
