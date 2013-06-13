@@ -1,19 +1,19 @@
 # Called when we receive the json to render.
-skuVariationsDoneHandler = (options, json) ->
-	$.skuSelector.$placeholder.removeClass('sku-selector-loading')
+skuVariationsDoneHandler = ($el, options, json) ->
+	$el.removeClass('sku-selector-loading')
 	# If this item doesn't have variations, add it to the cart directly.
 	if json.dimensions.length == 0
-		return options.addSkuToCart json.skus[0].sku
+		return options.addSkuToCart json.skus[0].sku, $el
 	else
 		# Render the sku selector, passing the options with templates
-		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options)
-		$.skuSelector.$placeholder.html(skuSelector)
-		$.skuSelector.$placeholder.showPopup?()
+		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options, $el)
+		$el.html(skuSelector)
+		$el.showPopup?()
 
 # Adds a given sku to the cart. On success, shows the mini-cart
 # On failure, redirects the user to the cart.
-addSkuToCart = (sku) ->
-	$.skuSelector.$placeholder.hidePopup?()
+addSkuToCart = (sku, $el) ->
+	$el.hidePopup?()
 	console.log 'Adding SKU to cart:', sku
 	promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, false)
 	promise.done (data) ->
@@ -27,11 +27,11 @@ addSkuToCart = (sku) ->
 
 # A sample buy button click handler
 # You can use it as a default with the popup flavor of the sku selector.
-buyButtonClickHandler = (event) ->
+buyButtonClickHandler = (event, $el) ->
 	event.preventDefault()
 	id = $(event.target).parents('li').find('h2').next().attr('id').replace('rating-produto-', '')
 	# Opens the popup
-	$.skuSelector.$placeholder.skuSelector
+	$el.skuSelector
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
 		skuVariationsDoneHandler: skuVariationsDoneHandler
 		addSkuToCart: addSkuToCart
@@ -46,11 +46,11 @@ buyButtonClickHandler = (event) ->
 # An utilitary function to bind element's with the given class.
 # The class will be removed from the element.
 # You should use a "disposable" class, such as "add-buy-button".
-bindClickHandlers = (className) ->
+bindClickHandlers = (className, $el) ->
 	$elements = $('.'+className)
 	console.log 'Binding to', $elements.length
 	$elements.removeClass className
-	$elements.click buyButtonClickHandler
+	$elements.click (e) -> buyButtonClickHandler(e, $el)
 
 mainTemplate = """
 	<div class="boxPopUp2-wrap">
@@ -116,32 +116,32 @@ $.skuSelectorPopup = (options = {}) ->
 	$.skuSelector.$overlay = $(opts.overlayTemplate)
 	$.skuSelector.$overlay.addClass(opts.overlayClass) if opts.overlayClass
 	$.skuSelector.$overlay.attr('id', opts.overlayId) if opts.overlayId
-	$.skuSelector.$placeholder = $(opts.popupTemplate)
-	$.skuSelector.$placeholder.addClass(opts.popupClass) if opts.popupClass
-	$.skuSelector.$placeholder.attr('id', opts.popupId) if opts.popupId
+	$el = $(opts.popupTemplate)
+	$el.addClass(opts.popupClass) if opts.popupClass
+	$el.attr('id', opts.popupId) if opts.popupId
 
 	$('body').append($.skuSelector.$overlay) # Adds the overlay
-	$('body').append($.skuSelector.$placeholder) # Adds the placeholder
+	$('body').append($el) # Adds the placeholder
 
 	# Adds show function
-	$.skuSelector.$placeholder.showPopup = ->
+	$el.showPopup = ->
 		$.skuSelector.$overlay?.fadeIn()
-		$.skuSelector.$placeholder?.fadeIn()
+		$el?.fadeIn()
 
 	# Adds hide function
-	$.skuSelector.$placeholder.hidePopup = ->
+	$el.hidePopup = ->
 		$.skuSelector.$overlay?.fadeOut()
-		$.skuSelector.$placeholder?.fadeOut()
+		$el?.fadeOut()
 
 	# Hide the popup on overlay click
-	$.skuSelector.$overlay.click $.skuSelector.$placeholder.hidePopup
+	$.skuSelector.$overlay.click $el.hidePopup
 
 	# Binds the exit handler
-	$.skuSelector.$placeholder.on 'click', '.skuselector-close', ->
-		$.skuSelector.$placeholder.hidePopup()
+	$el.on 'click', '.skuselector-close', ->
+		$el.hidePopup()
 		console.log 'Exiting sku selector'
 
-	return $.skuSelector.$placeholder
+	return $el
 
 $.skuSelectorPopup.defaults =
 	popupTemplate: '<div class="boxPopUp2 vtexsm-popupContent freeContentMain popupOpened" style="display: none;"></div>'
@@ -151,8 +151,10 @@ $.skuSelectorPopup.defaults =
 	popupId: 'sku-selector-popup'
 	popupClass: 'sku-selector'
 
+popup = {}
+
 $(window).ready ->
-	$.skuSelectorPopup()
+	popup = $.skuSelectorPopup()
 
 $(document).ajaxStop ->
-	bindClickHandlers "btn-add-sku"
+	bindClickHandlers "btn-add-sku", popup

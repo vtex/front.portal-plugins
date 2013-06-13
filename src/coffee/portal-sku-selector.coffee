@@ -14,9 +14,9 @@ $.skuSelector = { $placeholder: undefined }
 # $("#placeholder").skuSelector({skuVariationsPromise: promise});
 $.fn.skuSelector = (options = {}) ->
 	opts = $.extend($.fn.skuSelector.defaults, options)
-	$.skuSelector.$placeholder or= $(this)
-	$.skuSelector.$placeholder.addClass('sku-selector-loading')
-	console.log('fn.skuSelector', $.skuSelector.$placeholder, opts)
+	$el = $(this)
+	$el.addClass('sku-selector-loading')
+	console.log('fn.skuSelector', $el, opts)
 
 	unless opts.mainTemplate and opts.dimensionListTemplate and opts.skuDimensionTemplate
 		throw new Error('Required option not given.')
@@ -24,8 +24,8 @@ $.fn.skuSelector = (options = {}) ->
 	if opts.skuVariations
 		skuVariationsDoneHandler opts, opts.skuVariations
 	else if opts.skuVariationsPromise
-		opts.skuVariationsPromise.done (json) -> opts.skuVariationsDoneHandler(opts, json)
-		opts.skuVariationsPromise.fail (reason) -> opts.skuVariationsFailHandler(opts, reason)
+		opts.skuVariationsPromise.done (json) -> opts.skuVariationsDoneHandler($el, opts, json)
+		opts.skuVariationsPromise.fail (reason) -> opts.skuVariationsFailHandler($el, opts, reason)
 	else
 		console.error 'You must either provide a JSON or a Promise'
 
@@ -54,8 +54,8 @@ $.fn.skuSelector.defaults =
 		$('.skuselector-buy-btn', template).attr('href', url)
 
 	# Called when we failed to receive variations.
-	skuVariationsFailHandler: (options, reason) ->
-		$.skuSelector.$placeholder.removeClass('sku-selector-loading')
+	skuVariationsFailHandler: ($el, options, reason) ->
+		$el.removeClass('sku-selector-loading')
 		console.error(reason)
 		window.location.href = options.productUrl if options.productUrl
 
@@ -73,7 +73,7 @@ $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	protocol + '://' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
-$.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
+$.skuSelector.createSkuSelector = (name, dimensions, skus, options, $el) =>
 	# Create selected dimensions map and functions
 	selectedDimensionsMap = createDimensionsMap(dimensions)
 			
@@ -111,7 +111,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 	buyButtonHandler = (event) =>
 		sku = selectedSku(skus, selectedDimensionsMap)
 		if sku
-			return options.addSkuToCart(sku.sku)
+			return options.addSkuToCart(sku.sku, $el)
 		else
 			errorMessage = 'Por favor, escolha: ' + findUndefinedDimensions(selectedDimensionsMap)[0]
 			options.selectors.warning($template).show().text(errorMessage)
@@ -138,7 +138,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options) =>
 		undefinedDimensions = findUndefinedDimensions(selectedDimensionsMap)
 
 		# Trigger event for interested scripts
-		$.skuSelector.$placeholder.trigger 'skuSelected', [selectedSkuObj, dimensionName] if selectedSkuObj
+		$el.trigger 'skuSelected', [selectedSkuObj, dimensionName] if selectedSkuObj
 
 		if options.selectFirstAvailableDimensions
 			for dimension in undefinedDimensions

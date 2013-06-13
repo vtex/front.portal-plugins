@@ -1,10 +1,10 @@
-skuVariationsDoneHandler = (options, json) ->
-	$.skuSelector.$placeholder.removeClass('sku-selector-loading')
+skuVariationsDoneHandler = ($el, options, json) ->
+	$el.removeClass('sku-selector-loading')
 	unless json.dimensions.length is 0 and json.skus[0].available is false
 		# Render the sku selector, passing the options with templates
 		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options)
-		$.skuSelector.$placeholder.html(skuSelector)
-		$.skuSelector.$placeholder.fadeIn()
+		$el.html(skuSelector)
+		$el.fadeIn()
 		$('body').trigger('skuSelectorReady')
 
 addSkuToCart = (sku) ->  true
