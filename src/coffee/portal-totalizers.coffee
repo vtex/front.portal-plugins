@@ -112,5 +112,5 @@
 
 )( jQuery, window, document )
 
-# $ -> $('.portal-totalizers-ref').vtexTotalizers()
-$ -> $('.carrinhoCompras a').vtexTotalizers()
+$ -> $('.portal-totalizers-ref').vtexTotalizers()
+# $ -> $('.carrinhoCompras a').vtexTotalizers()
