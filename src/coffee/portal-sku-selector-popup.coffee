@@ -31,7 +31,7 @@ buyButtonClickHandler = (event, $el) ->
 	event.preventDefault()
 	id = $(event.target).data('product-id')
 	# Opens the popup
-	$el.skuSelector
+	$($el).skuSelector
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
 		skuVariationsDoneHandler: skuVariationsDoneHandler
 		addSkuToCart: addSkuToCart
