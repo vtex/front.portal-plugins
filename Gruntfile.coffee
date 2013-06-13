@@ -98,6 +98,11 @@ module.exports = (grunt) ->
 				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**/*.coffee']
 				tasks: ['dev', 'karma:unit:run']
 
+		concat:
+			dev:
+				files:
+					'build/js/portal-sku-selector-product.dev.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
+					'build/js/portal-sku-selector-popup.dev.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-popup.js']
 		uglify:
 			dev:
 				files:
@@ -120,7 +125,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'default', ['dev-watch']
 
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'less', 'uglify']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'less', 'concat']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files
