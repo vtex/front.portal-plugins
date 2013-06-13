@@ -22,6 +22,7 @@
 	"mappings": {
 	    ".*portal-totalizers.js.*": "build/js/portal-totalizers.js",
 	    ".*portal-minicart.js.*": "build/js/portal-minicart.js",
-	    ".*portal-sku-selector-product.min.js.*": "build/js/portal-sku-selector.min.js"
+	    ".*portal-sku-selector-product.min.js.*": "build/js/portal-sku-selector-product.min.js",
+	    ".*portal-sku-selector-popup.min.js.*": "build/js/portal-sku-selector-popup.min.js"
 	}
 }

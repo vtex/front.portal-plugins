@@ -101,7 +101,7 @@ module.exports = (grunt) ->
 		uglify:
 			dev:
 				files:
-					'build/js/portal-sku-selector.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
+					'build/js/portal-sku-selector-product.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
 					'build/js/portal-sku-selector-popup.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-popup.js']
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
