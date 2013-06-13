@@ -1,7 +1,9 @@
 (($, window, document) ->
 
   pluginName = 'vtexTotalizers'
-  defaults = {}
+  defaults = {
+    template: null
+  }
 
   class vtexTotalizers
     constructor: (@element, options) ->
@@ -15,7 +17,7 @@
     init: ->
       self = this
 
-      template = $ """
+      self.options.$template = $ """
       <div class="amount-items-in-cart amount-items-in-cart-loading">
         <div class="cartInfoWrapper">
           <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
@@ -37,31 +39,24 @@
       </div>
       """
 
-      self.selectors = {
-        amountProducts: $('.amount-products-em', template)
-        amountItems: $('.amount-items-em', template)
-        totalCart: $('.total-cart-em', template)
-      }
+      $(self.element).after self.options.$template
 
-      $(self.element)
-        .removeAttr('id')
-        .after template
+      self.selectors = {
+        amountProducts: $('.amount-products-em', self.options.$template)
+        amountItems: $('.amount-items-em', self.options.$template)
+        totalCart: $('.total-cart-em', self.options.$template)
+      }
 
       self.getCartData()
 
       $(window).on 'cartUpdated', ->
         self.getCartData()
-        return
 
       $('.amount-items-in-cart, .show-minicart-on-hover').mouseover ->
         $(window).trigger 'miniCartMouseOver'
-        return
 
       $('.amount-items-in-cart, .show-minicart-on-hover').mouseout ->
         $(window).trigger 'miniCartMouseOut'
-        return
-
-      return
 
     formatCurrency: (value) ->
       if value is '' or not value? or isNaN value
@@ -73,7 +68,7 @@
     getCartData: (items) ->
       self = this
 
-      $('.amount-items-in-cart').addClass 'amount-items-in-cart-loading'
+      $(self.options.$template).addClass 'amount-items-in-cart-loading'
 
       promise = $.ajax {
         url: '/api/checkout/pub/orderForm/'
@@ -84,10 +79,8 @@
       }
 
       promise.done (data) ->
-        $('.amount-items-in-cart').removeClass 'amount-items-in-cart-loading'
-        return
+        $(self.options.$template).removeClass 'amount-items-in-cart-loading'
 
-      # data = totalizersJson
       promise.success (data) ->
         amountProducts = data.items.length
         amountItems = 0;
@@ -97,24 +90,19 @@
         self.selectors.amountProducts.html amountProducts
         self.selectors.amountItems.html amountItems
         self.selectors.totalCart.html totalCart
-        return
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
         console.log 'Error Message: ' + textStatus;
         console.log 'HTTP Error: ' + errorThrown;
-        return
 
-      return
+      promise
 
     $.fn[pluginName] = (options) ->
       @each ->
         if !$.data(this, "plugin_#{pluginName}")
           $.data(@, "plugin_#{pluginName}", new vtexTotalizers(@, options))
-        return
-      return
-
-  return
 
 )( jQuery, window, document )
 
-$ -> $('script#vtex-totalizers').vtexTotalizers()
+$ -> $('.portal-totalizers-ref').vtexTotalizers()
+# $ -> $('.carrinhoCompras a').vtexTotalizers()
