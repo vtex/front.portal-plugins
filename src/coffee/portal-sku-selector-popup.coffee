@@ -3,17 +3,17 @@ skuVariationsDoneHandler = ($el, options, json) ->
 	$el.removeClass('sku-selector-loading')
 	# If this item doesn't have variations, add it to the cart directly.
 	if json.dimensions.length == 0
-		return options.addSkuToCart json.skus[0].sku, $el
+		return options.addSkuToCart json.skus[0].sku
 	else
 		# Render the sku selector, passing the options with templates
 		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options, $el)
 		$el.html(skuSelector)
-		$el.showPopup?()
+		$.skuSelectorPopup.showPopup()
 
 # Adds a given sku to the cart. On success, shows the mini-cart
 # On failure, redirects the user to the cart.
-addSkuToCart = (sku, $el) ->
-	$el.hidePopup?()
+addSkuToCart = (sku) ->
+	$.skuSelectorPopup.hidePopup()
 	console.log 'Adding SKU to cart:', sku
 	promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, false)
 	promise.done (data) ->
@@ -113,32 +113,32 @@ $.skuSelectorPopup = (options = {}) ->
 	opts = $.extend($.skuSelectorPopup.defaults, options)
 	console.log('skuSelector', opts)
 
-	$.skuSelector.$overlay = $(opts.overlayTemplate)
-	$.skuSelector.$overlay.addClass(opts.overlayClass) if opts.overlayClass
-	$.skuSelector.$overlay.attr('id', opts.overlayId) if opts.overlayId
+	$.skuSelectorPopup.$overlay = $(opts.overlayTemplate)
+	$.skuSelectorPopup.$overlay.addClass(opts.overlayClass) if opts.overlayClass
+	$.skuSelectorPopup.$overlay.attr('id', opts.overlayId) if opts.overlayId
 	$el = $(opts.popupTemplate)
 	$el.addClass(opts.popupClass) if opts.popupClass
 	$el.attr('id', opts.popupId) if opts.popupId
 
-	$('body').append($.skuSelector.$overlay) # Adds the overlay
+	$('body').append($.skuSelectorPopup.$overlay) # Adds the overlay
 	$('body').append($el) # Adds the placeholder
 
 	# Adds show function
-	$el.showPopup = ->
-		$.skuSelector.$overlay?.fadeIn()
+	$.skuSelectorPopup.showPopup = ->
+		$.skuSelectorPopup.$overlay?.fadeIn()
 		$el?.fadeIn()
 
 	# Adds hide function
-	$el.hidePopup = ->
-		$.skuSelector.$overlay?.fadeOut()
+	$.skuSelectorPopup.hidePopup = ->
+		$.skuSelectorPopup.$overlay?.fadeOut()
 		$el?.fadeOut()
 
 	# Hide the popup on overlay click
-	$.skuSelector.$overlay.click $el.hidePopup
+	$.skuSelectorPopup.$overlay.click $.skuSelectorPopup.hidePopup
 
 	# Binds the exit handler
 	$el.on 'click', '.skuselector-close', ->
-		$el.hidePopup()
+		$.skuSelectorPopup.hidePopup()
 		console.log 'Exiting sku selector'
 
 	return $el
