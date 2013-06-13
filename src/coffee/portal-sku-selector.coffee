@@ -5,7 +5,7 @@ $ = window.jQuery
 # Sku Selector elements function.
 #
 
-$.skuSelector = { $placeholder: undefined }
+$.skuSelector = {}
 
 # Renders the Sku Selector inside the given placeholder
 # Usage:
