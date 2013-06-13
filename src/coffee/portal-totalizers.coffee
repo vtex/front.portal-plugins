@@ -2,7 +2,7 @@
 
   pluginName = 'vtexTotalizers'
   defaults = {
-    template: null
+    $template: null
   }
 
   class vtexTotalizers
@@ -49,8 +49,11 @@
 
       self.getCartData()
 
-      $(window).on 'cartUpdated', ->
-        self.getCartData()
+      $(window).on 'cartUpdated', (event, cartData) ->
+        if (cartData)
+          self.setCartData(cartData)
+        else
+          self.getCartData()
 
       $('.amount-items-in-cart, .show-minicart-on-hover').mouseover ->
         $(window).trigger 'miniCartMouseOver'
@@ -65,7 +68,7 @@
         num = value / 100
       parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 
-    getCartData: (items) ->
+    getCartData: ->
       self = this
 
       $(self.options.$template).addClass 'amount-items-in-cart-loading'
@@ -82,20 +85,25 @@
         $(self.options.$template).removeClass 'amount-items-in-cart-loading'
 
       promise.success (data) ->
-        amountProducts = data.items.length
-        amountItems = 0;
-        amountItems += item.quantity for item in data.items
-        totalCart = self.formatCurrency data.value
-
-        self.selectors.amountProducts.html amountProducts
-        self.selectors.amountItems.html amountItems
-        self.selectors.totalCart.html totalCart
+        self.setCartData data
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
         console.log 'Error Message: ' + textStatus;
         console.log 'HTTP Error: ' + errorThrown;
 
       promise
+
+    setCartData: (data) ->
+      self = this
+
+      amountProducts = data.items.length
+      amountItems = 0;
+      amountItems += item.quantity for item in data.items
+      totalCart = self.formatCurrency data.value
+
+      self.selectors.amountProducts.html amountProducts
+      self.selectors.amountItems.html amountItems
+      self.selectors.totalCart.html totalCart
 
     $.fn[pluginName] = (options) ->
       @each ->
@@ -104,5 +112,5 @@
 
 )( jQuery, window, document )
 
-$ -> $('.portal-totalizers-ref').vtexTotalizers()
-# $ -> $('.carrinhoCompras a').vtexTotalizers()
+# $ -> $('.portal-totalizers-ref').vtexTotalizers()
+$ -> $('.carrinhoCompras a').vtexTotalizers()
