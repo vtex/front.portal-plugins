@@ -145,7 +145,7 @@ $.skuSelectorPopup = (options = {}) ->
 
 $.skuSelectorPopup.defaults =
 	popupTemplate: '<div class="boxPopUp2 vtexsm-popupContent freeContentMain popupOpened" style="display: none;"></div>'
-	overlayTemplate: '<div class="boxPopUp2-overlay boxPopUp2-clickActive"></div>'
+	overlayTemplate: '<div class="boxPopUp2-overlay boxPopUp2-clickActive" style="display: none;"></div>'
 	overlayId: 'sku-selector-overlay'
 	overlayClass: undefined
 	popupId: 'sku-selector-popup'
