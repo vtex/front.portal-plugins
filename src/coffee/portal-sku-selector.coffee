@@ -75,7 +75,7 @@ $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	protocol + '://' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
-$.skuSelector.createSkuSelector = (name, dimensions, skus, options, $el) =>
+$.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $el) =>
 	# Create selected dimensions map and functions
 	selectedDimensionsMap = createDimensionsMap(dimensions)
 			
@@ -84,7 +84,7 @@ $.skuSelector.createSkuSelector = (name, dimensions, skus, options, $el) =>
 	console.log 'skuSelector uniqueDimensionsMap', uniqueDimensionsMap
 
 	# Render template string with replacements
-	renderedTemplate = renderSkuSelector(skus[0].image, name, 
+	renderedTemplate = renderSkuSelector(skus[0].image, name, productId,
 		uniqueDimensionsMap, 
 		options.mainTemplate,
 		options.dimensionListTemplate,
@@ -264,7 +264,7 @@ selectedSku = (skus, selectedDimensionsMap) ->
 	return if s.length is 1 then s[0] else undefined
 
 # Renders the DOM elements of the Sku Selector, given the JSON and the templates
-renderSkuSelector = (image, name, uniqueDimensionsMap, mainTemplate, dimensionListTemplate, skuDimensionTemplate) =>
+renderSkuSelector = (image, name, productId, uniqueDimensionsMap, mainTemplate, dimensionListTemplate, skuDimensionTemplate) =>
 	dl = ''
 	dimensionIndex = 0
 	for dimension, dimensionValues of uniqueDimensionsMap
@@ -272,6 +272,7 @@ renderSkuSelector = (image, name, uniqueDimensionsMap, mainTemplate, dimensionLi
 		for value, i in dimensionValues
 			skuList += skuDimensionTemplate.replace(/\{\{dimension\}\}/g, dimension)
 				.replace(/\{\{dimensionSanitized\}\}/g, sanitize(dimension))
+				.replace(/\{\{productId\}\}/g, productId)
 				.replace(/\{\{index\}\}/g, i)
 				.replace(/\{\{value\}\}/g, value)
 				.replace(/\{\{valueSanitized\}\}/g, sanitize(value))

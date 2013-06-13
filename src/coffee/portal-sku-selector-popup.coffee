@@ -6,7 +6,7 @@ skuVariationsDoneHandler = ($el, options, json) ->
 		return options.addSkuToCart json.skus[0].sku
 	else
 		# Render the sku selector, passing the options with templates
-		skuSelector = $.skuSelector.createSkuSelector(json.name, json.dimensions, json.skus, options, $el)
+		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.dimensions, json.skus, options, $el)
 		$el.html(skuSelector)
 		$.skuSelectorPopup.showPopup()
 
@@ -99,8 +99,8 @@ dimensionListTemplate = """
 
 skuDimensionTemplate = """
 	<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
-		class="skuselector-specification-label input-dimension-{{dimensionSanitized}} sku-selector skuespec_{{valueSanitized}} change-image" id="espec_{{dimensionIndex}}_opcao_{{index}}" value="{{valueSanitized}}" specification="{{valueSanitized}}">
-	<label for="espec_{{dimensionIndex}}_opcao_{{index}}" class="dimension-{{dimensionSanitized}} espec_{{dimensionIndex}} skuespec_{{valueSanitized}}">{{value}}</label>
+		class="skuselector-specification-label input-dimension-{{dimensionSanitized}} sku-selector skuespec_{{valueSanitized}} change-image" id="{{productId}}_{{dimension}}" value="{{valueSanitized}}" specification="{{valueSanitized}}">
+	<label for="{{productId}}_{{dimension}}" class="dimension-{{dimensionSanitized}} espec_{{dimensionIndex}} skuespec_{{valueSanitized}}">{{value}}</label>
 	"""
 
 #
