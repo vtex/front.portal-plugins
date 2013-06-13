@@ -71,7 +71,7 @@ $.skuSelector.getSkusForProduct = (productId) ->
 	$.get '/api/catalog_system/pub/products/variations/' + productId
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
-	protocol = if window.location.host.indexOf('vtexlocal') isnt -1 then 'http' else 'https'
+	protocol = if window.location.host.indexOf('vtexlocal') isnt -1 then 'http' else 'http'
 	protocol + '://' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
