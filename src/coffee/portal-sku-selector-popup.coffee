@@ -29,7 +29,7 @@ addSkuToCart = (sku, $el) ->
 # You can use it as a default with the popup flavor of the sku selector.
 buyButtonClickHandler = (event, $el) ->
 	event.preventDefault()
-	id = $(event.target).parents('li').find('h2').next().attr('id').replace('rating-produto-', '')
+	id = $(event.target).data('product-id')
 	# Opens the popup
 	$el.skuSelector
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
