@@ -29,6 +29,8 @@ $.fn.skuSelector = (options = {}) ->
 	else
 		console.error 'You must either provide a JSON or a Promise'
 
+	return $el
+
 $.fn.skuSelector.defaults =
 	skuVariationsPromise: undefined
 	skuVariations: undefined
