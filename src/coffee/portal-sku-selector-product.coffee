@@ -5,7 +5,7 @@ skuVariationsDoneHandler = ($el, options, json) ->
 		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.dimensions, json.skus, options, $el)
 		$el.html(skuSelector)
 		$el.fadeIn()
-		$('body').trigger('skuSelectorReady')
+		$(window).trigger('skuSelectorReady')
 
 addSkuToCart = (sku) ->  true
 
