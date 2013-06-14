@@ -78,7 +78,7 @@
           $(".vtexsc-cart").slideDown()
           self.options.timeoutToHide = setTimeout ->
             $(".vtexsc-cart").stop(true, true).slideUp()
-          , 2000
+          , 3000
 
       $(window).on 'productAddedToCart', ->
         promiseAdd = self.getData()
@@ -204,6 +204,8 @@
           self.deleteItem(this)
 
     changeCartValues: (data) ->
+      self = this;
+
       if data
         total = 0
         for subtotal in data.totalizers
