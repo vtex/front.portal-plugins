@@ -71,18 +71,21 @@
         , 800
 
       $(window).on "cartUpdated", (event, cartData, show) ->
-        console.log('pois:'+ show)
         if cartData?.items? and cartData.items.length is 0
           $(".vtexsc-cart").slideUp()
-          console.log('nao devia entrar')
           return
         if show
-          console.log('entrou')
           $(".vtexsc-cart").slideDown()
           self.options.timeoutToHide = setTimeout ->
             $(".vtexsc-cart").stop(true, true).slideUp()
           , 2000
 
+      $(window).on 'productAddedToCart', ->
+        promiseAdd = self.getData()
+        promiseAdd.success (data) ->
+          self.updateItems data
+          self.changeCartValues data
+          $(window).trigger "cartUpdated", [null, true]
 
       promise = @getData()
       promise.success (data) ->
@@ -206,8 +209,7 @@
         for subtotal in data.totalizers
           total += subtotal.value
 
-        $(".vtexsc-text", @options.$template).text "R$ " + @formatCurrency total
-        $(".linkCart", @options.$template).attr "href", "/checkout/#/cart"
+        $(".vtexsc-text", self.options.$template).text "R$ " + self.formatCurrency total
 
     formatCurrency: (value) ->
       if value is '' or not value? or isNaN value
