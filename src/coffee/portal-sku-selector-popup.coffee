@@ -35,7 +35,6 @@ buyButtonClickHandler = (event, $el) ->
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
 		skuVariationsDoneHandler: skuVariationsDoneHandler
 		addSkuToCart: addSkuToCart
-		selectFirstAvailable: true
 		productUrl: $(event.target).attr('href')
 		mainTemplate: mainTemplate
 		dimensionListTemplate: dimensionListTemplate
@@ -153,8 +152,9 @@ $.skuSelectorPopup.defaults =
 
 popup = {}
 
-$(window).ready ->
+$(document).ready ->
 	popup = $.skuSelectorPopup()
+	bindClickHandlers "btn-add-sku", popup
 
 $(document).ajaxStop ->
 	bindClickHandlers "btn-add-sku", popup

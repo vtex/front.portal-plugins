@@ -23,7 +23,6 @@ $(window).ready ->
 		skuVariationsPromise: $.skuSelector.getSkusForProduct(productId)
 		skuVariationsDoneHandler: skuVariationsDoneHandler
 		addSkuToCart: addSkuToCart
-		selectFirstAvailableOnStart: true
 		mainTemplate: mainTemplate
 		dimensionListTemplate: dimensionListTemplate
 		skuDimensionTemplate: skuDimensionTemplate
