@@ -41,7 +41,7 @@ $.fn.skuSelector.defaults =
 		bestPriceValue: (template) -> $('.skuselector-best-price .value', template).add('.skuBestPrice')
 		installment: (template) -> $('.skuselector-installment', template)
 		buyButton: (template) -> $('.skuselector-buy-btn', template)
-		price: (template) -> $('.skuselector-price', template)
+		price: (template) -> $('.skuselector-buy-btn-wrap', template)
 		warning: (template) -> $('.skuselector-warning', template)
 		itemDimensionListItem: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName), template)
 		itemDimensionInput: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input', template)
