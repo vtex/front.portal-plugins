@@ -3,111 +3,149 @@
 <head>
     <title>Portal plugins test</title>
     <meta name="vtex-version" content="1.0.0.0">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/reset.css">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/estilos.css">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/produto.css">
+
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script src="lib/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript">
+        var mock = 2;
+        $.get = function (url) {
+            console.log("mock:", url);
+            return {
+                done: function (callback) {
+                    callback(mocks[mock ? mock : Math.floor(Math.random()*mocks.length)]);
+                },
+                fail: function(){}
+            }
+        };
+    </script>
+    <script type="text/javascript" src="js/sku-mocks.js"></script>
+    <!-- build:js js/portal-sku-selector-product.min.js -->
+    <script type="text/javascript" src="js/portal-sku-selector.js"></script>
+    <script type="text/javascript" src="js/portal-sku-selector-product.js"></script>
+    <!-- endbuild -->
+
 </head>
 <body>
 
-<li layout="85e23371-f0a2-43c2-a6ac-e5464c462fb3" class="produtos-para-caes-|-meu-amigo-pet---tudo-para-seu-cao">
-    <!-- <a title="PEITORAL E GUIA B&#193;SICO - PATAS - MULTIPATAS" class="highlight" href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"></a> -->
-
-    <a class="productImage" title="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS"
-       href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p">
-        <img
-                src="http://meuamigopet.vtexcommercebeta.com.br/arquivos/ids/181179-160-160/Coleira_vermelha_basica.jpg"
-                width="160" height="160" alt="Coleira_vermelha_basica" id="">
-    </a>
-    <!-- Foto do produto -->
-
-    <h2>
-        <a title="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS"
-           href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p">
-            PEITORAL
-            E GUIA BÁSICO - PATAS - MULTIPATAS
-        </a>
-    </h2>
-    <!-- Nome do produto -->
-
-    <div id="rating-produto-6934" class="rating-produto avaliacao0">0</div>
-    <!-- Estrelas -->
-
-    <p class="brand">
-        <a class="texto brand multipatas" href="http://meuamigopet.vtexcommercebeta.com.br/Multipatas">Multipatas</a>
-    </p>
-    <!-- Marca produto -->
-
-    <div class="data">
-
-        <div class="discount"></div>
-        <p class="price">
-            <a title="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS"
-               href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p">
-                <span class="newPrice"><span>A partir de: </span><em>R$ 31,10</em></span>
-                <em class="installment">
-                    à vista
-                </em>
-            </a>
+<div id="content" style="padding-top: 15px;">
+    <div class="fotoProduto">
+        <div class="apresentacao">
+            <div id="setaThumbs">
+            </div>
+            <div id="show">
+                <div id="include">
+                    <div id="image" productindex="0">
+                        <img productindex="0" id="image-main" class="sku-rich-image-main" src="http://www.meuamigopet.com.br/arquivos/ids/162083-331-331/7797453062251_1000_1000.jpg " alt="Ração Pedrigree Adulto Carne &amp; Vegetais 3Kg - Pedrigree">
+                    </div>
+                </div>
+                <ul class="thumbs">
+                    <li><a id="botaoZoom" href="javascript:void(0);" title="Zoom" rel=" http://www.meuamigopet.com.br/arquivos/ids/162083-331-331/7797453062251_1000_1000.jpg" zoom=""><img src="http://www.meuamigopet.com.br/arquivos/ids/162083-71-71/7797453062251_1000_1000.jpg" title="Ração Pedrigree Adulto Carne &amp; Vegetais - Pedrigree"></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- Fecha fotoProduto -->
+    <div class="informacoesProduto">
+        <h1 class="tituloProduto">
+        <div class="fn productName Racao-Pedrigree-Adulto-Carne---Vegetais----Pedrigree---all ">
+            Ração Pedrigree Adulto Carne &amp; Vegetais - Pedrigree - all
+        </div>
+        <input id="___rc-p-id" type="hidden" value="2346"><input id="___rc-p-dv-id" type="hidden" value="31,99"><input id="___rc-p-sku-ids" type="hidden" value="2347,2348,2349,2350,2351,5123,7258"><input id="___rc-p-kit-ids" type="hidden" value=""></h1>
+        <!-- Fecha tituloProduto -->
+        <div style="display:none" class="brandName">
+            <div class="brandName Pedigree ">
+                <a href="http://www.meuamigopet.com.br/caes/alimentos-e-racoes/racoes-secas/pedigree" class="brand pedigree">Pedigree</a>
+            </div>
+        </div>
+        <p class="codigoProduto">
+            Código:
         </p>
-
-        <!-- <p class="category"><a href="http://meuamigopet.vtexcommercebeta.com.br/caes/coleiras-e-guias">Coleiras e Guias</a></p> -->
+        <div class="skuReference">
+            7797453062251
+        </div>
+        <div class="avaliacaoProduto">
+            <strong>Opinião dos Consumidores:</strong><span id="spnRatingProdutoTop" class="rating-produto avaliacao0">0</span>
+        </div>
+        <!-- Fecha avaliacaoProduto -->
+        <div class="formasPagamento">
+            <div class="listaPresente">
+                <div class="giftlist">
+                    <div class="ajax-content-loader" rel="/no-cache/GiftListInsertSku.aspx?GiftListTypeIdWishList=1&amp;GiftListTypeIdLikeIt=0&amp;SkuId=2348">
+                    </div>
+                </div>
+            </div>
+            <!-- Fecha listaPresente -->
+            <p productindex="0" class="descricao-preco">
+                <em productindex="0" class="valor-de" style="display:none">De: <strong productindex="0" class="skuListPrice">R$ 31,99</strong></em><em productindex="0" class="valor-por">Por: <strong productindex="0" class="skuBestPrice">R$ 31,99</strong></em><em productindex="0" class="valor-dividido" style="display:none"><span><span>ou <label productindex="0" class="skuBestInstallmentNumber">1</label>X de</span><strong><label productindex="0" class="skuBestInstallmentValue">R$ 31,99</label></strong></span></em>
+            </p>
+            <p productindex="0" class="preco-a-vista" style="display:block">
+                Preço a vista: <strong productindex="0" class="skuPrice">31,99</strong>
+            </p>
+            <p>
+            </p>
+            <!-- Controle preço -->
+            <div class="skuTamanho">
+                <input type="hidden" class="product-sku-selector-ref">
+            </div>
+            <!-- Fecha skuTamanho -->
+            <div class="btComprar">
+                <a target="_top" class="buy-button" href="javascript:alert('Selecione o modelo desejado.')" style="display:block">Comprar</a>
+                <p class="unavailable-button" style="display:none">
+                    Eu Quero!
+                </p>
+                <input type="hidden" class="buy-button-amount" value="1">
+                <div class="notifyme" style="display:none">
+                    <h3 class="notifymetitle">Eu Quero!</h3>
+                    <fieldset class="notifyme-form">
+                        <p>
+                             Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.
+                        </p>
+                        <input id="notifymeClientName" onfocus="notifymeSelect(this,'Digite seu nome...');" onblur="notifymeLeave(this,'Digite seu nome...');" class="notifyme-client-name" value="Digite seu nome..." size="20" type="text" name="notifymeClientName"><input id="notifymeClientEmail" onfocus="notifymeSelect(this,'Digite seu e-mail...');" onblur="notifymeLeave(this,'Digite seu e-mail...');" class="notifyme-client-email" value="Digite seu e-mail..." size="20" type="text" name="notifymeClientEmail"><input id="notifymeButtonOK" class="btn-ok notifyme-button-ok" value="ok" type="button" name="notifymeButtonOK"><input id="notifymeTitle" type="hidden" class="notifyme-title" value="Eu Quero!"><input id="notifymeLoading" type="hidden" class="notifyme-loading" value="Carregando..."><input id="notifymeSuccess" type="hidden" class="notifyme-success" value="Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando."><input id="notifymeError" type="hidden" class="notifyme-error" value="Não foi possível cadastrar. Tente mais tarde."><input id="notifymeSkuId" type="hidden" class="notifyme-skuid" value="2348">
+                    </fieldset>
+                </div>
+            </div>
+            <!-- Fecha btComprar -->
+            <div class="btFrete">
+            </div>
+            <!-- Fecha btFrete -->
+            <div class="paymentCalcEnt">
+                <a href="#" class="openProductPayment">+ Opções de Parcelamento</a>
+            </div>
+            <!-- paymentCalcEnt -->
+            <div class="productPayment">
+                <div class="other-payment-method-content">
+                    <div class="other-payment-method">
+                        <span class="titulo-parcelamento">Opções de Parcelamento:</span>
+                        <ul class="other-payment-method-ul">
+                            <li class="other-payment-method-Visa-à vista #ParcelamentoPreco#">à vista R$ 31,99 <span class="other-payment-method-intereset-no"></span></li>
+                        </ul>
+                        <a class="see-other-payment-method-link" href="javascript:void(0)" onclick="window.open('http://www.meuamigopet.com.br/Site/OutrasFormasPagamento.aspx?IdSku=2348&amp;PopupComum=true','FormaPagamento','width=450,height=500,scrollbars=1')">Opções de Parcelamento:</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Fecha productPayment -->
+            <div class="calcFrete">
+                <a href="javascript:void(0);" class="openShipping">Calcular prazo de entrega</a>
+            </div>
+            <!-- Fecha calcFrete -->
+            <div class="disponibilidade">
+                <div class="delivery-time" id="deliverytime">
+                    <p>
+                        <strong>Disponibilidade</strong>
+                    </p>
+                    <span class="txt-availability">Entrega em 3 dias úteis para , </span><span class="txt">Conforme escolha da modalidade de entrega.</span>
+                </div>
+            </div>
+            <!-- Fecha disponibilidade -->
+        </div>
+        <!-- Fecha formasPagamento -->
     </div>
-    <div class="view" style="display: none;">
-        <a href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"
-           alt="PEITORAL E GUIA BÁSICO - PATAS - MULTIPATAS" class="botaoDetalhes" rel="nofollow">Espiar
-        </a>
-        <!-- a href="/quick-view/?idproduto=6934?KeepThis=true&amp;TB_iframe=true&amp;width=766&amp;height=450" alt="PEITORAL E GUIA B&#193;SICO - PATAS - MULTIPATAS" class="thickbox botaoDetalhes" rel="nofollow">Espiar</a -->
-    </div>
-    <!-- Fecha view -->
-    <div class="wrapper-buy-button-asynchronous bba6937">
-        <input type="hidden" value="Produto incluído no carrinho"
-               class="buy-button-asynchronous-product-message-success">
-        <input
-                type="hidden" value="Produto não incluído no carrinho"
-                class="buy-button-asynchronous-product-message-fail">
-        <input
-                type="hidden" value="6937" class="buy-button-asynchronous-product-id">
-        <input type="hidden"
-               value="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"
-               class="buy-button-asynchronous-product-url-6937">
-        <span class="add">
-
-        <input type="hidden" class="product-sku-selector-ref">
-
-        <a href="http://meuamigopet.vtexcommercebeta.com.br/PEITORAL-E-GUIA-BASICO---PATAS---MULTIPATAS-1651012358987/p"
-           class="btn-not-clicked asynchronousBuyButton btn-add-buy-button-asynchronous actionActivated vtexsm_activated .btover-active"
-           style="cursor:pointer" id="idprod6937">Comprar Produto sugerido
-        </a>
-        </span>
-        <input type="hidden"
-               value="product"
-               class="buy-button-asynchronous-go-to-cart-6937">
-
-        <div class="buy-button-asynchronous message-user6937"></div>
-    </div>
-</li>
-
-<input type="hidden" value="1234" id="product-id"/>
-<div id="sku-selector-placeholder" data-product-id="3442">
-
+    <!-- Fecha informacoesProduto -->
 </div>
 
-<script src="http://localhost:35729/livereload.js"></script>
-<script src="lib/jquery-1.8.3.min.js"></script>
-<script type="text/javascript">
-    var mock = 2;
-    $.get = function (url) {
-        console.log("mock:", url);
-        return {
-            done: function (callback) {
-                callback(mocks[mock ? mock : Math.floor(Math.random()*mocks.length)]);
-            },
-            fail: function(){}
-        }
-    };
-</script>
-<!-- build:js js/portal-sku-selector-product.min.js -->
-<script type="text/javascript" src="js/portal-sku-selector.js"></script>
-<script type="text/javascript" src="js/portal-sku-selector-product.js"></script>
-<!-- endbuild -->
-<script type="text/javascript" src="js/sku-mocks.js"></script>
 
 </body>
 </html>
