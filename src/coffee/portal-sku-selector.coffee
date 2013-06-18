@@ -122,6 +122,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 		dimensionValue = $(this).attr('data-value')
 		console.log 'Change dimension!', dimensionName, dimensionValue
 		selectedDimensionsMap[dimensionName] = dimensionValue
+		resetNextDimensions(dimensionName, selectedDimensionsMap)
 		selectedSkuObj = selectedSku(skus, selectedDimensionsMap)
 		undefinedDimensions = findUndefinedDimensions(selectedDimensionsMap)
 
@@ -136,16 +137,13 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 		options.selectors.itemDimensionValueInput(dimensionName, dimensionValue, $template).addClass('checked sku-picked')
 		options.selectors.itemDimensionValueLabel(dimensionName, dimensionValue, $template).addClass('checked sku-picked')
 
-		resetNextDimensions(dimensionName, selectedDimensionsMap)
-
-		disableInvalidInputs(uniqueDimensionsMap,
-			findUndefinedDimensions(selectedDimensionsMap),
+		disableInvalidInputs(uniqueDimensionsMap, undefinedDimensions,
 			selectableSkus(skus, selectedDimensionsMap),
 			$template, options.selectors)
 
 		# Select first available dimensions
 		for dimension in undefinedDimensions
-			selectDimension(options.selectors.itemDimensionInput(dimension, $template))
+			selectDimension(options.selectors.itemDimensionInput(dimension, $template).filter('input:not(.item_unavaliable)'))
 
 		# selectedSkuObj must be valid now, as first available dimensions were selected.
 		updatePrice(selectedSkuObj, options, $template)
