@@ -154,6 +154,7 @@ popup = {}
 
 $(document).ready ->
 	popup = $.skuSelectorPopup()
+	popup.on 'skuSelected', (e, sku, dimension) -> console.log 'skuSelected', sku, dimension
 	bindClickHandlers "btn-add-sku", popup
 
 $(document).ajaxStop ->

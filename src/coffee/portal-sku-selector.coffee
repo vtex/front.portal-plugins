@@ -127,7 +127,8 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 		undefinedDimensions = findUndefinedDimensions(selectedDimensionsMap)
 
 		# Trigger event for interested scripts
-		$el.trigger 'skuSelected', [selectedSkuObj, dimensionName] if selectedSkuObj
+		if selectedSkuObj and undefinedDimensions.length is 0
+			$el.trigger 'skuSelected', [selectedSkuObj, dimensionName]
 
 		# Limpa classe de selecionado para todos dessa dimensao
 		options.selectors.itemDimensionInput(dimensionName, $template).removeClass('checked sku-picked')
@@ -240,7 +241,7 @@ selectableSkus = (skus, selectedDimensionsMap) ->
 			if skuDimensionValue isnt dimensionValue
 				match = false
 				continue
-		selectableArray.splice(i, 1) unless match
+		selectableArray.splice(i, 1) unless match and sku.available
 		# selectableArray.splice(i, 1) unless match and sku.available
 	return selectableArray
 
