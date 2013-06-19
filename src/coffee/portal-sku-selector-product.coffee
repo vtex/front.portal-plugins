@@ -7,33 +7,6 @@ skuVariationsDoneHandler = ($el, options, json) ->
 		$el.fadeIn()
 		$(window).trigger('skuSelectorReady')
 
-addSkuToCart = (sku) ->  true
-
-ref = $('.product-sku-selector-ref');
-ref.after('<div class="sku-selector-container" />');
-ref.remove();
-
-$(window).ready ->
-	ref = $('.product-sku-selector-ref');
-	ref.after('<div class="sku-selector-container" />');
-	ref.remove();
-
-	productId = $('#___rc-p-id').val()
-	$(".sku-selector-container").skuSelector
-		skuVariationsPromise: $.skuSelector.getSkusForProduct(productId)
-		skuVariationsDoneHandler: skuVariationsDoneHandler
-		addSkuToCart: addSkuToCart
-		mainTemplate: mainTemplate
-		dimensionListTemplate: dimensionListTemplate
-		skuDimensionTemplate: skuDimensionTemplate
-		updateBuyButtonURL: updateBuyButtonURL
-
-	$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
-		console.log 'Selected:', sku, selectedDimension
-		window.FireSkuChangeImage?(sku.sku)
-		#window.FireSkuDataReceived?(sku.sku)
-		window.FireSkuSelectionChanged?(sku.sku)
-
 mainTemplate = """{{dimensionLists}}"""
 
 dimensionListTemplate = """
@@ -55,3 +28,24 @@ skuDimensionTemplate = """
 
 updateBuyButtonURL = (url)->
 	$('.buy-button').attr('href', url)
+
+$(window).ready ->
+	ref = $('.product-sku-selector-ref');
+	ref.after('<div class="sku-selector-container" />');
+	ref.remove();
+
+	productId = $('#___rc-p-id').val()
+	$(".sku-selector-container").skuSelector
+		skuVariationsPromise: $.skuSelector.getSkusForProduct(productId)
+		skuVariationsDoneHandler: skuVariationsDoneHandler
+		addSkuToCart: ->  true
+		mainTemplate: mainTemplate
+		dimensionListTemplate: dimensionListTemplate
+		skuDimensionTemplate: skuDimensionTemplate
+		updateBuyButtonURL: updateBuyButtonURL
+
+	$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
+		console.log 'Selected:', sku, selectedDimension
+		window.FireSkuChangeImage?(sku.sku)
+		#window.FireSkuDataReceived?(sku.sku)
+		window.FireSkuSelectionChanged?(sku.sku)

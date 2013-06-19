@@ -92,7 +92,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 	$template = $(renderedTemplate)
 
 	# Initialize content disabling invalid inputs
-	disableInvalidInputs(uniqueDimensionsMap, 
+	disableInvalidInputs(uniqueDimensionsMap,
 		findUndefinedDimensions(selectedDimensionsMap),
 		selectableSkus(skus, selectedDimensionsMap),
 		$template, options.selectors)
@@ -193,8 +193,8 @@ sanitize = (str = this) ->
 	sanitized = str.replace(regex, (char) ->
 		plain.charAt (specialChars.indexOf char))
 		.replace(/\s/g, '')
-		.replace(/\//g, '-')
-		.replace(/\(|\)|\'|\"/g, '')
+		.replace(/\/|\\/g, '-')
+		.replace(/\(|\)|\'|\"|\.|\,/g, '')
 		.toLowerCase()
 	return sanitized.charAt(0).toUpperCase() + sanitized.slice(1)
 
@@ -283,13 +283,10 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 	return unless firstUndefinedDimensionName
 
 	# Second, disable all options in this row
-
 	# Add disabled class
-	selectors.itemDimensionInput(firstUndefinedDimensionName, $template).addClass('item_unavaliable')
-	selectors.itemDimensionLabel(firstUndefinedDimensionName, $template).addClass('disabled item_unavaliable')
 	# Remove checked class and matching removeAttr checked
-	selectors.itemDimensionInput(firstUndefinedDimensionName, $template).removeAttr('checked').removeClass('checked sku-picked')
-	selectors.itemDimensionLabel(firstUndefinedDimensionName, $template).removeClass('checked sku-picked')
+	selectors.itemDimensionInput(firstUndefinedDimensionName, $template).addClass('item_unavaliable').removeAttr('checked').removeClass('checked sku-picked')
+	selectors.itemDimensionLabel(firstUndefinedDimensionName, $template).addClass('disabled item_unavaliable').removeClass('checked sku-picked')
 
 	# Third, enable all selectable options in this row
 	for value in uniqueDimensionsMap[firstUndefinedDimensionName]
