@@ -41,7 +41,7 @@ $.fn.skuSelector.defaults =
 		bestPriceValue: (template) -> $('.skuselector-best-price .value', template).add('.skuBestPrice')
 		installment: (template) -> $('.skuselector-installment', template)
 		buyButton: (template) -> $('.skuselector-buy-btn', template)
-		price: (template) -> $('.skuselector-buy-btn-wrap', template)
+		price: (template) -> $('.skuselector-price', template)
 		warning: (template) -> $('.skuselector-warning', template)
 		itemDimensionListItem: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName), template)
 		itemDimensionInput: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input', template)
@@ -174,6 +174,7 @@ updatePrice = (sku, options, template) ->
 		# Modifica href do botão comprar
 		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
 		options.selectors.price(template).show()
+		options.selectors.buyButton(template).show()
 		options.selectors.listPriceValue(template).text('R$ ' + listPrice)
 		options.selectors.bestPriceValue(template).text('R$ ' + price)
 		options.selectors.installment(template).text('ou até ' + installments + 'x de R$ ' + installmentValue) if installments > 1
@@ -181,6 +182,7 @@ updatePrice = (sku, options, template) ->
 		# Modifica href do botão comprar
 		options.updateBuyButtonURL('javascript:void(0);', template)
 		options.selectors.price(template).hide()
+		options.selectors.buyButton(template).hide()
 		# $('.notifyme-skuid').val()
 
 
@@ -241,7 +243,7 @@ selectableSkus = (skus, selectedDimensionsMap) ->
 			if skuDimensionValue isnt dimensionValue
 				match = false
 				continue
-		selectableArray.splice(i, 1) unless match and sku.available
+		selectableArray.splice(i, 1) unless match
 		# selectableArray.splice(i, 1) unless match and sku.available
 	return selectableArray
 
