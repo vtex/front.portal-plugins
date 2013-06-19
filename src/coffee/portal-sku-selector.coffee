@@ -144,7 +144,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 
 		# Select first available dimensions
 		for dimension in undefinedDimensions
-			selectDimension(options.selectors.itemDimensionInput(dimension, $template).filter('input:not(.item_unavaliable)'))
+			selectDimension(options.selectors.itemDimensionInput(dimension, $template))
 
 		# selectedSkuObj must be valid now, as first available dimensions were selected.
 		updatePrice(selectedSkuObj, options, $template)
@@ -155,14 +155,19 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 		options.selectors.itemDimensionInput(dimension, $template).change(dimensionChangeHandler)
 
 	# Select first dimension
-	selectDimension(options.selectors.itemDimensionInput(dimensions[0], $template).filter('input:not(.item_unavaliable)'))
+	selectDimension(options.selectors.itemDimensionInput(dimensions[0], $template))
 
 	return $template
 
 #
 # PRIVATE FUNCTIONS
 #
-selectDimension = (dimArray) -> $(dimArray[0]).attr('checked', 'checked').change() if dimArray.length > 0
+selectDimension = (dimArray) ->
+	# Tenta selecionar apenas dos disponíveis
+	available = dimArray.filter('input:not(.item_unavaliable)')
+	# Caso não haja indisponível, seleciona primeiro não-desabilitado (sku existente)
+	el = (if available.length > 0 then available else dimArray).filter('input:enabled')[0]
+	$(el).attr('checked', 'checked').change() if dimArray.length > 0
 
 updatePrice = (sku, options, template) ->
 	if sku and sku.available
@@ -284,10 +289,8 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 	# If there is no undefined dimension, there is nothing to disable.
 	return unless firstUndefinedDimensionName
 
-	# Second, disable all options in this row
-	# Add disabled class
-	# Remove checked class and matching removeAttr checked
-	selectors.itemDimensionInput(firstUndefinedDimensionName, $template).addClass('item_unavaliable').removeAttr('checked').removeClass('checked sku-picked')
+	# Second, disable all options in this row, add disabled class, remove checked class and matching removeAttr checked
+	selectors.itemDimensionInput(firstUndefinedDimensionName, $template).addClass('item_unavaliable').removeAttr('checked').removeClass('checked sku-picked').attr('disabled', 'disabled')
 	selectors.itemDimensionLabel(firstUndefinedDimensionName, $template).addClass('disabled item_unavaliable').removeClass('checked sku-picked')
 
 	# Third, enable all selectable options in this row
@@ -295,7 +298,10 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 		# Search for the sku dimension value corresponding to this dimension
 		for sku in selectableSkus
 			skuDimensionValue = (dim for dim in sku.dimensions when dim.Key is firstUndefinedDimensionName)[0].Value
-			# If the dimension value matches and this sku is available, enable the button
+			# If the dimension value matches, enable the button
+			if skuDimensionValue is value
+				selectors.itemDimensionValueInput(firstUndefinedDimensionName, value, $template).removeAttr('disabled')
+			# If the dimension value matches and this sku is available, show as selectable
 			if skuDimensionValue is value and sku.available
 				selectors.itemDimensionValueInput(firstUndefinedDimensionName, value, $template).removeClass('item_unavaliable')
 				selectors.itemDimensionValueLabel(firstUndefinedDimensionName, value, $template).removeClass('disabled item_unavaliable')
