@@ -235,7 +235,7 @@ calculateUniqueDimensions = (dimensions, skus) ->
 		for sku in skus
 			# If this dimension doesnt exist, add it
 			skuDimension = (dim for dim in sku.dimensions when dim.Key is dimension)[0].Value
-			if uniqueDimensionsMap[dimension].indexOf(skuDimension) is -1
+			if $.inArray(skuDimension, uniqueDimensionsMap[dimension]) is -1
 				uniqueDimensionsMap[dimension].push skuDimension
 	return uniqueDimensionsMap
 
