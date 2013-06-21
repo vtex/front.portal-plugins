@@ -120,7 +120,7 @@
         total = 0
 
         for subtotal in data.totalizers
-          total += subtotal.value
+          total += subtotal.value if subtotal.id is 'Items'
 
         $('.vtexsc-text', self.options.$template).text 'R$' + self.formatCurrency(total)
         
@@ -209,7 +209,7 @@
       if data
         total = 0
         for subtotal in data.totalizers
-          total += subtotal.value
+          total += subtotal.value if subtotal.id is 'Items'
 
         $(".vtexsc-text", self.options.$template).text "R$ " + self.formatCurrency total
 
