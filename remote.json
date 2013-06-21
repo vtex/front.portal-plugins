@@ -18,7 +18,7 @@
 		"style/.*",
 		"index.html"
 	],
-	"mapping": true,
+	"mapping": false,
 	"mappings": {
 	    ".*portal-totalizers.js.*": "build/js/portal-totalizers.js",
 	    ".*portal-minicart.js.*": "build/js/portal-minicart.js",
