@@ -25,31 +25,29 @@ addSkuToCart = (sku) ->
 		window.location.href = $.skuSelector.getAddUrlForSku(sku)
 	return false
 
-# A sample buy button click handler
-# You can use it as a default with the popup flavor of the sku selector.
-buyButtonClickHandler = (event, $el) ->
-	event.preventDefault()
-	id = $(event.target).data('product-id')
-	# Opens the popup
-	$($el).skuSelector
-		skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
-		skuVariationsDoneHandler: skuVariationsDoneHandler
-		addSkuToCart: addSkuToCart
-		productUrl: $(event.target).attr('href')
-		mainTemplate: mainTemplate
-		dimensionListTemplate: dimensionListTemplate
-		skuDimensionTemplate: skuDimensionTemplate
-
-	return false
-
 # An utilitary function to bind element's with the given class.
 # The class will be removed from the element.
 # You should use a "disposable" class, such as "add-buy-button".
 bindClickHandlers = (className, $el) ->
 	$elements = $('.'+className)
+	warnUnavailable = $elements.data('warnUnavailable')
+	selectOnOpening = $elements.data('selectOnOpening')
 	console.log 'Binding to', $elements.length
 	$elements.removeClass className
-	$elements.click (e) -> buyButtonClickHandler(e, $el)
+	$elements.click (event) ->
+		event.preventDefault()
+		id = $(event.target).data('product-id')
+		# Opens the popup
+		$($el).skuSelector
+			skuVariationsPromise: $.skuSelector.getSkusForProduct(id)
+			skuVariationsDoneHandler: skuVariationsDoneHandler
+			addSkuToCart: addSkuToCart
+			productUrl: $(event.target).attr('href')
+			mainTemplate: mainTemplate
+			dimensionListTemplate: dimensionListTemplate
+			skuDimensionTemplate: skuDimensionTemplate
+			warnUnavailable: warnUnavailable
+			selectOnOpening: selectOnOpening
 
 mainTemplate = """
 	<div class="boxPopUp2-wrap">
@@ -60,7 +58,6 @@ mainTemplate = """
 					Selecione a variação do produto
 				</div>
 				<div class="vtexsm-prodTitle">{{productName}}</div>
-				<p class="skuselector-product-unavailable" style="display: none">Produto indisponível</p>
 				<div class="vtexsc-skusWrap">
 					<div class="vtexsc-skuProductImage">
 						<img src="{{image}}" width="160" height="160" alt="{{productAlt}}" />
@@ -68,7 +65,7 @@ mainTemplate = """
 					<div class="skuListWrap_">
 						{{dimensionLists}}
 					</div>
-					<div class="vtexsc-skuProductPrice skuselector-price">
+					<div class="vtexsc-skuProductPrice skuselector-price" style="display: none;">
 						<div class="regularPrice skuselector-list-price">
 							De: <span class="value"></span>
 						</div>
@@ -79,6 +76,22 @@ mainTemplate = """
 					</div>
 				</div>
 				<p class="skuselector-warning" style="display: none;"></p>
+				<div class="skuselector-warn-unavailable" style="display: none;">
+					<form action="">
+						<fieldset class="notifyme-form" style="display: block;">
+							<p>
+									Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.
+							</p>
+							<input id="notifymeClientName" class="notifyme-client-name" placeholder="Digite seu nome..." size="20" type="text" name="notifymeClientName">
+							<input id="notifymeClientEmail" class="notifyme-client-email" placeholder="Digite seu e-mail..." size="20" type="text" name="notifymeClientEmail">
+							<input id="notifymeButtonOK" class="btn-ok notifyme-button-ok" value="ok" type="submit" name="notifymeButtonOK">
+							<input id="notifymeSkuId" type="hidden" class="notifyme-skuid" name="notifymeIdSku" value="">
+					</fieldset>
+					</form>
+					<span id="notifymeLoading" class="notifyme-success"  style="display: none">Carregando...</span>
+					<span id="notifymeSuccess" class="notifyme-success"  style="display: none">Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</span>
+					<span id="notifymeError" class="notifyme-error" style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
+				</div>
 				<div class="vtexsc-buttonWrap clearfix skuselector-buy-btn-wrap">
 					<a href="#" class="vtexsc-buyButton skuselector-buy-btn"></a>
 				</div>

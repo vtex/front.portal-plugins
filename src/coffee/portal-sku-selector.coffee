@@ -36,6 +36,8 @@ $.fn.skuSelector.defaults =
 	skuVariations: undefined
 	addSkuToCartPreventDefault: true
 	buyButtonSelector: ''
+	warnUnavailable: false
+	selectOnOpening: false
 	selectors:
 		listPriceValue: (template) -> $('.skuselector-list-price .value', template).add('.skuListPrice')
 		bestPriceValue: (template) -> $('.skuselector-best-price .value', template).add('.skuBestPrice')
@@ -43,6 +45,7 @@ $.fn.skuSelector.defaults =
 		buyButton: (template) -> $('.skuselector-buy-btn', template)
 		price: (template) -> $('.skuselector-price', template)
 		warning: (template) -> $('.skuselector-warning', template)
+		warnUnavailable: (template) -> $('.skuselector-warn-unavailable', template)
 		itemDimensionListItem: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName), template)
 		itemDimensionInput: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' input', template)
 		itemDimensionLabel: (dimensionName, template) -> $('.item-dimension-' + sanitize(dimensionName) + ' label', template)
@@ -57,6 +60,9 @@ $.fn.skuSelector.defaults =
 		$el.removeClass('sku-selector-loading')
 		console.error(reason)
 		window.location.href = options.productUrl if options.productUrl
+
+	warnUnavailablePost: (formElement) ->
+		$.post '/no-cache/AviseMe.aspx', $(formElement).serialize()
 
 #
 # SkuSelector Shared Functions
@@ -98,7 +104,8 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 	# Checks if there are no available options
 	available = (sku for sku in skus when sku.available is true)
 	if available.length is 0
-		$('.skuselector-product-unavailable', $template).show()
+		options.selectors.warnUnavailable($template).find('input#notifymeSkuId').val(skus[0].sku)
+		options.selectors.warnUnavailable($template).show()
 		$('.skuselector-buy-btn', $template).hide()
 	else if available.length is 1
 		selectedSkuObj = available[0]
@@ -127,6 +134,11 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 		# Trigger event for interested scripts
 		if selectedSkuObj and undefinedDimensions.length is 0
 			$el.trigger 'skuSelected', [selectedSkuObj, dimensionName]
+			if options.warnUnavailable and not selectedSkuObj.available
+				options.selectors.warnUnavailable($template).find('input#notifymeSkuId').val(selectedSkuObj.sku)
+				options.selectors.warnUnavailable($template).show()
+			else
+				options.selectors.warnUnavailable($template).filter(':visible').hide()
 
 		# Limpa classe de selecionado para todos dessa dimensao
 		options.selectors.itemDimensionInput(dimensionName, $template).removeClass('checked sku-picked')
@@ -152,8 +164,20 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 	for dimension in dimensions
 		options.selectors.itemDimensionInput(dimension, $template).change(dimensionChangeHandler)
 
+	if options.warnUnavailable
+		options.selectors.warnUnavailable($template).find('form').submit (e) ->
+			e.preventDefault()
+			options.selectors.warnUnavailable($template).find('#notifymeLoading').show()
+			options.selectors.warnUnavailable($template).find('form').hide()
+			xhr = options.warnUnavailablePost(e.target)
+			xhr.done -> options.selectors.warnUnavailable($template).find('#notifymeSuccess').show()
+			xhr.fail -> options.selectors.warnUnavailable($template).find('#notifymeError').show()
+			xhr.always -> options.selectors.warnUnavailable($template).find('#notifymeLoading').hide()
+			return false
+
 	# Select first dimension
-	selectDimension(options.selectors.itemDimensionInput(dimensions[0], $template))
+	if options.selectOnOpening
+		selectDimension(options.selectors.itemDimensionInput(dimensions[0], $template))
 
 	return $template
 

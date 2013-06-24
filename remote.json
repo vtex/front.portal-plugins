@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "177.72.244.129",
+		"host": "meuamigopet.vtexcommercebeta.com.br",
 		"port": 80
 	},
 	"proxy": {
-		"host": "vtex-io.s3.amazonaws.com",
+		"host": "meuamigopet.vtexlocal.com.br",
 		"port": 80
 	},
 	"server": {
