@@ -19,10 +19,16 @@ module.exports = (grunt) ->
 		clean: ['build']
 		copy:
 			main:
-				expand: true
-				cwd: 'src/'
-				src: ['**', '!includes/**', '!coffee/**', '!**/*.less']
-				dest: 'build/<%= relativePath %>'
+				files: [
+					expand: true
+					cwd: 'src/'
+					src: ['**', '!coffee/**', '!**/*.less']
+					dest: 'build/<%= relativePath %>'
+				,
+					expand: true
+					src: ['spec/**', '!**/*.coffee']
+					dest: 'build/<%= relativePath %>'
+				]
 
 			debug:
 				src: ['src/index.html']
@@ -31,7 +37,7 @@ module.exports = (grunt) ->
 			deploy:
 				expand: true
 				cwd: 'build/<%= relativePath %>/'
-				src: ['**', '!includes/**', '!coffee/**', '!**/*.less']
+				src: ['**', '!coffee/**', '!**/*.less']
 				dest: '<%= deployDirectory %>/<%= gitCommit %>/'
 
 			env:

@@ -1,0 +1,43 @@
+{
+	"productId": 5193,
+	"name": "REVOLUTION 6% - GATOS - PFIZER",
+	"dimensions": [
+		"Peso",
+		"Volume",
+		"Quantidade"
+	],
+	"skus": [
+		{
+			"sku": 4034,
+			"dimensions": {
+				"Peso": "unico",
+				"Volume": "0,75 mL",
+				"Quantidade": "3 bisnagas"
+			},
+			"available": true,
+			"listPrice": 12179,
+			"bestPrice": 12179,
+			"installments": 2,
+			"installmentsValue": 6089,
+			"installmentsInsterestRate": 0,
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170254-71-71/087219051108.jpg",
+			"seller": "MeuAmigoPet"
+		},
+		{
+			"sku": 5194,
+			"dimensions": {
+				"Peso": "unico",
+				"Volume": "0,75 mL",
+				"Quantidade": "1 bisnaga"
+			},
+			"available": true,
+			"listPrice": 4314,
+			"bestPrice": 4314,
+			"installments": 2,
+			"installmentsValue": 2157,
+			"installmentsInsterestRate": 0,
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170249-71-71/7891268200515.jpg",
+			"seller": "MeuAmigoPet"
+		}
+	]
+}

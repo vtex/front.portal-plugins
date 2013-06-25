@@ -256,7 +256,7 @@ calculateUniqueDimensions = (dimensions, skus) ->
 		uniqueDimensionsMap[dimension] = []
 		for sku in skus
 			# If this dimension doesnt exist, add it
-			skuDimension = (dim for dim in sku.dimensions when dim.Key is dimension)[0].Value
+			skuDimension = sku.dimensions[dimension]
 			if $.inArray(skuDimension, uniqueDimensionsMap[dimension]) is -1
 				uniqueDimensionsMap[dimension].push skuDimension
 	return uniqueDimensionsMap
@@ -266,7 +266,7 @@ selectableSkus = (skus, selectedDimensionsMap) ->
 	for sku, i in selectableArray by -1
 		match = true
 		for dimension, dimensionValue of selectedDimensionsMap when dimensionValue isnt undefined
-			skuDimensionValue = (dim for dim in sku.dimensions when dim.Key is dimension)[0].Value
+			skuDimensionValue = sku.dimensions[dimension]
 			if skuDimensionValue isnt dimensionValue
 				match = false
 				continue
@@ -319,7 +319,7 @@ disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus
 	for value in uniqueDimensionsMap[firstUndefinedDimensionName]
 		# Search for the sku dimension value corresponding to this dimension
 		for sku in selectableSkus
-			skuDimensionValue = (dim for dim in sku.dimensions when dim.Key is firstUndefinedDimensionName)[0].Value
+			skuDimensionValue = sku.dimensions[firstUndefinedDimensionName]
 			# If the dimension value matches, enable the button
 			if skuDimensionValue is value
 				selectors.itemDimensionValueInput(firstUndefinedDimensionName, value, $template).removeAttr('disabled')
