@@ -131,6 +131,8 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 		selectedSkuObj = selectedSku(skus, selectedDimensionsMap)
 		undefinedDimensions = findUndefinedDimensions(selectedDimensionsMap)
 
+		options.selectors.warning($template)
+
 		# Trigger event for interested scripts
 		if selectedSkuObj and undefinedDimensions.length is 0
 			$el.trigger 'skuSelected', [selectedSkuObj, dimensionName]
