@@ -14,14 +14,14 @@ skuVariationsDoneHandler = ($el, options, json) ->
 # On failure, redirects the user to the cart.
 addSkuToCart = (sku) ->
 	$.skuSelectorPopup.hidePopup()
-	console.log 'Adding SKU to cart:', sku
+	# console.log 'Adding SKU to cart:', sku
 	promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, false)
 	promise.done (data) ->
 		$(window).trigger 'productAddedToCart'
-		console.log 'Item adicionado com sucesso', sku, data
+		# console.log 'Item adicionado com sucesso', sku, data
 	promise.fail (jqXHR, status) ->
-		console.log jqXHR?.status, status
-		console.log 'Erro ao adicionar item', sku
+		# console.log jqXHR?.status, status
+		# console.log 'Erro ao adicionar item', sku
 		window.location.href = $.skuSelector.getAddUrlForSku(sku)
 	return false
 
@@ -32,7 +32,7 @@ bindClickHandlers = (className, $el) ->
 	$elements = $('.'+className)
 	warnUnavailable = $elements.data('warnUnavailable')
 	selectOnOpening = $elements.data('selectOnOpening')
-	console.log 'Binding to', $elements.length
+	# console.log 'Binding to', $elements.length
 	$elements.removeClass className
 	$elements.click (event) ->
 		event.preventDefault()
@@ -123,7 +123,7 @@ skuDimensionTemplate = """
 # $popup = $.skuSelectorPopup({popupId: "id", popupClass: "class1 class2"});
 $.skuSelectorPopup = (options = {}) ->
 	opts = $.extend($.skuSelectorPopup.defaults, options)
-	console.log('skuSelector', opts)
+	# console.log('skuSelector', opts)
 
 	$.skuSelectorPopup.$overlay = $(opts.overlayTemplate)
 	$.skuSelectorPopup.$overlay.addClass(opts.overlayClass) if opts.overlayClass
@@ -151,7 +151,7 @@ $.skuSelectorPopup = (options = {}) ->
 	# Binds the exit handler
 	$el.on 'click', '.skuselector-close', ->
 		$.skuSelectorPopup.hidePopup()
-		console.log 'Exiting sku selector'
+		# console.log 'Exiting sku selector'
 
 	return $el
 
@@ -167,7 +167,7 @@ popup = {}
 
 $(document).ready ->
 	popup = $.skuSelectorPopup()
-	popup.on 'skuSelected', (e, sku, dimension) -> console.log 'skuSelected', sku, dimension
+	# popup.on 'skuSelected', (e, sku, dimension) -> # console.log 'skuSelected', sku, dimension
 	bindClickHandlers "btn-add-sku", popup
 
 $(document).ajaxStop ->

@@ -16,7 +16,7 @@ $.fn.skuSelector = (options = {}) ->
 	opts = $.extend($.fn.skuSelector.defaults, options)
 	$el = $(this)
 	$el.addClass('sku-selector-loading')
-	console.log('fn.skuSelector', $el, opts)
+	# console.log('fn.skuSelector', $el, opts)
 
 	unless opts.mainTemplate and opts.dimensionListTemplate and opts.skuDimensionTemplate
 		throw new Error('Required option not given.')
@@ -27,7 +27,7 @@ $.fn.skuSelector = (options = {}) ->
 		opts.skuVariationsPromise.done (json) -> opts.skuVariationsDoneHandler($el, opts, json)
 		opts.skuVariationsPromise.fail (reason) -> opts.skuVariationsFailHandler($el, opts, reason)
 	else
-		console.error 'You must either provide a JSON or a Promise'
+		throw new Error 'You must either provide a JSON or a Promise'
 
 	return $el
 
@@ -58,7 +58,6 @@ $.fn.skuSelector.defaults =
 	# Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
 		$el.removeClass('sku-selector-loading')
-		console.error(reason)
 		window.location.href = options.productUrl if options.productUrl
 
 	warnUnavailablePost: (formElement) ->
@@ -70,7 +69,7 @@ $.fn.skuSelector.defaults =
 
 # Given a product id, return a promise for a request for the sku variations
 $.skuSelector.getSkusForProduct = (productId) ->
-	console.log 'getSkusForProduct', productId
+	# console.log 'getSkusForProduct', productId
 	$.get '/api/catalog_system/pub/products/variations/' + productId
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
@@ -83,7 +82,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 			
 	# Create unique dimensions map
 	uniqueDimensionsMap = calculateUniqueDimensions(dimensions, skus)
-	console.log 'skuSelector uniqueDimensionsMap', uniqueDimensionsMap
+	# console.log 'skuSelector uniqueDimensionsMap', uniqueDimensionsMap
 
 	# Render template string with replacements
 	renderedTemplate = renderSkuSelector(skus[0].image, name, productId,
@@ -125,7 +124,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 	dimensionChangeHandler = ->
 		dimensionName = $(this).attr('data-dimension')
 		dimensionValue = $(this).attr('data-value')
-		console.log 'Change dimension!', dimensionName, dimensionValue
+		# console.log 'Change dimension!', dimensionName, dimensionValue
 		selectedDimensionsMap[dimensionName] = dimensionValue
 		resetNextDimensions(dimensionName, selectedDimensionsMap)
 		selectedSkuObj = selectedSku(skus, selectedDimensionsMap)

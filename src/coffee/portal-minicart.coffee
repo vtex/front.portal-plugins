@@ -108,8 +108,8 @@
         self.options.cartData = data
       
       promise.fail (jqXHR, textStatus, errorThrown) ->
-        console.log "Error Message: " + textStatus
-        console.log "HTTP Error: " + errorThrown
+        # console.log "Error Message: " + textStatus
+        # console.log "HTTP Error: " + errorThrown
 
       promise
 
@@ -157,8 +157,8 @@
         $(item).parent().find('.vtexsc-overlay').hide()
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
-        console.log "Error Message: " + textStatus
-        console.log "HTTP Error: " + errorThrown
+        # console.log "Error Message: " + textStatus
+        # console.log "HTTP Error: " + errorThrown
 
     updateItems: (data) ->
       self = this

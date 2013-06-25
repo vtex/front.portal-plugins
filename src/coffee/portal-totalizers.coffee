@@ -88,8 +88,8 @@
         self.setCartData data
 
       promise.fail (jqXHR, textStatus, errorThrown) ->
-        console.log 'Error Message: ' + textStatus;
-        console.log 'HTTP Error: ' + errorThrown;
+        # console.log 'Error Message: ' + textStatus;
+        # console.log 'HTTP Error: ' + errorThrown;
 
       promise
 
