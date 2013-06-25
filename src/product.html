@@ -13,7 +13,7 @@
         var mocks = ['/spec/threeDimensionsAvailable.json', '/spec/threeDimensionsSomeUnavailable.json'];
         $.get = function (url) {
             console.log("mock:", url);
-            return $.ajax(mocks[0]);
+            return $.ajax(mocks[1]);
         };
     </script>
     <!-- build:js js/portal-sku-selector-product.min.js -->

@@ -91,7 +91,7 @@ module.exports = (grunt) ->
 			dev:
 				options:
 					livereload: true
-				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less']
+				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**']
 				tasks: ['dev']
 
 			prod:
@@ -101,7 +101,7 @@ module.exports = (grunt) ->
 				tasks: ['prod']
 
 			test:
-				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**/*.coffee']
+				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**']
 				tasks: ['dev', 'karma:unit:run']
 
 		concat:

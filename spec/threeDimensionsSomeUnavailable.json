@@ -40,19 +40,19 @@
 			"seller": "MeuAmigoPet"
 		},
 		{
-			"sku": 5273,
+			"sku": 51162,
 			"dimensions": {
-				"Peso": "7,5 Kg",
+				"Peso": "2,5 Kg",
 				"Fase da Vida": "Filhote",
-				"Porte": "Pequeno"
+				"Porte": "Grande"
 			},
-			"available": false,
-			"listPrice": 99998700,
-			"bestPrice": 99998700,
+			"available": true,
+			"listPrice": 6190,
+			"bestPrice": 6190,
 			"installments": 3,
-			"installmentsValue": 33332900,
+			"installmentsValue": 2063,
 			"installmentsInsterestRate": 0,
-			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170344-71-71/7897348201120.jpg",
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170199-71-71/7897348201274.jpg",
 			"seller": "MeuAmigoPet"
 		},
 		{
@@ -63,6 +63,54 @@
 				"Porte": "Pequeno"
 			},
 			"available": false,
+			"listPrice": 99998700,
+			"bestPrice": 99998700,
+			"installments": 3,
+			"installmentsValue": 33332900,
+			"installmentsInsterestRate": 0,
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet"
+		},
+		{
+			"sku": 52766,
+			"dimensions": {
+				"Peso": "12 Kg",
+				"Fase da Vida": "Filhote",
+				"Porte": "Grande"
+			},
+			"available": false,
+			"listPrice": 99998700,
+			"bestPrice": 99998700,
+			"installments": 3,
+			"installmentsValue": 33332900,
+			"installmentsInsterestRate": 0,
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet"
+		},
+		{
+			"sku": 527677,
+			"dimensions": {
+				"Peso": "2,5 Kg",
+				"Fase da Vida": "Adulto",
+				"Porte": "Grande"
+			},
+			"available": false,
+			"listPrice": 99998700,
+			"bestPrice": 99998700,
+			"installments": 3,
+			"installmentsValue": 33332900,
+			"installmentsInsterestRate": 0,
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet"
+		},
+		{
+			"sku": 527678,
+			"dimensions": {
+				"Peso": "7,5 Kg",
+				"Fase da Vida": "Filhote",
+				"Porte": "Pequeno"
+			},
+			"available": true,
 			"listPrice": 99998700,
 			"bestPrice": 99998700,
 			"installments": 3,
