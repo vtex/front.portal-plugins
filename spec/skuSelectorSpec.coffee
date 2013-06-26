@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = "base/build/spec/fixtures"
+jasmine.getFixtures().fixturesPath = "base/build/"
 
 describe 'SkuSelector', ->
 
