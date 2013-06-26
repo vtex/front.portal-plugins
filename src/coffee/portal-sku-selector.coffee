@@ -157,8 +157,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 			for dimension in undefinedDimensions
 				selectDimension(options.selectors.itemDimensionInput(dimension, $template))
 
-		# selectedSkuObj must be valid now, as first available dimensions were selected.
-		updatePrice(selectedSkuObj, options, $template)
+			updatePrice(selectedSkuObj, options, $template)
 
 	# Binds handlers
 	options.selectors.buyButton($template).click(buyButtonHandler)
@@ -177,7 +176,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $
 			return false
 
 	# Select first dimension
-	if options.selectOnOpening
+	if options.selectOnOpening or selectedSku(skus, selectedDimensionsMap)
 		selectDimension(options.selectors.itemDimensionInput(dimensions[0], $template))
 
 	return $template
