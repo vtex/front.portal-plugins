@@ -7,25 +7,6 @@ skuVariationsDoneHandler = ($el, options, json) ->
 		$el.fadeIn()
 		$(window).trigger('skuSelectorReady')
 
-mainTemplate = """{{dimensionLists}}"""
-
-dimensionListTemplate = """
-	<ul class="topic {{dimensionSanitized}}">
-		<li class="specification">{{dimension}}</li>
-		<li class="select skuList item-dimension-{{dimensionSanitized}}">
-			<span class="group_{{dimensionIndex}}">
-				{{skuList}}
-			</span>
-		</li>
-	</ul>
-	"""
-
-skuDimensionTemplate = """
-	<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
-		class="skuselector-specification-label input-dimension-{{dimensionSanitized}} sku-selector skuespec_{{valueSanitized}} change-image" id="{{productId}}_{{dimensionSanitized}}_{{index}}" value="{{valueSanitized}}" specification="{{valueSanitized}}">
-	<label for="{{productId}}_{{dimensionSanitized}}_{{index}}" class="dimension-{{dimensionSanitized}} espec_{{dimensionIndex}} skuespec_{{valueSanitized}}">{{value}}</label>
-	"""
-
 updateBuyButtonURL = (url)->
 	$('.buy-button').attr('href', url)
 
