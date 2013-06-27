@@ -60,7 +60,7 @@
         $(window).trigger "miniCartMouseOut"
 
       $(window).on "miniCartMouseOver", ->
-        if self.options.cartData.items.length > 0
+        if self.options.cartData?.items.length > 0
           $(".vtexsc-cart").slideDown()
           clearTimeout self.options.timeoutToHide
 
