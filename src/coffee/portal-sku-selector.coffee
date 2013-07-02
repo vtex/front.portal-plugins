@@ -4,6 +4,10 @@ $ = window.jQuery
 # Sku Selector elements function.
 $.skuSelector = {}
 
+
+#
+# CLASSE
+#
 class SkuSelector
 	constructor: (productId, name, dimensions, skus) ->
 		@productId = productId
@@ -127,6 +131,9 @@ class SkuSelector
 						selectors.itemDimensionValueLabel(dimension, value, context).removeClass('disabled item_unavaliable')
 
 
+#
+# PLUGIN ENTRY POINT
+#
 $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 	options = $.extend($.fn.skuSelector.defaults, options)
 	this.addClass('sku-selector-loading')
@@ -216,6 +223,10 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 
 	return this
 
+
+#
+# PLUGIN DEFAULTS
+#
 $.fn.skuSelector.defaults =
 	skuVariationsPromise: undefined
 	skuVariations: undefined
@@ -248,8 +259,9 @@ $.fn.skuSelector.defaults =
 	warnUnavailablePost: (formElement) ->
 		$.post '/no-cache/AviseMe.aspx', $(formElement).serialize()
 
+
 #
-# SHARED FUNCTIONS
+# PLUGIN SHARED FUNCTIONS
 #
 
 # Given a product id, return a promise for a request for the sku variations
@@ -259,6 +271,7 @@ $.skuSelector.getSkusForProduct = (productId) ->
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	window.location.protocol + '//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
+
 
 #
 # PRIVATE FUNCTIONS
@@ -297,6 +310,11 @@ updatePriceUnavailable = (options, context) ->
 	options.selectors.price(context).hide()
 	options.selectors.buyButton(context).hide()
 	# $('.notifyme-skuid').val()
+
+
+#
+# UTILITY FUNCTIONS
+#
 
 # Sanitizes text: "Caçoá (teste 2)" becomes "cacoateste2"
 sanitize = (str = this) ->
