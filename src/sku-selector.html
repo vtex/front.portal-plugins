@@ -75,6 +75,6 @@
 <script type="text/javascript">
     var mocks = ['/spec/mocks/oneDimensionAvailable.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json'];
     $.getJSON(mocks[2]).done(function(data){
-        $('.sku-selector-container').skuSelector2(data.productId, data.name, data.dimensions, data.skus);
+        $('.sku-selector-container').skuSelector(data.productId, data.name, data.dimensions, data.skus);
     })
 </script>
