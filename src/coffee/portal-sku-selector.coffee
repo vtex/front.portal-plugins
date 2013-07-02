@@ -61,7 +61,7 @@ class SkuSelector
 			@selectedDimensionsMap[key] = undefined if foundCurrent
 			foundCurrent = true if key is dimensionName
 
-	# Renders the DOM elements of the Sku Selector, given the JSON and the templates
+	# Renders the DOM elements of the Sku Selector, given the context
 	renderSkuSelector: (context) =>
 		dimensionIndex = 0
 
@@ -121,11 +121,11 @@ class SkuSelector
 					skuDimensionValue = sku.dimensions[dimension]
 					# If the dimension value matches, enable the button
 					if skuDimensionValue is value
-						selectors.itemDimensionValueInput(dimension, value, $template).removeAttr('disabled')
+						selectors.itemDimensionValueInput(dimension, value, context).removeAttr('disabled')
 					# If the dimension value matches and this sku is available, show as selectable
 					if skuDimensionValue is value and sku.available
-						selectors.itemDimensionValueInput(dimension, value, $template).removeClass('item_unavaliable')
-						selectors.itemDimensionValueLabel(dimension, value, $template).removeClass('disabled item_unavaliable')
+						selectors.itemDimensionValueInput(dimension, value, context).removeClass('item_unavaliable')
+						selectors.itemDimensionValueLabel(dimension, value, context).removeClass('disabled item_unavaliable')
 
 
 $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
@@ -143,9 +143,9 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 	available = skuSelectorObj.findAvailableSkus()
 	if available.length is 0
 		# showWarningUnavailable
-		options.selectors.warnUnavailable($template).find('input#notifymeSkuId').val(skus[0].sku)
-		options.selectors.warnUnavailable($template).show()
-		$('.skuselector-buy-btn', $template).hide()
+		options.selectors.warnUnavailable(this).find('input#notifymeSkuId').val(skus[0].sku)
+		options.selectors.warnUnavailable(this).show()
+		options.selectors.buyButton(this).hide()
 	else if available.length is 1
 		updatePrice(available[0], options, this)
 
@@ -271,32 +271,32 @@ selectDimension = (dimArray) ->
 	el = (if available.length > 0 then available else dimArray).filter('input:enabled')[0]
 	$(el).attr('checked', 'checked').change() if dimArray.length > 0
 
-updatePrice = (sku, options, template) ->
+updatePrice = (sku, options, context) ->
 	if sku and sku.available
-		updatePriceAvailable(sku, options, template)
+		updatePriceAvailable(sku, options, context)
 	else
-		updatePriceUnavailable(options, template)
+		updatePriceUnavailable(options, context)
 
-updatePriceAvailable = (sku, options, template) ->
+updatePriceAvailable = (sku, options, context) ->
 	listPrice = formatCurrency sku.listPrice
 	bestPrice = formatCurrency sku.bestPrice
 	installments = sku.installments
 	installmentValue = formatCurrency sku.installmentsValue
 
 	# Modifica href do botão comprar
-	options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
-	options.selectors.price(template).show()
-	options.selectors.buyButton(template).show()
-	options.selectors.listPriceValue(template).text("R$ #{listPrice}")
-	options.selectors.bestPriceValue(template).text("R$ #{bestPrice}")
+	options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), context)
+	options.selectors.price(context).show()
+	options.selectors.buyButton(context).show()
+	options.selectors.listPriceValue(context).text("R$ #{listPrice}")
+	options.selectors.bestPriceValue(context).text("R$ #{bestPrice}")
 	if installments > 1
-		options.selectors.installment(template).text("ou até #{installments}x de R$ #{installmentValue}")
+		options.selectors.installment(context).text("ou até #{installments}x de R$ #{installmentValue}")
 
-updatePriceUnavailable = (options, template) ->
+updatePriceUnavailable = (options, context) ->
 	# Modifica href do botão comprar
-	options.updateBuyButtonURL('javascript:void(0);', template)
-	options.selectors.price(template).hide()
-	options.selectors.buyButton(template).hide()
+	options.updateBuyButtonURL('javascript:void(0);', context)
+	options.selectors.price(context).hide()
+	options.selectors.buyButton(context).hide()
 	# $('.notifyme-skuid').val()
 
 # Sanitizes text: "Caçoá (teste 2)" becomes "cacoateste2"
@@ -319,29 +319,3 @@ formatCurrency = (value) ->
 		return parseFloat(value/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 	else
 		return "Grátis"
-
-# Disable unselectable SKUs given the current selections
-disableInvalidInputs = (uniqueDimensionsMap, undefinedDimensions, selectableSkus, $template, selectors) ->
-	# First, find the first undefined dimension selection list
-	firstUndefinedDimensionName = undefinedDimensions[0]
-
-	# If there is no undefined dimension, there is nothing to disable.
-	return unless firstUndefinedDimensionName
-
-	for dimension in undefinedDimensions
-		# Second, disable all options in this row, add disabled class, remove checked class and matching removeAttr checked
-		selectors.itemDimensionInput(dimension, $template).addClass('item_unavaliable').removeAttr('checked').removeClass('checked sku-picked').attr('disabled', 'disabled')
-		selectors.itemDimensionLabel(dimension, $template).addClass('disabled item_unavaliable').removeClass('checked sku-picked')
-
-		# Third, enable all selectable options in this row
-		for value in uniqueDimensionsMap[dimension]
-			# Search for the sku dimension value corresponding to this dimension
-			for sku in selectableSkus
-				skuDimensionValue = sku.dimensions[dimension]
-				# If the dimension value matches, enable the button
-				if skuDimensionValue is value
-					selectors.itemDimensionValueInput(dimension, value, $template).removeAttr('disabled')
-				# If the dimension value matches and this sku is available, show as selectable
-				if skuDimensionValue is value and sku.available
-					selectors.itemDimensionValueInput(dimension, value, $template).removeClass('item_unavaliable')
-					selectors.itemDimensionValueLabel(dimension, value, $template).removeClass('disabled item_unavaliable')
