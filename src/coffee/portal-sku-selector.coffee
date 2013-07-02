@@ -16,7 +16,8 @@ class SkuSelector
 		@skus = skus
 
 		#Create dimensions map
-		@selectedDimensionsMap = (undefined for dimension in dimensions)
+		@selectedDimensionsMap = {}
+		@selectedDimensionsMap[dimension] = undefined for dimension in dimensions
 
 		@uniqueDimensionsMap = @findUniqueDimensions()
 
@@ -118,7 +119,7 @@ class SkuSelector
 				.removeClass('checked sku-picked')
 
 			# Enable all selectable options in this row
-			for value of @uniqueDimensionsMap[dimension]
+			for value in @uniqueDimensionsMap[dimension]
 				# Search for the sku dimension value corresponding to this dimension
 				for sku in selectableSkus
 					skuDimensionValue = sku.dimensions[dimension]
@@ -170,6 +171,7 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 		dimensionValue = $(this).attr('data-value')
 		console.log 'Change dimension!', dimensionName, dimensionValue
 		skuSelectorObj.selectedDimensionsMap[dimensionName] = dimensionValue
+		console.log(skuSelectorObj.selectedDimensionsMap)
 		skuSelectorObj.resetNextDimensions(dimensionName)
 		selectedSku = skuSelectorObj.findSelectedSku()
 		undefinedDimensions = skuSelectorObj.findUndefinedDimensions()
