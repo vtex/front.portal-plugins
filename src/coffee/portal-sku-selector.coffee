@@ -26,7 +26,6 @@ class SkuSelector
 				skuDimension = sku.dimensions[dimension]
 				if $.inArray(skuDimension, uniqueDimensionsMap[dimension]) is -1
 					uniqueDimensionsMap[dimension].push skuDimension
-		console.log uniqueDimensionsMap
 		return uniqueDimensionsMap
 
 	findUndefinedDimensions: =>
