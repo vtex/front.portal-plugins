@@ -8,17 +8,8 @@ describe 'SkuSelector', ->
 		expect($.fn.skuSelector).toBeDefined()
 		expect($.skuSelector).toBeDefined()
 
+	beforeEach ->
+		loadFixtures 'sku-selector.html'
 
-	describe 'Popup', ->
-		beforeEach ->
-			loadFixtures 'popup.html'
-
-		it 'should have loaded fixtures correctly', ->
-			expect($('div')).toExist()
-
-	describe 'Product', ->
-		beforeEach ->
-			loadFixtures 'product.html'
-
-		it 'should have loaded fixtures correctly', ->
-			expect($('div')).toExist()
+	it 'should have loaded fixtures correctly', ->
+		expect($('div')).toExist()
