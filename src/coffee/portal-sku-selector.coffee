@@ -1,6 +1,3 @@
-window.vtex or= {}
-vtex.portalPlugins or= {}
-
 # Alias jQuery internally
 $ = window.jQuery
 
@@ -150,11 +147,18 @@ class SkuSelector
 #
 # PLUGIN ENTRY POINT
 #
-$.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
+$.fn.skuSelector = (productId, name, dimensions, skus, jsOptions = {}) ->
 	context = this
-
-	options = $.extend($.fn.skuSelector.defaults, options)
 	this.addClass('sku-selector-loading')
+
+	# Gather options
+	domOptions = this.data()
+	defaultOptions = $.fn.skuSelector.defaults
+	# Build final options object (priority: js, then dom, then default)
+	# Deep extending with true, for the selectors
+	options = $.extend(true, defaultOptions, domOptions, jsOptions)
+
+	# Instantiate our singleton
 	skuSelectorObj = new SkuSelector(productId, name, dimensions, skus)
 
 	# Finds elements and puts SKU information in them
@@ -257,17 +261,17 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 #
 $.fn.skuSelector.defaults =
 	addSkuToCartPreventDefault: true
-	buyButtonSelector: ''
 	warnUnavailable: false
 	selectOnOpening: false
 	selectors:
-		listPriceValue: (context) -> $('.skuselector-list-price .value', context).add('.skuListPrice')
-		bestPriceValue: (context) -> $('.skuselector-best-price .value', context).add('.skuBestPrice')
+		listPriceValue: (context) -> $('.skuselector-list-price .value', context)
+		bestPriceValue: (context) -> $('.skuselector-best-price .value', context)
 		installment: (context) -> $('.skuselector-installment', context)
 		buyButton: (context) -> $('.skuselector-buy-btn', context)
 		price: (context) -> $('.skuselector-price', context)
 		warning: (context) -> $('.skuselector-warning', context)
 		warnUnavailable: (context) -> $('.skuselector-warn-unavailable', context)
+		# TODO remover seletores abaixo
 		itemDimensionListItem: (dimensionName, context) -> $(".item-dimension-#{sanitize(dimensionName)}", context)
 		itemDimensionInput: (dimensionName, context) -> $(".item-dimension-#{sanitize(dimensionName)} input", context)
 		itemDimensionLabel: (dimensionName, context) -> $(".item-dimension-#{sanitize(dimensionName)} label", context)
@@ -363,4 +367,6 @@ formatCurrency = (value) ->
 #
 # EXPORTS
 #
+window.vtex or= {}
+vtex.portalPlugins or= {}
 vtex.portalPlugins.SkuSelector = SkuSelector
