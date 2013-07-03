@@ -3,6 +3,7 @@ files = [
 	JASMINE_ADAPTER,
 	'build/lib/jquery-1.8.3.min.js',
 	'build/js/portal-sku-selector.js',
+    'build/spec/helpers/*.js',
 	'build/spec/**/*.js'
 ];
 browsers = [
