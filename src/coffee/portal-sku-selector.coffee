@@ -205,6 +205,7 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 
 	# Binds handlers
 	options.selectors.buyButton(this).click(buyButtonHandler)
+
 	for dimension in skuSelectorObj.dimensions
 		options.selectors.itemDimensionInput(dimension, this).change(dimensionChangeHandler)
 
@@ -250,8 +251,6 @@ $.fn.skuSelector.defaults =
 		itemDimensionValueInput: (dimensionName, valueName, context) -> $('.item-dimension-' + sanitize(dimensionName) + ' input[value="' + sanitize(valueName) + '"]', context)
 		itemDimensionValueLabel: (dimensionName, valueName, context) -> $('.item-dimension-' + sanitize(dimensionName) + ' label.skuespec_' + sanitize(valueName), context)
 
-	updateBuyButtonURL: (url, template)->
-		$('.skuselector-buy-btn', template).attr('href', url)
 
 	# Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
@@ -298,7 +297,7 @@ updatePriceAvailable = (sku, options, context) ->
 	installmentValue = formatCurrency sku.installmentsValue
 
 	# Modifica href do botão comprar
-	options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), context)
+	options.selectors.buyButton(context).attr('href', $.skuSelector.getAddUrlForSku(sku.sku))
 	options.selectors.price(context).show()
 	options.selectors.buyButton(context).show()
 	options.selectors.listPriceValue(context).text("R$ #{listPrice}")
@@ -308,7 +307,7 @@ updatePriceAvailable = (sku, options, context) ->
 
 updatePriceUnavailable = (options, context) ->
 	# Modifica href do botão comprar
-	options.updateBuyButtonURL('javascript:void(0);', context)
+	options.selectors.buyButton(context).attr('href', 'javascript:void(0);')
 	options.selectors.price(context).hide()
 	options.selectors.buyButton(context).hide()
 	# $('.notifyme-skuid').val()

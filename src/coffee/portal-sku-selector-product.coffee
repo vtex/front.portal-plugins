@@ -7,9 +7,6 @@ skuVariationsDoneHandler = ($el, options, json) ->
 		$el.fadeIn()
 		$(window).trigger('skuSelectorReady')
 
-updateBuyButtonURL = (url)->
-	$('.buy-button').attr('href', url)
-
 $(window).ready ->
 	ref = $('.product-sku-selector-ref');
 	ref.after('<div class="sku-selector-container" />');
@@ -23,7 +20,8 @@ $(window).ready ->
 		mainTemplate: mainTemplate
 		dimensionListTemplate: dimensionListTemplate
 		skuDimensionTemplate: skuDimensionTemplate
-		updateBuyButtonURL: updateBuyButtonURL
+		selectors:
+			buyButton: (context) -> $('.buy-button', context)
 
 	$(".sku-selector-container").on 'skuSelected', (e, sku, selectedDimension) ->
 		# console.log 'Selected:', sku, selectedDimension
