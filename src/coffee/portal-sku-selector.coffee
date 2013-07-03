@@ -175,9 +175,9 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 		dimensionName = $(this).attr('data-dimension')
 		dimensionValue = $(this).attr('data-value')
 		skuSelectorObj.setSelectedDimension(dimensionName, dimensionValue)
+		skuSelectorObj.resetNextDimensions(dimensionName)
 		# console.log 'Change dimension!', dimensionName, dimensionValue
 		# console.log(skuSelectorObj.selectedDimensionsMap)
-		skuSelectorObj.resetNextDimensions(dimensionName)
 		selectedSku = skuSelectorObj.findSelectedSku()
 		undefinedDimensions = skuSelectorObj.findUndefinedDimensions()
 
@@ -208,6 +208,18 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 
 			updatePrice(selectedSku, options, this)
 
+	# Handles submission in the warn unavailable form
+	warnUnavailableSubmitHandler = (e) ->
+		e.preventDefault()
+		options.selectors.warnUnavailable(this).find('#notifymeLoading').show()
+		options.selectors.warnUnavailable(this).find('form').hide()
+		xhr = options.warnUnavailablePost(e.target)
+		xhr.done -> options.selectors.warnUnavailable(this).find('#notifymeSuccess').show()
+		xhr.fail -> options.selectors.warnUnavailable(this).find('#notifymeError').show()
+		xhr.always -> options.selectors.warnUnavailable(this).find('#notifymeLoading').hide()
+		return false
+
+
 	# Binds handlers
 	options.selectors.buyButton(this).click(buyButtonHandler)
 
@@ -215,20 +227,13 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 		options.selectors.itemDimensionInput(dimension, this).change(dimensionChangeHandler)
 
 	if options.warnUnavailable
-		options.selectors.warnUnavailable(this).find('form').submit (e) ->
-			e.preventDefault()
-			options.selectors.warnUnavailable(this).find('#notifymeLoading').show()
-			options.selectors.warnUnavailable(this).find('form').hide()
-			xhr = options.warnUnavailablePost(e.target)
-			xhr.done -> options.selectors.warnUnavailable(this).find('#notifymeSuccess').show()
-			xhr.fail -> options.selectors.warnUnavailable(this).find('#notifymeError').show()
-			xhr.always -> options.selectors.warnUnavailable(this).find('#notifymeLoading').hide()
-			return false
+		options.selectors.warnUnavailable(this).find('form').submit(warnUnavailableSubmitHandler)
 
 	# Select first dimension
 	if options.selectOnOpening or skuSelectorObj.findSelectedSku()
 		selectDimension(options.selectors.itemDimensionInput(dimensions[0], this))
 
+	# Chaining
 	return this
 
 
@@ -320,7 +325,7 @@ updatePriceUnavailable = (options, context) ->
 # UTILITY FUNCTIONS
 #
 
-# Sanitizes text: "Caçoá (teste 2)" becomes "cacoateste2"
+# Sanitizes text: "Caçoá (teste 2)" becomes "Cacoateste2"
 sanitize = (str = this) ->
 	specialChars =  "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź"
 	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczz"
@@ -334,7 +339,7 @@ sanitize = (str = this) ->
 		.toLowerCase()
 	return sanitized.charAt(0).toUpperCase() + sanitized.slice(1)
 
-# Format currency to brazilian reais
+# Format currency to brazilian reais: 123455 becomes "1.234,55"
 formatCurrency = (value) ->
 	if value? and not isNaN value
 		return parseFloat(value/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
