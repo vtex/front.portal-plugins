@@ -19,6 +19,7 @@ class SkuSelector
 		@selectedDimensionsMap = {}
 		@selectedDimensionsMap[dimension] = undefined for dimension in dimensions
 
+		# Object of structure { dimension : [possibility] }
 		@uniqueDimensionsMap = @findUniqueDimensions()
 
 	findUniqueDimensions: =>
@@ -40,17 +41,18 @@ class SkuSelector
 		(sku for sku in @skus when sku.available)
 
 	findSelectableSkus: =>
-		selectableArray = @skus[..]
-		for sku, i in selectableArray by -1
+		# copy the skus array and then mutate the copy
+		selectableSkus = @skus[..]
+		for sku, i in selectableSkus by -1
 			match = true
 			for dimension, dimensionValue of @selectedDimensionsMap when dimensionValue isnt undefined
 				skuDimensionValue = sku.dimensions[dimension]
 				if skuDimensionValue isnt dimensionValue
 					match = false
 					continue
-			selectableArray.splice(i, 1) unless match
-			# selectableArray.splice(i, 1) unless match and sku.available
-		return selectableArray
+			selectableSkus.splice(i, 1) unless match
+			# selectableSkus.splice(i, 1) unless match and sku.available
+		return selectableSkus
 
   findAvailableSkus: =>
     (sku for sku in @skus when sku.available is true)
@@ -59,11 +61,14 @@ class SkuSelector
 		s = @findSelectableSkus()
 		return if s.length is 1 then s[0] else undefined
 
-	resetNextDimensions: (dimensionName) =>
+	setSelectedDimension: (dimension, value) =>
+		@selectedDimensionsMap[dimension] = value
+
+	resetNextDimensions: (theDimension) =>
 		foundCurrent = false
-		for key of @selectedDimensionsMap
-			@selectedDimensionsMap[key] = undefined if foundCurrent
-			foundCurrent = true if key is dimensionName
+		for dimension of @dimensions
+			@setSelectedDimension(dimension, undefined) if foundCurrent
+			foundCurrent = true if dimension is theDimension
 
 	# Renders the DOM elements of the Sku Selector, given the context
 	renderSkuSelector: (context) =>
@@ -169,9 +174,9 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 	dimensionChangeHandler = (event) ->
 		dimensionName = $(this).attr('data-dimension')
 		dimensionValue = $(this).attr('data-value')
-		console.log 'Change dimension!', dimensionName, dimensionValue
-		skuSelectorObj.selectedDimensionsMap[dimensionName] = dimensionValue
-		console.log(skuSelectorObj.selectedDimensionsMap)
+		skuSelectorObj.setSelectedDimension(dimensionName, dimensionValue)
+		# console.log 'Change dimension!', dimensionName, dimensionValue
+		# console.log(skuSelectorObj.selectedDimensionsMap)
 		skuSelectorObj.resetNextDimensions(dimensionName)
 		selectedSku = skuSelectorObj.findSelectedSku()
 		undefinedDimensions = skuSelectorObj.findUndefinedDimensions()
@@ -297,9 +302,8 @@ updatePriceAvailable = (sku, options, context) ->
 	installmentValue = formatCurrency sku.installmentsValue
 
 	# Modifica href do botão comprar
-	options.selectors.buyButton(context).attr('href', $.skuSelector.getAddUrlForSku(sku.sku))
+	options.selectors.buyButton(context).attr('href', $.skuSelector.getAddUrlForSku(sku.sku)).show()
 	options.selectors.price(context).show()
-	options.selectors.buyButton(context).show()
 	options.selectors.listPriceValue(context).text("R$ #{listPrice}")
 	options.selectors.bestPriceValue(context).text("R$ #{bestPrice}")
 	if installments > 1
@@ -307,9 +311,8 @@ updatePriceAvailable = (sku, options, context) ->
 
 updatePriceUnavailable = (options, context) ->
 	# Modifica href do botão comprar
-	options.selectors.buyButton(context).attr('href', 'javascript:void(0);')
+	options.selectors.buyButton(context).attr('href', 'javascript:void(0);').hide()
 	options.selectors.price(context).hide()
-	options.selectors.buyButton(context).hide()
 	# $('.notifyme-skuid').val()
 
 
