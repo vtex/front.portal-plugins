@@ -65,10 +65,10 @@ class SkuSelector
 		@selectedDimensionsMap[dimension] = value
 
 	resetNextDimensions: (theDimension) =>
-		foundCurrent = false
-		for dimension of @dimensions
-			@setSelectedDimension(dimension, undefined) if foundCurrent
-			foundCurrent = true if dimension is theDimension
+		currentIndex = @dimensions.indexOf(theDimension)
+
+		for dimension, i in @dimensions when i > currentIndex
+			@setSelectedDimension(dimension, undefined)
 
 	# Renders the DOM elements of the Sku Selector, given the context
 	renderSkuSelector: (context) =>
