@@ -93,16 +93,16 @@ class SkuSelector
 				valueSanitized = sanitize(value)
 
 				skuList.find('input').attr('data-dimension', dimension)
-				.attr('dimension', dimensionSanitized)
-				.attr('name', 'dimension-' + dimensionSanitized)
-				.attr('data-value', value)
-				.attr('value', valueSanitized)
-				.attr('specification', valueSanitized)
-				.attr('id', "#{@productId}_#{dimensionSanitized}_#{i}")
-				.addClass("input-dimension-#{dimensionSanitized} sku-selector skuespec_#{valueSanitized} ")
+					.attr('dimension', dimensionSanitized)
+					.attr('name', 'dimension-' + dimensionSanitized)
+					.attr('data-value', value)
+					.attr('value', valueSanitized)
+					.attr('specification', valueSanitized)
+					.attr('id', "#{@productId}_#{dimensionSanitized}_#{i}")
+					.addClass("input-dimension-#{dimensionSanitized} sku-selector skuespec_#{valueSanitized} ")
 				skuList.find('label').attr('for', "#{@productId}_#{dimensionSanitized}_#{i}")
-				.text(value)
-				.addClass("dimension-#{dimensionSanitized} espec_#{dimensionIndex} skuespec_#{valueSanitized}")
+					.text(value)
+					.addClass("dimension-#{dimensionSanitized} espec_#{dimensionIndex} skuespec_#{valueSanitized}")
 
 				skuList.appendTo(dimensionList.find('.skuList'))
 
@@ -176,8 +176,8 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 		dimensionValue = $(this).attr('data-value')
 		skuSelectorObj.setSelectedDimension(dimensionName, dimensionValue)
 		skuSelectorObj.resetNextDimensions(dimensionName)
-		# console.log 'Change dimension!', dimensionName, dimensionValue
-		# console.log(skuSelectorObj.selectedDimensionsMap)
+		console.log 'Change dimension!', dimensionName, dimensionValue
+		console.log(skuSelectorObj.selectedDimensionsMap)
 		selectedSku = skuSelectorObj.findSelectedSku()
 		undefinedDimensions = skuSelectorObj.findUndefinedDimensions()
 
