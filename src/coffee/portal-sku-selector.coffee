@@ -1,3 +1,6 @@
+window.vtex or= {}
+vtex.portalPlugins or= {}
+
 # Alias jQuery internally
 $ = window.jQuery
 
@@ -253,8 +256,6 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 # PLUGIN DEFAULTS
 #
 $.fn.skuSelector.defaults =
-	skuVariationsPromise: undefined
-	skuVariations: undefined
 	addSkuToCartPreventDefault: true
 	buyButtonSelector: ''
 	warnUnavailable: false
@@ -357,3 +358,9 @@ formatCurrency = (value) ->
 		return parseFloat(value/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 	else
 		return "Grátis"
+
+
+#
+# EXPORTS
+#
+vtex.portalPlugins.SkuSelector = SkuSelector
