@@ -218,7 +218,7 @@ $.fn.skuSelector = (productId, name, dimensions, skus, options = {}) ->
 			for dimension in undefinedDimensions
 				selectDimension(options.selectors.itemDimensionInput(dimension, context))
 
-			updatePrice(selectedSku, options, context)
+		updatePrice(selectedSku, options, context)
 
 	# Handles submission in the warn unavailable form
 	warnUnavailableSubmitHandler = (e) ->
