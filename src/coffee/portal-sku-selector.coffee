@@ -9,15 +9,15 @@ $.skuSelector = {}
 # CLASSE
 #
 class SkuSelector
-	constructor: (productId, name, dimensions, skus) ->
-		@productId = productId
-		@name = name
-		@dimensions = dimensions
-		@skus = skus
+	constructor: (productData) ->
+		@productId = productData.productId
+		@name = productData.name
+		@dimensions = productData.dimensions
+		@skus = productData.skus
 
 		#Create dimensions map
 		@selectedDimensionsMap = {}
-		@selectedDimensionsMap[dimension] = undefined for dimension in dimensions
+		@selectedDimensionsMap[dimension] = undefined for dimension in @dimensions
 
 		# Object of structure { dimension : [possibility] }
 		@uniqueDimensionsMap = @findUniqueDimensions()
@@ -147,7 +147,7 @@ class SkuSelector
 #
 # PLUGIN ENTRY POINT
 #
-$.fn.skuSelector = (productId, name, dimensions, skus, jsOptions = {}) ->
+$.fn.skuSelector = (productData, jsOptions = {}) ->
 	context = this
 	this.addClass('sku-selector-loading')
 
@@ -159,7 +159,7 @@ $.fn.skuSelector = (productId, name, dimensions, skus, jsOptions = {}) ->
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
 
 	# Instantiate our singleton
-	skuSelectorObj = new SkuSelector(productId, name, dimensions, skus)
+	skuSelectorObj = new SkuSelector(productData)
 
 	# Finds elements and puts SKU information in them
 	skuSelectorObj.renderSkuSelector(this)
