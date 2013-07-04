@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = "base/build/"
+jasmine.getFixtures().fixturesPath = "base/build/spec/fixtures/"
 
 describe 'SkuSelector', ->
 	it 'should exist', ->
@@ -7,7 +7,7 @@ describe 'SkuSelector', ->
 describe '$.skuSelector', ->
 
 	beforeEach ->
-		loadFixtures 'templates/sku-selector.html'
+		loadFixtures 'sku-selector.html'
 
 	it 'should have jQuery', ->
 		expect($).toBeDefined()
@@ -16,6 +16,4 @@ describe '$.skuSelector', ->
 		expect($.skuSelector).toBeDefined()
 
 	it 'should have loaded fixtures correctly', ->
-		console.log $('div').length
-
 		expect($('.sku-selector-container')).toExist()
