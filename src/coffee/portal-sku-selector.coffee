@@ -76,12 +76,12 @@ $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	window.location.protocol + '//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
-$.skuSelector.createSkuSelector = (productId, name, dimensions, skus, options, $el) =>
+$.skuSelector.createSkuSelector = (productId, name, dimensions, dimensionsMap, skus, options, $el) =>
 	# Create selected dimensions map and functions
 	selectedDimensionsMap = createDimensionsMap(dimensions)
 			
 	# Create unique dimensions map
-	uniqueDimensionsMap = calculateUniqueDimensions(dimensions, skus)
+	uniqueDimensionsMap = dimensionsMap
 	# console.log 'skuSelector uniqueDimensionsMap', uniqueDimensionsMap
 
 	# Render template string with replacements
@@ -248,18 +248,6 @@ resetNextDimensions = (dimensionName, selectedDimensionsMap) ->
 	for key of selectedDimensionsMap
 		selectedDimensionsMap[key] = undefined if foundCurrent
 		foundCurrent = true if key is dimensionName
-
-calculateUniqueDimensions = (dimensions, skus) ->
-	uniqueDimensionsMap = {}
-	# For each dimension, lets grab the uniques
-	for dimension in dimensions
-		uniqueDimensionsMap[dimension] = []
-		for sku in skus
-			# If this dimension doesnt exist, add it
-			skuDimension = sku.dimensions[dimension]
-			if $.inArray(skuDimension, uniqueDimensionsMap[dimension]) is -1
-				uniqueDimensionsMap[dimension].push skuDimension
-	return uniqueDimensionsMap
 
 selectableSkus = (skus, selectedDimensionsMap) ->
 	selectableArray = skus[..]

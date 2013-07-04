@@ -4,6 +4,9 @@
 	"dimensions": [
 		"Voltagem"
 	],
+	"dimensionsMap": {
+		"Voltagem": ["TENSÃO / FREQUÊNCIA"]
+	},
 	"skus": [
 		{
 			"sku": 2000082,

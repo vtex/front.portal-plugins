@@ -1,0 +1,33 @@
+{"productId": 2479, "name": "Ração Club Performance Adult - Royal Canin", "salesChannel": "1", "dimensions": ["Peso"],
+	"dimensionsMap": {
+	"Peso": ["3 Kg", "15 Kg"]
+}, "skus": [
+	{
+		"sku": 2480,
+		"dimensions": {
+			"Peso": "15 Kg"
+		},
+		"available": true,
+		"listPrice": 13100,
+		"bestPrice": 13100,
+		"installments": 3,
+		"installmentsValue": 4366,
+		"installmentsInsterestRate": 0,
+		"image": "http://meuamigopet.vtexcommercebeta.com.br/arquivos/ids/171545-331-331/produto_Foto1_1447101.jpg",
+		"seller": "MeuAmigoPet"
+	},
+	{
+		"sku": 2481,
+		"dimensions": {
+			"Peso": "3 Kg"
+		},
+		"available": false,
+		"listPrice": 99998700,
+		"bestPrice": 99998700,
+		"installments": 3,
+		"installmentsValue": 33332900,
+		"installmentsInsterestRate": 0,
+		"image": "http://meuamigopet.vtexcommercebeta.com.br/arquivos/ids/171550-331-331/produto_Foto1_1447101.jpg",
+		"seller": "MeuAmigoPet"
+	}
+]}

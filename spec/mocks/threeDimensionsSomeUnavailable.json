@@ -6,6 +6,11 @@
 		"Fase da Vida",
 		"Porte"
 	],
+	"dimensionsMap": {
+		"Peso": ["1 Kg", "2,5 Kg", "7,5 Kg", "12 Kg"],
+		"Fase da Vida": ["Adulto", "Filhote"],
+		"Porte": ["Pequeno", "Grande"]
+	},
 	"skus": [
 		{
 			"sku": 4085,

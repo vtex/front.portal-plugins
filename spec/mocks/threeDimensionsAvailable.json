@@ -6,6 +6,11 @@
 		"Volume",
 		"Quantidade"
 	],
+	"dimensionsMap": {
+		"Peso": ["unico"],
+		"Volume": ["0,75 mL"],
+		"Quantidade": ["1 bisnaga", "3 bisnagas"]
+	},
 	"skus": [
 		{
 			"sku": 4034,
