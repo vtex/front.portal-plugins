@@ -14,7 +14,7 @@ describe 'SkuSelector Plugin', ->
 
 	describe 'SkuSelector Class', ->
 		beforeEach ->
-			@mock = @mocks[0]
+			@mock = @mocks[2]
 			@ss = new vtex.portalPlugins.SkuSelector(@mock)
 
 		it 'should exist', ->
@@ -42,6 +42,15 @@ describe 'SkuSelector Plugin', ->
 
 			it 'should have the same length as dimensions', ->
 				expect(Object.keys(@ss.selectedDimensionsMap).length).toEqual(@ss.dimensions.length)
+
+			it 'should get and set', ->
+				dim  = @ss.dimensions[0]
+				@ss.setSelectedDimension(dim, "12kg")
+				expect(@ss.getSelectedDimension(dim)).toEqual("12kg")
+
+		it 'should find available skus', ->
+			availableSkus = (sku for sku in @ss.skus when sku.available is true)
+			expect(@ss.findAvailableSkus()).toEqual(availableSkus)
 
 
 	describe '$.skuSelector', ->
