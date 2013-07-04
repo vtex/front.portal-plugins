@@ -26,7 +26,8 @@
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170194-71-71/7897348201113.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 5116,
@@ -42,7 +43,8 @@
 			"installmentsValue": 2063,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170199-71-71/7897348201274.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 51162,
@@ -58,7 +60,8 @@
 			"installmentsValue": 2063,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170199-71-71/7897348201274.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 5274,
@@ -74,7 +77,8 @@
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 52766,
@@ -90,7 +94,8 @@
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 527677,
@@ -106,7 +111,8 @@
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 527678,
@@ -122,7 +128,8 @@
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
-			"seller": "MeuAmigoPet"
+			"seller": "MeuAmigoPet2",
+			"sellerId": "2"
 		}
 	]
 }

@@ -199,7 +199,7 @@ updatePrice = (sku, options, template) ->
 		installmentValue = formatCurrency sku.installmentsValue
 
 		# Modifica href do botão comprar
-		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku), template)
+		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId), template)
 		options.selectors.price(template).show()
 		options.selectors.buyButton(template).show()
 		options.selectors.listPriceValue(template).text('R$ ' + listPrice)

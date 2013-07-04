@@ -20,7 +20,8 @@
 			"installmentsValue": 5000,
 			"installmentsInsterestRate": 0,
 			"image": "http://electroluxqa.vtexlocal.com.br/arquivos/ids/155976-55-55/80021387-001.jpg",
-			"seller": "ElectroluxQA"
+			"seller": "ElectroluxQA",
+			"sellerId": "1"
 		}
 	]
 }

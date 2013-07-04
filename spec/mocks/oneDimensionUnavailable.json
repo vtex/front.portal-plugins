@@ -14,7 +14,8 @@
 		"installmentsValue": 4366,
 		"installmentsInsterestRate": 0,
 		"image": "http://meuamigopet.vtexcommercebeta.com.br/arquivos/ids/171545-331-331/produto_Foto1_1447101.jpg",
-		"seller": "MeuAmigoPet"
+		"seller": "MeuAmigoPet",
+		"sellerId": "1"
 	},
 	{
 		"sku": 2481,
@@ -28,6 +29,7 @@
 		"installmentsValue": 33332900,
 		"installmentsInsterestRate": 0,
 		"image": "http://meuamigopet.vtexcommercebeta.com.br/arquivos/ids/171550-331-331/produto_Foto1_1447101.jpg",
-		"seller": "MeuAmigoPet"
+		"seller": "MeuAmigoPet2",
+		"sellerId": "2"
 	}
 ]}
