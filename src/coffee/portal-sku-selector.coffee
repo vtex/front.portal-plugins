@@ -4,9 +4,8 @@ $ = window.jQuery
 # Sku Selector elements function.
 $.skuSelector = {}
 
-
 #
-# CLASSE
+# CLASSES
 #
 
 # TODO separar em classes menores
@@ -74,23 +73,47 @@ class SkuSelector
 		for dimension, i in @dimensions when i > currentIndex
 			@setSelectedDimension(dimension, undefined)
 
+
+class SkuSelectorRenderer
+	constructor: (context) ->
+		@context = context
+
+	generateItemDimensionClass: (dimensionName) =>
+		"item-dimension-#{sanitize(dimensionName)}"
+
+	selectItemDimension: (dimensionName) =>
+		$('.' + @generateItemDimensionClass(dimensionName), @context)
+
+	selectItemDimensionInput: (dimensionName) =>
+		$('.' + @generateItemDimensionClass(dimensionName) + ' input', @context)
+
+	selectItemDimensionLabel: (dimensionName) =>
+		$('.' + @generateItemDimensionClass(dimensionName) + ' label', @context)
+
+	selectItemDimensionValueInput: (dimensionName, valueName) =>
+		$('.' + @generateItemDimensionClass(dimensionName) + " input[value='#{sanitize(valueName)}']", @context)
+
+	selectItemDimensionValueLabel: (dimensionName, valueName) =>
+		$('.' + @generateItemDimensionClass(dimensionName) + " label.skuespec_#{sanitize(valueName)}", @context)
+
 	# Renders the DOM elements of the Sku Selector, given the context
-	renderSkuSelector: (context) =>
+	renderSkuSelector: (selector) =>
 		dimensionIndex = 0
 
-		image = @skus[0].image
+		image = selector.skus[0].image
 
-		context.find('.vtexsc-skuProductImage img').attr('src', image).attr('alt', @name)
-		context.find('.vtexsm-prodTitle').text(@name)
+		@context.find('.vtexsc-skuProductImage img').attr('src', image).attr('alt', selector.name)
+		@context.find('.vtexsm-prodTitle').text(selector.name)
 
-		skuListBase = context.find('.skuListEach').remove()
-		dimensionListsBase = context.find('.dimensionListsEach').remove()
-		for dimension, dimensionValues of @uniqueDimensionsMap
+		# The order matters, because .skuListEach is inside .dimensionListsEach
+		skuListBase = @context.find('.skuListEach').remove()
+		dimensionListsBase = @context.find('.dimensionListsEach').remove()
+		for dimension, dimensionValues of selector.uniqueDimensionsMap
 			dimensionList = dimensionListsBase.clone()
 			dimensionSanitized = sanitize(dimension)
 
 			dimensionList.find('.specification').text(dimension)
-			dimensionList.find('.topic').addClass("#{dimensionSanitized}").addClass("item-dimension-#{dimensionSanitized}")
+			dimensionList.find('.topic').addClass("#{dimensionSanitized}").addClass(@generateItemDimensionClass(dimension))
 			dimensionList.find('.skuList').addClass("group_#{dimensionIndex}")
 			dimensionIndex++
 			for value, i in dimensionValues
@@ -103,47 +126,47 @@ class SkuSelector
 					.attr('data-value', value)
 					.attr('value', valueSanitized)
 					.attr('specification', valueSanitized)
-					.attr('id', "#{@productId}_#{dimensionSanitized}_#{i}")
-					.addClass("input-dimension-#{dimensionSanitized}")
+					.attr('id', "#{selector.productId}_#{dimensionSanitized}_#{i}")
+					.addClass(@generateItemDimensionClass(dimension))
 					.addClass("sku-selector")
 					.addClass("skuespec_#{valueSanitized}")
 				skuList.find('label').text(value)
-					.attr('for', "#{@productId}_#{dimensionSanitized}_#{i}")
+					.attr('for', "#{selector.productId}_#{dimensionSanitized}_#{i}")
 					.addClass("dimension-#{dimensionSanitized}")
 					.addClass("espec_#{dimensionIndex}")
 					.addClass("skuespec_#{valueSanitized}")
 
 				skuList.appendTo(dimensionList.find('.skuList'))
 
-			dimensionList.appendTo(context.find('.dimensionLists'))
+			dimensionList.appendTo(@context.find('.dimensionLists'))
 
-	disableInvalidInputs: (context, selectors) =>
-		undefinedDimensions = @findUndefinedDimensions()
-		selectableSkus = @findSelectableSkus()
+	disableInvalidInputs: (selector) =>
+		undefinedDimensions = selector.findUndefinedDimensions()
+		selectableSkus = selector.findSelectableSkus()
 
 		for dimension in undefinedDimensions
 			# Disable all options in this row, add disabled class, remove checked class and matching removeAttr checked
-			selectors.itemDimensionInput(dimension, context)
+			@selectItemDimensionInput(dimension)
 				.addClass('item_unavaliable')
 				.removeClass('checked sku-picked')
 				.attr('disabled', 'disabled')
 				.removeAttr('checked')
-			selectors.itemDimensionLabel(dimension, context)
+			@selectItemDimensionLabel(dimension)
 				.addClass('disabled item_unavaliable')
 				.removeClass('checked sku-picked')
 
 			# Enable all selectable options in this row
-			for value in @uniqueDimensionsMap[dimension]
+			for value in selector.uniqueDimensionsMap[dimension]
 				# Search for the sku dimension value corresponding to this dimension
 				for sku in selectableSkus
 					skuDimensionValue = sku.dimensions[dimension]
 					# If the dimension value matches, enable the button
 					if skuDimensionValue is value
-						selectors.itemDimensionValueInput(dimension, value, context).removeAttr('disabled')
+						@selectItemDimensionValueInput(dimension, value).removeAttr('disabled')
 					# If the dimension value matches and this sku is available, show as selectable
 					if skuDimensionValue is value and sku.available
-						selectors.itemDimensionValueInput(dimension, value, context).removeClass('item_unavaliable')
-						selectors.itemDimensionValueLabel(dimension, value, context).removeClass('disabled item_unavaliable')
+						@selectItemDimensionValueInput(dimension, value).removeClass('item_unavaliable')
+						@selectItemDimensionValueLabel(dimension, value).removeClass('disabled item_unavaliable')
 
 #
 # PLUGIN ENTRY POINT
@@ -160,16 +183,17 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
 
 	# Instantiate our singleton
-	skuSelectorObj = new SkuSelector(productData)
+	selector = new SkuSelector(productData)
+	renderer = new SkuSelectorRenderer(this)
 
 	# Finds elements and puts SKU information in them
-	skuSelectorObj.renderSkuSelector(this)
+	renderer.renderSkuSelector(selector)
 
 	# Initialize content disabling invalid inputs
-	skuSelectorObj.disableInvalidInputs(this, options.selectors)
+	renderer.disableInvalidInputs(selector)
 
 	# Checks if there are no available options
-	available = skuSelectorObj.findAvailableSkus()
+	available = selector.findAvailableSkus()
 	if available.length is 0
 		# showWarningUnavailable
 		options.selectors.warnUnavailable(this).find('input#notifymeSkuId').val(skus[0].sku)
@@ -180,21 +204,21 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
-		selectedSku = skuSelectorObj.findSelectedSku()
+		selectedSku = selector.findSelectedSku()
 		if selectedSku
 			return options.addSkuToCart(selectedSku.sku, context)
 		else
-			options.selectors.warning(context).show().text('Por favor, escolha: ' + skuSelectorObj.findUndefinedDimensions()[0])
+			options.selectors.warning(context).show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0])
 			return false
 
 	# Handles changes in the dimension inputs
 	dimensionChangeHandler = (event) ->
 		dimensionName = $(this).attr('data-dimension')
 		dimensionValue = $(this).attr('data-value')
-		skuSelectorObj.setSelectedDimension(dimensionName, dimensionValue)
-		skuSelectorObj.resetNextDimensions(dimensionName)
-		selectedSku = skuSelectorObj.findSelectedSku()
-		undefinedDimensions = skuSelectorObj.findUndefinedDimensions()
+		selector.setSelectedDimension(dimensionName, dimensionValue)
+		selector.resetNextDimensions(dimensionName)
+		selectedSku = selector.findSelectedSku()
+		undefinedDimensions = selector.findUndefinedDimensions()
 
 		options.selectors.warning(context).hide()
 		options.selectors.warnUnavailable(context).filter(':visible').hide()
@@ -207,19 +231,19 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 				options.selectors.warnUnavailable(context).show()
 
 		# Limpa classe de selecionado para todos dessa dimensao
-		options.selectors.itemDimensionInput(dimensionName, context).removeClass('checked sku-picked')
-		options.selectors.itemDimensionLabel(dimensionName, context).removeClass('checked sku-picked')
+		renderer.selectItemDimensionInput(dimensionName).removeClass('checked sku-picked')
+		renderer.selectItemDimensionLabel(dimensionName).removeClass('checked sku-picked')
 
 		# Coloca classes corretas em si
-		options.selectors.itemDimensionValueInput(dimensionName, dimensionValue, context).addClass('checked sku-picked')
-		options.selectors.itemDimensionValueLabel(dimensionName, dimensionValue, context).addClass('checked sku-picked')
+		renderer.selectItemDimensionValueInput(dimensionName, dimensionValue).addClass('checked sku-picked')
+		renderer.selectItemDimensionValueLabel(dimensionName, dimensionValue).addClass('checked sku-picked')
 
-		skuSelectorObj.disableInvalidInputs(context, options.selectors)
+		renderer.disableInvalidInputs(selector)
 
 		# Select first available dimensions
 		if selectedSku
 			for dimension in undefinedDimensions
-				selectDimension(options.selectors.itemDimensionInput(dimension, context))
+				selectDimension(renderer.selectItemDimensionInput(dimension))
 
 		updatePrice(selectedSku, options, context)
 
@@ -239,8 +263,8 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	options.selectors.buyButton(this)
 		.click(buyButtonHandler)
 
-	for dimension in skuSelectorObj.dimensions
-		options.selectors.itemDimensionInput(dimension, this)
+	for dimension in selector.dimensions
+		renderer.selectItemDimensionInput(dimension)
 			.change(dimensionChangeHandler)
 
 	if options.warnUnavailable
@@ -248,8 +272,8 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 			.submit(warnUnavailableSubmitHandler)
 
 	# Select first dimension
-	if options.selectOnOpening or skuSelectorObj.findSelectedSku()
-		selectDimension(options.selectors.itemDimensionInput(dimensions[0], this))
+	if options.selectOnOpening or selector.findSelectedSku()
+		selectDimension(renderer.selectItemDimensionInput(selector.dimensions[0]))
 
 	# Chaining
 	return this
@@ -270,13 +294,6 @@ $.fn.skuSelector.defaults =
 		price: (context) -> $('.skuselector-price', context)
 		warning: (context) -> $('.skuselector-warning', context)
 		warnUnavailable: (context) -> $('.skuselector-warn-unavailable', context)
-		# TODO remover seletores abaixo
-		itemDimensionListItem: (dimensionName, context) -> $(".item-dimension-#{sanitize(dimensionName)}", context)
-		itemDimensionInput: (dimensionName, context) -> $(".item-dimension-#{sanitize(dimensionName)} input", context)
-		itemDimensionLabel: (dimensionName, context) -> $(".item-dimension-#{sanitize(dimensionName)} label", context)
-		itemDimensionValueInput: (dimensionName, valueName, context) -> $(".item-dimension-#{sanitize(dimensionName)} input[value='#{sanitize(valueName)}']", context)
-		itemDimensionValueLabel: (dimensionName, valueName, context) -> $(".item-dimension-#{sanitize(dimensionName)} label.skuespec_#{sanitize(valueName)}", context)
-
 
 	# Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
