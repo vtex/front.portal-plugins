@@ -8,6 +8,8 @@ $.skuSelector = {}
 #
 # CLASSE
 #
+
+# TODO separar em classes menores
 class SkuSelector
 	constructor: (productData) ->
 		@productId = productData.productId
@@ -50,8 +52,7 @@ class SkuSelector
 				if skuDimensionValue isnt dimensionValue
 					match = false
 					continue
-			selectableSkus.splice(i, 1) unless match
-			# selectableSkus.splice(i, 1) unless match and sku.available
+			selectableSkus.splice(i, 1) unless match #and sku.available
 		return selectableSkus
 
   findAvailableSkus: =>
@@ -192,8 +193,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		dimensionValue = $(this).attr('data-value')
 		skuSelectorObj.setSelectedDimension(dimensionName, dimensionValue)
 		skuSelectorObj.resetNextDimensions(dimensionName)
-		console.log 'Change dimension!', dimensionName, dimensionValue
-		console.log(skuSelectorObj.selectedDimensionsMap)
 		selectedSku = skuSelectorObj.findSelectedSku()
 		undefinedDimensions = skuSelectorObj.findUndefinedDimensions()
 
@@ -294,7 +293,6 @@ $.fn.skuSelector.defaults =
 
 # Given a product id, return a promise for a request for the sku variations
 $.skuSelector.getSkusForProduct = (productId) ->
-	# console.log 'getSkusForProduct', productId
 	$.get '/api/catalog_system/pub/products/variations/' + productId
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
@@ -343,6 +341,7 @@ updatePriceUnavailable = (options, context) ->
 #
 
 # Sanitizes text: "Caçoá (teste 2)" becomes "Cacoateste2"
+# TODO resolver ambiguidade: "15 kg" e "1,5 kg" ambos viram "15kg"
 sanitize = (str = this) ->
 	specialChars =  "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź"
 	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczz"
