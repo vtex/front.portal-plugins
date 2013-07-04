@@ -75,8 +75,12 @@ class SkuSelector
 
 
 class SkuSelectorRenderer
-	constructor: (context) ->
+	constructor: (context, selectors) ->
 		@context = context
+		@select = {}
+		for key, value of selectors
+			@select[key] = -> $(value, @context)
+		console.log @select
 
 	generateItemDimensionClass: (dimensionName) =>
 		"item-dimension-#{sanitize(dimensionName)}"
@@ -96,7 +100,7 @@ class SkuSelectorRenderer
 	selectItemDimensionValueLabel: (dimensionName, valueName) =>
 		$('.' + @generateItemDimensionClass(dimensionName) + " label.skuespec_#{sanitize(valueName)}", @context)
 
-	# Renders the DOM elements of the Sku Selector, given the context
+	# Renders the DOM elements of the Sku Selector
 	renderSkuSelector: (selector) =>
 		dimensionIndex = 0
 
@@ -168,11 +172,44 @@ class SkuSelectorRenderer
 						@selectItemDimensionValueInput(dimension, value).removeClass('item_unavaliable')
 						@selectItemDimensionValueLabel(dimension, value).removeClass('disabled item_unavaliable')
 
+	selectDimension: (dimension) ->
+		dimensions = @selectItemDimensionInput(dimension)
+		# Tenta selecionar apenas dos disponíveis
+		available = dimensions.filter('input:not(.item_unavaliable)')
+		# Caso não haja indisponível, seleciona primeiro não-desabilitado (sku existente)
+		el = (if available.length > 0 then available else dimensions).filter('input:enabled')[0]
+		$(el).attr('checked', 'checked').change() if dimensions.length > 0
+
+	updatePrice: (sku) ->
+		if sku and sku.available
+			@updatePriceAvailable(sku)
+		else
+			@updatePriceUnavailable()
+
+	updatePriceAvailable: (sku) ->
+		listPrice = formatCurrency sku.listPrice
+		bestPrice = formatCurrency sku.bestPrice
+		installments = sku.installments
+		installmentValue = formatCurrency sku.installmentsValue
+
+		# Modifica href do botão comprar
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku)).show()
+		@select.price().show()
+		@select.listPriceValue().text("R$ #{listPrice}")
+		@select.bestPriceValue().text("R$ #{bestPrice}")
+		if installments > 1
+			@select.installment().text("ou até #{installments}x de R$ #{installmentValue}")
+
+	updatePriceUnavailable: () ->
+		# Modifica href do botão comprar
+		@select.buyButton().attr('href', 'javascript:void(0);').hide()
+		@select.price().hide()
+		# $('.notifyme-skuid').val()
+
 #
 # PLUGIN ENTRY POINT
 #
 $.fn.skuSelector = (productData, jsOptions = {}) ->
-	context = this
 	this.addClass('sku-selector-loading')
 
 	# Gather options
@@ -184,7 +221,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Instantiate our singleton
 	selector = new SkuSelector(productData)
-	renderer = new SkuSelectorRenderer(this)
+	renderer = new SkuSelectorRenderer(this, options.selectors)
 
 	# Finds elements and puts SKU information in them
 	renderer.renderSkuSelector(selector)
@@ -196,11 +233,11 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	available = selector.findAvailableSkus()
 	if available.length is 0
 		# showWarningUnavailable
-		options.selectors.warnUnavailable(this).find('input#notifymeSkuId').val(skus[0].sku)
-		options.selectors.warnUnavailable(this).show()
-		options.selectors.buyButton(this).hide()
+		renderer.select.warnUnavailable().find('input#notifymeSkuId').val(skus[0].sku)
+		renderer.select.warnUnavailable().show()
+		renderer.select.buyButton().hide()
 	else if available.length is 1
-		updatePrice(available[0], options, this)
+		renderer.select.updatePrice(available[0])
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
@@ -208,7 +245,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		if selectedSku
 			return options.addSkuToCart(selectedSku.sku, context)
 		else
-			options.selectors.warning(context).show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0])
+			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0])
 			return false
 
 	# Handles changes in the dimension inputs
@@ -220,15 +257,15 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		selectedSku = selector.findSelectedSku()
 		undefinedDimensions = selector.findUndefinedDimensions()
 
-		options.selectors.warning(context).hide()
-		options.selectors.warnUnavailable(context).filter(':visible').hide()
+		renderer.select.warning().hide()
+		renderer.select.warnUnavailable().filter(':visible').hide()
 
 		# Trigger event for interested scripts
 		if selectedSku and undefinedDimensions.length is 0
 			$(this).trigger('skuSelected', [selectedSku, dimensionName])
 			if options.warnUnavailable and not selectedSku.available
-				options.selectors.warnUnavailable(context).find('#notifymeSkuId').val(selectedSku.sku)
-				options.selectors.warnUnavailable(context).show()
+				renderer.select.warnUnavailable().find('#notifymeSkuId').val(selectedSku.sku)
+				renderer.select.warnUnavailable().show()
 
 		# Limpa classe de selecionado para todos dessa dimensao
 		renderer.selectItemDimensionInput(dimensionName).removeClass('checked sku-picked')
@@ -243,24 +280,24 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		# Select first available dimensions
 		if selectedSku
 			for dimension in undefinedDimensions
-				selectDimension(renderer.selectItemDimensionInput(dimension))
+				renderer.selectDimension(dimension)
 
-		updatePrice(selectedSku, options, context)
+		renderer.updatePrice(selectedSku)
 
 	# Handles submission in the warn unavailable form
 	warnUnavailableSubmitHandler = (e) ->
 		e.preventDefault()
-		options.selectors.warnUnavailable(context).find('#notifymeLoading').show()
-		options.selectors.warnUnavailable(context).find('form').hide()
+		renderer.select.warnUnavailable().find('#notifymeLoading').show()
+		renderer.select.warnUnavailable().find('form').hide()
 		xhr = options.warnUnavailablePost(e.target)
-		xhr.done -> options.selectors.warnUnavailable(context).find('#notifymeSuccess').show()
-		xhr.fail -> options.selectors.warnUnavailable(context).find('#notifymeError').show()
-		xhr.always -> options.selectors.warnUnavailable(context).find('#notifymeLoading').hide()
+		xhr.done -> renderer.select.warnUnavailable().find('#notifymeSuccess').show()
+		xhr.fail -> renderer.select.warnUnavailable().find('#notifymeError').show()
+		xhr.always -> renderer.select.warnUnavailable().find('#notifymeLoading').hide()
 		return false
 
 
 	# Binds handlers
-	options.selectors.buyButton(this)
+	renderer.select.buyButton()
 		.click(buyButtonHandler)
 
 	for dimension in selector.dimensions
@@ -268,12 +305,12 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 			.change(dimensionChangeHandler)
 
 	if options.warnUnavailable
-		options.selectors.warnUnavailable(this).find('form')
+		renderer.select.warnUnavailable().find('form')
 			.submit(warnUnavailableSubmitHandler)
 
 	# Select first dimension
 	if options.selectOnOpening or selector.findSelectedSku()
-		selectDimension(renderer.selectItemDimensionInput(selector.dimensions[0]))
+		renderer.selectDimension(selector.dimensions[0])
 
 	# Chaining
 	return this
@@ -287,13 +324,13 @@ $.fn.skuSelector.defaults =
 	warnUnavailable: false
 	selectOnOpening: false
 	selectors:
-		listPriceValue: (context) -> $('.skuselector-list-price .value', context)
-		bestPriceValue: (context) -> $('.skuselector-best-price .value', context)
-		installment: (context) -> $('.skuselector-installment', context)
-		buyButton: (context) -> $('.skuselector-buy-btn', context)
-		price: (context) -> $('.skuselector-price', context)
-		warning: (context) -> $('.skuselector-warning', context)
-		warnUnavailable: (context) -> $('.skuselector-warn-unavailable', context)
+		listPriceValue: '.skuselector-list-price .value'
+		bestPriceValue: '.skuselector-best-price .value'
+		installment: '.skuselector-installment'
+		buyButton: '.skuselector-buy-btn'
+		price: '.skuselector-price'
+		warning: '.skuselector-warning'
+		warnUnavailable: '.skuselector-warn-unavailable'
 
 	# Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
@@ -314,44 +351,6 @@ $.skuSelector.getSkusForProduct = (productId) ->
 
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	window.location.protocol + '//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
-
-
-#
-# PRIVATE FUNCTIONS
-#
-selectDimension = (dimArray) ->
-	# Tenta selecionar apenas dos disponíveis
-	available = dimArray.filter('input:not(.item_unavaliable)')
-	# Caso não haja indisponível, seleciona primeiro não-desabilitado (sku existente)
-	el = (if available.length > 0 then available else dimArray).filter('input:enabled')[0]
-	$(el).attr('checked', 'checked').change() if dimArray.length > 0
-
-updatePrice = (sku, options, context) ->
-	if sku and sku.available
-		updatePriceAvailable(sku, options, context)
-	else
-		updatePriceUnavailable(options, context)
-
-updatePriceAvailable = (sku, options, context) ->
-	listPrice = formatCurrency sku.listPrice
-	bestPrice = formatCurrency sku.bestPrice
-	installments = sku.installments
-	installmentValue = formatCurrency sku.installmentsValue
-
-	# Modifica href do botão comprar
-	options.selectors.buyButton(context).attr('href', $.skuSelector.getAddUrlForSku(sku.sku)).show()
-	options.selectors.price(context).show()
-	options.selectors.listPriceValue(context).text("R$ #{listPrice}")
-	options.selectors.bestPriceValue(context).text("R$ #{bestPrice}")
-	if installments > 1
-		options.selectors.installment(context).text("ou até #{installments}x de R$ #{installmentValue}")
-
-updatePriceUnavailable = (options, context) ->
-	# Modifica href do botão comprar
-	options.selectors.buyButton(context).attr('href', 'javascript:void(0);').hide()
-	options.selectors.price(context).hide()
-	# $('.notifyme-skuid').val()
-
 
 #
 # UTILITY FUNCTIONS
