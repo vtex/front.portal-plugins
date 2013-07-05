@@ -184,6 +184,16 @@ class SkuSelectorRenderer
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()
 		@select.price().hide()
 
+	applySelectedClasses: (dimensionName, dimensionValue) =>
+		@select.itemDimensionInput(dimensionName).removeClass('checked sku-picked')
+		@select.itemDimensionLabel(dimensionName).removeClass('checked sku-picked')
+		@select.itemDimensionValueInput(dimensionName, dimensionValue).addClass('checked sku-picked')
+		@select.itemDimensionValueLabel(dimensionName, dimensionValue).addClass('checked sku-picked')
+
+	showWarnUnavailable: (sku) =>
+		renderer.select.warnUnavailable().find('input#notifymeSkuId').val(sku)
+		renderer.select.warnUnavailable().show()
+
 #
 # PLUGIN ENTRY POINT
 #
@@ -197,7 +207,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Deep extending with true, for the selectors
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
 
-	# Instantiate our singleton
+	# Instantiate our singletons
 	selector = new SkuSelector(productData)
 	renderer = new SkuSelectorRenderer(this, options.selectors)
 
@@ -210,9 +220,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Checks if there are no available options
 	available = selector.findAvailableSkus()
 	if available.length is 0
-		# showWarningUnavailable
-		renderer.select.warnUnavailable().find('input#notifymeSkuId').val(skus[0].sku)
-		renderer.select.warnUnavailable().show()
+		renderer.showWarnUnavailable(skus[0].sku)
 		renderer.select.buyButton().hide()
 	else if available.length is 1
 		renderer.updatePrice(available[0])
@@ -239,19 +247,13 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		renderer.select.warnUnavailable().filter(':visible').hide()
 
 		# Trigger event for interested scripts
-		if selectedSku and undefinedDimensions.length is 0
+		if selectedSku isnt undefined and undefinedDimensions.length is 0
 			$(this).trigger('skuSelected', [selectedSku, dimensionName])
 			if options.warnUnavailable and not selectedSku.available
-				renderer.select.warnUnavailable().find('#notifymeSkuId').val(selectedSku.sku)
-				renderer.select.warnUnavailable().show()
+				renderer.showWarnUnavailable(selectedSku.sku)
 
-		# Limpa classe de selecionado para todos dessa dimensao
-		renderer.select.itemDimensionInput(dimensionName).removeClass('checked sku-picked')
-		renderer.select.itemDimensionLabel(dimensionName).removeClass('checked sku-picked')
-
-		# Coloca classes corretas em si
-		renderer.select.itemDimensionValueInput(dimensionName, dimensionValue).addClass('checked sku-picked')
-		renderer.select.itemDimensionValueLabel(dimensionName, dimensionValue).addClass('checked sku-picked')
+		# Limpa classe de selecionado para todos dessa dimensao e coloca classes corretas em si
+		renderer.applySelectedClasses(dimensionName, dimensionValue)
 
 		renderer.disableInvalidInputs(selector)
 
