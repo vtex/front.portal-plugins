@@ -22,32 +22,31 @@
       self.options.$template = $ """
       <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded" style="display: none;">
         <div class="vtexsc-bt"></div>
-            <div class="vtexsc-center">
-                <div class="vtexsc-wrap">
-                    <table class="vtexsc-productList">
-                        <thead style="display: none;">
-                            <tr>
-                                <th class="cartSkuName" colspan="2">Produto</th>
-                                <th class="cartSkuPrice">Preço</th>
-                                <th class="cartSkuQuantity">Quantidade</th>
-                                <th class="cartSkuActions">Excluir</th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>
-                    </table>
-                </div>
-                <div class="cartFooter clearfix">
-                    <div class="cartTotal">
-                        Total\
-                        <span class="vtexsc-totalCart">
-                            <span class="vtexsc-text">R$ 0</span>
-                        </span>
-                    </div>
-                    <a href="/checkout/#/orderform" class="cartCheckout"></a>
-                </div>
+        <div class="vtexsc-center">
+            <div class="vtexsc-wrap">
+                <table class="vtexsc-productList">
+                    <thead style="display: none;">
+                        <tr>
+                            <th class="cartSkuName" colspan="2">Produto</th>
+                            <th class="cartSkuPrice">Preço</th>
+                            <th class="cartSkuQuantity">Quantidade</th>
+                            <th class="cartSkuActions">Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
             </div>
-            <div class="vtexsc-bb"></div>
+            <div class="cartFooter clearfix">
+                <div class="cartTotal">
+                    Total\
+                    <span class="vtexsc-totalCart">
+                        <span class="vtexsc-text">R$ 0</span>
+                    </span>
+                </div>
+                <a href="/checkout/#/orderform" class="cartCheckout"></a>
+            </div>
         </div>
+        <div class="vtexsc-bb"></div>        
       </div>
       """
 
@@ -60,7 +59,7 @@
         $(window).trigger "miniCartMouseOut"
 
       $(window).on "miniCartMouseOver", ->
-        if self.options.cartData.items.length > 0
+        if self.options.cartData?.items.length > 0
           $(".vtexsc-cart").slideDown()
           clearTimeout self.options.timeoutToHide
 

@@ -98,8 +98,12 @@
 
       amountProducts = data.items.length
       amountItems = 0;
-      amountItems += item.quantity for item in data.items
-      totalCart = self.formatCurrency data.value
+      amountItems += item.quantity for item in data.items      
+
+      total = 0
+      for subtotal in data.totalizers
+        total += subtotal.value if subtotal.id is 'Items'
+      totalCart = self.formatCurrency(total)
 
       self.selectors.amountProducts.html amountProducts
       self.selectors.amountItems.html amountItems
