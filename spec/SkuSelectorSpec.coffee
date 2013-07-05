@@ -27,14 +27,19 @@ describe 'SkuSelector Plugin', ->
 		it 'should import name', ->
 			expect(@ss.name).toEqual(@mock.name)
 		it 'should import dimensions', ->
-			expect(@ss.dimensions).toEqual(@mock.dimensions)
+			# Number of dimensions
+			expect(@ss.dimensions.length).toEqual(@mock.dimensions.length)
+			# Dimension names
+			expect((dim.name for dim in @ss.dimensions)).toEqual(@mock.dimensions)
+			# Dimension selected map
+			expect(dim.selected).toBeUndefined() for dim in @ss.dimensions
+			# Dimension values
+			expect(dim.values).toEqual(@mock.dimensionsMap[dim.name]) for dim in @ss.dimensions
 		it 'should import skus', ->
 			expect(@ss.skus).toEqual(@mock.skus)
-		it 'should import dimensionsMap', ->
-			expect(@ss.uniqueDimensionsMap).toEqual(@mock.dimensionsMap)
 
 		it 'should find undefined dimensions', ->
-			undefinedDimensions = (key for key, value of @ss.selectedDimensionsMap when value is undefined)
+			undefinedDimensions = (dim for dim in @ss.dimensions when dim.selected is undefined)
 			expect(@ss.findUndefinedDimensions()).toEqual(undefinedDimensions)
 
 		it 'should find available skus', ->
@@ -57,28 +62,14 @@ describe 'SkuSelector Plugin', ->
 				expect(@ss.findSelectedSku()).toBeUndefined()
 
 
-		describe 'selectedDimensionsMap', ->
-			it 'should initially be filled with undefined', ->
-				for selectedDimension in @ss.selectedDimensionsMap
-					expect(selectedDimension).toBeUndefined()
-
-			it 'should have the same length as dimensions', ->
-				expect(Object.keys(@ss.selectedDimensionsMap).length).toEqual(@ss.dimensions.length)
-
-			it 'should get and set', ->
-				dim  = @ss.dimensions[0]
-				@ss.setSelectedDimension(dim, "12kg")
-				expect(@ss.getSelectedDimension(dim)).toEqual("12kg")
+		it 'should get and set selected dimension', ->
+			dim  = @ss.dimensions[0]
+			@ss.setSelectedDimension(dim.name, "12kg")
+			expect(@ss.getSelectedDimension(dim.name)).toEqual("12kg")
 
 		it 'should reset the next dimensions', ->
-			@ss.dimensions = ["a", "b", "c", "d"]
-			spyOn(@ss, 'setSelectedDimension')
-
-			@ss.resetNextDimensions("b")
-			expect(@ss.setSelectedDimension.calls.length).toBe(2)
-			expect(@ss.setSelectedDimension).toHaveBeenCalledWith("c", undefined)
-			expect(@ss.setSelectedDimension).toHaveBeenCalledWith("d", undefined)
-
+			@ss.resetNextDimensions(@ss.dimensions[0].name)
+			expect(@ss.getSelectedDimension(dim.name)).toBeUndefined() for dim, i in @ss.dimensions when i > 0
 
 
 	describe 'SkuSelectorRenderer', ->

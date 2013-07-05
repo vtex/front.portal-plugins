@@ -9,52 +9,48 @@ class SkuSelector
 	constructor: (productData) ->
 		@productId = productData.productId
 		@name = productData.name
-		@dimensions = productData.dimensions
 		@skus = productData.skus
-		@uniqueDimensionsMap = productData.dimensionsMap
-
-		#Create dimensions map
-		@selectedDimensionsMap = {}
-		@selectedDimensionsMap[dimension] = undefined for dimension in @dimensions
+		i = 0
+		@dimensions = ({
+			index: i++
+			name: dimensionName
+			nameSanitized: sanitize(dimensionName)
+			values: productData.dimensionsMap[dimensionName]
+			valuesSanitized: (sanitize(value) for value in productData.dimensionsMap[dimensionName])
+			selected: undefined
+		} for dimensionName in productData.dimensions)
 
 	findUndefinedDimensions: =>
-		(key for key, value of @selectedDimensionsMap when value is undefined)
+		(dim for dim in @dimensions when dim.selected is undefined)
 
 	findAvailableSkus: =>
 		(sku for sku in @skus when sku.available)
 
-	findSelectableSkus: =>
-		# copy the skus array and then mutate the copy
-		selectableSkus = @skus[..]
-		for sku, i in selectableSkus by -1
-			match = true
-			for dimension, dimensionValue of @selectedDimensionsMap when dimensionValue isnt undefined
-				skuDimensionValue = sku.dimensions[dimension]
-				if skuDimensionValue isnt dimensionValue
-					match = false
-					continue
-			selectableSkus.splice(i, 1) unless match #and sku.available
-		return selectableSkus
+	isSkuSelectable: (sku) =>
+		for dimension in @dimensions when dimension.selected isnt undefined
+			if dimension.selected isnt sku.dimensions[dimension.name]
+				return false
+		return true
 
-  findAvailableSkus: =>
-    (sku for sku in @skus when sku.available is true)
+	findSelectableSkus: =>
+		(sku for sku in @skus when isSkuSelectable(sku))
 
 	findSelectedSku: =>
 		s = @findSelectableSkus()
 		return if s.length is 1 then s[0] else undefined
 
+	getDimensionByName: (dimensionName) =>
+		$.grep(@dimensions, (dim) -> dim.name == dimensionName)[0]
+
 	getSelectedDimension: (dimension) =>
-		@selectedDimensionsMap[dimension]
+		@getDimensionByName(dimension).selected
 
 	setSelectedDimension: (dimension, value) =>
-		@selectedDimensionsMap[dimension] = value
+		@getDimensionByName(dimension).selected = value
 
-	resetNextDimensions: (theDimension) =>
-		currentIndex = @dimensions.indexOf(theDimension)
-
-		for dimension, i in @dimensions when i > currentIndex
-			@setSelectedDimension(dimension, undefined)
-
+	resetNextDimensions: (dimension) =>
+		currentIndex = @getDimensionByName(dimension).index
+		dim.selected = undefined for dim in $.grep(@dimensions, (dim) -> dim.index > currentIndex)
 
 class SkuSelectorRenderer
 	constructor: (context, selectors) ->
@@ -69,7 +65,7 @@ class SkuSelectorRenderer
 		@select.itemDimensionLabel = (dimensionName) =>	$('.' + @generateItemDimensionClass(dimensionName) + ' label', @context)
 		@select.itemDimensionValueInput = (dimensionName, valueName) =>	$('.' + @generateItemDimensionClass(dimensionName) + " input[value ='#{sanitize(valueName)}']", @context)
 		@select.itemDimensionValueLabel = (dimensionName, valueName) =>	$('.' + @generateItemDimensionClass(dimensionName) + " label.skuespec_#{sanitize(valueName)}", @context)
-			
+
 
 	generateItemDimensionClass: (dimensionName) =>
 		"item-dimension-#{sanitize(dimensionName)}"
@@ -86,32 +82,30 @@ class SkuSelectorRenderer
 		# The order matters, because .skuListEach is inside .dimensionListsEach
 		skuListBase = @context.find('.skuListEach').remove()
 		dimensionListsBase = @context.find('.dimensionListsEach').remove()
-		for dimension, dimensionValues of selector.uniqueDimensionsMap
+		for dimension in selector.dimensions
 			dimensionList = dimensionListsBase.clone()
-			dimensionSanitized = sanitize(dimension)
 
-			dimensionList.find('.specification').text(dimension)
-			dimensionList.find('.topic').addClass("#{dimensionSanitized}").addClass(@generateItemDimensionClass(dimension))
-			dimensionList.find('.skuList').addClass("group_#{dimensionIndex}")
-			dimensionIndex++
-			for value, i in dimensionValues
+			dimensionList.find('.specification').text(dimension.name)
+			dimensionList.find('.topic').addClass("#{dimension.nameSanitized}").addClass(@generateItemDimensionClass(dimension.name))
+			dimensionList.find('.skuList').addClass("group_#{dimension.index}")
+			for value, i in dimension.values
 				skuList = skuListBase.clone()
-				valueSanitized = sanitize(value)
+				valueSanitized = dimension.valuesSanitized[i]
 
-				skuList.find('input').attr('data-dimension', dimension)
-					.attr('dimension', dimensionSanitized)
-					.attr('name', "dimension-#{dimensionSanitized}")
+				skuList.find('input').attr('data-dimension', dimension.name)
+					.attr('dimension', dimension.nameSanitized)
+					.attr('name', "dimension-#{dimension.nameSanitized}")
 					.attr('data-value', value)
 					.attr('value', valueSanitized)
 					.attr('specification', valueSanitized)
-					.attr('id', "#{selector.productId}_#{dimensionSanitized}_#{i}")
-					.addClass(@generateItemDimensionClass(dimension))
+					.attr('id', "#{selector.productId}_#{dimension.nameSanitized}_#{i}")
+					.addClass(@generateItemDimensionClass(dimension.name))
 					.addClass("sku-selector")
 					.addClass("skuespec_#{valueSanitized}")
 				skuList.find('label').text(value)
-					.attr('for', "#{selector.productId}_#{dimensionSanitized}_#{i}")
-					.addClass("dimension-#{dimensionSanitized}")
-					.addClass("espec_#{dimensionIndex}")
+					.attr('for', "#{selector.productId}_#{dimension.nameSanitized}_#{i}")
+					.addClass("dimension-#{dimension.nameSanitized}")
+					.addClass("espec_#{dimension.index}")
 					.addClass("skuespec_#{valueSanitized}")
 
 				skuList.appendTo(dimensionList.find('.skuList'))
@@ -124,30 +118,30 @@ class SkuSelectorRenderer
 
 		for dimension in undefinedDimensions
 			# Disable all options in this row, add disabled class, remove checked class and matching removeAttr checked
-			@select.itemDimensionInput(dimension)
+			@select.itemDimensionInput(dimension.name)
 				.addClass('item_unavaliable')
 				.removeClass('checked sku-picked')
 				.attr('disabled', 'disabled')
 				.removeAttr('checked')
-			@select.itemDimensionLabel(dimension)
+			@select.itemDimensionLabel(dimension.name)
 				.addClass('disabled item_unavaliable')
 				.removeClass('checked sku-picked')
 
 			# Enable all selectable options in this row
-			for value in selector.uniqueDimensionsMap[dimension]
+			for value in dimension.values
 				# Search for the sku dimension value corresponding to this dimension
 				for sku in selectableSkus
-					skuDimensionValue = sku.dimensions[dimension]
+					skuDimensionValue = sku.dimensions[dimension.name]
 					# If the dimension value matches, enable the button
 					if skuDimensionValue is value
-						@select.itemDimensionValueInput(dimension, value).removeAttr('disabled')
+						@select.itemDimensionValueInput(dimension.name, value).removeAttr('disabled')
 					# If the dimension value matches and this sku is available, show as selectable
 					if skuDimensionValue is value and sku.available
-						@select.itemDimensionValueInput(dimension, value).removeClass('item_unavaliable')
-						@select.itemDimensionValueLabel(dimension, value).removeClass('disabled item_unavaliable')
+						@select.itemDimensionValueInput(dimension.name, value).removeClass('item_unavaliable')
+						@select.itemDimensionValueLabel(dimension.name, value).removeClass('disabled item_unavaliable')
 
 	selectDimension: (dimension) ->
-		dimensions = @select.itemDimensionInput(dimension)
+		dimensions = @select.itemDimensionInput(dimension.name)
 		# Tenta selecionar apenas dos disponíveis
 		available = dimensions.filter('input:not(.item_unavaliable)')
 		# Caso não haja indisponível, seleciona primeiro não-desabilitado (sku existente)
@@ -187,8 +181,8 @@ class SkuSelectorRenderer
 		@select.itemDimensionValueLabel(dimensionName, dimensionValue).addClass('checked sku-picked')
 
 	showWarnUnavailable: (sku) =>
-		renderer.select.warnUnavailable().find('input#notifymeSkuId').val(sku)
-		renderer.select.warnUnavailable().show()
+		@select.warnUnavailable().find('input#notifymeSkuId').val(sku)
+		@select.warnUnavailable().show()
 
 #
 # PLUGIN ENTRY POINT
@@ -228,7 +222,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		if selectedSku
 			return options.addSkuToCart(selectedSku.sku, context)
 		else
-			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0])
+			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0].name)
 			return false
 
 	# Handles changes in the dimension inputs
@@ -278,7 +272,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		.click(buyButtonHandler)
 
 	for dimension in selector.dimensions
-		renderer.select.itemDimensionInput(dimension)
+		renderer.select.itemDimensionInput(dimension.name)
 			.change(dimensionChangeHandler)
 
 	if options.warnUnavailable
@@ -288,6 +282,9 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Select first dimension
 	if options.selectOnOpening or selector.findSelectedSku()
 		renderer.selectDimension(selector.dimensions[0])
+
+
+	this.removeClass('sku-selector-loading')
 
 	# Chaining
 	return this
