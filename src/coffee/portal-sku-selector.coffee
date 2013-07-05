@@ -61,8 +61,8 @@ class SkuSelectorRenderer
 		@context = context
 
 		# Build selectors from given select strings.
-		@select = mapObj selectors, (key, val) ->
-			( -> $(val, @context) )
+		@select = mapObj selectors, (key, val) =>
+			( => $(val, @context) )
 
 		@select.itemDimension = (dimensionName) => $('.' + @generateItemDimensionClass(dimensionName), @context)
 		@select.itemDimensionInput = (dimensionName) =>	$('.' + @generateItemDimensionClass(dimensionName) + ' input', @context)
@@ -195,6 +195,7 @@ class SkuSelectorRenderer
 #
 $.fn.skuSelector = (productData, jsOptions = {}) ->
 	this.addClass('sku-selector-loading')
+	context = this
 
 	# Gather options
 	domOptions = this.data()
