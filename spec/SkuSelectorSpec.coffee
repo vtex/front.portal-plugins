@@ -41,7 +41,7 @@ describe 'SkuSelector Plugin', ->
 			availableSkus = (sku for sku in @ss.skus when sku.available is true)
 			expect(@ss.findAvailableSkus()).toEqual(availableSkus)
 
-		it 'should find the selectable skus'
+		#TODO it 'should find the selectable skus', ->
 
 		describe 'findSelectedSku', ->
 			it 'should find when it is unique', ->
@@ -69,6 +69,15 @@ describe 'SkuSelector Plugin', ->
 				dim  = @ss.dimensions[0]
 				@ss.setSelectedDimension(dim, "12kg")
 				expect(@ss.getSelectedDimension(dim)).toEqual("12kg")
+
+		it 'should reset the next dimensions', ->
+			@ss.dimensions = ["a", "b", "c", "d"]
+			spyOn(@ss, 'setSelectedDimension')
+
+			@ss.resetNextDimensions("b")
+			expect(@ss.setSelectedDimension.calls.length).toBe(2)
+			expect(@ss.setSelectedDimension).toHaveBeenCalledWith("c", undefined)
+			expect(@ss.setSelectedDimension).toHaveBeenCalledWith("d", undefined)
 
 
 
