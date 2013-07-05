@@ -1,8 +1,4 @@
-# Alias jQuery internally
 $ = window.jQuery
-
-# Sku Selector elements function.
-$.skuSelector = {}
 
 #
 # CLASSES
@@ -325,6 +321,8 @@ $.fn.skuSelector.defaults =
 # PLUGIN SHARED FUNCTIONS
 #
 
+$.skuSelector = {}
+
 # Given a product id, return a promise for a request for the sku variations
 $.skuSelector.getSkusForProduct = (productId) ->
 	$.get '/api/catalog_system/pub/products/variations/' + productId
@@ -342,13 +340,18 @@ sanitize = (str = this) ->
 	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczzVP"
 	regex = new RegExp '[' + specialChars + ']', 'g'
 	str += ""
-	sanitized = str.replace(regex, (char) ->
-		plain.charAt (specialChars.indexOf char))
+	sanitized = str
 		.replace(/\s/g, '')
 		.replace(/\/|\\/g, '-')
-		.replace(/\(|\)|\'|\"|\.|\,/g, '')
+		.replace(/\(|\)|\'|\"/g, '')
 		.toLowerCase()
-	return sanitized.charAt(0).toUpperCase() + sanitized.slice(1)
+		.replace regex, (char) ->
+			plain.charAt (specialChars.indexOf char)
+
+	return capitalize(sanitized)
+
+capitalize = (str) ->
+	return str.charAt(0).toUpperCase() + str.slice(1)
 
 # Format currency to brazilian reais: 123455 becomes "1.234,55"
 formatCurrency = (value) ->
