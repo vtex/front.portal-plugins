@@ -15,25 +15,11 @@ class SkuSelector
 		@name = productData.name
 		@dimensions = productData.dimensions
 		@skus = productData.skus
+		@uniqueDimensionsMap = productData.dimensionsMap
 
 		#Create dimensions map
 		@selectedDimensionsMap = {}
 		@selectedDimensionsMap[dimension] = undefined for dimension in @dimensions
-
-		# Object of structure { dimension : [possibility] }
-		@uniqueDimensionsMap = @findUniqueDimensions()
-
-	findUniqueDimensions: =>
-		uniqueDimensionsMap = {}
-		# For each dimension, lets grab the uniques
-		for dimension in @dimensions
-			uniqueDimensionsMap[dimension] = []
-			for sku in @skus
-				# If this dimension doesnt exist, add it
-				skuDimension = sku.dimensions[dimension]
-				if $.inArray(skuDimension, uniqueDimensionsMap[dimension]) is -1
-					uniqueDimensionsMap[dimension].push skuDimension
-		return uniqueDimensionsMap
 
 	findUndefinedDimensions: =>
 		(key for key, value of @selectedDimensionsMap when value is undefined)
@@ -77,28 +63,20 @@ class SkuSelector
 class SkuSelectorRenderer
 	constructor: (context, selectors) ->
 		@context = context
-		@select = {}
-		for key, value of selectors
-			@select[key] = -> $(value, @context)
-		console.log @select
+
+		# Build selectors from given select strings.
+		@select = mapObj selectors, (key, val) ->
+			( -> $(val, @context) )
+
+		@select.itemDimension = (dimensionName) => $('.' + @generateItemDimensionClass(dimensionName), @context)
+		@select.itemDimensionInput = (dimensionName) =>	$('.' + @generateItemDimensionClass(dimensionName) + ' input', @context)
+		@select.itemDimensionLabel = (dimensionName) =>	$('.' + @generateItemDimensionClass(dimensionName) + ' label', @context)
+		@select.itemDimensionValueInput = (dimensionName, valueName) =>	$('.' + @generateItemDimensionClass(dimensionName) + " input[value ='#{sanitize(valueName)}']", @context)
+		@select.itemDimensionValueLabel = (dimensionName, valueName) =>	$('.' + @generateItemDimensionClass(dimensionName) + " label.skuespec_#{sanitize(valueName)}", @context)
+			
 
 	generateItemDimensionClass: (dimensionName) =>
 		"item-dimension-#{sanitize(dimensionName)}"
-
-	selectItemDimension: (dimensionName) =>
-		$('.' + @generateItemDimensionClass(dimensionName), @context)
-
-	selectItemDimensionInput: (dimensionName) =>
-		$('.' + @generateItemDimensionClass(dimensionName) + ' input', @context)
-
-	selectItemDimensionLabel: (dimensionName) =>
-		$('.' + @generateItemDimensionClass(dimensionName) + ' label', @context)
-
-	selectItemDimensionValueInput: (dimensionName, valueName) =>
-		$('.' + @generateItemDimensionClass(dimensionName) + " input[value='#{sanitize(valueName)}']", @context)
-
-	selectItemDimensionValueLabel: (dimensionName, valueName) =>
-		$('.' + @generateItemDimensionClass(dimensionName) + " label.skuespec_#{sanitize(valueName)}", @context)
 
 	# Renders the DOM elements of the Sku Selector
 	renderSkuSelector: (selector) =>
@@ -150,12 +128,12 @@ class SkuSelectorRenderer
 
 		for dimension in undefinedDimensions
 			# Disable all options in this row, add disabled class, remove checked class and matching removeAttr checked
-			@selectItemDimensionInput(dimension)
+			@select.itemDimensionInput(dimension)
 				.addClass('item_unavaliable')
 				.removeClass('checked sku-picked')
 				.attr('disabled', 'disabled')
 				.removeAttr('checked')
-			@selectItemDimensionLabel(dimension)
+			@select.itemDimensionLabel(dimension)
 				.addClass('disabled item_unavaliable')
 				.removeClass('checked sku-picked')
 
@@ -166,14 +144,14 @@ class SkuSelectorRenderer
 					skuDimensionValue = sku.dimensions[dimension]
 					# If the dimension value matches, enable the button
 					if skuDimensionValue is value
-						@selectItemDimensionValueInput(dimension, value).removeAttr('disabled')
+						@select.itemDimensionValueInput(dimension, value).removeAttr('disabled')
 					# If the dimension value matches and this sku is available, show as selectable
 					if skuDimensionValue is value and sku.available
-						@selectItemDimensionValueInput(dimension, value).removeClass('item_unavaliable')
-						@selectItemDimensionValueLabel(dimension, value).removeClass('disabled item_unavaliable')
+						@select.itemDimensionValueInput(dimension, value).removeClass('item_unavaliable')
+						@select.itemDimensionValueLabel(dimension, value).removeClass('disabled item_unavaliable')
 
 	selectDimension: (dimension) ->
-		dimensions = @selectItemDimensionInput(dimension)
+		dimensions = @select.itemDimensionInput(dimension)
 		# Tenta selecionar apenas dos disponíveis
 		available = dimensions.filter('input:not(.item_unavaliable)')
 		# Caso não haja indisponível, seleciona primeiro não-desabilitado (sku existente)
@@ -193,7 +171,7 @@ class SkuSelectorRenderer
 		installmentValue = formatCurrency sku.installmentsValue
 
 		# Modifica href do botão comprar
-		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku)).show()
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId)).show()
 		@select.price().show()
 		@select.listPriceValue().text("R$ #{listPrice}")
 		@select.bestPriceValue().text("R$ #{bestPrice}")
@@ -202,9 +180,9 @@ class SkuSelectorRenderer
 
 	updatePriceUnavailable: () ->
 		# Modifica href do botão comprar
+		# $('.notifyme-skuid').val()
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()
 		@select.price().hide()
-		# $('.notifyme-skuid').val()
 
 #
 # PLUGIN ENTRY POINT
@@ -237,7 +215,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		renderer.select.warnUnavailable().show()
 		renderer.select.buyButton().hide()
 	else if available.length is 1
-		renderer.select.updatePrice(available[0])
+		renderer.updatePrice(available[0])
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
@@ -268,12 +246,12 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 				renderer.select.warnUnavailable().show()
 
 		# Limpa classe de selecionado para todos dessa dimensao
-		renderer.selectItemDimensionInput(dimensionName).removeClass('checked sku-picked')
-		renderer.selectItemDimensionLabel(dimensionName).removeClass('checked sku-picked')
+		renderer.select.itemDimensionInput(dimensionName).removeClass('checked sku-picked')
+		renderer.select.itemDimensionLabel(dimensionName).removeClass('checked sku-picked')
 
 		# Coloca classes corretas em si
-		renderer.selectItemDimensionValueInput(dimensionName, dimensionValue).addClass('checked sku-picked')
-		renderer.selectItemDimensionValueLabel(dimensionName, dimensionValue).addClass('checked sku-picked')
+		renderer.select.itemDimensionValueInput(dimensionName, dimensionValue).addClass('checked sku-picked')
+		renderer.select.itemDimensionValueLabel(dimensionName, dimensionValue).addClass('checked sku-picked')
 
 		renderer.disableInvalidInputs(selector)
 
@@ -301,7 +279,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		.click(buyButtonHandler)
 
 	for dimension in selector.dimensions
-		renderer.selectItemDimensionInput(dimension)
+		renderer.select.itemDimensionInput(dimension)
 			.change(dimensionChangeHandler)
 
 	if options.warnUnavailable
@@ -357,10 +335,9 @@ $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 #
 
 # Sanitizes text: "Caçoá (teste 2)" becomes "Cacoateste2"
-# TODO resolver ambiguidade: "15 kg" e "1,5 kg" ambos viram "15kg"
 sanitize = (str = this) ->
-	specialChars =  "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź"
-	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczz"
+	specialChars =  "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź,."
+	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczzVP"
 	regex = new RegExp '[' + specialChars + ']', 'g'
 	str += ""
 	sanitized = str.replace(regex, (char) ->
@@ -378,6 +355,12 @@ formatCurrency = (value) ->
 	else
 		return "Grátis"
 
+mapObj = (obj, f) ->
+	obj2 = {}
+	for own k, v of obj
+		obj2[k] = f k, v
+	obj2
+
 
 #
 # EXPORTS
@@ -385,3 +368,4 @@ formatCurrency = (value) ->
 window.vtex or= {}
 vtex.portalPlugins or= {}
 vtex.portalPlugins.SkuSelector = SkuSelector
+vtex.portalPlugins.SkuSelectorRenderer = SkuSelectorRenderer

@@ -4,6 +4,9 @@
 	"dimensions": [
 		"Voltagem"
 	],
+	"dimensionsMap": {
+		"Voltagem": ["TENSÃO / FREQUÊNCIA"]
+	},
 	"skus": [
 		{
 			"sku": 2000082,
@@ -16,8 +19,9 @@
 			"installments": 1,
 			"installmentsValue": 5000,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "ElectroluxQA"
+			"image": "http://electroluxqa.vtexlocal.com.br/arquivos/ids/155976-55-55/80021387-001.jpg",
+			"seller": "ElectroluxQA",
+			"sellerId": "1"
 		}
 	]
 }

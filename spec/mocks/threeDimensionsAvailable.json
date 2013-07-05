@@ -6,6 +6,11 @@
 		"Volume",
 		"Quantidade"
 	],
+	"dimensionsMap": {
+		"Peso": ["unico"],
+		"Volume": ["0,75 mL"],
+		"Quantidade": ["1 bisnaga", "3 bisnagas"]
+	},
 	"skus": [
 		{
 			"sku": 4034,
@@ -20,8 +25,9 @@
 			"installments": 2,
 			"installmentsValue": 6089,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170254-71-71/087219051108.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 5194,
@@ -36,8 +42,9 @@
 			"installments": 2,
 			"installmentsValue": 2157,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170249-71-71/7891268200515.jpg",
+			"seller": "MeuAmigoPet2",
+			"sellerId": "2"
 		}
 	]
 }

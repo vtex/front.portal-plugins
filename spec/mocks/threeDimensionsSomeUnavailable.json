@@ -6,6 +6,11 @@
 		"Fase da Vida",
 		"Porte"
 	],
+	"dimensionsMap": {
+		"Peso": ["1 Kg", "2,5 Kg", "7,5 Kg", "12 Kg"],
+		"Fase da Vida": ["Adulto", "Filhote"],
+		"Porte": ["Pequeno", "Grande"]
+	},
 	"skus": [
 		{
 			"sku": 4085,
@@ -20,8 +25,9 @@
 			"installments": 3,
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170194-71-71/7897348201113.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 5116,
@@ -36,8 +42,9 @@
 			"installments": 3,
 			"installmentsValue": 2063,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170199-71-71/7897348201274.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 51162,
@@ -52,8 +59,9 @@
 			"installments": 3,
 			"installmentsValue": 2063,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170199-71-71/7897348201274.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 5274,
@@ -68,8 +76,9 @@
 			"installments": 3,
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 52766,
@@ -84,8 +93,9 @@
 			"installments": 3,
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 527677,
@@ -100,8 +110,9 @@
 			"installments": 3,
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet",
+			"sellerId": "1"
 		},
 		{
 			"sku": 527678,
@@ -116,8 +127,9 @@
 			"installments": 3,
 			"installmentsValue": 33332900,
 			"installmentsInsterestRate": 0,
-			"image": "/img/3910074-a.jpg",
-			"seller": "MeuAmigoPet"
+			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170339-71-71/7897348203254.jpg",
+			"seller": "MeuAmigoPet2",
+			"sellerId": "2"
 		}
 	]
 }

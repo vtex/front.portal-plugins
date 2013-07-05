@@ -6,7 +6,7 @@ skuVariationsDoneHandler = ($el, options, json) ->
 		return options.addSkuToCart json.skus[0].sku
 	else
 		# Render the sku selector, passing the options with templates
-		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.dimensions, json.skus, options, $el)
+		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.dimensions, json.dimensionsMap, json.skus, options, $el)
 		$el.html(skuSelector)
 		$.skuSelectorPopup.showPopup()
 

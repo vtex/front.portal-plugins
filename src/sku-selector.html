@@ -16,8 +16,8 @@
     <!-- skuSelectorTemplate -->
 
     <script type="text/javascript">
-        var mocks = ['/spec/mocks/oneDimensionAvailable.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json'];
-        $.getJSON(mocks[2]).done(function(data){
+        var mocks = ['/spec/mocks/oneDimensionAvailable.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json', '/spec/mocks/oneDimensionUnavailable.json'];
+        $.getJSON(mocks[3]).done(function(data){
             $('.sku-selector-container').skuSelector(data, {warnUnavailable: true});
         })
     </script>
