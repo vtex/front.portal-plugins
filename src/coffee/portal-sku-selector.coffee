@@ -33,7 +33,7 @@ class SkuSelector
 		return true
 
 	findSelectableSkus: =>
-		(sku for sku in @skus when isSkuSelectable(sku))
+		(sku for sku in @skus when @isSkuSelectable(sku))
 
 	findSelectedSku: =>
 		s = @findSelectableSkus()
