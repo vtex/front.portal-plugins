@@ -48,6 +48,18 @@ describe 'SkuSelector Plugin', ->
 
 		#TODO it 'should find the selectable skus', ->
 
+
+		it 'should search the dimensions using the given function', ->
+			fn = ()->true
+			spyOn($, 'grep').andCallThrough()
+			expect(@ss.searchDimensions(fn)).toEqual(@ss.dimensions)
+			expect($.grep).toHaveBeenCalledWith(@ss.dimensions, fn)
+
+		#TODO it 'should search the dimensions correctly', ->
+
+		it 'should get the dimension by its name', ->
+			expect(@ss.getDimensionByName(@ss.dimensions[0].name)).toEqual(@ss.dimensions[0])
+
 		describe 'findSelectedSku', ->
 			it 'should find when it is unique', ->
 				spyOn(@ss, 'findSelectableSkus').andReturn([@mock.skus[0]])

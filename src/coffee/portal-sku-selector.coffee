@@ -39,8 +39,11 @@ class SkuSelector
 		s = @findSelectableSkus()
 		return if s.length is 1 then s[0] else undefined
 
+	searchDimensions: (fn = ()->true) =>
+		$.grep(@dimensions, fn)
+
 	getDimensionByName: (dimensionName) =>
-		$.grep(@dimensions, (dim) -> dim.name == dimensionName)[0]
+		@searchDimensions((dim) -> dim.name == dimensionName)[0]
 
 	getSelectedDimension: (dimension) =>
 		@getDimensionByName(dimension).selected
@@ -50,7 +53,7 @@ class SkuSelector
 
 	resetNextDimensions: (dimension) =>
 		currentIndex = @getDimensionByName(dimension).index
-		dim.selected = undefined for dim in $.grep(@dimensions, (dim) -> dim.index > currentIndex)
+		dim.selected = undefined for dim in @searchDimensions((dim) -> dim.index > currentIndex)
 
 class SkuSelectorRenderer
 	constructor: (context, selectors) ->
