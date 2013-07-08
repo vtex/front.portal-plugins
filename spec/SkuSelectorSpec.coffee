@@ -46,6 +46,8 @@ describe 'SkuSelector Plugin', ->
 			availableSkus = (sku for sku in @ss.skus when sku.available is true)
 			expect(@ss.findAvailableSkus()).toEqual(availableSkus)
 
+		#TODO it 'should assert that a sku is selectable', ->
+
 		#TODO it 'should find the selectable skus', ->
 
 
