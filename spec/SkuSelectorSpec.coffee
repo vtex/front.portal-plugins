@@ -123,5 +123,7 @@ describe 'SkuSelector Plugin', ->
 		it 'should have loaded HTML fixtures correctly', ->
 			expect($('.sku-selector-container')).toExist()
 
-
+		it 'should return jQuery object, for chaining', ->
+			$el = $('.sku-selector-container')
+			expect($el.skuSelector(@mocks[0])).toBe($el)
 
