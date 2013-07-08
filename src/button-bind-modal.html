@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:vtex="http://www.vtex.com.br/2009/vtex-common" xmlns:vtex.cmc="http://www.vtex.com.br/2009/vtex-commerce">
+<head>
+    <link rel="shortcut icon" href="http://www.meuamigopet.com.br/favicon.ico">
+    <title>Pet Shop online | Meu Amigo Pet - O Pet Shop mais Completo</title>
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/reset.css">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/estilos.css?v=3">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/vtex-smartCart.css">
+
+    <meta name="vtex-version" content="1.0.0.0">
+
+    <script src="http://localhost:35729/livereload.js"></script>
+    <script src="lib/jquery-1.8.3.min.js"></script>
+</head>
+<body class="home">
+<div id="container">
+    <div id="content" style="padding-top: 15px;">
+        <div class="conteudo">
+            <div class="prateleira vitrine n4colunas">
+                <h2>Ofertas Especiais para o seu Pet</h2>
+                <ul>
+                    <li layout="ef3fcb99-de72-4251-aa57-71fe5b6e149f" class="produtos-para-caes-|-meu-amigo-pet---tudo-para-seu-cao">
+                        <a class="productImage" title="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p"><img src="http://www.meuamigopet.com.br/arquivos/ids/170194-160-160/7897348201113.jpg" width="160" height="160" alt="7897348201113" id=""></a>
+                        <h2><a title="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p">Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier</a></h2>
+                        <div id="rating-produto-4083" class="rating-produto avaliacao0">0</div>
+                        <p class="brand"><a class="texto brand premier" href="http://www.meuamigopet.com.br/premier">Premier</a></p>
+
+                        <div class="data">
+                            <div class="discount"></div>
+                            <p class="price">
+                                <a title="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p">
+                                    <span class="newPrice"><span>A partir de: </span><em>R$ 27,90</em></span>
+                                    <em class="installment">à vista</em>
+                                </a>
+                            </p>
+                            <div class="view">
+                                <a href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p" alt="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" class="botaoDetalhes" rel="nofollow">Espiar</a>
+                            </div>
+
+                            <!--
+                            ------------ AQUI --------------
+                            -->
+                            <div class="wrapper-buy-button-asynchronous">
+                                <button data-template="/templates/button-bind-modal-api-response.html" data-to-bind="openModalFromTemplate" class="btn-modal to-bind btn-add-sku btn btn-add-buy-button-asynchronous btn-not-clicked asynchronousBuyButton actionActivated vtexsm_activated">Comprar Produto sugerido</button>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- build:js js/portal-sku-selector-popup.min.js -->
+<script type="text/javascript" src="js/portal-sku-selector.js"></script>
+<!-- endbuild -->
+<script type="text/javascript">
+var openModalFromTemplate = function(evt){
+    var templateURL = $(this).data('template');
+
+    $.get(templateURL, function(data){
+
+        $overlay = $('<div class="boxPopUp2-overlay boxPopUp2-clickActive" style="display: none;"></div>')
+        $(data).appendTo($overlay);
+        $overlay.appendTo($('body')).show()
+    })
+}
+</script>
+<script type="text/javascript" src="js/portal-binder.js"></script>
+
+</body>
+</html>

@@ -119,12 +119,16 @@ module.exports = (grunt) ->
 			all:
 				files:
 					'build/<%= relativePath %>/sku-selector.html': ['build/<%= relativePath %>/sku-selector.html']
+					'build/<%= relativePath %>/templates/button-bind-modal-api-response.html': ['build/<%= relativePath %>/templates/button-bind-modal-api-response.html']
 					'build/<%= relativePath %>/spec/fixtures/sku-selector.html': ['build/<%= relativePath %>/spec/fixtures/sku-selector.html']
 
 				options:
 					replacements: [
-						pattern: '<!-- skuSelectorTemplate -->'
-						replacement: grunt.file.read('src/templates/sku-selector.html')
+							pattern: '<!-- skuSelectorTemplate -->'
+							replacement: grunt.file.read('src/templates/sku-selector.html')
+						,
+							pattern: '<!-- skuSelectorMock -->'
+							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
 					]
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
