@@ -95,6 +95,21 @@ describe 'SkuSelector Plugin', ->
 		it 'should be instantiated', ->
 			expect(@ssr instanceof vtex.portalPlugins.SkuSelectorRenderer).toBe(true)
 
+		it 'should call updatePriceAvailable', ->
+			sku = {available: true}
+			spyOn(@ssr, 'updatePriceAvailable')
+			@ssr.updatePrice(sku)
+
+			expect(@ssr.updatePriceAvailable).toHaveBeenCalledWith(sku)
+
+		it 'should call updatePriceUnavailable', ->
+			sku = {available: false}
+			spyOn(@ssr, 'updatePriceUnavailable')
+			@ssr.updatePrice(sku)
+
+			expect(@ssr.updatePriceUnavailable).toHaveBeenCalled()
+
+
 	describe '$.skuSelector', ->
 		beforeEach ->
 			loadFixtures 'sku-selector.html'
