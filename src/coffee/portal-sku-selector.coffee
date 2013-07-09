@@ -272,15 +272,15 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Binds handlers
 	renderer.select.buyButton()
-		.click(buyButtonHandler)
+		.on 'click', buyButtonHandler
 
 	for dimension in selector.dimensions
 		renderer.select.itemDimensionInput(dimension.name)
-			.change(dimensionChangeHandler)
+			.on 'change', dimensionChangeHandler
 
 	if options.warnUnavailable
 		renderer.select.warnUnavailable().find('form')
-			.submit(warnUnavailableSubmitHandler)
+			.on 'submit', warnUnavailableSubmitHandler
 
 	# Select first dimension
 	if options.selectOnOpening or selector.findSelectedSku()
