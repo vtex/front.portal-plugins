@@ -37,11 +37,12 @@
                                 <a href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p" alt="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" class="botaoDetalhes" rel="nofollow">Espiar</a>
                             </div>
 
-                            <!--
-                            ------------ AQUI --------------
-                            -->
                             <div class="wrapper-buy-button-asynchronous">
-                                <button data-template="/templates/button-bind-modal-api-response.html" data-to-bind="openModalFromTemplate" class="btn-modal to-bind btn-add-sku btn btn-add-buy-button-asynchronous btn-not-clicked asynchronousBuyButton actionActivated vtexsm_activated">Comprar Produto sugerido</button>
+                                <!--
+                                  data-template define a URL que tem o HTML+JS a ser posto no modal
+                                  classe to-bind-modal significa que o elemento ainda nao foi binded (sera removida ao ser binded)
+                                -->
+                                <button data-template="/templates/button-bind-modal-api-response.html" class="btn-modal to-bind-modal btn-add-sku btn btn-add-buy-button-asynchronous btn-not-clicked asynchronousBuyButton actionActivated vtexsm_activated">Comprar Produto sugerido</button>
                             </div>
                         </div>
                     </li>
@@ -54,18 +55,6 @@
 <!-- build:js js/portal-sku-selector-popup.min.js -->
 <script type="text/javascript" src="js/portal-sku-selector.js"></script>
 <!-- endbuild -->
-<script type="text/javascript">
-var openModalFromTemplate = function(evt){
-    var templateURL = $(this).data('template');
-
-    $.get(templateURL, function(data){
-
-        $overlay = $('<div class="boxPopUp2-overlay boxPopUp2-clickActive" style="display: none;"></div>')
-        $(data).appendTo($overlay);
-        $overlay.appendTo($('body')).show()
-    })
-}
-</script>
 <script type="text/javascript" src="js/portal-binder.js"></script>
 
 </body>
