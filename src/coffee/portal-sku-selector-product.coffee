@@ -1,13 +1,7 @@
-$(document).on "dimensionChanged", ->
-	$(".notifyme").hide()
-	$(".buy-button").hide()
+$(document).ready hideBuyInfo
+$(document).on "dimensionChanged", hideBuyInfo
 
 $(document).on "skuSelected", (evt, sku) ->
-	console.log "Foi selecionado um sku que está " + (if sku.available then "" else "un") + "available: ", sku
-	if sku.available
-		$(".buy-button").show()
-		$(".skuBestPrice").text "R$ " + $.formatCurrency(sku.bestPrice)
-		# etc...
-	else
-		$(".notifyme").show()
-		# etc...
+	window.FireSkuChangeImage?(sku.sku)
+	#window.FireSkuDataReceived?(sku.sku)
+	window.FireSkuSelectionChanged?(sku.sku)
