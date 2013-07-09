@@ -143,26 +143,9 @@
     })
 </script>
 
-<script type="text/javascript">
-    $(document).on('dimensionChanged', function(){
-        $('.notifyme').hide();
-        $('.buy-button').hide();
-    })
-
-    $(document).on('skuSelected', function(evt, sku){
-        console.log('Foi selecionado um sku que está ' + (sku.available? "" : "un") + "available: ", sku);
-
-        if(sku.available){
-            $('.buy-button').show();
-            $('.skuBestPrice').text("R$ " + $.formatCurrency(sku.bestPrice));
-            // etc...
-        } else {
-            $('.notifyme').show();
-            // etc...
-        }
-
-    })
-</script>
+<!-- build:js js/portal-sku-selector-product.min.js -->
+<script type="text/javascript" src="js/portal-sku-selector-product.js"></script>
+<!-- endbuild -->
 
 </body>
 </html>
