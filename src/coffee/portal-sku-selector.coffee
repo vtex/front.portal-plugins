@@ -158,10 +158,10 @@ class SkuSelectorRenderer
 			@updatePriceUnavailable()
 
 	updatePriceAvailable: (sku) ->
-		listPrice = formatCurrency sku.listPrice
-		bestPrice = formatCurrency sku.bestPrice
+		listPrice = $.formatCurrency sku.listPrice
+		bestPrice = $.formatCurrency sku.bestPrice
 		installments = sku.installments
-		installmentValue = formatCurrency sku.installmentsValue
+		installmentValue = $.formatCurrency sku.installmentsValue
 
 		# Modifica href do botão comprar
 		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId)).show()
@@ -241,8 +241,8 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		renderer.select.warnUnavailable().filter(':visible').hide()
 
 		# Trigger event for interested scripts
-		if selectedSku isnt undefined and undefinedDimensions.length is 0
-			$(this).trigger('skuSelected', [selectedSku, dimensionName])
+		if selectedSku
+			$(this).trigger('skuSelected', [selectedSku])
 			if options.warnUnavailable and not selectedSku.available
 				renderer.showWarnUnavailable(selectedSku.sku)
 
@@ -355,7 +355,7 @@ capitalize = (str) ->
 	return str.charAt(0).toUpperCase() + str.slice(1)
 
 # Format currency to brazilian reais: 123455 becomes "1.234,55"
-formatCurrency = (value) ->
+$.formatCurrency = (value) ->
 	if value? and not isNaN value
 		return parseFloat(value/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 	else

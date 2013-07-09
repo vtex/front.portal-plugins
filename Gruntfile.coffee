@@ -68,10 +68,10 @@ module.exports = (grunt) ->
 					'build/<%= relativePath %>/style/product-listing-mock.css': 'src/style/product-listing-mock.less'
 
 		useminPrepare:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html', 'build/<%= relativePath %>/modal.html']
 
 		usemin:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html', 'build/<%= relativePath %>/modal.html']
 
 		karma:
 			options:
@@ -119,7 +119,7 @@ module.exports = (grunt) ->
 			all:
 				files:
 					'build/<%= relativePath %>/sku-selector.html': ['build/<%= relativePath %>/sku-selector.html']
-					'build/<%= relativePath %>/templates/button-bind-modal-api-response.html': ['build/<%= relativePath %>/templates/button-bind-modal-api-response.html']
+					'build/<%= relativePath %>/templates/button-bind-modal-api-response.html': ['build/<%= relativePath %>/templates/modal-api-response.html']
 					'build/<%= relativePath %>/spec/fixtures/sku-selector.html': ['build/<%= relativePath %>/spec/fixtures/sku-selector.html']
 
 				options:
