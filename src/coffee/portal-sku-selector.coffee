@@ -241,8 +241,9 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		renderer.select.warnUnavailable().filter(':visible').hide()
 
 		# Trigger event for interested scripts
+		$(this).trigger 'dimensionChanged', [dimensionName, dimensionValue]
 		if selectedSku
-			$(this).trigger('skuSelected', [selectedSku])
+			$(this).trigger 'skuSelected', [selectedSku]
 			if options.warnUnavailable and not selectedSku.available
 				renderer.showWarnUnavailable(selectedSku.sku)
 
