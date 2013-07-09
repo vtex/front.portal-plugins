@@ -1,3 +1,5 @@
+KEYCODE_ESC = 27
+
 doBind = ->
 	$('.to-bind-modal').each ->	$(this).removeClass('to-bind-modal').on('click', openModalFromTemplate)
 
@@ -18,14 +20,14 @@ openModalFromTemplate = (evt) ->
 	$overlay = getOverlay()
 	$container = $(containerTemplate)
 
-	#showModal
 	$overlay.appendTo($("body")).fadeIn()
 	$container.appendTo($("body")).fadeIn()
+
 	hideModal = ->
 		$overlay.fadeOut()
 		$container.remove()
 	hideModalOnEscapeKey = (e) ->
-		hideModal() if e.keyCode is 27 # esc
+		hideModal() if e.keyCode is KEYCODE_ESC
 		$(document).off "keyup", hideModalOnEscapeKey
 
 	$overlay.on "click", hideModal
