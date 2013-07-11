@@ -9,6 +9,8 @@ describe 'SkuSelector Plugin', ->
 		@mocks = (getJSONFixture(name) for name in mockNames)
 
 	it 'should have loaded JSON fixtures correctly', ->
+		#Assert
+		expect(typeof @mocks).toBe(typeof [])
 		expect(@mocks[0]).toBeDefined()
 		expect(typeof @mocks[0]).toBe(typeof {})
 
@@ -18,71 +20,155 @@ describe 'SkuSelector Plugin', ->
 			@ss = new vtex.portalPlugins.SkuSelector(@mock)
 
 		it 'should exist', ->
+			#Assert
 			expect(vtex.portalPlugins.SkuSelector).toBeDefined()
+
 		it 'should be instantiated', ->
+			#Assert
 			expect(@ss instanceof vtex.portalPlugins.SkuSelector).toBe(true)
 
-		it 'should import productId', ->
-			expect(@ss.productId).toEqual(@mock.productId)
-		it 'should import name', ->
-			expect(@ss.name).toEqual(@mock.name)
-		it 'should import dimensions', ->
-			# Number of dimensions
-			expect(@ss.dimensions.length).toEqual(@mock.dimensions.length)
-			# Dimension names
-			expect((dim.name for dim in @ss.dimensions)).toEqual(@mock.dimensions)
-			# Dimension selected map
-			expect(dim.selected).toBeUndefined() for dim in @ss.dimensions
-			# Dimension values
-			expect(dim.values).toEqual(@mock.dimensionsMap[dim.name]) for dim in @ss.dimensions
-		it 'should import skus', ->
-			expect(@ss.skus).toEqual(@mock.skus)
+		describe 'constructor', ->
+			it 'should import productId', ->
+				#Assert
+				expect(@ss.productId).toEqual(@mock.productId)
+
+			it 'should import product name', ->
+				#Assert
+				expect(@ss.name).toEqual(@mock.name)
+
+			it 'should import all dimensions', ->
+				#Assert
+				expect(@ss.dimensions.length).toEqual(@mock.dimensions.length)
+
+			it 'should import dimension names', ->
+				#Assert
+				expect((dim.name for dim in @ss.dimensions)).toEqual(@mock.dimensions)
+
+			it 'should initialize', ->
+				#Assert
+				expect(dim.selected).toBeUndefined() for dim in @ss.dimensions
+
+			it "should import each dimension's values", ->
+				#Assert
+				expect(dim.values).toEqual(@mock.dimensionsMap[dim.name]) for dim in @ss.dimensions
+
+			it "should import each dimension's input types", ->
+				#Assert
+				expect(dim.inputType).toEqual(@mock.dimensionsInputType[dim.name] or "radio") for dim in @ss.dimensions
+
+			it 'should import skus', ->
+				#Assert
+				expect(@ss.skus).toEqual(@mock.skus)
 
 		it 'should find undefined dimensions', ->
-			undefinedDimensions = (dim for dim in @ss.dimensions when dim.selected is undefined)
-			expect(@ss.findUndefinedDimensions()).toEqual(undefinedDimensions)
+			#Arrange
+			ours = (dim for dim in @ss.dimensions when dim.selected is undefined)
+
+			#Act
+			theirs =  @ss.findUndefinedDimensions()
+
+			#Assert
+			expect(theirs).toEqual(ours)
 
 		it 'should find available skus', ->
-			availableSkus = (sku for sku in @ss.skus when sku.available is true)
-			expect(@ss.findAvailableSkus()).toEqual(availableSkus)
+			#Arrange
+			ours = (sku for sku in @ss.skus when sku.available is true)
+
+			#Act
+			theirs = @ss.findAvailableSkus()
+
+			#Assert
+			expect(theirs).toEqual(ours)
+
+		it "should select a sku by setting each dimension's selected to its values", ->
+			#Arrange
+			sku = @mock.skus[0]
+
+			#Act
+			@ss.selectSku(sku)
+
+			#Assert
+			expect(dim.selected).toEqual(sku.dimensions[dim.name]) for dim in @ss.dimensions
 
 		#TODO it 'should assert that a sku is selectable', ->
 
 		#TODO it 'should find the selectable skus', ->
 
-
 		it 'should search the dimensions using the given function', ->
-			fn = ()->true
+			#Arrange
+			fn = -> true
 			spyOn($, 'grep').andCallThrough()
-			expect(@ss.searchDimensions(fn)).toEqual(@ss.dimensions)
+
+			#Act
+			searchResults = @ss.searchDimensions(fn)
+
+			#Assert
+			expect(searchResults).toEqual(@ss.dimensions)
 			expect($.grep).toHaveBeenCalledWith(@ss.dimensions, fn)
 
-		#TODO it 'should search the dimensions correctly', ->
-
 		it 'should get the dimension by its name', ->
-			expect(@ss.getDimensionByName(@ss.dimensions[0].name)).toEqual(@ss.dimensions[0])
+			#Arrange
+			dimension = @ss.dimensions[0]
+			name = dimension.name
+
+			#Act
+			result = @ss.getDimensionByName(name)
+
+			#Assert
+			expect(result).toEqual(dimension)
 
 		describe 'findSelectedSku', ->
 			it 'should find when it is unique', ->
-				spyOn(@ss, 'findSelectableSkus').andReturn([@mock.skus[0]])
-				expect(@ss.findSelectedSku()).toEqual(@mock.skus[0])
+				#Arrange
+				mockResult = [@mock.skus[0]]
+				spyOn(@ss, 'findSelectableSkus').andReturn(mockResult)
+
+				#Act
+				result = @ss.findSelectedSku()
+
+				#Assert
+				expect(result).toEqual(mockResult...)
 
 			it 'should not find when it is not unique', ->
-				spyOn(@ss, 'findSelectableSkus').andReturn([@mock.skus[0], @mock.skus[1]])
-				expect(@ss.findSelectedSku()).toBeUndefined()
+				#Arrange
+				mockResult = [@mock.skus[0], @mock.skus[1]]
+				spyOn(@ss, 'findSelectableSkus').andReturn(mockResult)
+
+				#Act
+				result = @ss.findSelectedSku()
+
+				#Assert
+				expect(result).toBeUndefined()
 
 			it 'should not find when it is empty', ->
-				spyOn(@ss, 'findSelectableSkus').andReturn([])
-				expect(@ss.findSelectedSku()).toBeUndefined()
+				#Arrange
+				mockResult = []
+				spyOn(@ss, 'findSelectableSkus').andReturn(mockResult)
+
+				#Act
+				result = @ss.findSelectedSku()
+
+				#Assert
+				expect(result).toBeUndefined()
 
 
 		it 'should get and set selected dimension', ->
+			#Arrange
 			dim  = @ss.dimensions[0]
-			@ss.setSelectedDimension(dim.name, "12kg")
-			expect(@ss.getSelectedDimension(dim.name)).toEqual("12kg")
+			value = "12kg"
+
+			#Act
+			@ss.setSelectedDimension(dim.name, value)
+			result = @ss.getSelectedDimension(dim.name)
+
+			#Assert
+			expect(result).toEqual(value)
 
 		it 'should reset the next dimensions', ->
+			#Act
 			@ss.resetNextDimensions(@ss.dimensions[0].name)
+
+			#Assert
 			expect(@ss.getSelectedDimension(dim.name)).toBeUndefined() for dim, i in @ss.dimensions when i > 0
 
 
@@ -91,22 +177,34 @@ describe 'SkuSelector Plugin', ->
 			@ssr = new vtex.portalPlugins.SkuSelectorRenderer({}, {}, {})
 
 		it 'should exist', ->
+			#Assert
 			expect(vtex.portalPlugins.SkuSelectorRenderer).toBeDefined()
+
 		it 'should be instantiated', ->
+			#Assert
 			expect(@ssr instanceof vtex.portalPlugins.SkuSelectorRenderer).toBe(true)
 
 		it 'should call updatePriceAvailable', ->
+			#Arrange
 			sku = {available: true}
 			spyOn(@ssr, 'updatePriceAvailable')
+
+			#Act
 			@ssr.updatePrice(sku)
 
+			#Assert
 			expect(@ssr.updatePriceAvailable).toHaveBeenCalledWith(sku)
 
+
 		it 'should call updatePriceUnavailable', ->
+			#Arrange
 			sku = {available: false}
 			spyOn(@ssr, 'updatePriceUnavailable')
+
+			#Act
 			@ssr.updatePrice(sku)
 
+			#Assert
 			expect(@ssr.updatePriceUnavailable).toHaveBeenCalled()
 
 
@@ -115,15 +213,25 @@ describe 'SkuSelector Plugin', ->
 			loadFixtures 'sku-selector.html'
 
 		it 'should have jQuery', ->
+			#Assert
 			expect($).toBeDefined()
+
 		it 'should exist', ->
+			#Assert
 			expect($.fn.skuSelector).toBeDefined()
 			expect($.skuSelector).toBeDefined()
 
 		it 'should have loaded HTML fixtures correctly', ->
+			#Assert
 			expect($('.sku-selector-container')).toExist()
 
-		it 'should return jQuery object, for chaining', ->
-			$el = $('.sku-selector-container')
-			expect($el.skuSelector(@mocks[0])).toBe($el)
+		it 'should return a jQuery object, for chaining', ->
+			#Arrange
+			element = $('.sku-selector-container')
+
+			#Act
+			result = element.skuSelector(@mocks[0])
+
+			#Assert
+			expect(result).toBe(element)
 
