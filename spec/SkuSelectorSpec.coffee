@@ -88,7 +88,7 @@ describe 'SkuSelector Plugin', ->
 
 	describe 'SkuSelectorRenderer', ->
 		beforeEach ->
-			@ssr = new vtex.portalPlugins.SkuSelectorRenderer()
+			@ssr = new vtex.portalPlugins.SkuSelectorRenderer({}, {}, {})
 
 		it 'should exist', ->
 			expect(vtex.portalPlugins.SkuSelectorRenderer).toBeDefined()
