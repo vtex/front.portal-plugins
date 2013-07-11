@@ -8,9 +8,14 @@
 	],
 	"dimensionsMap": {
 		"Peso": ["unico"],
-		"Volume": ["0,75 mL"],
+		"Volume": ["0,75 mL", "1 mL"],
 		"Quantidade": ["1 bisnaga", "3 bisnagas"]
 	},
+    "dimensionsInputType": {
+        "Peso": "radio",
+        "Volume": "combo",
+        "Quantidade": "radio"
+    },
 	"skus": [
 		{
 			"sku": 4034,

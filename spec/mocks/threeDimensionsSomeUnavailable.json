@@ -11,6 +11,9 @@
 		"Fase da Vida": ["Adulto", "Filhote"],
 		"Porte": ["Pequeno", "Grande"]
 	},
+    "dimensionsInputType": {
+        "Fase da Vida": "Combo"
+    },
 	"skus": [
 		{
 			"sku": 4085,
