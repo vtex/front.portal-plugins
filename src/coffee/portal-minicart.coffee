@@ -8,7 +8,7 @@ class vtexMinicart
 		@options = $.extend {}, $.fn.vtexMinicart.defaults, options
 		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
-		@cartData = options.cartData	# default {}
+		@cartData = @options.cartData	# default {}
 		@init()
 
 	getOrderFormURL: =>
