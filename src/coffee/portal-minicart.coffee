@@ -117,7 +117,7 @@ class vtexMinicart
 			]
 
 		$.ajax({
-			url: "/api/checkout/pub/orderForm/" + self.options.cartData.orderFormId + "/items/update/"
+			url: "/api/checkout/pub/orderForm/" + @options.cartData.orderFormId + "/items/update/"
 			data: data
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
