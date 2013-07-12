@@ -27,17 +27,17 @@ class vtexMinicart
 
 	bindEvents: =>
 		@hoverContext.add('.show-minicart-on-hover').on 'mouseover', ->
-			$(window).trigger "miniCartMouseOver"
+			$(window).trigger "minicartMouseOver"
 
 		@hoverContext.add('.show-minicart-on-hover').on 'mouseout', ->
-			$(window).trigger "miniCartMouseOut"
+			$(window).trigger "minicartMouseOut"
 
-		$(window).on "miniCartMouseOver", =>
+		$(window).on "minicartMouseOver", =>
 			if @cartData.items?.length > 0
 				$(".vtexsc-cart").slideDown()
 				clearTimeout @timeoutToHide
 
-		$(window).on "miniCartMouseOut", =>
+		$(window).on "minicartMouseOut", =>
 			clearTimeout @timeoutToHide
 			@timeoutToHide = setTimeout ->
 				$(".vtexsc-cart").stop(true, true).slideUp()
