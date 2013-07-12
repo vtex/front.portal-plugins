@@ -90,7 +90,7 @@ class vtexMinicart
 	updateItems: (data) =>
 		return unless data
 
-		container = $(".vtexsc-productList tbody", @context).empty()
+		container = $(".minicartListContainer", @context).empty()
 		for item, i in data.items
 			now = @base.clone()
 			now.find('.cartSkuImage a').attr('href', item.detailUrl)
