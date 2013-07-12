@@ -76,6 +76,15 @@ class vtexMinicart
 		@updateValues data
 		@updateItems data
 
+	updateValues: (data) =>
+		return unless data
+
+		total = 0
+		for subtotal in data.totalizers when subtotal.id is 'Items'
+			total += subtotal.value
+
+		$(".vtexsc-text", @context).text "R$ " + formatCurrency total
+
 	updateItems: (data) =>
 		return unless data
 
@@ -92,15 +101,6 @@ class vtexMinicart
 
 		$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
 			@deleteItem(this)
-
-	updateValues: (data) =>
-		return unless data
-
-		total = 0
-		for subtotal in data.totalizers when subtotal.id is 'Items'
-			total += subtotal.value
-
-		$(".vtexsc-text", @context).text "R$ " + formatCurrency total
 
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
