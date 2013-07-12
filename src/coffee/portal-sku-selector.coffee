@@ -171,6 +171,7 @@ class SkuSelectorRenderer
 				.addClass("dimension-#{dimension.nameSanitized}")
 				.addClass("espec_#{dimension.index}")
 				.addClass("skuespec_#{valueSanitized}")
+				.addClass("skuespec_#{spacesToHyphens(dimension.name)}_opcao_#{spacesToHyphens(value)}")
 
 			skuList.appendTo(list)
 
@@ -471,6 +472,8 @@ mapObj = (obj, f) ->
 		obj2[k] = f k, v
 	obj2
 
+spacesToHyphens = (str) ->
+	str.replace(/\ /g, '-')
 
 #
 # EXPORTS
