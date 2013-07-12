@@ -390,7 +390,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 #	if options.selectOnOpening or selector.findSelectedSku()
 #		renderer.selectDimension(selector.dimensions[0])
 
-
+	$(window).trigger('skuSelectorReady')
 	this.removeClass('sku-selector-loading')
 
 	# Chaining
