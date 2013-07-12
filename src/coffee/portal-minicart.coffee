@@ -8,6 +8,12 @@ class vtexMinicart
 		@options = $.extend {}, $.fn.vtexMinicart.defaults, options
 		@init()
 
+	getOrderFormURL: =>
+		"/api/checkout/pub/orderForm/"
+
+	getOrderFormUpdateURL: =>
+		@getOrderFormURL() + @options.cartData.orderFormId + "/items/update/"
+
 	init: =>
 		self = this
 
@@ -84,7 +90,7 @@ class vtexMinicart
 
 	getData: =>
 		$.ajax({
-			url: "/api/checkout/pub/orderForm/"
+			url: @getOrderFormURL()
 			data: JSON.stringify(expectedOrderFormSections: ["items", "paymentData", "totalizers"])
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
@@ -117,7 +123,7 @@ class vtexMinicart
 			]
 
 		$.ajax({
-			url: "/api/checkout/pub/orderForm/" + @options.cartData.orderFormId + "/items/update/"
+			url: @getOrderFormUpdateURL()
 			data: data
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
