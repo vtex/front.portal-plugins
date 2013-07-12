@@ -83,7 +83,7 @@ class vtexMinicart
 		for subtotal in data.totalizers when subtotal.id is 'Items'
 			total += subtotal.value
 
-		$(".vtexsc-text", @context).text "R$ " + formatCurrency total
+		$(".vtexsc-text", @context).text(@valueLabel(total))
 
 	updateItems: (data) =>
 		return unless data
@@ -94,7 +94,7 @@ class vtexMinicart
 			now.find('.cartSkuImage a').attr('href', item.detailUrl)
 			now.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
 			now.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
-			now.find('.cartSkuPrice .bestPrice').text("R$ #{formatCurrency(item.price)}")
+			now.find('.cartSkuPrice .bestPrice').text(@valueLabel(item.price))
 			now.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
 
 			now.appendTo(container)
@@ -138,6 +138,8 @@ class vtexMinicart
 				$(".vtexsc-cart").slideUp()
 			, 3000
 
+	valueLabel: (value) =>
+		@options.valuePrefix + formatCurrency(value) + @options.valueSufix
 
 #
 # Utils
@@ -161,6 +163,8 @@ $.fn.vtexMinicart = (options) ->
 
 $.fn.vtexMinicart.defaults =
 	cartData: {}
+	valuePrefix: "R$ "
+	valueSufix: ""
 
 
 $ ->
