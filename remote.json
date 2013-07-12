@@ -16,9 +16,10 @@
 	"bounces":[
 		"lib/.*",
 		"style/.*",
-		"index.html"
+		"index.html",
+        "minicart.html"
 	],
-	"mapping": false,
+	"mapping": true,
 	"mappings": {
 	    ".*portal-totalizers.js.*": "build/js/portal-totalizers.js",
 	    ".*portal-minicart.js.*": "build/js/portal-minicart.js",
