@@ -25,6 +25,8 @@ class vtexMinicart
 		@getData().success (data) =>
 			@updateCart data
 
+		$(window).trigger "minicartLoaded"
+
 	bindEvents: =>
 		@hoverContext.add('.show-minicart-on-hover').on 'mouseover', ->
 			$(window).trigger "minicartMouseOver"
@@ -165,7 +167,3 @@ $.fn.vtexMinicart.defaults =
 	cartData: {}
 	valuePrefix: "R$ "
 	valueSufix: ""
-
-
-$ ->
-	$('.portal-minicart-ref').vtexMinicart()
