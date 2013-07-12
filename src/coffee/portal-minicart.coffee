@@ -195,7 +195,7 @@ class vtexMinicart
 #
 # Utils
 #
-formatCurrency: (value) ->
+formatCurrency = (value) ->
 	if value is '' or not value? or isNaN value
 		num = 0.00
 	else
