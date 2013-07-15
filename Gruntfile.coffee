@@ -115,6 +115,12 @@ module.exports = (grunt) ->
 					'build/js/portal-sku-selector-product.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
 					'build/js/portal-sku-selector-popup.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-popup.js']
 
+		bower:
+			install:
+				options:
+					targetDir: './src/lib'
+
+
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
@@ -127,8 +133,11 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-usemin'
 	grunt.loadNpmTasks 'grunt-string-replace'
 	grunt.loadNpmTasks 'grunt-karma'
+	grunt.loadNpmTasks 'grunt-bower-task'
 
 	grunt.registerTask 'default', ['dev-watch']
+
+	grunt.registerTask 'bow', ['bower:install']
 
 	# Dev
 	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'less', 'concat']
