@@ -131,6 +131,11 @@ module.exports = (grunt) ->
 							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
 					]
 
+		bower:
+			install:
+				options:
+					targetDir: './src/lib'
+
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
@@ -143,6 +148,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-usemin'
 	grunt.loadNpmTasks 'grunt-string-replace'
 	grunt.loadNpmTasks 'grunt-karma'
+	grunt.loadNpmTasks 'grunt-bower-task'
 
 	grunt.registerTask 'default', ['dev-watch']
 
