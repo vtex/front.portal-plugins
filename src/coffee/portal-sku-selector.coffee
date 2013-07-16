@@ -1,3 +1,7 @@
+# DEPENDENCIES:
+# jQuery
+# vtex-utils
+
 $ = window.jQuery
 
 #
@@ -14,9 +18,9 @@ class SkuSelector
 		@dimensions = ({
 			index: i++
 			name: dimensionName
-			nameSanitized: sanitize(dimensionName)
+			nameSanitized: _.sanitize(dimensionName)
 			values: productData.dimensionsMap[dimensionName]
-			valuesSanitized: (sanitize(value) for value in productData.dimensionsMap[dimensionName])
+			valuesSanitized: (_.sanitize(value) for value in productData.dimensionsMap[dimensionName])
 			availableValues: (true for value in productData.dimensionsMap[dimensionName])
 			validValues: (true for value in productData.dimensionsMap[dimensionName])
 			selected: undefined
@@ -105,7 +109,7 @@ class SkuSelectorRenderer
 		@data = data
 
 		# Build selectors from given select strings.
-		@select = mapObj selectors, (key, val) =>
+		@select = _.mapObj selectors, (key, val) =>
 			( => $(val, @context) )
 
 		@select.inputs = => $('input, select', @context)
@@ -114,12 +118,12 @@ class SkuSelectorRenderer
 		@select.itemDimensionLabel = (dimensionName) =>	@select.itemDimension(dimensionName).find('label')
 		@select.itemDimensionOption = (dimensionName) => @select.itemDimension(dimensionName).find('option')
 		@select.itemDimensionValueInput = (dimensionName, valueName) =>	@select.itemDimension(dimensionName).find("input[value='#{valueName}']")
-		@select.itemDimensionValueLabel = (dimensionName, valueName) =>	@select.itemDimension(dimensionName).find("label.skuespec_#{sanitize(valueName)}")
+		@select.itemDimensionValueLabel = (dimensionName, valueName) =>	@select.itemDimension(dimensionName).find("label.skuespec_#{_.sanitize(valueName)}")
 		@select.itemDimensionValueOption = (dimensionName, valueName) => @select.itemDimension(dimensionName).find("option[value='#{valueName}']")
 
 
 	generateItemDimensionClass: (dimensionName) =>
-		"item-dimension-#{sanitize(dimensionName)}"
+		"item-dimension-#{_.sanitize(dimensionName)}"
 
 	# Renders the DOM elements of the Sku Selector
 	renderSkuSelector: (selector) =>
@@ -171,7 +175,7 @@ class SkuSelectorRenderer
 				.addClass("dimension-#{dimension.nameSanitized}")
 				.addClass("espec_#{dimension.index}")
 				.addClass("skuespec_#{valueSanitized}")
-				.addClass("skuespec_#{spacesToHyphens(dimension.name)}_opcao_#{spacesToHyphens(value)}")
+				.addClass("skuespec_#{_.spacesToHyphens(dimension.name)}_opcao_#{_.spacesToHyphens(value)}")
 
 			skuList.appendTo(list)
 
@@ -272,10 +276,10 @@ class SkuSelectorRenderer
 			@updatePriceUnavailable()
 
 	updatePriceAvailable: (sku) ->
-		listPrice = $.formatCurrency sku.listPrice
-		bestPrice = $.formatCurrency sku.bestPrice
+		listPrice = _.formatCurrency sku.listPrice
+		bestPrice = _.formatCurrency sku.bestPrice
 		installments = sku.installments
-		installmentValue = $.formatCurrency sku.installmentsValue
+		installmentValue = _.formatCurrency sku.installmentsValue
 
 		# Modifica href do botão comprar
 		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId)).show()
@@ -436,44 +440,6 @@ $.skuSelector.getSkusForProduct = (productId) ->
 $.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
 	window.location.protocol + '//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
 
-#
-# UTILITY FUNCTIONS
-#
-
-# Sanitizes text: "Caçoá (teste 2)" becomes "Cacoateste2"
-sanitize = (str = this) ->
-	specialChars =  "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź,."
-	plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczzVP"
-	regex = new RegExp '[' + specialChars + ']', 'g'
-	str += ""
-	sanitized = str
-		.replace(/\s/g, '')
-		.replace(/\/|\\/g, '-')
-		.replace(/\(|\)|\'|\"/g, '')
-		.toLowerCase()
-		.replace regex, (char) ->
-			plain.charAt (specialChars.indexOf char)
-
-	return capitalize(sanitized)
-
-capitalize = (str) ->
-	return str.charAt(0).toUpperCase() + str.slice(1)
-
-# Format currency to brazilian reais: 123455 becomes "1.234,55"
-$.formatCurrency = (value) ->
-	if value? and not isNaN value
-		return parseFloat(value/100).toFixed(2).replace('.',',').replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
-	else
-		return "Grátis"
-
-mapObj = (obj, f) ->
-	obj2 = {}
-	for own k, v of obj
-		obj2[k] = f k, v
-	obj2
-
-spacesToHyphens = (str) ->
-	str.replace(/\ /g, '-')
 
 #
 # EXPORTS
