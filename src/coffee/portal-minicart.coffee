@@ -141,17 +141,7 @@ class vtexMinicart
 			, 3000
 
 	valueLabel: (value) =>
-		@options.valuePrefix + formatCurrency(value) + @options.valueSufix
-
-#
-# Utils
-#
-formatCurrency = (value) ->
-	if value is '' or not value? or isNaN value
-		num = 0.00
-	else
-		num = value / 100
-	parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
+		@options.valuePrefix + _.formatCurrency(value) + @options.valueSufix
 
 
 #

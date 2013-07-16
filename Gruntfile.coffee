@@ -61,6 +61,13 @@ module.exports = (grunt) ->
 				dest: 'build/<%= relativePath %>/spec/'
 				ext: '.js'
 
+			lib:
+				expand: true
+				cwd: 'src/lib'
+				src: ['**/*.coffee']
+				dest: 'build/<%= relativePath %>/lib/'
+				ext: '.js'
+
 		less:
 			main:
 				files:
@@ -155,7 +162,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'bow', ['bower:install']
 
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'coffee:lib' 'less', 'concat', 'string-replace:all']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'coffee:lib', 'less', 'concat', 'string-replace:all']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files
