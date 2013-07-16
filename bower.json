@@ -3,5 +3,8 @@
   "version": "1.0.0",
   "dependencies": {
     "front-utils": "https://github.com/vtex/front.utils.git"
+  },
+  "install": {
+    "path": "src/lib/bower"
   }
 }
