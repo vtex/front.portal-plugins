@@ -156,6 +156,7 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-usemin'
 	grunt.loadNpmTasks 'grunt-string-replace'
 	grunt.loadNpmTasks 'grunt-karma'
+	grunt.loadNpmTasks 'grunt-bower-task'
 
 	grunt.registerTask 'default', ['dev-watch']
 
