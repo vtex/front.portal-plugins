@@ -2,6 +2,6 @@
   "name": "portal-plugins",
   "version": "1.0.0",
   "dependencies": {
-    "front-utils": "git@github.com:vtex/front.utils.git"
+    "front-utils": "https://github.com/vtex/front.utils.git"
   }
 }
