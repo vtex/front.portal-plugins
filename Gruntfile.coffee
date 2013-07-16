@@ -131,6 +131,12 @@ module.exports = (grunt) ->
 							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
 					]
 
+		bower:
+			install:
+				options:
+					targetDir: './src/lib'
+					cleanBowerDir: true
+
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
@@ -146,8 +152,10 @@ module.exports = (grunt) ->
 
 	grunt.registerTask 'default', ['dev-watch']
 
+	grunt.registerTask 'bow', ['bower:install']
+
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'less', 'concat', 'string-replace:all']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'coffee:lib' 'less', 'concat', 'string-replace:all']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files

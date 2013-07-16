@@ -19,7 +19,9 @@
     "grunt-usemin": "~0.1.10",
     "coffee-script": "~1.6.2",
     "remote": "~0.2.5",
-    "grunt-karma": "~0.4.4"
+    "grunt-karma": "~0.4.4",
+    "bower": "0.10.0",
+    "grunt-bower-task": "~0.2.3"
   },
   "repository": {
     "type": "git",
