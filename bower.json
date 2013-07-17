@@ -5,6 +5,6 @@
     "front-utils": "https://github.com/vtex/front.utils.git"
   },
   "install": {
-    "path": "src/lib/bower"
+    "path": "src/lib/bower_modules"
   }
 }
