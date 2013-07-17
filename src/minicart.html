@@ -3,64 +3,86 @@
 <head>
     <title>Portal plugins test</title>
     <meta name="vtex-version" content="1.0.0.0">
+
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/reset.css">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/estilos.css?v=3">
+    <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/vtex-smartCart.css">
+
     <script src="http://localhost:35729/livereload.js"></script>
-    <script src="lib/jquery-1.8.3.min.js"></script>
-    <script>
-        var minicartJson = {
-            totalizers: [{
-                value: 200
-            }],
-            orderFormId: 200,
-            items:[
-                
-                {
-                    name: "Ração",
-                    detailUrl: "http://google.com",
-                    price: 2000,
-                    quantity: 2,
-
-
-                }
-            ]
-
-        }
-        var totalizersJson = {
-            value: 800,
-            totalizers: [
-                {
-                    value: 400
-                },
-                {
-                    value: 300
-                },
-                {
-                    value: 100
-                }
-            ],
-            orderFormId: 200,
-            items:[
-                {
-                    name: "Ração",
-                    detailUrl: "http://google.com",
-                    price: 2000,
-                    quantity: 2,
-                }
-            ]
-        }
-    </script>
-
-    <script id="vtex-totalizers" type="text/javascript" src="js/portal-totalizers.js"></script>
-    <script id="vtex-minicart" type="text/javascript" src="js/portal-minicart.js"></script>
+    <script src="/lib/jquery-1.8.3.min.js"></script>
+    <script src="/lib/bower/vtex-utils.js"></script>
 </head>
-
-
 <body>
 
+<div class="carrinhoCompras show-minicart-on-hover">
+    <a href="/Site/Carrinho.aspx" title="Concluir Compra">Minhas Compras</a>
 
+    <input type="hidden" class="portal-totalizers-ref">
+    <div class="amount-items-in-cart"></div>
 
-<input type="hidden" class="portal-totalizers-ref" />
-<br><br><br><br>
-<input type="hidden" class="portal-minicart-ref" />
+    <div class="portal-minicart-ref">
+        <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded">
+            <div class="vtexsc-bt"></div>
+            <div class="vtexsc-center">
+                <div class="vtexsc-wrap">
+                    <table class="vtexsc-productList">
+                        <thead>
+                            <tr>
+                                <th class="cartSkuName" colspan="2">Produto</th>
+                                <th class="cartSkuPrice">Preço</th>
+                                <th class="cartSkuQuantity">Quantidade</th>
+                                <th class="cartSkuActions">Excluir</th>
+                            </tr>
+                        </thead>
+                        <tbody class="minicartListContainer">
+                            <tr class="minicartListBase">
+                                <td class="cartSkuImage">
+                                    <a class="sku-imagem" href="#{item.detailUrl}"><img height="71" width="71" alt="#{item.name}" src="#{item.imageUrl}" /></a>
+                                </td>
+                                <td class="cartSkuName">
+                                    <h4><a href="#{item.detailUrl}">"#{item.name}"</a><br /></h4>
+                                </td>
+                                <td class="cartSkuPrice">
+                                    <div class="cartSkuUnitPrice">
+                                        <span class="bestPrice">R$ #{formatCurrency(item.price)}</span>
+                                    </div>
+                                </td>
+                                <td class="cartSkuQuantity">
+                                    <div class="cartSkuQtt">
+                                        <span class="cartSkuQttTxt"><span class="vtexsc-skuQtt">#{item.quantity}</span></span>
+                                    </div>
+                                </td>
+                                <td class="cartSkuActions">
+                                    <span class="cartSkuRemove" data-index="#{i}">
+                                            <a href="javascript:void(0);" class="text" style="display: none;">excluir</a>
+                                    </span>
+                                    <div class="vtexsc-overlay" style="display: none;"></div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="cartFooter clearfix">
+                    <div class="cartTotal">
+                        Total
+                        <span class="vtexsc-totalCart"><span class="vtexsc-text">
+                            R$ 0
+                        </span></span>
+                    </div>
+                    <a href="/checkout/#/orderform" class="cartCheckout"></a>
+                </div>
+            </div>
+            <div class="vtexsc-bb"></div>
+        </div>
+    </div>
+</div>
+
+<script id="vtex-totalizers" type="text/javascript" src="js/portal-totalizers.js"></script>
+<script id="vtex-minicart" type="text/javascript" src="js/portal-minicart.js"></script>
+
+<script>
+$('.portal-minicart-ref').vtexMinicart();
+</script>
 
 </body>
 </html>
