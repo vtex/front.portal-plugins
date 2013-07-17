@@ -115,6 +115,22 @@ module.exports = (grunt) ->
 					'build/js/portal-sku-selector-product.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
 					'build/js/portal-sku-selector-popup.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-popup.js']
 
+		'string-replace':
+			all:
+				files:
+					'build/<%= relativePath %>/sku-selector.html': ['build/<%= relativePath %>/sku-selector.html']
+					'build/<%= relativePath %>/spec/fixtures/sku-selector.html': ['build/<%= relativePath %>/spec/fixtures/sku-selector.html']
+					'build/templates/button-bind-modal-api-response.html': ['build/templates/button-bind-modal-api-response.html']
+
+				options:
+					replacements: [
+							pattern: '<!-- skuSelectorTemplate -->'
+							replacement: grunt.file.read('src/templates/sku-selector.html')
+						,
+							pattern: '<!-- skuSelectorMock -->'
+							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
+					]
+
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
 	grunt.loadNpmTasks 'grunt-contrib-copy'
@@ -132,7 +148,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'default', ['dev-watch']
 
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'less', 'concat']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'string-replace:all', 'coffee', 'less', 'concat']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files
