@@ -40,7 +40,7 @@
                 <div class="cartTotal">
                     Total\
                     <span class="vtexsc-totalCart">
-                        #{self.getCurrency()} <span class="vtexsc-text"> 0</span>
+                        <span class="vtexsc-text"></span>
                     </span>
                 </div>
                 <a href="/checkout/#/orderform" class="cartCheckout"></a>
@@ -179,7 +179,7 @@
               </td>
               <td class="cartSkuPrice">
                   <div class="cartSkuUnitPrice">
-                      #{self.getCurrency()} <span class="bestPrice">#{self.formatCurrency(item.price)}</span>
+                      <span class="bestPrice">#{self.formatCurrency(item.price)}</span>
                   </div>
               </td>
               <td class="cartSkuQuantity">
@@ -217,7 +217,7 @@
         num = 0.00
       else
         num = value / 100
-      parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
+      self.getCurrency() + ' ' + parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 
     showMinicart: (value) ->
       promise = @getData()

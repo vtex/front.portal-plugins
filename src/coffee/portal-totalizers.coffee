@@ -32,7 +32,7 @@
               <strong><span id="MostraTextoXml4">Total de Kits:</span></strong> <em class="amount-kits-em">0</em>
             </li>
             <li class="total-cart">
-              <strong><span id="MostraTextoXml5">Valor Total:</span></strong> #{self.getCurrency()} <em class="total-cart-em">0,00</em>
+              <strong><span id="MostraTextoXml5">Valor Total:</span></strong> <em class="total-cart-em"></em>
             </li>
           </ul>
         </div>
@@ -66,7 +66,7 @@
         num = 0.00
       else
         num = value / 100
-      parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
+      self.getCurrency() + ' ' + parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 
     getCartData: ->
       self = this
@@ -98,7 +98,7 @@
 
       amountProducts = data.items.length
       amountItems = 0;
-      amountItems += item.quantity for item in data.items      
+      amountItems += item.quantity for item in data.items
 
       total = 0
       for subtotal in data.totalizers
