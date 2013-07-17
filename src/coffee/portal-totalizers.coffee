@@ -32,7 +32,7 @@
               <strong><span id="MostraTextoXml4">Total de Kits:</span></strong> <em class="amount-kits-em">0</em>
             </li>
             <li class="total-cart">
-              <strong><span id="MostraTextoXml5">Valor Total:</span></strong> R$ <em class="total-cart-em">0,00</em>
+              <strong><span id="MostraTextoXml5">Valor Total:</span></strong> #{self.getCurrency()} <em class="total-cart-em">0,00</em>
             </li>
           </ul>
         </div>
@@ -108,6 +108,9 @@
       self.selectors.amountProducts.html amountProducts
       self.selectors.amountItems.html amountItems
       self.selectors.totalCart.html totalCart
+
+    getCurrency: ->
+      vtex?.i18n?.getCurrency() or "R$"
 
     $.fn[pluginName] = (options) ->
       @each ->

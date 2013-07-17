@@ -40,13 +40,13 @@
                 <div class="cartTotal">
                     Total\
                     <span class="vtexsc-totalCart">
-                        <span class="vtexsc-text">R$ 0</span>
+                        #{self.getCurrency()} <span class="vtexsc-text"> 0</span>
                     </span>
                 </div>
                 <a href="/checkout/#/orderform" class="cartCheckout"></a>
             </div>
         </div>
-        <div class="vtexsc-bb"></div>        
+        <div class="vtexsc-bb"></div>
       </div>
       """
 
@@ -94,7 +94,7 @@
 
     getData: ->
       self = this
-      
+
       promise = $.ajax {
         url: "/api/checkout/pub/orderForm/"
         data: JSON.stringify(expectedOrderFormSections: ["items", "paymentData", "totalizers"])
@@ -105,7 +105,7 @@
 
       promise.done (data) ->
         self.options.cartData = data
-      
+
       promise.fail (jqXHR, textStatus, errorThrown) ->
         # console.log "Error Message: " + textStatus
         # console.log "HTTP Error: " + errorThrown
@@ -114,17 +114,17 @@
 
     insertCartItems: (data) ->
       self = this
-      
+
       if data
         total = 0
 
         for subtotal in data.totalizers
           total += subtotal.value if subtotal.id is 'Items'
 
-        $('.vtexsc-text', self.options.$template).text 'R$' + self.formatCurrency(total)
-        
+        $('.vtexsc-text', self.options.$template).text self.formatCurrency(total)
+
         self.updateItems data
-        
+
     deleteItem: (item) ->
       self = this
 
@@ -179,7 +179,7 @@
               </td>
               <td class="cartSkuPrice">
                   <div class="cartSkuUnitPrice">
-                      <span class="bestPrice">R$ #{self.formatCurrency(item.price)}</span>
+                      #{self.getCurrency()} <span class="bestPrice">#{self.formatCurrency(item.price)}</span>
                   </div>
               </td>
               <td class="cartSkuQuantity">
@@ -210,7 +210,7 @@
         for subtotal in data.totalizers
           total += subtotal.value if subtotal.id is 'Items'
 
-        $(".vtexsc-text", self.options.$template).text "R$ " + self.formatCurrency total
+        $(".vtexsc-text", self.options.$template).text(self.formatCurrency (total))
 
     formatCurrency: (value) ->
       if value is '' or not value? or isNaN value
@@ -228,7 +228,10 @@
         @options.timeoutToHide = setTimeout ->
           $(".vtexsc-cart").slideUp()
         , 3000
-  
+
+    getCurrency: ->
+      vtex?.i18n?.getCurrency() or "R$"
+
     $.fn[pluginName] = (options) ->
       @each ->
         if !$.data(this, "plugin_#{pluginName}")
