@@ -23,6 +23,8 @@ class vtexMinicart
 		@bindEvents()
 
 		@getData().success (data) =>
+			@cartData = data
+			console.log data
 			@updateCart data
 
 		$(window).trigger "minicartLoaded"
@@ -92,14 +94,14 @@ class vtexMinicart
 
 		container = $(".minicartListContainer", @context).empty()
 		for item, i in data.items
-			now = @base.clone()
-			now.find('.cartSkuImage a').attr('href', item.detailUrl)
-			now.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
-			now.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
-			now.find('.cartSkuPrice .bestPrice').text(@valueLabel(item.price))
-			now.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
+			current = @base.clone()
+			current.find('.cartSkuImage a').attr('href', item.detailUrl)
+			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
+			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
+			current.find('.cartSkuPrice .bestPrice').text(@valueLabel(item.price))
+			current.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
 
-			now.appendTo(container)
+			current.appendTo(container)
 
 		$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
 			@deleteItem(this)
@@ -141,8 +143,6 @@ class vtexMinicart
 			, 3000
 
 	valueLabel: (value) =>
-		console.log @
-		console.log @options
 		@options.valuePrefix + _.formatCurrency(value, @options) + @options.valueSufix
 
 
