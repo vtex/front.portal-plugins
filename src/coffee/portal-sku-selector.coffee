@@ -318,7 +318,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Instantiate our singletons
 	selector = new SkuSelector(productData)
-	window.selector = selector
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
 	selector.smartUpdate()
@@ -337,6 +336,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
+		event.preventDefault() if options.addSkuToCartPreventDefault
 		selectedSku = selector.findSelectedSku()
 		if selectedSku
 			return options.addSkuToCart(selectedSku.sku, context)
@@ -370,13 +370,8 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Handles submission in the warn unavailable form
 	warnUnavailableSubmitHandler = (e) ->
-		e.preventDefault()
 		renderer.select.warnUnavailable().find('#notifymeLoading').show()
 		renderer.select.warnUnavailable().find('form').hide()
-		xhr = options.warnUnavailablePost(e.target)
-		xhr.done -> renderer.select.warnUnavailable().find('#notifymeSuccess').show()
-		xhr.fail -> renderer.select.warnUnavailable().find('#notifymeError').show()
-		xhr.always -> renderer.select.warnUnavailable().find('#notifymeLoading').hide()
 		return false
 
 
