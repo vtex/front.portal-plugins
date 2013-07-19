@@ -141,7 +141,9 @@ class vtexMinicart
 			, 3000
 
 	valueLabel: (value) =>
-		@options.valuePrefix + _.formatCurrency(value, options) + @options.valueSufix
+		console.log @
+		console.log @options
+		@options.valuePrefix + _.formatCurrency(value, @options) + @options.valueSufix
 
 
 #
