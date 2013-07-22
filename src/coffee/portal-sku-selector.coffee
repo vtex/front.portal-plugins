@@ -42,9 +42,13 @@ class SkuSelector
 	findSelectableSkus: =>
 		(sku for sku in @skus when @isSkuSelectable(sku))
 
-	findSelectedSku: =>
-		s = @findSelectableSkus()
-		return if s.length is 1 then s[0] else undefined
+	findSelectedSku: (skus = undefined) =>
+		skus or= @findSelectableSkus()
+		return if skus.length is 1 then skus[0] else undefined
+
+	findPrices: (skus = undefined) =>
+		skus or= @findSelectableSkus()
+		$.map(skus, (sku) -> sku.bestPrice ).sort()
 
 	searchDimensions: (fn = ()->true) =>
 		$.grep(@dimensions, fn)
@@ -217,11 +221,13 @@ class SkuSelectorRenderer
 				unless dimension.availableValues[i]
 					@disableUnavailableValue(dimension, value)
 
-		selectedSku = @data.findSelectedSku()
+		selectableSkus = @data.findSelectableSkus()
+		selectedSku = @data.findSelectedSku(selectableSkus)
 
 		@hideBuyButton()
 		@hideConfirmButton()
 		@hideWarnUnavailable()
+		@hidePriceRange()
 		@hidePrice()
 
 		if selectedSku
@@ -230,6 +236,8 @@ class SkuSelectorRenderer
 				@showPrice(selectedSku)
 			else if @warnUnavailable
 				@showWarnUnavailable(selectedSku)
+		else if selectableSkus.length > 0
+			@showPriceRange(@data.findPrices(selectableSkus))
 
 	resetDimension: (dimension) =>
 		@select.itemDimensionInput(dimension.name)
@@ -290,6 +298,9 @@ class SkuSelectorRenderer
 	hidePrice: =>
 		@select.price().hide()
 
+	hidePriceRange: =>
+		@select.priceRange().hide()
+
 	hideWarnUnavailable: =>
 		@select.warning().hide()
 		@select.warnUnavailable().filter(':visible').hide()
@@ -317,6 +328,13 @@ class SkuSelectorRenderer
 			@select.installment().text("ou até #{installments}x de R$ #{installmentValue}")
 
 		@select.price().show()
+
+	showPriceRange: (prices) =>
+		$priceRange = @select.priceRange().show()
+		$priceRange.find('.lowPrice').text("R$ #{prices[0]}")
+		$priceRange.find('.highPrice').text("R$ #{prices[prices.length-1]}")
+
+
 
 	showWarnUnavailable: (sku) =>
 		@select.warnUnavailable().find('input#notifymeSkuId').val(sku).show()
@@ -426,6 +444,7 @@ $.fn.skuSelector.defaults =
 	warnUnavailable: true
 	selectOnOpening: false
 	confirmBuy: false
+	priceRange: false
 	selectors:
 		listPriceValue: '.skuselector-list-price .value'
 		bestPriceValue: '.skuselector-best-price .value'
@@ -433,6 +452,7 @@ $.fn.skuSelector.defaults =
 		buyButton: '.skuselector-buy-btn'
 		confirmButton: '.skuselector-confirm-btn'
 		price: '.skuselector-price'
+		priceRange: '.skuselector-price-range'
 		warning: '.skuselector-warning'
 		warnUnavailable: '.skuselector-warn-unavailable'
 

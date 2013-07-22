@@ -19,7 +19,7 @@
 
     <script type="text/javascript">
         var mocks = ['/spec/mocks/oneDimensionAvailable.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json', '/spec/mocks/oneDimensionUnavailable.json', '/spec/mocks/manyDimensionsCombo.json'];
-        $.getJSON(mocks[2]).done(function(data){
+        $.getJSON(mocks[1]).done(function(data){
             $('.sku-selector-container').skuSelector(data, {warnUnavailable: true});
         })
     </script>
