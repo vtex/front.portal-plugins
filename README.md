@@ -24,9 +24,9 @@ default: `false`. Se `true`, seleciona o primeiro SKU disponível na inicializa�
 
 default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado
 
-### addSkuToCartPreventDefault
+### confirmBuy
 
-default: `true`. Se `true`, dá um `evt.preventDefault()` no evento do botão de compra
+default: `false`. Se `true`, ao clicar no botão de compra é mostrado um botão de confirmação, com as dimensões selecionadas.
 
 
 # Minicart

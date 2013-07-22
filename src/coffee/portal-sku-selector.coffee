@@ -425,7 +425,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 $.fn.skuSelector.defaults =
 	warnUnavailable: true
 	selectOnOpening: false
-	confirmBuy: true
+	confirmBuy: false
 	selectors:
 		listPriceValue: '.skuselector-list-price .value'
 		bestPriceValue: '.skuselector-best-price .value'
