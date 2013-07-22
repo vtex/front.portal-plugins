@@ -7,6 +7,7 @@
     "value": 3948,
     "messages": null,
     "items": [{
+        "availability": "cannotBeDelivered",
         "id": "2514",
         "productId": "2513",
         "name": "Ração Mini Indoor Adult - Royal Canin Ração Mini Indoor Adult 1Kg - Royal Canin",
@@ -27,6 +28,7 @@
         "offerings": [],
         "priceTags": []
     }, {
+        "availability": "available",
         "id": "3999",
         "productId": "3997",
         "name": "Areia Classic 4Kg - Pipicat (este orderForm é mock)",

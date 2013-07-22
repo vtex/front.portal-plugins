@@ -24,7 +24,6 @@ class vtexMinicart
 
 		@getData().success (data) =>
 			@cartData = data
-			console.log data
 			@updateCart data
 
 		$(window).trigger "minicartLoaded"
@@ -99,6 +98,7 @@ class vtexMinicart
 			current.find('.cartSkuImage a').attr('href', item.detailUrl)
 			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
 			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
+			current.find('.cartSkuName .availability').text(@availabilityMessage(item)).addClass("availability-#{@availabilityCode(item)}")
 			current.find('.cartSkuPrice .bestPrice').text(@valueLabel(item.price))
 			current.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
 
@@ -146,14 +146,11 @@ class vtexMinicart
 	valueLabel: (value) =>
 		@options.valuePrefix + _.formatCurrency(value, @options) + @options.valueSufix
 
-	availabilityClass: (item) =>
-		return switch item.availability
-			when "available", null, undefined
-				"cartSkuAvailable"
-			when "cannotBeDelivered"
-				"cartSkuCBD"
-			else
-				""
+	availabilityCode: (item) =>
+		item.availability or "available"
+
+	availabilityMessage: (item) =>
+		@options.availabilityMessages[@availabilityCode(item)]
 
 
 #
@@ -169,3 +166,11 @@ $.fn.vtexMinicart.defaults =
 	cartData: {}
 	valuePrefix: "R$ "
 	valueSufix: ""
+	availabilityMessages:
+		"available": ""
+		"unavailableItemFulfillment": "Este item não está disponível no momento."
+		"withoutStock": "Este item não está disponível no momento."
+		"cannotBeDelivered": "Este item não está disponível no momento."
+		"withoutPrice": "Este item não está disponível no momento."
+		"withoutPriceRnB": "Este item não está disponível no momento."
+		"nullPrice": "Este item não está disponível no momento."

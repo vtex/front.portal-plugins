@@ -54,3 +54,16 @@ default: `"R$ "`. Define o texto a ser exibido antes do valor.
 ### valueSufix
 
 default: `""`. Define o texto a ser exibido depois do valor.
+
+### availabilityMessages
+
+Define as mensagens exibidas para cada código de disponibilidade da API. Default:
+
+	availabilityMessages:
+		"available": ""
+		"unavailableItemFulfillment": "Este item não está disponível no momento."
+		"withoutStock": "Este item não está disponível no momento."
+		"cannotBeDelivered": "Este item não está disponível no momento."
+		"withoutPrice": "Este item não está disponível no momento."
+		"withoutPriceRnB": "Este item não está disponível no momento."
+		"nullPrice": "Este item não está disponível no momento."
