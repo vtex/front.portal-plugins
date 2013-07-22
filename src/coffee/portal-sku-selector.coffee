@@ -48,7 +48,7 @@ class SkuSelector
 
 	findPrices: (skus = undefined) =>
 		skus or= @findSelectableSkus()
-		$.map(skus, (sku) -> sku.bestPrice ).sort()
+		$.map(skus, (sku) -> sku.bestPrice).sort( (a,b) -> return parseInt(a) - parseInt(b) )
 
 	searchDimensions: (fn = ()->true) =>
 		$.grep(@dimensions, fn)
