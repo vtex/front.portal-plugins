@@ -217,13 +217,19 @@ class SkuSelectorRenderer
 				unless dimension.availableValues[i]
 					@disableUnavailableValue(dimension, value)
 
-		@hideWarnUnavailable()
 		selectedSku = @data.findSelectedSku()
-		if @warnUnavailable and selectedSku?.available
-			@showWarnUnavailable(selectedSku.sku)
 
-		@updatePrice()
+		@hideBuyButton()
+		@hideConfirmButton()
+		@hideWarnUnavailable()
+		@hidePrice()
 
+		if selectedSku
+			if selectedSku.available
+				@showBuyButton(selectedSku)
+				@showPrice(selectedSku)
+			else if @warnUnavailable
+				@showWarnUnavailable(selectedSku)
 
 	resetDimension: (dimension) =>
 		@select.itemDimensionInput(dimension.name)
@@ -269,35 +275,48 @@ class SkuSelectorRenderer
 		@select.itemDimensionValueLabel(dimension.name, value)
 			.addClass('item_unavaliable disabled')
 
-	updatePrice: (sku) ->
+	updatePrice: (sku) =>
 		if sku and sku.available
 			@updatePriceAvailable(sku)
 		else
 			@updatePriceUnavailable()
 
-	updatePriceAvailable: (sku) ->
-		listPrice = _.formatCurrency sku.listPrice
-		bestPrice = _.formatCurrency sku.bestPrice
-		installments = sku.installments
-		installmentValue = _.formatCurrency sku.installmentsValue
-
-		# Modifica href do botão comprar
-		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId)).show()
-		@select.price().show()
-		@select.listPriceValue().text("R$ #{listPrice}")
-		@select.bestPriceValue().text("R$ #{bestPrice}")
-		if installments > 1
-			@select.installment().text("ou até #{installments}x de R$ #{installmentValue}")
-
-	updatePriceUnavailable: () ->
-		# Modifica href do botão comprar
-		# $('.notifyme-skuid').val()
+	hideBuyButton: =>
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()
+
+	hideConfirmButton: =>
+		@select.confirmButton().attr('href', 'javascript:void(0);').hide()
+
+	hidePrice: =>
 		@select.price().hide()
 
 	hideWarnUnavailable: =>
 		@select.warning().hide()
 		@select.warnUnavailable().filter(':visible').hide()
+
+	showBuyButton: (sku) =>
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId)).show()
+
+	showConfirmButton: (sku) =>
+		dimensionsText = $.map(sku.dimensions, (k, v) -> k).join(', ')
+
+		@select.confirmButton()
+			.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId))
+			.show()
+			.find('.skuselector-confirm-dimensions').text(dimensionsText)
+
+	showPrice: (sku) =>
+		listPrice = _.formatCurrency sku.listPrice
+		bestPrice = _.formatCurrency sku.bestPrice
+		installments = sku.installments
+		installmentValue = _.formatCurrency sku.installmentsValue
+
+		@select.listPriceValue().text("R$ #{listPrice}")
+		@select.bestPriceValue().text("R$ #{bestPrice}")
+		if installments > 1
+			@select.installment().text("ou até #{installments}x de R$ #{installmentValue}")
+
+		@select.price().show()
 
 	showWarnUnavailable: (sku) =>
 		@select.warnUnavailable().find('input#notifymeSkuId').val(sku).show()
@@ -336,10 +355,13 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
-		event.preventDefault() if options.addSkuToCartPreventDefault
 		selectedSku = selector.findSelectedSku()
 		if selectedSku
-			return options.addSkuToCart(selectedSku.sku, context)
+			if options.confirmBuy
+				event.preventDefault()
+				renderer.showConfirmButton(selectedSku)
+			else
+				return options.addSkuToCart(selectedSku.sku, context)
 		else
 			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0].name)
 			return false
@@ -401,14 +423,15 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 # PLUGIN DEFAULTS
 #
 $.fn.skuSelector.defaults =
-	addSkuToCartPreventDefault: true
-	warnUnavailable: false
+	warnUnavailable: true
 	selectOnOpening: false
+	confirmBuy: true
 	selectors:
 		listPriceValue: '.skuselector-list-price .value'
 		bestPriceValue: '.skuselector-best-price .value'
 		installment: '.skuselector-installment'
 		buyButton: '.skuselector-buy-btn'
+		confirmButton: '.skuselector-confirm-btn'
 		price: '.skuselector-price'
 		warning: '.skuselector-warning'
 		warnUnavailable: '.skuselector-warn-unavailable'

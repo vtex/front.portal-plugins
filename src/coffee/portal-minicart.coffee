@@ -95,6 +95,7 @@ class vtexMinicart
 		container = $(".minicartListContainer", @context).empty()
 		for item, i in data.items
 			current = @base.clone()
+
 			current.find('.cartSkuImage a').attr('href', item.detailUrl)
 			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
 			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
@@ -144,6 +145,15 @@ class vtexMinicart
 
 	valueLabel: (value) =>
 		@options.valuePrefix + _.formatCurrency(value, @options) + @options.valueSufix
+
+	availabilityClass: (item) =>
+		return switch item.availability
+			when "available", null, undefined
+				"cartSkuAvailable"
+			when "cannotBeDelivered"
+				"cartSkuCBD"
+			else
+				""
 
 
 #
