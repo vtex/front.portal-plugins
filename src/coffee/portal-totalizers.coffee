@@ -48,12 +48,6 @@ class vtexTotalizers
 			else
 				@getCartData()
 
-		$('.amount-items-in-cart, .show-minicart-on-hover').on 'mouseover', ->
-			$(window).trigger 'miniCartMouseOver'
-
-		$('.amount-items-in-cart, .show-minicart-on-hover').on 'mouseout', ->
-			$(window).trigger 'miniCartMouseOut'
-
 	formatCurrency: (value) ->
 		if value is '' or not value? or isNaN value
 			num = 0.00
