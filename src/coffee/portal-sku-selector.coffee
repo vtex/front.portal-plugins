@@ -283,12 +283,6 @@ class SkuSelectorRenderer
 		@select.itemDimensionValueLabel(dimension.name, value)
 			.addClass('item_unavaliable disabled')
 
-	updatePrice: (sku) =>
-		if sku and sku.available
-			@updatePriceAvailable(sku)
-		else
-			@updatePriceUnavailable()
-
 	hideBuyButton: =>
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()
 
@@ -362,14 +356,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Finds elements and puts SKU information in them
 	renderer.renderSkuSelector()
 	renderer.smartUpdate()
-
-	# Checks if there are no available options
-	available = selector.findAvailableSkus()
-	if available.length is 0
-		renderer.showWarnUnavailable(skus[0].sku)
-		renderer.select.buyButton().hide()
-	else if available.length is 1
-		renderer.updatePrice(available[0])
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>

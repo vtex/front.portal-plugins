@@ -184,29 +184,6 @@ describe 'SkuSelector Plugin', ->
 			#Assert
 			expect(@ssr instanceof vtex.portalPlugins.SkuSelectorRenderer).toBe(true)
 
-		it 'should call updatePriceAvailable', ->
-			#Arrange
-			sku = {available: true}
-			spyOn(@ssr, 'updatePriceAvailable')
-
-			#Act
-			@ssr.updatePrice(sku)
-
-			#Assert
-			expect(@ssr.updatePriceAvailable).toHaveBeenCalledWith(sku)
-
-
-		it 'should call updatePriceUnavailable', ->
-			#Arrange
-			sku = {available: false}
-			spyOn(@ssr, 'updatePriceUnavailable')
-
-			#Act
-			@ssr.updatePrice(sku)
-
-			#Assert
-			expect(@ssr.updatePriceUnavailable).toHaveBeenCalled()
-
 
 	describe '$.skuSelector', ->
 		beforeEach ->
