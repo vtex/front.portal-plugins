@@ -1,10 +1,5 @@
 $ = window.jQuery
 
-pluginName = 'vtexTotalizers'
-defaults = {
-	$template: null
-}
-
 #
 # Class
 #
