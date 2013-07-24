@@ -29,10 +29,10 @@ class vtexMinicart
 		$(window).trigger "minicartLoaded"
 
 	bindEvents: =>
-		@hoverContext.add('.show-minicart-on-hover').on 'mouseover', ->
+		@hoverContext.on 'mouseover', ->
 			$(window).trigger "minicartMouseOver"
 
-		@hoverContext.add('.show-minicart-on-hover').on 'mouseout', ->
+		@hoverContext.on 'mouseout', ->
 			$(window).trigger "minicartMouseOut"
 
 		$(window).on "minicartMouseOver", =>
