@@ -5,17 +5,12 @@ $ = window.jQuery
 #
 class vtexTotalizers
 	constructor: (@element, options) ->
-		@options = $.extend {}, defaults, options
-
-		@_defaults = defaults
-		@_name = pluginName
+		@options = $.extend {}, $.fn.vtexTotalizers.defaults, options
 
 		@init()
 
-	init: ->
-		self = this
-
-		self.options.$template = $ """
+	init: =>
+		@options.$template = $ """
 		<div class="amount-items-in-cart amount-items-in-cart-loading">
 			<div class="cartInfoWrapper">
 				<span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
@@ -37,26 +32,26 @@ class vtexTotalizers
 		</div>
 		"""
 
-		$(self.element).after self.options.$template
+		$(@element).after @options.$template
 
-		self.selectors = {
-			amountProducts: $('.amount-products-em', self.options.$template)
-			amountItems: $('.amount-items-em', self.options.$template)
-			totalCart: $('.total-cart-em', self.options.$template)
+		@selectors = {
+			amountProducts: $('.amount-products-em', @options.$template)
+			amountItems: $('.amount-items-em', @options.$template)
+			totalCart: $('.total-cart-em', @options.$template)
 		}
 
-		self.getCartData()
+		@getCartData()
 
-		$(window).on 'cartUpdated', (event, cartData) ->
+		$(window).on 'cartUpdated', (event, cartData) =>
 			if (cartData)
-				self.setCartData(cartData)
+				@setCartData(cartData)
 			else
-				self.getCartData()
+				@getCartData()
 
-		$('.amount-items-in-cart, .show-minicart-on-hover').mouseover ->
+		$('.amount-items-in-cart, .show-minicart-on-hover').on 'mouseover', ->
 			$(window).trigger 'miniCartMouseOver'
 
-		$('.amount-items-in-cart, .show-minicart-on-hover').mouseout ->
+		$('.amount-items-in-cart, .show-minicart-on-hover').on 'mouseout', ->
 			$(window).trigger 'miniCartMouseOut'
 
 	formatCurrency: (value) ->
@@ -66,34 +61,25 @@ class vtexTotalizers
 			num = value / 100
 		parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 
-	getCartData: ->
-		self = this
+	getCartData: =>
+		$(@options.$template).addClass 'amount-items-in-cart-loading'
 
-		$(self.options.$template).addClass 'amount-items-in-cart-loading'
-
-		promise = $.ajax {
+		$.ajax({
 			url: '/api/checkout/pub/orderForm/'
 			data: JSON.stringify {"expectedOrderFormSections": ["items", "paymentData", "totalizers"]}
 			dataType: 'json'
 			contentType: 'application/json; charset=utf-8'
 			type: 'POST'
-		}
-
-		promise.done (data) ->
-			$(self.options.$template).removeClass 'amount-items-in-cart-loading'
-
-		promise.success (data) ->
-			self.setCartData data
-
-		promise.fail (jqXHR, textStatus, errorThrown) ->
+		})
+		.done (data) =>
+			$(@options.$template).removeClass 'amount-items-in-cart-loading'
+		.success (data) =>
+			@setCartData data
+		.fail (jqXHR, textStatus, errorThrown) =>
 			# console.log 'Error Message: ' + textStatus;
 			# console.log 'HTTP Error: ' + errorThrown;
 
-		promise
-
-	setCartData: (data) ->
-		self = this
-
+	setCartData: (data) =>
 		amountProducts = data.items.length
 		amountItems = 0;
 		amountItems += item.quantity for item in data.items
@@ -101,19 +87,19 @@ class vtexTotalizers
 		total = 0
 		for subtotal in data.totalizers
 			total += subtotal.value if subtotal.id is 'Items'
-		totalCart = self.formatCurrency(total)
+		totalCart = @formatCurrency(total)
 
-		self.selectors.amountProducts.html amountProducts
-		self.selectors.amountItems.html amountItems
-		self.selectors.totalCart.html totalCart
+		@selectors.amountProducts.html amountProducts
+		@selectors.amountItems.html amountItems
+		@selectors.totalCart.html totalCart
 
 #
 # Plugin
 #
-$.fn.vtexMinicart = (options) ->
+$.fn.vtexTotalizers = (options) ->
 	return this if @hasClass("plugin_vtexTotalizers")
 	@addClass("plugin_vtexTotalizers")
 	new vtexTotalizers(this, options)
 	return this
 
-$.fn.vtexMinicart.defaults = {}
+$.fn.vtexTotalizers.defaults = {}
