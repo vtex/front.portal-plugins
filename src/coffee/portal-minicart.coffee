@@ -3,9 +3,9 @@ $ = window.jQuery
 #
 # Class
 #
-class vtexMinicart
+class Minicart
 	constructor: (context, options) ->
-		@options = $.extend {}, $.fn.vtexMinicart.defaults, options
+		@options = $.extend {}, $.fn.minicart.defaults, options
 		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
 		@cartData = @options.cartData	# default {}
@@ -156,13 +156,13 @@ class vtexMinicart
 #
 # Plugin
 #
-$.fn.vtexMinicart = (options) ->
-	return this if @hasClass("plugin_vtexMinicart")
-	@addClass("plugin_vtexMinicart")
-	new vtexMinicart(this, options)
+$.fn.minicart = (options) ->
+	return this if @hasClass("plugin_minicart")
+	@addClass("plugin_minicart")
+	new Minicart(this, options)
 	return this
 
-$.fn.vtexMinicart.defaults =
+$.fn.minicart.defaults =
 	cartData: {}
 	valuePrefix: "R$ "
 	valueSufix: ""
@@ -174,3 +174,11 @@ $.fn.vtexMinicart.defaults =
 		"withoutPrice": "Este item não está disponível no momento."
 		"withoutPriceRnB": "Este item não está disponível no momento."
 		"nullPrice": "Este item não está disponível no momento."
+
+
+#
+# EXPORTS
+#
+window.vtex or= {}
+vtex.portalPlugins or= {}
+vtex.portalPlugins.Minicart = Minicart

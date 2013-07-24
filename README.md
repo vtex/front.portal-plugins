@@ -41,7 +41,7 @@ default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs 
 
 ## Uso
 
-    $('.portal-minicart-ref').vtexMinicart(options);
+    $('.portal-minicart-ref').minicart(options);
     
 ## options
 

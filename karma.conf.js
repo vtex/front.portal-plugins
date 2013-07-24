@@ -8,7 +8,7 @@ files = [
   'build/js/portal-totalizers.js',
   'build/spec/helpers/*.js',
     {
-        pattern: 'build/spec/fixtures/**/*.html',
+        pattern: 'build/*.html',
         watched: true,
         included: false,
         served: true
