@@ -122,5 +122,3 @@ $.fn.vtexMinicart = (options) ->
 	return this
 
 $.fn.vtexMinicart.defaults = {}
-
-$ -> $('.portal-totalizers-ref').vtexTotalizers()
