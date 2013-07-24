@@ -49,11 +49,11 @@ class vtexTotalizers
 		total = 0
 		for subtotal in data.totalizers
 			total += subtotal.value if subtotal.id is 'Items'
-		totalCart = _.formatCurrency(total / 100)
+		totalCart = _.formatCurrency(total / 100, @options)
 
 		@select.amountProducts().text amountProducts
 		@select.amountItems().text amountItems
-		@select.totalCart().text totalCart
+		@select.totalCart().text @options.valuePrefix + totalCart + @options.valueSufix
 
 #
 # Plugin
@@ -64,4 +64,6 @@ $.fn.vtexTotalizers = (options) ->
 	new vtexTotalizers(this, options)
 	return this
 
-$.fn.vtexTotalizers.defaults = {}
+$.fn.vtexTotalizers.defaults =
+	valuePrefix: "R$ "
+	valueSufix: ""
