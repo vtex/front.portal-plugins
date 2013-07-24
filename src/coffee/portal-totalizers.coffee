@@ -5,6 +5,9 @@ defaults = {
 	$template: null
 }
 
+#
+# Class
+#
 class vtexTotalizers
 	constructor: (@element, options) ->
 		@options = $.extend {}, defaults, options
@@ -109,10 +112,15 @@ class vtexTotalizers
 		self.selectors.amountItems.html amountItems
 		self.selectors.totalCart.html totalCart
 
-	$.fn[pluginName] = (options) ->
-		@each ->
-			if !$.data(this, "plugin_#{pluginName}")
-				$.data(@, "plugin_#{pluginName}", new vtexTotalizers(@, options))
+#
+# Plugin
+#
+$.fn.vtexMinicart = (options) ->
+	return this if @hasClass("plugin_vtexTotalizers")
+	@addClass("plugin_vtexTotalizers")
+	new vtexTotalizers(this, options)
+	return this
+
+$.fn.vtexMinicart.defaults = {}
 
 $ -> $('.portal-totalizers-ref').vtexTotalizers()
-# $ -> $('.carrinhoCompras a').vtexTotalizers()
