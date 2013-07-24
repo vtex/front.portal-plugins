@@ -144,7 +144,7 @@ class vtexMinicart
 			, 3000
 
 	valueLabel: (value) =>
-		@options.valuePrefix + _.formatCurrency(value, @options) + @options.valueSufix
+		@options.valuePrefix + _.formatCurrency(value/100, @options) + @options.valueSufix
 
 	availabilityCode: (item) =>
 		item.availability or "available"

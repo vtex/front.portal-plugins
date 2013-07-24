@@ -317,10 +317,10 @@ class SkuSelectorRenderer
 			.find('.skuselector-confirm-dimensions').text(dimensionsText)
 
 	showPrice: (sku) =>
-		listPrice = _.formatCurrency sku.listPrice
-		bestPrice = _.formatCurrency sku.bestPrice
+		listPrice = _.formatCurrency sku.listPrice/100
+		bestPrice = _.formatCurrency sku.bestPrice/100
 		installments = sku.installments
-		installmentValue = _.formatCurrency sku.installmentsValue
+		installmentValue = _.formatCurrency sku.installmentsValue/100
 
 		@select.listPriceValue().text("R$ #{listPrice}")
 		@select.bestPriceValue().text("R$ #{bestPrice}")
