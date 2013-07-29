@@ -5,6 +5,8 @@ $ = window.jQuery
 #
 class Minicart
 	constructor: (context, options) ->
+		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
+
 		@options = $.extend {}, $.fn.minicart.defaults, options
 		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
@@ -59,7 +61,7 @@ class Minicart
 	updateData: =>
 		$.ajax({
 			url: @getOrderFormURL()
-			data: expectedOrderFormSections: ["items", "paymentData", "totalizers"]
+			data: expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
@@ -102,7 +104,7 @@ class Minicart
 		$(item).parent().find('.vtexsc-overlay').show()
 
 		data =
-			expectedOrderFormSections: ["items", "paymentData", "totalizers"]
+			expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
 			orderItems: [
 				index: $(item).data("index")
 				quantity: 0
