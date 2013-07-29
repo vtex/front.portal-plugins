@@ -59,7 +59,7 @@ class Minicart
 	updateData: =>
 		$.ajax({
 			url: @getOrderFormURL()
-			data: JSON.stringify(expectedOrderFormSections: ["items", "paymentData", "totalizers"])
+			data: expectedOrderFormSections: ["items", "paymentData", "totalizers"]
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
@@ -101,7 +101,7 @@ class Minicart
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
 
-		data = JSON.stringify
+		data =
 			expectedOrderFormSections: ["items", "paymentData", "totalizers"]
 			orderItems: [
 				index: $(item).data("index")
