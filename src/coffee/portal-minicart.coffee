@@ -8,15 +8,13 @@ class Minicart
 		@options = $.extend {}, $.fn.minicart.defaults, options
 		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
-		@cartData = @options.cartData	# default {}
+		@cartData = {}
 
 		@base = $('.minicartListBase').remove()
 
 		@bindEvents()
 
-		@getData().success (data) =>
-			@cartData = data
-			@updateCart data
+		@updateData().success @updateCart
 
 		$(window).trigger "minicartLoaded"
 
@@ -54,11 +52,11 @@ class Minicart
 				, 3000
 
 		$(window).on 'productAddedToCart', =>
-			@getData().success (data) =>
-				@updateCart(data)
+			@updateData().success =>
+				@updateCart()
 				$(window).trigger "cartUpdated", [null, true]
 
-	getData: =>
+	updateData: =>
 		$.ajax({
 			url: @getOrderFormURL()
 			data: JSON.stringify(expectedOrderFormSections: ["items", "paymentData", "totalizers"])
@@ -72,32 +70,27 @@ class Minicart
 			# console.log "Error Message: " + textStatus
 			# console.log "HTTP Error: " + errorThrown
 
-	updateCart: (data) =>
-		data or= @cartData
-		@updateValues data
-		@updateItems data
+	updateCart: () =>
+		@updateValues()
+		@updateItems()
 
-	updateValues: (data) =>
-		return unless data
-
+	updateValues: =>
 		total = 0
-		for subtotal in data.totalizers when subtotal.id is 'Items'
+		for subtotal in @cartData.totalizers when subtotal.id is 'Items'
 			total += subtotal.value
 
-		$(".vtexsc-text", @context).text(@valueLabel(total))
+		$(".vtexsc-text", @context).text(@getValueLabel(total))
 
-	updateItems: (data) =>
-		return unless data
-
+	updateItems: =>
 		container = $(".minicartListContainer", @context).empty()
-		for item, i in data.items
+		for item, i in @cartData.items
 			current = @base.clone()
 
 			current.find('.cartSkuImage a').attr('href', item.detailUrl)
 			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
 			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
-			current.find('.cartSkuName .availability').text(@availabilityMessage(item)).addClass("availability-#{@availabilityCode(item)}")
-			current.find('.cartSkuPrice .bestPrice').text(@valueLabel(item.price))
+			current.find('.cartSkuName .availability').text(@getAvailabilityMessage(item)).addClass("availability-#{@getAvailabilityCode(item)}")
+			current.find('.cartSkuPrice .bestPrice').text(@getValueLabel(item.price))
 			current.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
 
 			current.appendTo(container)
@@ -132,23 +125,14 @@ class Minicart
 				# console.log "Error Message: " + textStatus
 				# console.log "HTTP Error: " + errorThrown
 
-	showMinicart: =>
-		@getData().done =>
-			@updateItems data
-			$(".vtexsc-cart").slideDown()
-			clearTimeout @timeoutToHide
-			@timeoutToHide = setTimeout ->
-				$(".vtexsc-cart").slideUp()
-			, 3000
-
-	valueLabel: (value) =>
+	getValueLabel: (value) =>
 		@options.valuePrefix + _.formatCurrency(value/100, @options) + @options.valueSufix
 
-	availabilityCode: (item) =>
+	getAvailabilityCode: (item) =>
 		item.availability or "available"
 
-	availabilityMessage: (item) =>
-		@options.availabilityMessages[@availabilityCode(item)]
+	getAvailabilityMessage: (item) =>
+		@options.availabilityMessages[@getAvailabilityCode(item)]
 
 
 #
