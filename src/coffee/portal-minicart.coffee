@@ -9,15 +9,7 @@ class Minicart
 		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
 		@cartData = @options.cartData	# default {}
-		@init()
 
-	getOrderFormURL: =>
-		"/api/checkout/pub/orderForm/"
-
-	getOrderFormUpdateURL: =>
-		@getOrderFormURL() + @cartData.orderFormId + "/items/update/"
-
-	init: =>
 		@base = $('.minicartListBase').remove()
 
 		@bindEvents()
@@ -27,6 +19,12 @@ class Minicart
 			@updateCart data
 
 		$(window).trigger "minicartLoaded"
+
+	getOrderFormURL: =>
+		"/api/checkout/pub/orderForm/"
+
+	getOrderFormUpdateURL: =>
+		@getOrderFormURL() + @cartData.orderFormId + "/items/update/"
 
 	bindEvents: =>
 		@hoverContext.on 'mouseover', ->
