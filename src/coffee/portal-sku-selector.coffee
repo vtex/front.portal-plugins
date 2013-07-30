@@ -105,15 +105,16 @@ class SkuSelector
 
 class SkuSelectorRenderer
 	constructor: (context, options, data) ->
-		selectors = options.selectors
 		@context = context
-		@warnUnavailable = options.warnUnavailable
+		@options = options
+
+		@template = Handlebars.compile(@context.html())
 
 		#SkuSelector
 		@data = data
 
 		# Build selectors from given select strings.
-		@select = _.mapObj selectors, (key, val) =>
+		@select = _.mapObj options.selectors, (key, val) =>
 			( => $(val, @context) )
 
 		@select.inputs = => $('input, select', @context)
@@ -127,11 +128,8 @@ class SkuSelectorRenderer
 
 
 	# Renders the DOM elements of the Sku Selector
-	renderSkuSelector: (selector) =>
-		source = @context.html()
-		template = Handlebars.compile(source)
-		html = template(@data)
-		@context.html(html)
+	render: (selector) =>
+		@context.html(@template(@data))
 
 	smartUpdate: =>
 		for dimension in @data.dimensions
@@ -157,7 +155,7 @@ class SkuSelectorRenderer
 			if selectedSku.available
 				@showBuyButton(selectedSku)
 				@showPrice(selectedSku)
-			else if @warnUnavailable
+			else if @options.warnUnavailable
 				@showWarnUnavailable(selectedSku)
 		else if selectableSkus.length > 0
 			@showPriceRange(@data.findPrices(selectableSkus))
@@ -275,7 +273,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	selector.smartUpdate()
 
 	# Finds elements and puts SKU information in them
-	renderer.renderSkuSelector()
+	renderer.render()
 	renderer.smartUpdate()
 
 	# Handler for the buy button
