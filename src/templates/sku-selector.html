@@ -4,28 +4,51 @@
             <div class="selectSkuTitle">
                 Selecione a variação do produto
             </div>
-            <div class="vtexsm-prodTitle"></div>
+            <div class="vtexsm-prodTitle">{{name}}</div>
             <div class="vtexsc-skusWrap">
                 <div class="vtexsc-skuProductImage">
-                    <img src="" width="160" height="160" alt="" />
+                    <img src="{{skus.[0].image}}" width="160" height="160" alt="{{name}}"/>
                 </div>
                 <div class="skuListWrap_ dimensionLists">
-                    <div class="dimensionListsEach">
-                        <ul class="topic">
-                            <li class="specification"></li>
-                            <li class="select skuList">
-                                <span class="skuListBase-radio">
-                                    <input type="radio" class="skuselector-specification-label change-image" value="">
-                                    <label></label>
-                                </span>
-                                <span class="skuListBase-combo">
-                                    <select size="1" class="sku-selector">
-                                        <option value=""></option>
-                                    </select>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
+                    {{#each dimensions}}
+                    <ul class="topic {{sanitize name}} {{nameClass}}">
+                        <li class="specification">{{name}}</li>
+                        <li class="select skuList group_{{index}}">
+                            {{#if radio}}
+                            {{#each values}}
+                            <input type="radio"
+                                   class="{{../../nameClass}} sku-selector skuespec_{{sanitize .}}"
+                                   data-dimension="{{../../name}}"
+                                   name="{{sanitize ../../name}}"
+                                   value="{{.}}"
+                                   specification="{{sanitize .}}"
+                                   id="{{../../../productId}}_{{sanitize ../../name}}_{{@index}}"
+                                   class="skuselector-specification-label change-image">
+                            <label for="{{../../../productId}}_{{sanitize ../../name}}_{{@index}}"
+                                   class="dimension-{{sanitize ../../name}} espec_{{../../index}} skuespec_{{sanitize .}} skuespec_{{spacesToHyphens ../../name}}_opcao_{{spacesToHyphens .}}">                                        {{.}}
+                            </label>
+                            {{/each}}
+                            {{/if}}
+                            {{#if combo}}
+                            <select size="1"
+                                    id="espec_{{../index}}_opcao_0"
+                                    name="espec_{{../index}}"
+                                    data-dimension="{{../name}}"
+                                    specification="{{sanitize ../name}}"
+                                    currentproductid="{{../../productId}}"
+                                    class="sku-selector">
+                                <option value=""></option>
+                                {{#each ../values}}
+                                <option class="skuopcao_{{@index}}"
+                                        value="{{.}}">
+                                    {{.}}
+                                </option>
+                                {{/each}}
+                            </select>
+                            {{/if}}
+                        </li>
+                    </ul>
+                    {{/each}}
                 </div>
                 <div class="vtexsc-skuProductPrice skuselector-price" style="display: none;">
                     <div class="regularPrice skuselector-list-price">

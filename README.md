@@ -2,7 +2,9 @@
 
 ## Dependências
 
+ - [jQuery](http://www.jquery.com)
  - [front.utils](https://github.com/vtex/front.utils)
+ - [Handlebars](https://github.com/janl/mustache.js)
 
 ## Uso
 
