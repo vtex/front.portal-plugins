@@ -12,6 +12,12 @@
     <script src="/lib/bower_modules/vtex-utils.js"></script>
     <script src="/lib/bower_modules/handlebars.js"></script>
 
+    <style type="text/css">
+        .disabled {
+            color: gray;
+        }
+    </style>
+
     <!-- skuSelectorTemplate -->
 
     <!-- build:js js/portal-sku-selector.min.js -->
@@ -20,7 +26,7 @@
 
     <script type="text/javascript">
         var mocks = ['/spec/mocks/twoDimensions.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json', '/spec/mocks/oneDimensionUnavailable.json', '/spec/mocks/manyDimensionsCombo.json'];
-        $.getJSON(mocks[0]).done(function(data){
+        $.getJSON(mocks[2]).done(function(data){
             $('.sku-selector-container').skuSelector(data, {warnUnavailable: true});
         })
     </script>

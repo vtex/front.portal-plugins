@@ -27,11 +27,29 @@ class SkuSelector
 		dim.radio = (dim.inputType == "radio") for dim in @dimensions
 		dim.combo = (dim.inputType == "combo") for dim in @dimensions
 
-	findUndefinedDimensions: =>
-		(dim for dim in @dimensions when dim.selected is undefined)
+		sku.values = (sku.dimensions[dim.name] for dim in @dimensions) for sku in @skus
 
-	findAvailableSkus: =>
-		(sku for sku in @skus when sku.available)
+	update: (dimensionName, dimensionValue) =>
+		@setSelectedDimension(dimensionName, dimensionValue) if dimensionName
+
+		while @isSelectedInexistent()
+			@unselectLast(dimensionName)
+
+		if (skus = @findSelectableSkus()).length == 1
+			sku = skus[0]
+			@selectSku(sku)
+			if not sku.available
+				console.log 'unavailable' # event
+
+	isSelectedInexistent: =>
+		@findSelectableSkus().length == 0
+
+	unselectLast: (exceptDimension) =>
+		for dim in @dimensions by -1
+			if dim.selected isnt undefined and dim.name isnt exceptDimension
+				dim.selected = undefined
+				return true
+		return false
 
 	isSkuSelectable: (sku) =>
 		for dimension in @dimensions when dimension.selected isnt undefined
@@ -41,10 +59,6 @@ class SkuSelector
 
 	findSelectableSkus: =>
 		(sku for sku in @skus when @isSkuSelectable(sku))
-
-	findSelectedSku: (skus = undefined) =>
-		skus or= @findSelectableSkus()
-		return if skus.length is 1 then skus[0] else undefined
 
 	findPrices: (skus = undefined) =>
 		skus or= @findSelectableSkus()
@@ -62,18 +76,6 @@ class SkuSelector
 	setSelectedDimension: (dimension, value) =>
 		@getDimensionByName(dimension).selected = value
 
-	smartUpdate: (dimensionName) =>
-		dimension = @getDimensionByName(dimensionName) if dimensionName
-		selectedSku = @findSelectedSku()
-
-		#		@updateValidValues()
-		@resetNextDimensions(dimensionName) if dimensionName
-		@unselectInvalidValues()
-		@updateValidValues()
-		if selectedSku
-			unless dimension?.selected is undefined
-				@selectSku(selectedSku)
-
 	resetNextDimensions: (dimensionName) =>
 		currentIndex = @getDimensionByName(dimensionName).index
 		dim.selected = undefined for dim in @searchDimensions((dim) -> dim.index > currentIndex)
@@ -81,6 +83,21 @@ class SkuSelector
 	selectSku: (sku) =>
 		for dimension in @dimensions
 			dimension.selected = sku.dimensions[dimension.name]
+
+	findSelectionStatus: (selection) =>
+		for sku in @skus
+			if @skuMatches(sku, selection)
+				if sku.available
+					return "ok"
+				else
+					return "unavailable"
+		return "invalid"
+
+	skuMatches: (sku, selection) =>
+		for value, i in sku.values
+			if selection[i] isnt undefined and selection[i] isnt value
+				return false
+		return true
 
 	updateValidValues: =>
 		selectableSkus = @findSelectableSkus()
@@ -96,11 +113,6 @@ class SkuSelector
 						dimension.validValues[i] = true
 						if sku.available
 							dimension.availableValues[i] = true
-
-	unselectInvalidValues: =>
-		for dimension in @dimensions
-			unless dimension.validValues[ dimension.values.indexOf(dimension.selectedValue) ]
-				dimension.selectedValue = undefined
 
 
 class SkuSelectorRenderer
@@ -128,22 +140,26 @@ class SkuSelectorRenderer
 
 
 	# Renders the DOM elements of the Sku Selector
-	render: (selector) =>
+	render: =>
 		@context.html(@template(@data))
 
 	smartUpdate: =>
-		for dimension in @data.dimensions
+		originalSelection = (dim.selected for dim in @data.dimensions)
+
+		for dimension, i in @data.dimensions
 			@resetDimension(dimension)
 			@selectValue(dimension)
 
-			for value, i in dimension.values
-				unless dimension.validValues[i]
-					@disableInvalidValue(dimension, value)
-				unless dimension.availableValues[i]
-					@disableUnavailableValue(dimension, value)
+			for value in dimension.values
+				selection = originalSelection.slice(0)
+				selection[i] = value
+				switch @data.findSelectionStatus(selection)
+					when "invalid"
+						@disableInvalidValue(dimension, value)
+					when "unavailable"
+						@disableUnavailableValue(dimension, value)
 
 		selectableSkus = @data.findSelectableSkus()
-		selectedSku = @data.findSelectedSku(selectableSkus)
 
 		@hideBuyButton()
 		@hideConfirmButton()
@@ -151,7 +167,8 @@ class SkuSelectorRenderer
 		@hidePriceRange()
 		@hidePrice()
 
-		if selectedSku
+		if selectableSkus.length == 1
+			selectedSku = selectableSkus[0]
 			if selectedSku.available
 				@showBuyButton(selectedSku)
 				@showPrice(selectedSku)
@@ -194,15 +211,19 @@ class SkuSelectorRenderer
 
 	disableInvalidValue: (dimension, value) =>
 		@select.itemDimensionValueInput(dimension.name, value)
-		.attr('disabled', 'disabled')
+		.addClass('disabled')
+		@select.itemDimensionValueLabel(dimension.name, value)
+		.addClass('disabled')
 		@select.itemDimensionValueOption(dimension.name, value)
-		.attr('disabled', 'disabled')
+		.addClass('disabled')
 
 	disableUnavailableValue: (dimension, value) =>
 		@select.itemDimensionValueInput(dimension.name, value)
 		.addClass('item_unavaliable')
 		@select.itemDimensionValueLabel(dimension.name, value)
-		.addClass('item_unavaliable disabled')
+		.addClass('item_unavaliable')
+		@select.itemDimensionValueOption(dimension.name, value)
+		.addClass('item_unavaliable')
 
 	hideBuyButton: =>
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()
@@ -270,8 +291,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	selector = new SkuSelector(productData)
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
-	selector.smartUpdate()
-
+	selector.update()
 	# Finds elements and puts SKU information in them
 	renderer.render()
 	renderer.smartUpdate()
@@ -297,20 +317,17 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		dimensionName = $this.data('dimension')
 		dimensionValue = if $this.val() is "" then undefined else $this.val()
 
-		# Update data
-		selector.setSelectedDimension(dimensionName, dimensionValue)
-
 		# Process data
-		selector.smartUpdate(dimensionName)
+		selector.update(dimensionName, dimensionValue)
 
 		# Update DOM
 		renderer.smartUpdate()
 
-		selectedSku = selector.findSelectedSku()
+		selectableSkus = selector.findSelectableSkus()
 		# Trigger event for interested scripts
 		$this.trigger 'dimensionChanged', [dimensionName, dimensionValue]
-		if selectedSku
-			$this.trigger 'skuSelected', [selectedSku]
+		if selectableSkus.length == 1
+			$this.trigger 'skuSelected', [selectableSkus[0]]
 
 
 	# Handles submission in the warn unavailable form
@@ -325,7 +342,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	.on 'click', buyButtonHandler
 
 	renderer.select.inputs()
-	.on 'change', dimensionChangeHandler
+	.on('change', dimensionChangeHandler)
 
 	if options.warnUnavailable
 		renderer.select.warnUnavailable().find('form')

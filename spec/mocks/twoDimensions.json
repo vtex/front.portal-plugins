@@ -17,7 +17,7 @@
       "Tamanho": "GG",
       "Cor": "unico"
     },
-    "available": false,
+    "available": true,
     "listPrice": 99998700,
     "bestPrice": 99998700,
     "installments": 3,
