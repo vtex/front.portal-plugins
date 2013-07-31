@@ -1,4 +1,4 @@
-qq(($, window, document) ->
+(($, window, document) ->
 
   pluginName = 'vtexTotalizers'
   defaults = {
