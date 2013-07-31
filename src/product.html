@@ -10,10 +10,10 @@
     <script src="http://localhost:35729/livereload.js"></script>
     <script src="lib/jquery-1.8.3.min.js"></script>
     <script type="text/javascript">
-        var mocks = ['/spec/mocks/oneDimensionAvailable.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json'];
+        var mocks = ['/spec/mocks/twoDimensions.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json'];
         $.get = function (url) {
             console.log("mock:", url);
-            return $.ajax(mocks[2]);
+            return $.ajax(mocks[0]);
         };
     </script>
     <!-- build:js js/portal-sku-selector-product.min.js -->

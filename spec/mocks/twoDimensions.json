@@ -1,0 +1,45 @@
+{
+  "productId": 6268,
+  "name": "BOLA CRAVO - AMARELO - SÃO PET",
+  "salesChannel": "1",
+  "dimensions": ["Tamanho", "Cor"],
+  "dimensionsInputType": {
+    "Tamanho": "radio",
+    "Cor": "radio"
+  },
+  "dimensionsMap": {
+    "Tamanho": ["G", "GG"],
+    "Cor": ["Amarelo", "unico"]
+  },
+  "skus": [{
+    "sku": 6269,
+    "dimensions": {
+      "Tamanho": "GG",
+      "Cor": "unico"
+    },
+    "available": false,
+    "listPrice": 99998700,
+    "bestPrice": 99998700,
+    "installments": 3,
+    "installmentsValue": 33332900,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
+    "sellerId": "1",
+    "seller": "MeuAmigoPet"
+  }, {
+    "sku": 7925,
+    "dimensions": {
+      "Tamanho": "G",
+      "Cor": "Amarelo"
+    },
+    "available": false,
+    "listPrice": 99998700,
+    "bestPrice": 99998700,
+    "installments": 3,
+    "installmentsValue": 33332900,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
+    "sellerId": "1",
+    "seller": "MeuAmigoPet"
+  }]
+}
