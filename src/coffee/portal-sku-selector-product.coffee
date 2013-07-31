@@ -23,7 +23,7 @@ dimensionListTemplate = """
 skuDimensionTemplate = """
 	<input type="radio" name="dimension-{{dimensionSanitized}}" dimension="{{dimensionSanitized}}" data-value="{{value}}" data-dimension="{{dimension}}"
 		class="skuselector-specification-label input-dimension-{{dimensionSanitized}} sku-selector skuespec_{{valueSanitized}} change-image" id="{{productId}}_{{dimensionSanitized}}_{{index}}" value="{{valueSanitized}}" specification="{{valueSanitized}}">
-	<label for="{{productId}}_{{dimensionSanitized}}_{{index}}" class="dimension-{{dimensionSanitized}} espec_{{dimensionIndex}} skuespec_{{valueSanitized}}">{{value}}</label>
+	<label for="{{productId}}_{{dimensionSanitized}}_{{index}}" class="dimension-{{dimensionSanitized}} espec_{{dimensionIndex}} skuespec_{{valueSanitized}} skuespec_{{dimensionSanitized}}_opcao_{{valueSanitized}}">{{value}}</label>
 	"""
 
 updateBuyButtonURL = (url)->

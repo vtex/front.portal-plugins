@@ -217,7 +217,7 @@
         num = 0.00
       else
         num = value / 100
-      self.getCurrency() + ' ' + parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
+      @getCurrency() + ' ' + parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
 
     showMinicart: (value) ->
       promise = @getData()
