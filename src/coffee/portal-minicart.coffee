@@ -78,7 +78,7 @@ class Minicart
 
 	updateValues: =>
 		total = 0
-		for subtotal in @cartData.totalizers when subtotal.id is 'Items'
+		for subtotal in @cartData.totalizers when subtotal.id in ['Items', 'Discounts']
 			total += subtotal.value
 
 		$(".vtexsc-text", @context).text(@getValueLabel(total))
@@ -92,7 +92,7 @@ class Minicart
 			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
 			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
 			current.find('.cartSkuName .availability').text(@getAvailabilityMessage(item)).addClass("availability-#{@getAvailabilityCode(item)}")
-			current.find('.cartSkuPrice .bestPrice').text(@getValueLabel(item.price))
+			current.find('.cartSkuPrice .bestPrice').text(@getValueLabel(item.sellingPrice or item.price))
 			current.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
 
 			current.appendTo(container)

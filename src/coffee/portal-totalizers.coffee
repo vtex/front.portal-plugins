@@ -48,7 +48,7 @@ class vtexTotalizers
 
 		total = 0
 		for subtotal in data.totalizers
-			total += subtotal.value if subtotal.id is 'Items'
+			total += subtotal.value if subtotal.id in ['Items', 'Discounts']
 		totalCart = _.formatCurrency(total / 100, @options)
 
 		@select.amountProducts().text amountProducts
