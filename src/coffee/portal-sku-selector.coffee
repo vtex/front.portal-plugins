@@ -38,8 +38,6 @@ class SkuSelector
 		if (skus = @findSelectableSkus()).length == 1
 			sku = skus[0]
 			@selectSku(sku)
-			if not sku.available
-				console.log 'unavailable' # event
 
 	isSelectedInexistent: =>
 		@findSelectableSkus().length == 0
@@ -76,10 +74,6 @@ class SkuSelector
 	setSelectedDimension: (dimension, value) =>
 		@getDimensionByName(dimension).selected = value
 
-	resetNextDimensions: (dimensionName) =>
-		currentIndex = @getDimensionByName(dimensionName).index
-		dim.selected = undefined for dim in @searchDimensions((dim) -> dim.index > currentIndex)
-
 	selectSku: (sku) =>
 		for dimension in @dimensions
 			dimension.selected = sku.dimensions[dimension.name]
@@ -99,21 +93,6 @@ class SkuSelector
 			if selection[i] isnt undefined and selection[i] isnt value
 				return false
 		return true
-
-	updateValidValues: =>
-		selectableSkus = @findSelectableSkus()
-		undefinedDimensions = @findUndefinedDimensions()
-
-		for dimension in undefinedDimensions
-			dimension.validValues = dimension.validValues.map( -> false )
-			dimension.availableValues = dimension.availableValues.map( -> false )
-
-			for value, i in dimension.values
-				for sku in selectableSkus
-					if sku.dimensions[dimension.name] is value
-						dimension.validValues[i] = true
-						if sku.available
-							dimension.availableValues[i] = true
 
 
 class SkuSelectorRenderer
@@ -173,8 +152,10 @@ class SkuSelectorRenderer
 			if selectedSku.available
 				@showBuyButton(selectedSku)
 				@showPrice(selectedSku)
-			else if @options.warnUnavailable
-				@showWarnUnavailable(selectedSku)
+			else
+				@context.trigger 'skuSelected', [selectedSku]
+				if @options.warnUnavailable
+					@showWarnUnavailable(selectedSku)
 		else if selectableSkus.length > 0
 			@showPriceRange(@data.findPrices(selectableSkus))
 
@@ -274,7 +255,7 @@ class SkuSelectorRenderer
 		$priceRange.find('.highPrice').text("R$ #{prices[prices.length-1]}")
 
 	showWarnUnavailable: (sku) =>
-		@select.warnUnavailable().find('input#notifymeSkuId').val(sku).show()
+		@select.warnUnavailable().show().find('input#notifymeSkuId').val(sku)
 
 #
 # PLUGIN ENTRY POINT
@@ -372,7 +353,7 @@ Handlebars.registerHelper('spacesToHyphens', (text) -> new Handlebars.SafeString
 # PLUGIN DEFAULTS
 #
 $.fn.skuSelector.defaults =
-	warnUnavailable: true
+	warnUnavailable: false
 	selectOnOpening: false
 	confirmBuy: false
 	priceRange: false
