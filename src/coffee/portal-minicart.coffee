@@ -179,7 +179,7 @@
               </td>
               <td class="cartSkuPrice">
                   <div class="cartSkuUnitPrice">
-                      <span class="bestPrice">#{self.formatCurrency(item.price)}</span>
+                      <span class="bestPrice">#{self.formatCurrency(item.sellingPrice or item.price)}</span>
                   </div>
               </td>
               <td class="cartSkuQuantity">
