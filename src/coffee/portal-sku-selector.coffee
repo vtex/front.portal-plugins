@@ -90,7 +90,8 @@ class SkuSelector
 				if sku.available
 					return "ok"
 				else
-					return "unavailable"
+					foundUnavailable = true
+		return "unavailable" if foundUnavailable
 		return "invalid"
 
 	skuMatches: (sku, selection) =>
@@ -143,7 +144,7 @@ class SkuSelectorRenderer
 	render: =>
 		@context.html(@template(@data))
 
-	smartUpdate: =>
+	update: =>
 		originalSelection = (dim.selected for dim in @data.dimensions)
 
 		for dimension, i in @data.dimensions
@@ -181,13 +182,13 @@ class SkuSelectorRenderer
 		@select.itemDimensionInput(dimension.name)
 		.removeAttr('checked')
 		.removeAttr('disabled')
-		.removeClass('checked sku-picked item_unavaliable')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable ')
 
 		@select.itemDimensionLabel(dimension.name)
-		.removeClass('item_unavaliable disabled')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled')
 
 		@select.itemDimensionOption(dimension.name)
-		.removeClass('checked sku-picked item_unavaliable')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable ')
 		.removeAttr('disabled')
 		.removeAttr('selected')
 
@@ -205,6 +206,8 @@ class SkuSelectorRenderer
 			@select.itemDimensionValueInput(dimension.name, value)
 			.attr('checked', 'checked')
 			.addClass('checked sku-picked')
+			@select.itemDimensionValueLabel(dimension.name, value)
+			.addClass('checked sku-picked')
 			@select.itemDimensionValueOption(dimension.name, value)
 			.attr('selected', 'selected')
 			.addClass('checked sku-picked')
@@ -219,11 +222,11 @@ class SkuSelectorRenderer
 
 	disableUnavailableValue: (dimension, value) =>
 		@select.itemDimensionValueInput(dimension.name, value)
-		.addClass('item_unavaliable')
+		.addClass('item_unavaliable item_unavailable')
 		@select.itemDimensionValueLabel(dimension.name, value)
-		.addClass('item_unavaliable')
+		.addClass('item_unavaliable item_unavailable')
 		@select.itemDimensionValueOption(dimension.name, value)
-		.addClass('item_unavaliable')
+		.addClass('item_unavaliable item_unavailable')
 
 	hideBuyButton: =>
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()
@@ -294,7 +297,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	selector.update()
 	# Finds elements and puts SKU information in them
 	renderer.render()
-	renderer.smartUpdate()
+	renderer.update()
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
@@ -321,7 +324,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		selector.update(dimensionName, dimensionValue)
 
 		# Update DOM
-		renderer.smartUpdate()
+		renderer.update()
 
 		selectableSkus = selector.findSelectableSkus()
 		# Trigger event for interested scripts
