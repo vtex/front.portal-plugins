@@ -102,7 +102,7 @@
 
       total = 0
       for subtotal in data.totalizers
-        total += subtotal.value if subtotal.id is 'Items'
+        total += subtotal.value if subtotal.id in ['Items', 'Discounts']
       totalCart = self.formatCurrency(total)
 
       self.selectors.amountProducts.html amountProducts

@@ -179,7 +179,7 @@
               </td>
               <td class="cartSkuPrice">
                   <div class="cartSkuUnitPrice">
-                      <span class="bestPrice">#{self.formatCurrency(item.price)}</span>
+                      <span class="bestPrice">#{self.formatCurrency(item.sellingPrice or item.price)}</span>
                   </div>
               </td>
               <td class="cartSkuQuantity">
@@ -208,7 +208,7 @@
       if data
         total = 0
         for subtotal in data.totalizers
-          total += subtotal.value if subtotal.id is 'Items'
+          total += subtotal.value if subtotal.id in ['Items', 'Discounts']
 
         $(".vtexsc-text", self.options.$template).text(self.formatCurrency (total))
 
