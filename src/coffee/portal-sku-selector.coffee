@@ -17,7 +17,7 @@ class SkuSelector
 		@dimensions = ({
 		index: i++
 		name: dimensionName
-		nameClass: "item-dimension-#{_.sanitize(dimensionName)}"
+		nameClass: ""
 		values: productData.dimensionsMap[dimensionName]
 		availableValues: (true for value in productData.dimensionsMap[dimensionName])
 		validValues: (true for value in productData.dimensionsMap[dimensionName])
