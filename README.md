@@ -4,7 +4,7 @@
 
  - [jQuery](http://www.jquery.com)
  - [front.utils](https://github.com/vtex/front.utils)
- - [Handlebars](https://github.com/janl/mustache.js)
+ - [Liquid.js](https://github.com/gberger42/liquid.js)
 
 ## Uso
 
