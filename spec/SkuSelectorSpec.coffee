@@ -1,4 +1,4 @@
-jasmine.getFixtures().fixturesPath = "base/build/spec/fixtures"
+jasmine.getFixtures().fixturesPath = "base/build"
 jasmine.getJSONFixtures().fixturesPath = "base/build/spec/mocks"
 
 
@@ -60,26 +60,6 @@ describe 'SkuSelector Plugin', ->
 				#Assert
 				expect(@ss.skus).toEqual(@mock.skus)
 
-		it 'should find undefined dimensions', ->
-			#Arrange
-			ours = (dim for dim in @ss.dimensions when dim.selected is undefined)
-
-			#Act
-			theirs =  @ss.findUndefinedDimensions()
-
-			#Assert
-			expect(theirs).toEqual(ours)
-
-		it 'should find available skus', ->
-			#Arrange
-			ours = (sku for sku in @ss.skus when sku.available is true)
-
-			#Act
-			theirs = @ss.findAvailableSkus()
-
-			#Assert
-			expect(theirs).toEqual(ours)
-
 		it "should select a sku by setting each dimension's selected to its values", ->
 			#Arrange
 			sku = @mock.skus[0]
@@ -89,10 +69,6 @@ describe 'SkuSelector Plugin', ->
 
 			#Assert
 			expect(dim.selected).toEqual(sku.dimensions[dim.name]) for dim in @ss.dimensions
-
-		#TODO it 'should assert that a sku is selectable', ->
-
-		#TODO it 'should find the selectable skus', ->
 
 		it 'should search the dimensions using the given function', ->
 			#Arrange
@@ -117,41 +93,6 @@ describe 'SkuSelector Plugin', ->
 			#Assert
 			expect(result).toEqual(dimension)
 
-		describe 'findSelectedSku', ->
-			it 'should find when it is unique', ->
-				#Arrange
-				mockResult = [@mock.skus[0]]
-				spyOn(@ss, 'findSelectableSkus').andReturn(mockResult)
-
-				#Act
-				result = @ss.findSelectedSku()
-
-				#Assert
-				expect(result).toEqual(mockResult...)
-
-			it 'should not find when it is not unique', ->
-				#Arrange
-				mockResult = [@mock.skus[0], @mock.skus[1]]
-				spyOn(@ss, 'findSelectableSkus').andReturn(mockResult)
-
-				#Act
-				result = @ss.findSelectedSku()
-
-				#Assert
-				expect(result).toBeUndefined()
-
-			it 'should not find when it is empty', ->
-				#Arrange
-				mockResult = []
-				spyOn(@ss, 'findSelectableSkus').andReturn(mockResult)
-
-				#Act
-				result = @ss.findSelectedSku()
-
-				#Assert
-				expect(result).toBeUndefined()
-
-
 		it 'should get and set selected dimension', ->
 			#Arrange
 			dim  = @ss.dimensions[0]
@@ -164,17 +105,10 @@ describe 'SkuSelector Plugin', ->
 			#Assert
 			expect(result).toEqual(value)
 
-		it 'should reset the next dimensions', ->
-			#Act
-			@ss.resetNextDimensions(@ss.dimensions[0].name)
-
-			#Assert
-			expect(@ss.getSelectedDimension(dim.name)).toBeUndefined() for dim, i in @ss.dimensions when i > 0
-
 
 	describe 'SkuSelectorRenderer', ->
 		beforeEach ->
-			@ssr = new vtex.portalPlugins.SkuSelectorRenderer({}, {}, {})
+			@ssr = new vtex.portalPlugins.SkuSelectorRenderer($('html'), {}, {})
 
 		it 'should exist', ->
 			#Assert
@@ -183,29 +117,6 @@ describe 'SkuSelector Plugin', ->
 		it 'should be instantiated', ->
 			#Assert
 			expect(@ssr instanceof vtex.portalPlugins.SkuSelectorRenderer).toBe(true)
-
-		it 'should call updatePriceAvailable', ->
-			#Arrange
-			sku = {available: true}
-			spyOn(@ssr, 'updatePriceAvailable')
-
-			#Act
-			@ssr.updatePrice(sku)
-
-			#Assert
-			expect(@ssr.updatePriceAvailable).toHaveBeenCalledWith(sku)
-
-
-		it 'should call updatePriceUnavailable', ->
-			#Arrange
-			sku = {available: false}
-			spyOn(@ssr, 'updatePriceUnavailable')
-
-			#Act
-			@ssr.updatePrice(sku)
-
-			#Assert
-			expect(@ssr.updatePriceUnavailable).toHaveBeenCalled()
 
 
 	describe '$.skuSelector', ->

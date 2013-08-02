@@ -16,13 +16,15 @@
 	"bounces":[
 		"lib/.*",
 		"style/.*",
-		"index.html"
+		"index.html",
+        "minicart.html"
 	],
-	"mapping": false,
+	"mapping": true,
 	"mappings": {
 	    ".*portal-totalizers.js.*": "build/js/portal-totalizers.js",
 	    ".*portal-minicart.js.*": "build/js/portal-minicart.js",
 	    ".*portal-sku-selector-product.min.js.*": "build/js/portal-sku-selector-product.dev.js",
-	    ".*portal-sku-selector-popup.min.js.*": "build/js/portal-sku-selector-popup.dev.js"
+	    ".*portal-sku-selector-popup.min.js.*": "build/js/portal-sku-selector-popup.dev.js",
+        "/api/checkout/pub/orderForm/" : "build/spec/mocks/orderform.json"
 	}
 }

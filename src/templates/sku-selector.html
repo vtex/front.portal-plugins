@@ -4,28 +4,51 @@
             <div class="selectSkuTitle">
                 Selecione a variação do produto
             </div>
-            <div class="vtexsm-prodTitle"></div>
+            <div class="vtexsm-prodTitle">{{name}}</div>
             <div class="vtexsc-skusWrap">
                 <div class="vtexsc-skuProductImage">
-                    <img src="" width="160" height="160" alt="" />
+                    <img src="{{skus.[0].image}}" width="160" height="160" alt="{{name}}"/>
                 </div>
                 <div class="skuListWrap_ dimensionLists">
-                    <div class="dimensionListsEach">
-                        <ul class="topic">
-                            <li class="specification"></li>
-                            <li class="select skuList">
-                                <span class="skuListBase-radio">
-                                    <input type="radio" class="skuselector-specification-label change-image" value="">
-                                    <label></label>
-                                </span>
-                                <span class="skuListBase-combo">
-                                    <select size="1" class="sku-selector">
-                                        <option value=""></option>
-                                    </select>
-                                </span>
-                            </li>
-                        </ul>
-                    </div>
+                    {% for dimension in dimensions %}
+                    <ul class="topic {{ dimension.name | sanitize }} {{ dimension.nameClass }}">
+                        <li class="specification">{{dimension.name}}</li>
+                        <li class="select skuList group_{{ dimension.index }}">
+                            {% if dimension.radio %}
+                                {% for value in dimension.values %}
+                                    <input type="radio"
+                                           class="{{ dimension.nameClass }} sku-selector skuespec_{{ value | sanitize }}"
+                                           data-dimension="{{dimension.name}}"
+                                           name="{{ dimension.name | sanitize }}"
+                                           value="{{ value }}"
+                                           specification="{{ value | sanitize }}"
+                                           id="{{ productId }}_{{ dimension.name | sanitize }}_{{ forloop.index0 }}"
+                                           class="skuselector-specification-label change-image">
+                                    <label for="{{ productId }}_{{ dimension.name | sanitize }}_{{ forloop.index0 }}"
+                                           class="dimension-{{ dimension.name | sanitize }} espec_{{ dimension.index }} skuespec_{{ value | sanitize }} skuespec_{{ dimension.name | spacesToHyphens }}_opcao_{{ value | spacesToHyphens }}">
+                                        {{ value }}
+                                    </label>
+                                {% endfor %}
+                            {% elsif dimension.combo %}
+                                <select size="1"
+                                    id="espec_{{ dimension.index }}_opcao_0"
+                                    name="espec_{{ dimension.index }}"
+                                    data-dimension="{{ dimension.name }}"
+                                    specification="{{ dimension.name | sanitize }}"
+                                    currentproductid="{{ productId }}"
+                                    class="sku-selector">
+                                    <option value=""></option>
+                                    {% for value in dimension.values %}
+                                        <option class="skuopcao_{{ forloop.index0 }}"
+                                                value="{{ value }}">
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
+                        </li>
+                    </ul>
+                    {% endfor %}
                 </div>
                 <div class="vtexsc-skuProductPrice skuselector-price" style="display: none;">
                     <div class="regularPrice skuselector-list-price">
@@ -35,6 +58,12 @@
                         Por: <span class="value"></span>
                     </div>
                     <div class="installment"></div>
+                </div>
+                <div class="skuselector-price-range">
+                    A partir de
+                    <span class="lowPrice"></span>
+                    até
+                    <span class="highPrice"></span>
                 </div>
             </div>
             <p class="skuselector-warning" style="display: none;"></p>
@@ -55,7 +84,10 @@
                 <span id="notifymeError" class="notifyme-error" style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
             </div>
             <div class="vtexsc-buttonWrap clearfix skuselector-buy-btn-wrap">
-                <a href="#" class="vtexsc-buyButton skuselector-buy-btn"></a>
+                <a href="#" class="vtexsc-buyButton skuselector-buy-btn">Comprar</a>
+            </div>
+            <div class="vtexsc-buttonWrap clearfix skuselector-confirm-btn-wrap">
+                <a href="#" class="vtexsc-confirmButton skuselector-confirm-btn">Confirmar - <span class="skuselector-confirm-dimensions"></span></a>
             </div>
         </div>
     </div>
