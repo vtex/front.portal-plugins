@@ -107,13 +107,18 @@ module.exports = (grunt) ->
 		concat:
 			dev:
 				files:
-					'build/js/portal-sku-selector-product.dev.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
-					'build/js/portal-sku-selector-popup.dev.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-popup.js']
+					'build/js/portal-sku-selector.dev.js': 'build/js/portal-sku-selector.js'
+					'build/js/portal-minicart.dev.js': 'build/js/portal-minicart.js'
+					'build/js/portal-totalizers.dev.js': 'build/js/portal-totalizers.js'
+					'build/js/portal-template-as-modal.dev.js': 'build/js/portal-template-as-modal.js'
+
 		uglify:
 			dev:
 				files:
-					'build/js/portal-sku-selector-product.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-product.js']
-					'build/js/portal-sku-selector-popup.min.js': ['build/js/portal-sku-selector.js', 'build/js/portal-sku-selector-popup.js']
+					'build/js/portal-sku-selector.min.js': 'build/js/portal-sku-selector.js'
+					'build/js/portal-minicart.min.js': 'build/js/portal-minicart.js'
+					'build/js/portal-totalizers.min.js': 'build/js/portal-totalizers.js'
+					'build/js/portal-template-as-modal.min.js': 'build/js/portal-template-as-modal.js'
 
 		'string-replace':
 			all:
@@ -152,7 +157,10 @@ module.exports = (grunt) ->
 
 	# Prod - minifies files
 	grunt.registerTask 'prod', ['dev', 'copy:debug', 'useminPrepare', 'concat', 'uglify', 'usemin']
-	grunt.registerTask 'prod-watch', ['prod', 'connect', 'remote', 'watch:prod']
+	grunt.registerTask 'prod-watch', ['prod$(document).on "skuSelected", (evt, sku) ->
+	window.FireSkuChangeImage?(sku.sku)
+	#window.FireSkuDataReceived?(sku.sku)
+	window.FireSkuSelectionChanged?(sku.sku)', 'connect', 'remote', 'watch:prod']
 
 	# Test
 	grunt.registerTask 'test', ['dev', 'karma:deploy']
