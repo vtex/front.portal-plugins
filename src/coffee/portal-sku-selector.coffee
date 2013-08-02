@@ -100,7 +100,7 @@ class SkuSelectorRenderer
 		@context = context
 		@options = options
 
-		@template = Handlebars.compile(@context.html())
+		@template = Liquid.parse(@context.html())
 
 		#SkuSelector
 		@data = data
@@ -121,7 +121,7 @@ class SkuSelectorRenderer
 
 	# Renders the DOM elements of the Sku Selector
 	render: =>
-		@context.html(@template(@data))
+		@context.html(@template.render(@data))
 
 	update: =>
 		originalSelection = (dim.selected for dim in @data.dimensions)
@@ -344,10 +344,11 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 
 #
-# HANDLEBARS HELPERS
+# LIQUID HELPERS
 #
-Handlebars.registerHelper('sanitize', (text) -> new Handlebars.SafeString _.sanitize text)
-Handlebars.registerHelper('spacesToHyphens', (text) -> new Handlebars.SafeString _.spacesToHyphens text)
+Liquid.Template.registerFilter
+	sanitize: (text) -> _.sanitize text
+	spacesToHyphens: (text) -> _.spacesToHyphens text
 
 #
 # PLUGIN DEFAULTS

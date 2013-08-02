@@ -10,45 +10,45 @@
                     <img src="{{skus.[0].image}}" width="160" height="160" alt="{{name}}"/>
                 </div>
                 <div class="skuListWrap_ dimensionLists">
-                    {{#each dimensions}}
-                    <ul class="topic {{sanitize name}} {{nameClass}}">
-                        <li class="specification">{{name}}</li>
-                        <li class="select skuList group_{{index}}">
-                            {{#if radio}}
-                            {{#each values}}
-                            <input type="radio"
-                                   class="{{../../nameClass}} sku-selector skuespec_{{sanitize .}}"
-                                   data-dimension="{{../../name}}"
-                                   name="{{sanitize ../../name}}"
-                                   value="{{.}}"
-                                   specification="{{sanitize .}}"
-                                   id="{{../../../productId}}_{{sanitize ../../name}}_{{@index}}"
-                                   class="skuselector-specification-label change-image">
-                            <label for="{{../../../productId}}_{{sanitize ../../name}}_{{@index}}"
-                                   class="dimension-{{sanitize ../../name}} espec_{{../../index}} skuespec_{{sanitize .}} skuespec_{{spacesToHyphens ../../name}}_opcao_{{spacesToHyphens .}}">                                        {{.}}
-                            </label>
-                            {{/each}}
-                            {{/if}}
-                            {{#if combo}}
-                            <select size="1"
-                                    id="espec_{{../index}}_opcao_0"
-                                    name="espec_{{../index}}"
-                                    data-dimension="{{../name}}"
-                                    specification="{{sanitize ../name}}"
-                                    currentproductid="{{../../productId}}"
+                    {% for dimension in dimensions %}
+                    <ul class="topic {{ dimension.name | sanitize }} {{ dimension.nameClass }}">
+                        <li class="specification">{{dimension.name}}</li>
+                        <li class="select skuList group_{{ dimension.index }}">
+                            {% if dimension.radio %}
+                                {% for value in dimension.values %}
+                                    <input type="radio"
+                                           class="{{ dimension.nameClass }} sku-selector skuespec_{{ value | sanitize }}"
+                                           data-dimension="{{dimension.name}}"
+                                           name="{{ dimension.name | sanitize }}"
+                                           value="{{ value }}"
+                                           specification="{{ value | sanitize }}"
+                                           id="{{ productId }}_{{ dimension.name | sanitize }}_{{ forloop.index0 }}"
+                                           class="skuselector-specification-label change-image">
+                                    <label for="{{ productId }}_{{ dimension.name | sanitize }}_{{ forloop.index0 }}"
+                                           class="dimension-{{ dimension.name | sanitize }} espec_{{ dimension.index }} skuespec_{{ value | sanitize }} skuespec_{{ dimension.name | spacesToHyphens }}_opcao_{{ value | spacesToHyphens }}">
+                                        {{ value }}
+                                    </label>
+                                {% endfor %}
+                            {% elsif dimension.combo %}
+                                <select size="1"
+                                    id="espec_{{ dimension.index }}_opcao_0"
+                                    name="espec_{{ dimension.index }}"
+                                    data-dimension="{{ dimension.name }}"
+                                    specification="{{ dimension.name | sanitize }}"
+                                    currentproductid="{{ productId }}"
                                     class="sku-selector">
-                                <option value=""></option>
-                                {{#each ../values}}
-                                <option class="skuopcao_{{@index}}"
-                                        value="{{.}}">
-                                    {{.}}
-                                </option>
-                                {{/each}}
-                            </select>
-                            {{/if}}
+                                    <option value=""></option>
+                                    {% for value in dimension.values %}
+                                        <option class="skuopcao_{{ forloop.index0 }}"
+                                                value="{{ value }}">
+                                            {{ value }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+                            {% endif %}
                         </li>
                     </ul>
-                    {{/each}}
+                    {% endfor %}
                 </div>
                 <div class="vtexsc-skuProductPrice skuselector-price" style="display: none;">
                     <div class="regularPrice skuselector-list-price">
