@@ -68,10 +68,10 @@ module.exports = (grunt) ->
 					'build/<%= relativePath %>/style/product-listing-mock.css': 'src/style/product-listing-mock.less'
 
 		useminPrepare:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html', 'build/<%= relativePath %>/modal.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
 
 		usemin:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html', 'build/<%= relativePath %>/modal.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
 
 		karma:
 			options:
@@ -119,8 +119,8 @@ module.exports = (grunt) ->
 			all:
 				files:
 					'build/<%= relativePath %>/sku-selector.html': ['build/<%= relativePath %>/sku-selector.html']
-					'build/<%= relativePath %>/templates/button-bind-modal-api-response.html': ['build/<%= relativePath %>/templates/modal-api-response.html']
 					'build/<%= relativePath %>/spec/fixtures/sku-selector.html': ['build/<%= relativePath %>/spec/fixtures/sku-selector.html']
+					'build/templates/button-bind-modal-api-response.html': ['build/templates/button-bind-modal-api-response.html']
 
 				options:
 					replacements: [
@@ -147,7 +147,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'default', ['dev-watch']
 
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'copy:main', 'coffee', 'less', 'concat', 'string-replace:all']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'string-replace:all', 'coffee', 'less', 'concat']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files

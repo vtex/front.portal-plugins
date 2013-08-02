@@ -12,7 +12,6 @@
 		"Porte": ["Pequeno", "Grande"]
 	},
     "dimensionsInputType": {
-        "Fase da Vida": "Combo"
     },
 	"skus": [
 		{

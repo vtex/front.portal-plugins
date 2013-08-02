@@ -1,240 +1,168 @@
-(($, window, document) ->
+$ = window.jQuery
 
-  pluginName = 'vtexMinicart'
-  defaults = {
-    timeoutToHide: null
-    cartData: null
-    $template: null
-  }
+#
+# Class
+#
+class Minicart
+	constructor: (context, options) ->
+		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
 
-  class vtexMinicart
-    constructor: (@element, options) ->
-      @options = $.extend {}, defaults, options
+		@options = $.extend {}, $.fn.minicart.defaults, options
+		@context = context
+		@hoverContext = @context.add('.show-minicart-on-hover')
+		@cartData = {}
 
-      @_defaults = defaults
-      @_name = pluginName
+		@base = $('.minicartListBase').remove()
 
-      @init()
+		@bindEvents()
 
-    init: ->
-      self = this
+		@updateData().success @updateCart
 
-      self.options.$template = $ """
-      <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded" style="display: none;">
-        <div class="vtexsc-bt"></div>
-        <div class="vtexsc-center">
-            <div class="vtexsc-wrap">
-                <table class="vtexsc-productList">
-                    <thead style="display: none;">
-                        <tr>
-                            <th class="cartSkuName" colspan="2">Produto</th>
-                            <th class="cartSkuPrice">Preço</th>
-                            <th class="cartSkuQuantity">Quantidade</th>
-                            <th class="cartSkuActions">Excluir</th>
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-            </div>
-            <div class="cartFooter clearfix">
-                <div class="cartTotal">
-                    Total\
-                    <span class="vtexsc-totalCart">
-                        <span class="vtexsc-text">R$ 0</span>
-                    </span>
-                </div>
-                <a href="/checkout/#/orderform" class="cartCheckout"></a>
-            </div>
-        </div>
-        <div class="vtexsc-bb"></div>        
-      </div>
-      """
+		$(window).trigger "minicartLoaded"
 
-      $(self.element).after self.options.$template
+	getOrderFormURL: =>
+		"/api/checkout/pub/orderForm/"
 
-      $(self.options.$template)
-      .mouseover ->
-        $(window).trigger "miniCartMouseOver"
-      .mouseout ->
-        $(window).trigger "miniCartMouseOut"
+	getOrderFormUpdateURL: =>
+		@getOrderFormURL() + @cartData.orderFormId + "/items/update/"
 
-      $(window).on "miniCartMouseOver", ->
-        if self.options.cartData?.items.length > 0
-          $(".vtexsc-cart").slideDown()
-          clearTimeout self.options.timeoutToHide
+	bindEvents: =>
+		@hoverContext.on 'mouseover', ->
+			$(window).trigger "minicartMouseOver"
 
-      $(window).on "miniCartMouseOut", ->
-        clearTimeout self.options.timeoutToHide
-        self.options.timeoutToHide = setTimeout ->
-          $(".vtexsc-cart").stop(true, true).slideUp()
-        , 800
+		@hoverContext.on 'mouseout', ->
+			$(window).trigger "minicartMouseOut"
 
-      $(window).on "cartUpdated", (event, cartData, show) ->
-        if cartData?.items? and cartData.items.length is 0
-          $(".vtexsc-cart").slideUp()
-          return
-        if show
-          $(".vtexsc-cart").slideDown()
-          self.options.timeoutToHide = setTimeout ->
-            $(".vtexsc-cart").stop(true, true).slideUp()
-          , 3000
+		$(window).on "minicartMouseOver", =>
+			if @cartData.items?.length > 0
+				$(".vtexsc-cart").slideDown()
+				clearTimeout @timeoutToHide
 
-      $(window).on 'productAddedToCart', ->
-        promiseAdd = self.getData()
-        promiseAdd.success (data) ->
-          self.updateItems data
-          self.changeCartValues data
-          $(window).trigger "cartUpdated", [null, true]
+		$(window).on "minicartMouseOut", =>
+			clearTimeout @timeoutToHide
+			@timeoutToHide = setTimeout ->
+				$(".vtexsc-cart").stop(true, true).slideUp()
+			, 800
 
-      promise = @getData()
-      promise.success (data) ->
-        self.insertCartItems data
-        self.changeCartValues data
+		$(window).on "cartUpdated", (event, cartData, show) =>
+			if cartData?.items?.length is 0
+				$(".vtexsc-cart").slideUp()
+			else if show
+				$(".vtexsc-cart").slideDown()
+				@timeoutToHide = setTimeout ->
+					$(".vtexsc-cart").stop(true, true).slideUp()
+				, 3000
+
+		$(window).on 'productAddedToCart', =>
+			@updateData().success =>
+				@updateCart()
+				$(window).trigger "cartUpdated", [null, true]
+
+	updateData: =>
+		$.ajax({
+			url: @getOrderFormURL()
+			data: expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+			dataType: "json"
+			contentType: "application/json; charset=utf-8"
+			type: "POST"
+		})
+		.done (data) =>
+			@cartData = data
+		.fail (jqXHR, textStatus, errorThrown) ->
+			# console.log "Error Message: " + textStatus
+			# console.log "HTTP Error: " + errorThrown
+
+	updateCart: () =>
+		@updateValues()
+		@updateItems()
+
+	updateValues: =>
+		total = 0
+		for subtotal in @cartData.totalizers when subtotal.id in ['Items', 'Discounts']
+			total += subtotal.value
+
+		$(".vtexsc-text", @context).text(@getValueLabel(total))
+
+	updateItems: =>
+		container = $(".minicartListContainer", @context).empty()
+		for item, i in @cartData.items
+			current = @base.clone()
+
+			current.find('.cartSkuImage a').attr('href', item.detailUrl)
+			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
+			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
+			current.find('.cartSkuName .availability').text(@getAvailabilityMessage(item)).addClass("availability-#{@getAvailabilityCode(item)}")
+			current.find('.cartSkuPrice .bestPrice').text(@getValueLabel(item.sellingPrice or item.price))
+			current.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
+
+			current.appendTo(container)
+
+		$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
+			@deleteItem(this)
+
+	deleteItem: (item) =>
+		$(item).parent().find('.vtexsc-overlay').show()
+
+		data =
+			expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+			orderItems: [
+				index: $(item).data("index")
+				quantity: 0
+			]
+
+		$.ajax({
+			url: @getOrderFormUpdateURL()
+			data: data
+			dataType: "json"
+			contentType: "application/json; charset=utf-8"
+			type: "POST"
+		})
+		.success (data) =>
+				@cartData = data
+				@updateCart(data)
+				$(window).trigger "cartUpdated", [data]
+		.done ->
+				$(item).parent().find('.vtexsc-overlay').hide()
+		.fail (jqXHR, textStatus, errorThrown) ->
+				# console.log "Error Message: " + textStatus
+				# console.log "HTTP Error: " + errorThrown
+
+	getValueLabel: (value) =>
+		@options.valuePrefix + _.formatCurrency(value/100, @options) + @options.valueSufix
+
+	getAvailabilityCode: (item) =>
+		item.availability or "available"
+
+	getAvailabilityMessage: (item) =>
+		@options.availabilityMessages[@getAvailabilityCode(item)]
 
 
-    getData: ->
-      self = this
-      
-      promise = $.ajax {
-        url: "/api/checkout/pub/orderForm/"
-        data: JSON.stringify(expectedOrderFormSections: ["items", "paymentData", "totalizers"])
-        dataType: "json"
-        contentType: "application/json; charset=utf-8"
-        type: "POST"
-      }
+#
+# Plugin
+#
+$.fn.minicart = (options) ->
+	return this if @hasClass("plugin_minicart")
+	@addClass("plugin_minicart")
+	new Minicart(this, options)
+	return this
 
-      promise.done (data) ->
-        self.options.cartData = data
-      
-      promise.fail (jqXHR, textStatus, errorThrown) ->
-        # console.log "Error Message: " + textStatus
-        # console.log "HTTP Error: " + errorThrown
+$.fn.minicart.defaults =
+	cartData: {}
+	valuePrefix: "R$ "
+	valueSufix: ""
+	availabilityMessages:
+		"available": ""
+		"unavailableItemFulfillment": "Este item não está disponível no momento."
+		"withoutStock": "Este item não está disponível no momento."
+		"cannotBeDelivered": "Este item não está disponível no momento."
+		"withoutPrice": "Este item não está disponível no momento."
+		"withoutPriceRnB": "Este item não está disponível no momento."
+		"nullPrice": "Este item não está disponível no momento."
 
-      promise
 
-    insertCartItems: (data) ->
-      self = this
-      
-      if data
-        total = 0
-
-        for subtotal in data.totalizers
-          total += subtotal.value if subtotal.id is 'Items'
-
-        $('.vtexsc-text', self.options.$template).text 'R$' + self.formatCurrency(total)
-        
-        self.updateItems data
-        
-    deleteItem: (item) ->
-      self = this
-
-      $(item).parent().find('.vtexsc-overlay').show()
-
-      data = JSON.stringify(
-        expectedOrderFormSections: ["items", "paymentData", "totalizers"]
-        orderItems: [
-          index: $(item).data("index")
-          quantity: 0
-        ]
-      )
-
-      promise = $.ajax {
-        url: "/api/checkout/pub/orderForm/" + self.options.cartData.orderFormId + "/items/update/"
-        data: data
-        dataType: "json"
-        contentType: "application/json; charset=utf-8"
-        type: "POST"
-      }
-
-      promise.success (data) ->
-        self.options.cartData = data
-        self.changeCartValues data
-        self.updateItems data
-        $(window).trigger "cartUpdated", [data]
-
-      promise.done ->
-        $(item).parent().find('.vtexsc-overlay').hide()
-
-      promise.fail (jqXHR, textStatus, errorThrown) ->
-        # console.log "Error Message: " + textStatus
-        # console.log "HTTP Error: " + errorThrown
-
-    updateItems: (data) ->
-      self = this
-      $template = self.options.$template
-
-      if data
-        items = ''
-
-        $(".vtexsc-productList tbody", $template).html ""
-
-        for item, i in data.items
-          item = """
-          <tr>
-              <td class="cartSkuImage">
-                  <a class="sku-imagem" href="#{item.detailUrl}"><img height="71" width="71" alt="#{item.name}" src="#{item.imageUrl}" /></a>
-              </td>
-              <td class="cartSkuName">
-                  <h4><a href="#{item.detailUrl}">"#{item.name}"</a><br /></h4>
-              </td>
-              <td class="cartSkuPrice">
-                  <div class="cartSkuUnitPrice">
-                      <span class="bestPrice">R$ #{self.formatCurrency(item.price)}</span>
-                  </div>
-              </td>
-              <td class="cartSkuQuantity">
-                  <div class="cartSkuQtt">
-                      <span class="cartSkuQttTxt"><span class="vtexsc-skuQtt">#{item.quantity}</span></span>
-                  </div>
-              </td>
-              <td class="cartSkuActions">
-                  <span class="cartSkuRemove" data-index="#{i}">
-                      <a href="javascript:void(0);" class="text" style="display: none;">excluir</a>
-                  </span>
-                  <div class="vtexsc-overlay" style="display: none;"></div>
-              </td>
-          </tr>
-          """
-          items += item
-
-        $(".vtexsc-productList tbody", $template).html items
-
-        $(".vtexsc-productList .cartSkuRemove", $template).click ->
-          self.deleteItem(this)
-
-    changeCartValues: (data) ->
-      self = this;
-
-      if data
-        total = 0
-        for subtotal in data.totalizers
-          total += subtotal.value if subtotal.id is 'Items'
-
-        $(".vtexsc-text", self.options.$template).text "R$ " + self.formatCurrency total
-
-    formatCurrency: (value) ->
-      if value is '' or not value? or isNaN value
-        num = 0.00
-      else
-        num = value / 100
-      parseFloat(num).toFixed(2).replace('.', ',').toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, '$1.')
-
-    showMinicart: (value) ->
-      promise = @getData()
-      promise.done ->
-        self.updateItems data
-        $(".vtexsc-cart").slideDown()
-        clearTimeout @options.timeoutToHide
-        @options.timeoutToHide = setTimeout ->
-          $(".vtexsc-cart").slideUp()
-        , 3000
-  
-    $.fn[pluginName] = (options) ->
-      @each ->
-        if !$.data(this, "plugin_#{pluginName}")
-          $.data(@, "plugin_#{pluginName}", new vtexMinicart(@, options))
-
-)( jQuery, window, document )
-
-$ -> $('.portal-minicart-ref').vtexMinicart()
-# $ -> $('#vtex-minicart').vtexMinicart()
+#
+# EXPORTS
+#
+window.vtex or= {}
+vtex.portalPlugins or= {}
+vtex.portalPlugins.Minicart = Minicart
