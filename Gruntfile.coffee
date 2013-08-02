@@ -124,6 +124,7 @@ module.exports = (grunt) ->
 			all:
 				files:
 					'build/<%= relativePath %>/sku-selector.html': ['build/<%= relativePath %>/sku-selector.html']
+					'build/<%= relativePath %>/minicart.html': ['build/<%= relativePath %>/minicart.html']
 					'build/<%= relativePath %>/spec/fixtures/sku-selector.html': ['build/<%= relativePath %>/spec/fixtures/sku-selector.html']
 					'build/templates/button-bind-modal-api-response.html': ['build/templates/button-bind-modal-api-response.html']
 
@@ -134,6 +135,9 @@ module.exports = (grunt) ->
 						,
 							pattern: '<!-- skuSelectorMock -->'
 							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
+						,
+							pattern: '<!-- minicartTemplate -->'
+							replacement: grunt.file.read('src/templates/minicart-and-totalizers.html')
 					]
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
