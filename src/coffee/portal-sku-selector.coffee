@@ -72,11 +72,11 @@ $.skuSelector.getSkusForProduct = (productId) ->
 	# console.log 'getSkusForProduct', productId
 	$.get '/api/catalog_system/pub/products/variations/' + productId
 
-$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
-	window.location.protocol + '//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
+$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, sc = 1, redirect = true) ->
+	window.location.protocol + '//' + window.location.host + "/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{sc}&redirect=#{redirect}"
 
 # Creates the DOM of the Sku Selector, with the appropriate event bindings
-$.skuSelector.createSkuSelector = (productId, name, dimensions, dimensionsMap, skus, options, $el) =>
+$.skuSelector.createSkuSelector = (productId, name, salesChannel, dimensions, dimensionsMap, skus, options, $el) =>
 	# Create selected dimensions map and functions
 	selectedDimensionsMap = createDimensionsMap(dimensions)
 			
@@ -108,13 +108,13 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, dimensionsMap, s
 		$('.skuselector-buy-btn', $template).hide()
 	else if available.length is 1
 		selectedSkuObj = available[0]
-		updatePrice(selectedSkuObj, options, $template)
+		updatePrice(selectedSkuObj, salesChannel, options, $template)
 
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
 		sku = selectedSku(skus, selectedDimensionsMap)
 		if sku
-			return options.addSkuToCart(sku.sku, $el)
+			return options.addSkuToCart(sku.sku, salesChannel, $el)
 		else
 			errorMessage = 'Por favor, escolha: ' + findUndefinedDimensions(selectedDimensionsMap)[0]
 			options.selectors.warning($template).show().text(errorMessage)
@@ -157,7 +157,7 @@ $.skuSelector.createSkuSelector = (productId, name, dimensions, dimensionsMap, s
 			for dimension in undefinedDimensions
 				selectDimension(options.selectors.itemDimensionInput(dimension, $template))
 
-			updatePrice(selectedSkuObj, options, $template)
+			updatePrice(selectedSkuObj, salesChannel, options, $template)
 
 	# Binds handlers
 	options.selectors.buyButton($template).click(buyButtonHandler)
@@ -191,7 +191,7 @@ selectDimension = (dimArray) ->
 	el = (if available.length > 0 then available else dimArray).filter('input:enabled')[0]
 	$(el).attr('checked', 'checked').change() if dimArray.length > 0
 
-updatePrice = (sku, options, template) ->
+updatePrice = (sku, salesChannel, options, template) ->
 	if sku and sku.available
 		listPrice = formatCurrency sku.listPrice
 		price = formatCurrency sku.bestPrice
@@ -199,7 +199,7 @@ updatePrice = (sku, options, template) ->
 		installmentValue = formatCurrency sku.installmentsValue
 
 		# Modifica href do botão comprar
-		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId), template)
+		options.updateBuyButtonURL($.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, salesChannel), template)
 		options.selectors.price(template).show()
 		options.selectors.buyButton(template).show()
 		options.selectors.listPriceValue(template).text('R$ ' + listPrice)

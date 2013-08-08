@@ -3,19 +3,19 @@ skuVariationsDoneHandler = ($el, options, json) ->
 	$el.removeClass('sku-selector-loading')
 	# If this item doesn't have variations, add it to the cart directly.
 	if json?.dimensions?.length == 0
-		return options.addSkuToCart json.skus[0].sku
+		return options.addSkuToCart json.skus[0].sku, json.salesChannel
 	else
 		# Render the sku selector, passing the options with templates
-		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.dimensions, json.dimensionsMap, json.skus, options, $el)
+		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.salesChannel, json.dimensions, json.dimensionsMap, json.skus, options, $el)
 		$el.html(skuSelector)
 		$.skuSelectorPopup.showPopup()
 
 # Adds a given sku to the cart. On success, shows the mini-cart
 # On failure, redirects the user to the cart.
-addSkuToCart = (sku) ->
+addSkuToCart = (sku, salesChannel) ->
 	$.skuSelectorPopup.hidePopup()
 	# console.log 'Adding SKU to cart:', sku
-	promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, false)
+	promise = $.get $.skuSelector.getAddUrlForSku(sku, 1, 1, salesChannel, false)
 	promise.done (data) ->
 		$(window).trigger 'productAddedToCart'
 		# console.log 'Item adicionado com sucesso', sku, data

@@ -2,7 +2,7 @@ skuVariationsDoneHandler = ($el, options, json) ->
 	$el.removeClass('sku-selector-loading')
 	unless json.dimensions.length is 0 and json.skus[0].available is false
 		# Render the sku selector, passing the options with templates
-		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.dimensions, json.dimensionsMap, json.skus, options, $el)
+		skuSelector = $.skuSelector.createSkuSelector(json.productId, json.name, json.salesChannel, json.dimensions, json.dimensionsMap, json.skus, options, $el)
 		$el.html(skuSelector)
 		$el.fadeIn()
 		$(window).trigger('skuSelectorReady')
