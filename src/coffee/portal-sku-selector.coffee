@@ -79,6 +79,7 @@ class SkuSelector
 			dimension.selected = sku.dimensions[dimension.name]
 
 	findSelectionStatus: (selection) =>
+		foundUnavailable = false
 		for sku in @skus
 			if @skuMatches(sku, selection)
 				if sku.available
