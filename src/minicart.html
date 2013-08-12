@@ -14,7 +14,86 @@
 </head>
 <body>
 
-<!-- minicartTemplate -->
+<div class="carrinhoCompras show-minicart-on-hover">
+  <a href="/Site/Carrinho.aspx" title="Concluir Compra">Minhas Compras</a>
+
+  <div class="portal-totalizers-ref amount-items-in-cart amount-items-in-cart-loading">
+    <div class="cartInfoWrapper">
+      <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
+      <ul class="cart-info">
+        <li class="amount-products">
+          <span id="MostraTextoXml2">Total de Produtos:</span> <em class="amount-products-em">0</em>
+        </li>
+        <li class="amount-items">
+          <span id="MostraTextoXml3">Itens:</span> <em class="amount-items-em">0</em>
+        </li>
+        <li class="amount-kits">
+          <span id="MostraTextoXml4">Total de Kits:</span> <em class="amount-kits-em">0</em>
+        </li>
+        <li class="total-cart">
+          <span id="MostraTextoXml5">Valor Total:</span> <em class="total-cart-em">R$ 0,00</em>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="portal-minicart-ref">
+    <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded">
+      <div class="vtexsc-bt"></div>
+      <div class="vtexsc-center">
+        <div class="vtexsc-wrap">
+          <table class="vtexsc-productList">
+            <thead>
+            <tr>
+              <th class="cartSkuName" colspan="2">Produto</th>
+              <th class="cartSkuPrice">Preço</th>
+              <th class="cartSkuQuantity">Quantidade</th>
+              <th class="cartSkuActions">Excluir</th>
+            </tr>
+            </thead>
+            <tbody class="minicartListContainer">
+            <tr class="minicartListBase">
+              <td class="cartSkuImage">
+                <a class="sku-imagem" href="#{item.detailUrl}"><img height="71" width="71" alt="#{item.name}" src="#{item.imageUrl}" /></a>
+              </td>
+              <td class="cartSkuName">
+                <h4><a href="#{item.detailUrl}">"#{item.name}"</a></h4>
+                <p class="availability"></p>
+              </td>
+              <td class="cartSkuPrice">
+                <div class="cartSkuUnitPrice">
+                  <span class="bestPrice">R$ #{formatCurrency(item.price / 100)}</span>
+                </div>
+              </td>
+              <td class="cartSkuQuantity">
+                <div class="cartSkuQtt">
+                  <span class="cartSkuQttTxt"><span class="vtexsc-skuQtt">#{item.quantity}</span></span>
+                </div>
+              </td>
+              <td class="cartSkuActions">
+                                    <span class="cartSkuRemove" data-index="#{i}">
+                                            <a href="javascript:void(0);" class="text" style="display: none;">excluir</a>
+                                    </span>
+                <div class="vtexsc-overlay" style="display: none;"></div>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="cartFooter clearfix">
+          <div class="cartTotal">
+            Total
+                        <span class="vtexsc-totalCart"><span class="vtexsc-text">
+                            R$ 0
+                        </span></span>
+          </div>
+          <a href="/checkout/#/orderform" class="cartCheckout"></a>
+        </div>
+      </div>
+      <div class="vtexsc-bb"></div>
+    </div>
+  </div>
+</div>
 
 <script id="vtex-totalizers" type="text/javascript" src="js/portal-totalizers.js"></script>
 <script id="vtex-minicart" type="text/javascript" src="js/portal-minicart.js"></script>

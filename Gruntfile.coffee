@@ -123,21 +123,17 @@ module.exports = (grunt) ->
 		'string-replace':
 			all:
 				files:
-					'build/<%= relativePath %>/spec/fixtures/sku-selector.html': ['build/<%= relativePath %>/spec/fixtures/sku-selector.html']
-					'build/templates/button-bind-modal-api-response.html': ['build/templates/button-bind-modal-api-response.html']
+					'build/button-bind-modal-api-response.html': ['build/button-bind-modal-api-response.html']
 
 				options:
 					replacements: [
 							pattern: '<!-- skuSelectorMock -->'
 							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
-						,
-							pattern: '<!-- minicartTemplate -->'
-							replacement: grunt.file.read('src/templates/minicart-and-totalizers.html')
 					]
 
 		shell:
 			dust:
-				command: 'dustc src/templates/sku-selector.dust src/templates/sku-selector.js --name="sku-selector"'
+				command: 'dustc src/templates/sku-selector.dust build/templates/sku-selector.js --name="sku-selector"'
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -156,7 +152,7 @@ module.exports = (grunt) ->
 	grunt.registerTask 'default', ['dev-watch']
 
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'shell:dust', 'copy:main', 'string-replace:all', 'coffee', 'less', 'concat']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'shell:dust', 'string-replace:all', 'coffee', 'less', 'concat']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files
