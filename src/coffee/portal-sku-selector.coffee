@@ -101,10 +101,9 @@ class SkuSelectorRenderer
 		@context = context
 		@options = options
 
-		@template = Liquid.parse(@context.html())
-
 		#SkuSelector
 		@data = data
+		@data.image = @data.skus[0].image
 
 		# Build selectors from given select strings.
 		@select = _.mapObj options.selectors, (key, val) =>
@@ -122,7 +121,9 @@ class SkuSelectorRenderer
 
 	# Renders the DOM elements of the Sku Selector
 	render: =>
-		@context.html(@template.render(@data))
+		dust.render "sku-selector", @data, (err, out) =>
+			console.log err if err
+			@context.html out
 
 	update: =>
 		originalSelection = (dim.selected for dim in @data.dimensions)
@@ -252,8 +253,10 @@ class SkuSelectorRenderer
 
 	showPriceRange: (prices) =>
 		$priceRange = @select.priceRange().show()
-		$priceRange.find('.lowPrice').text("R$ #{prices[0]}")
-		$priceRange.find('.highPrice').text("R$ #{prices[prices.length-1]}")
+		min = _.formatCurrency prices[0]/100
+		max = _.formatCurrency prices[prices.length-1]/100
+		$priceRange.find('.lowPrice').text(" R$ #{min} ")
+		$priceRange.find('.highPrice').text(" R$ #{max} ")
 
 	showWarnUnavailable: (sku) =>
 		@select.warnUnavailable().show().find('input#notifymeSkuId').val(sku)
@@ -347,9 +350,9 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 #
 # LIQUID HELPERS
 #
-Liquid.Template.registerFilter
-	sanitize: (text) -> _.sanitize text
-	spacesToHyphens: (text) -> _.spacesToHyphens text
+_.extend dust.filters,
+	sanitize: (value) -> _.sanitize value
+	spacesToHyphens: (value) -> _.spacesToHyphens value
 
 #
 # PLUGIN DEFAULTS
