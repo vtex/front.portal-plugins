@@ -131,9 +131,10 @@ module.exports = (grunt) ->
 							replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
 					]
 
-		shell:
-			dust:
-				command: 'dustc src/templates/sku-selector.dust build/templates/sku-selector.js --name="sku-selector"'
+		dustjs:
+			compile:
+				files:
+					'build/templates/sku-selector.js': 'src/templates/sku-selector.dust'
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
@@ -147,12 +148,12 @@ module.exports = (grunt) ->
 	grunt.loadNpmTasks 'grunt-usemin'
 	grunt.loadNpmTasks 'grunt-string-replace'
 	grunt.loadNpmTasks 'grunt-karma'
-	grunt.loadNpmTasks 'grunt-shell'
+	grunt.loadNpmTasks 'grunt-dustjs'
 
 	grunt.registerTask 'default', ['dev-watch']
 
 	# Dev
-	grunt.registerTask 'dev', ['clean', 'copy:main', 'shell:dust', 'string-replace:all', 'coffee', 'less', 'concat']
+	grunt.registerTask 'dev', ['clean', 'copy:main', 'dustjs', 'string-replace:all', 'coffee', 'less', 'concat']
 	grunt.registerTask 'dev-watch', ['dev', 'connect', 'remote', 'watch:dev']
 
 	# Prod - minifies files
