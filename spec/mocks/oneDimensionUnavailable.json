@@ -1,7 +1,9 @@
 {"productId": 2479, "name": "Ração Club Performance Adult - Royal Canin", "salesChannel": "1", "dimensions": ["Peso"],
 	"dimensionsMap": {
-	"Peso": ["3 Kg", "15 Kg"]
-}, "skus": [
+    "Peso": ["3 Kg", "15 Kg"]
+  },
+  "salesChannel": 2,
+  "skus": [
 	{
 		"sku": 2480,
 		"dimensions": {

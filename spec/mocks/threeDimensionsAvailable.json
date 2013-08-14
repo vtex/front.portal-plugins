@@ -16,6 +16,7 @@
         "Volume": "combo",
         "Quantidade": "radio"
     },
+  "salesChannel": 3,
 	"skus": [
 		{
 			"sku": 4034,
