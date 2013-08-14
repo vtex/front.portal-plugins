@@ -50,6 +50,23 @@
 			"image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170249-71-71/7891268200515.jpg",
 			"seller": "MeuAmigoPet2",
 			"sellerId": "2"
-		}
+		},
+    {
+      "sku": 5195,
+      "dimensions": {
+        "Peso": "unico",
+        "Volume": "1 mL",
+        "Quantidade": "1 bisnaga"
+      },
+      "available": true,
+      "listPrice": 5014,
+      "bestPrice": 5014,
+      "installments": 2,
+      "installmentsValue": 2507,
+      "installmentsInsterestRate": 0,
+      "image": "http://meuamigopet.vtexlocal.com.br/arquivos/ids/170249-71-71/7891268200515.jpg",
+      "seller": "MeuAmigoPet2",
+      "sellerId": "2"
+    }
 	]
 }
