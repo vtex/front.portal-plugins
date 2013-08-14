@@ -11,6 +11,7 @@ class SkuSelector
 	constructor: (productData) ->
 		@productId = productData.productId
 		@name = productData.name
+		@salesChannel = productData.salesChannel
 		@skus = productData.skus
 
 		i = 0
@@ -228,13 +229,13 @@ class SkuSelectorRenderer
 		@select.warnUnavailable().filter(':visible').hide()
 
 	showBuyButton: (sku) =>
-		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId)).show()
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel)).show()
 
 	showConfirmButton: (sku) =>
 		dimensionsText = $.map(sku.dimensions, (k, v) -> k).join(', ')
 
 		@select.confirmButton()
-		.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId))
+		.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel))
 		.show()
 		.find('.skuselector-confirm-dimensions').text(dimensionsText)
 
@@ -392,8 +393,8 @@ $.skuSelector = {}
 $.skuSelector.getSkusForProduct = (productId) ->
 	$.get '/api/catalog_system/pub/products/variations/' + productId
 
-$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, redirect = true) ->
-	"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&redirect=#{redirect}"
+$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
+	"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
 
 
 #
