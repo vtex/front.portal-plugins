@@ -266,6 +266,11 @@ class SkuSelectorRenderer
 # PLUGIN ENTRY POINT
 #
 $.fn.skuSelector = (productData, jsOptions = {}) ->
+	if this.length > 1
+		throw new Error('Sku Selector should be activated on only one element! To activate many sku selectors, activate it for each element.')
+	else if this.length == 0
+		throw new Error('Sku Selector was activated on 0 elements')
+
 	this.addClass('sku-selector-loading')
 	context = this
 
