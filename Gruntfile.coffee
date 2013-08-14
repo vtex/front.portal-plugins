@@ -134,7 +134,7 @@ module.exports = (grunt) ->
 		dustjs:
 			compile:
 				files:
-					'build/templates/sku-selector.js': 'src/templates/sku-selector.dust'
+					'build/templates/template-sku-selector.js': 'src/templates/sku-selector.dust'
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
