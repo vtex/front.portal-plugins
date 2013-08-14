@@ -11,7 +11,6 @@
     <script src="/lib/jquery-1.8.3.min.js"></script>
     <script src="/lib/vtex-utils.js"></script>
     <script src="/lib/dust-core-2.0.0.min.js"></script>
-    <script src="/templates/template-sku-selector.js"></script>
 
     <style type="text/css">
         .disabled {
@@ -21,13 +20,23 @@
 
     <div class="portal-sku-selector-ref"></div>
 
+    <div class="portal-sku-selector-ref2" style="float: right;"></div>
 
+    <!-- build:js js/portal-sku-selector-with-template.min.js -->
+    <script src="/templates/template-sku-selector.js"></script>
     <script type="text/javascript" src="js/portal-sku-selector.js"></script>
+    <!-- -->
 
     <script type="text/javascript">
         var mocks = ['/spec/mocks/twoDimensions.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json', '/spec/mocks/oneDimensionUnavailable.json', '/spec/mocks/manyDimensionsCombo.json'];
+
         $.getJSON(mocks[1]).done(function(data){
-            $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true});})
+          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true});
+        });
+
+        $.getJSON(mocks[2]).done(function(data){
+          $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true});
+        });
     </script>
 
 </body>

@@ -314,9 +314,9 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 		selectableSkus = selector.findSelectableSkus()
 		# Trigger event for interested scripts
-		$this.trigger 'dimensionChanged', [dimensionName, dimensionValue]
+		$this.trigger 'vtex.sku.dimensionChanged', [dimensionName, dimensionValue]
 		if selectableSkus.length == 1
-			$this.trigger 'skuSelected', [selectableSkus[0]]
+			$this.trigger 'vtex.sku.selected', [selectableSkus[0]]
 
 
 	# Handles submission in the warn unavailable form
@@ -341,7 +341,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	#	if options.selectOnOpening or selector.findSelectedSku()
 	#		renderer.selectDimension(selector.dimensions[0])
 
-	$(window).trigger('skuSelectorReady')
+	$(window).trigger('vtex.sku.ready')
 	this.removeClass('sku-selector-loading')
 
 	# Chaining
@@ -409,7 +409,7 @@ vtex.portalPlugins.SkuSelectorRenderer = SkuSelectorRenderer
 #
 # EVENTS
 #
-$(document).on "skuSelected", (evt, sku) ->
+$(document).on "vtex.sku.selected", (evt, sku) ->
 	window.FireSkuChangeImage?(sku.sku)
 	#window.FireSkuDataReceived?(sku.sku)
 	window.FireSkuSelectionChanged?(sku.sku)

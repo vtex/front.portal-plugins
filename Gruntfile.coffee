@@ -68,10 +68,10 @@ module.exports = (grunt) ->
 					'build/<%= relativePath %>/style/product-listing-mock.css': 'src/style/product-listing-mock.less'
 
 		useminPrepare:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/sku-selector.html']
 
 		usemin:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/popup.html', 'build/<%= relativePath %>/product.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/sku-selector.html']
 
 		karma:
 			options:
