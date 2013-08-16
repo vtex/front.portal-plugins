@@ -236,7 +236,7 @@ class SkuSelectorRenderer
 		@context.find('.vtexsm-prodTitle').hide()
 
 	showBuyButton: (sku) =>
-		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel)).show()
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel)).show().parent().show()
 
 	showConfirmButton: (sku) =>
 		dimensionsText = $.map(sku.dimensions, (k, v) -> k).join(', ')
