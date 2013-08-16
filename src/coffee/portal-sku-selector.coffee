@@ -349,6 +349,11 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	if options.warnUnavailable
 		renderer.select.warnUnavailable().find('form')
 		.on 'submit', warnUnavailableSubmitHandler
+		renderer.select.warnUnavailable().find('.notifyme-button-ok').on 'click', ->
+			if notifyMe?
+				notifyMe()
+			else
+				console.log 'Função notifyMe não definida'
 
 	# Select first dimension
 	#	if options.selectOnOpening or selector.findSelectedSku()
