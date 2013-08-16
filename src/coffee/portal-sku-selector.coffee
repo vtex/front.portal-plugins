@@ -149,18 +149,18 @@ class SkuSelectorRenderer
 		@hideWarnUnavailable()
 		@hidePriceRange()
 		@hidePrice()
+		@hideProductImage() unless @options.showProductImage
 
 		if selectableSkus.length == 1
 			selectedSku = selectableSkus[0]
 			if selectedSku.available
-				@showBuyButton(selectedSku)
-				@showPrice(selectedSku)
+				@showBuyButton(selectedSku) if @options.showBuyButton
+				@showPrice(selectedSku) if @options.showPrice
 			else
 				@context.trigger 'skuSelected', [selectedSku]
-				if @options.warnUnavailable
-					@showWarnUnavailable(selectedSku)
+				@showWarnUnavailable(selectedSku) if @options.warnUnavailable
 		else if selectableSkus.length > 0
-			@showPriceRange(@data.findPrices(selectableSkus))
+			@showPriceRange(@data.findPrices(selectableSkus)) if @options.showPrice
 
 	resetDimension: (dimension) =>
 		@select.itemDimensionInput(dimension.name)
@@ -227,6 +227,9 @@ class SkuSelectorRenderer
 	hideWarnUnavailable: =>
 		@select.warning().hide()
 		@select.warnUnavailable().filter(':visible').hide()
+
+	hideProductImage: =>
+		@context.find('.vtexsc-skuProductImage').hide()
 
 	showBuyButton: (sku) =>
 		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel)).show()
@@ -364,6 +367,9 @@ _.extend dust.filters,
 # PLUGIN DEFAULTS
 #
 $.fn.skuSelector.defaults =
+	showBuyButton: false
+	showProductImage: false
+	showPrice: false
 	warnUnavailable: false
 	selectOnOpening: false
 	confirmBuy: false
