@@ -69,7 +69,7 @@
     };
 
     Utils.prototype.intAsCurrency = function(value, options) {
-      return (options.currencySymbol || this._getCurrencySymbol()) + utils.formatCurrency(value / 100, options);
+      return ((options != null ? options.currencySymbol : void 0) || this._getCurrencySymbol()) + utils.formatCurrency(value / 100, options);
     };
 
     /*
@@ -407,17 +407,17 @@
 
     Utils.prototype._getCurrencySymbol = function() {
       var _ref, _ref1;
-      return ((_ref = window.vtex) != null ? (_ref1 = _ref.i18n) != null ? _ref1.getCurrencySymbol() : void 0 : void 0) || 'R$ ';
+      return ((_ref = window.vtex) != null ? (_ref1 = _ref.i18n) != null ? typeof _ref1.getCurrencySymbol === "function" ? _ref1.getCurrencySymbol() : void 0 : void 0 : void 0) || 'R$ ';
     };
 
     Utils.prototype._getDecimalSeparator = function() {
       var _ref, _ref1;
-      return ((_ref = window.vtex) != null ? (_ref1 = _ref.i18n) != null ? _ref1.getDecimalSeparator() : void 0 : void 0) || ',';
+      return ((_ref = window.vtex) != null ? (_ref1 = _ref.i18n) != null ? typeof _ref1.getDecimalSeparator === "function" ? _ref1.getDecimalSeparator() : void 0 : void 0 : void 0) || ',';
     };
 
     Utils.prototype._getThousandsSeparator = function() {
       var _ref, _ref1;
-      return ((_ref = window.vtex) != null ? (_ref1 = _ref.i18n) != null ? _ref1.getThousandsSeparator() : void 0 : void 0) || '.';
+      return ((_ref = window.vtex) != null ? (_ref1 = _ref.i18n) != null ? typeof _ref1.getThousandsSeparator === "function" ? _ref1.getThousandsSeparator() : void 0 : void 0 : void 0) || '.';
     };
 
     Utils.prototype._extend = function() {
