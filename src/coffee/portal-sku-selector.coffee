@@ -125,6 +125,8 @@ class SkuSelectorRenderer
 		dust.render "sku-selector", @data, (err, out) =>
 			console.log err if err
 			@context.html out
+			@hideProductImage() unless @options.showProductImage
+			@hideProductTitle() unless @options.showProductTitle
 
 	update: =>
 		originalSelection = (dim.selected for dim in @data.dimensions)
@@ -149,7 +151,6 @@ class SkuSelectorRenderer
 		@hideWarnUnavailable()
 		@hidePriceRange()
 		@hidePrice()
-		@hideProductImage() unless @options.showProductImage
 
 		if selectableSkus.length == 1
 			selectedSku = selectableSkus[0]
@@ -230,6 +231,9 @@ class SkuSelectorRenderer
 
 	hideProductImage: =>
 		@context.find('.vtexsc-skuProductImage').hide()
+
+	hideProductTitle: =>
+		@context.find('.vtexsm-prodTitle').hide()
 
 	showBuyButton: (sku) =>
 		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel)).show()
@@ -369,6 +373,7 @@ _.extend dust.filters,
 $.fn.skuSelector.defaults =
 	showBuyButton: false
 	showProductImage: false
+	showProductTitle: false
 	showPrice: false
 	warnUnavailable: false
 	selectOnOpening: false
