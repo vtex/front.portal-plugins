@@ -31,11 +31,11 @@
         var mocks = ['/spec/mocks/twoDimensions.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json', '/spec/mocks/oneDimensionUnavailable.json', '/spec/mocks/manyDimensionsCombo.json'];
 
         $.getJSON(mocks[1]).done(function(data){
-          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true});
+          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true});
         });
 
         $.getJSON(mocks[2]).done(function(data){
-          $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true});
+          $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true, showPrice: true});
         });
     </script>
 

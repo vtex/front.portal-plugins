@@ -61,6 +61,8 @@ class SkuSelector
 
 	findPrices: (skus = undefined) =>
 		skus or= @findSelectableSkus()
+		skus = (sku for sku in skus when sku.available)
+		console.log skus
 		$.map(skus, (sku) -> sku.bestPrice).sort( (a,b) -> return parseInt(a) - parseInt(b) )
 
 	searchDimensions: (fn = ()->true) =>
