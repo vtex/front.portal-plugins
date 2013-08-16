@@ -350,7 +350,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	if options.warnUnavailable
 		renderer.select.warnUnavailable().find('form')
-		.on 'submit', warnUnavailableSubmitHandler
+		.on('submit', warnUnavailableSubmitHandler)
 		.on 'submit', ->
 			if notifyMe?
 				notifyMe()
