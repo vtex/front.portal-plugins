@@ -36,7 +36,7 @@ openModalFromTemplate = (evt) ->
 	$(document).on "keyup", hideModalOnEscapeKey
 
 	$.get(templateURL).done (content) ->
-		$container.html $(content)
+		$container.find('.boxPopUp2-content').html $(content)
 
 $(document).ready(doBind)
 $(document).on('ajaxComplete', doBind)
