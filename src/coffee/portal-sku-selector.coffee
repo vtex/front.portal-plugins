@@ -62,7 +62,6 @@ class SkuSelector
 	findPrices: (skus = undefined) =>
 		skus or= @findSelectableSkus()
 		skus = (sku for sku in skus when sku.available)
-		console.log skus
 		$.map(skus, (sku) -> sku.bestPrice).sort( (a,b) -> return parseInt(a) - parseInt(b) )
 
 	searchDimensions: (fn = ()->true) =>
@@ -352,10 +351,10 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		renderer.select.warnUnavailable().find('form')
 		.on('submit', warnUnavailableSubmitHandler)
 		.on 'submit', ->
-			if notifyMe?
-				notifyMe()
+			if notifyMeClick?
+				notifyMeClick()
 			else
-				console.log 'Função notifyMe não definida'
+				console.log 'Função notifyMeClick não definida'
 
 	# Select first dimension
 	#	if options.selectOnOpening or selector.findSelectedSku()
