@@ -329,6 +329,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		$this.trigger 'vtex.sku.dimensionChanged', [dimensionName, dimensionValue]
 		if selectableSkus.length == 1
 			$this.trigger 'vtex.sku.selected', [selectableSkus[0], productData]
+			$this.trigger 'skuSelected', [selectableSkus[0], productData]
 
 
 	# Handles submission in the warn unavailable form
@@ -430,15 +431,3 @@ $(document).on "vtex.sku.selected", (evt, sku, productData) ->
 	#window.FireSkuDataReceived?(sku.sku)
 	window.FireSkuSelectionChanged?(sku.sku)
 
-	$('.buy-button').attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, productData.salesChannel))
-
-	listPrice = _.formatCurrency sku.listPrice/100
-	bestPrice = _.formatCurrency sku.bestPrice/100
-	installments = sku.installments
-	installmentValue = _.formatCurrency sku.installmentsValue/100
-
-	$('.skuListPrice').text("R$ #{listPrice}")
-	$('.skuBestPrice').text("R$ #{bestPrice}")
-	if installments > 1
-		$('.skuBestInstallmentValue').text("R$ #{installmentValue}")
-		$('.skuBestInstallmentNumber').text(installments)
