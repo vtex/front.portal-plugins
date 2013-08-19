@@ -53,8 +53,8 @@ class SkuSelector
 			selected: undefined
 			inputType: productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio"
 		} for dimensionName in productData.dimensions)
-		dim.radio = (dim.inputType == "radio") for dim in @dimensions
-		dim.combo = (dim.inputType == "combo") for dim in @dimensions
+		dim.isRadio = (dim.inputType == "radio") for dim in @dimensions
+		dim.isCombo = (dim.inputType == "combo") for dim in @dimensions
 
 		sku.values = (sku.dimensions[dim.name] for dim in @dimensions) for sku in @skus
 

@@ -12,38 +12,38 @@
       <ul class="topic {name|sanitize} {nameClass}">
         <li class="specification">{name}</li>
         <li class="select skuList group_{index} item-dimension-{name|sanitize}">
-          {#radio}
-          {#values}
-          <input type="radio"
-                 class="{nameClass} sku-selector skuespec_{.}"
-                 data-dimension="{name}"
-                 name="{name|sanitize}"
-                 value="{.}"
-                 specification="{.|sanitize}"
-                 id="{productId}_{name|sanitize}_{$idx}"
-                 class="skuselector-specification-label change-image">
-          <label for="{productId}_{name|sanitize}_{$idx}"
-                 class="dimension-{name|sanitize} espec_{index} skuespec_{.|sanitize} skuespec_{name|spacesToHyphens}_opcao_{.|spacesToHyphens}">
-            {.}
-          </label>
-          {/values}
-          {:else}
-          <select size="1"
-                  id="espec_{index}_opcao_0"
-                  name="espec_{index}"
-                  data-dimension="{name}"
-                  specification="{name|sanitize}"
-                  currentproductid="{productId}"
-                  class="sku-selector">
-            <option value=""></option>
+          {#isRadio}
             {#values}
-            <option class="skuopcao_{$idx}"
-                    value="{.}">
+            <input type="radio"
+                   class="{nameClass} sku-selector skuespec_{.}"
+                   data-dimension="{name}"
+                   name="{name|sanitize}"
+                   value="{.}"
+                   specification="{.|sanitize}"
+                   id="{productId}_{name|sanitize}_{$idx}"
+                   class="skuselector-specification-label change-image">
+            <label for="{productId}_{name|sanitize}_{$idx}"
+                   class="dimension-{name|sanitize} espec_{index} skuespec_{.|sanitize} skuespec_{name|spacesToHyphens}_opcao_{.|spacesToHyphens}">
               {.}
-            </option>
+            </label>
             {/values}
-          </select>
-          {/radio}
+          {:else}
+            <select size="1"
+                    id="espec_{index}_opcao_0"
+                    name="espec_{index}"
+                    data-dimension="{name}"
+                    specification="{name|sanitize}"
+                    currentproductid="{productId}"
+                    class="sku-selector">
+              <option value=""></option>
+              {#values}
+              <option class="skuopcao_{$idx}"
+                      value="{.}">
+                {.}
+              </option>
+              {/values}
+            </select>
+          {/isRadio}
         </li>
       </ul>
       {/dimensions}
