@@ -5,31 +5,23 @@
 
 $ = window.jQuery
 
-
 #
-# SHARED FUNCTIONS
+# SHARED STUFF
 #
+$.skuSelector =
+	getAddUrlForSku: (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
+		"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
 
-$.skuSelector = {}
-
-# Given a product id, return a promise for a request for the sku variations
-$.skuSelector.getSkusForProduct = (productId) ->
-	$.get '/api/catalog_system/pub/products/variations/' + productId
-
-$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
-	"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
-
-$.skuSelector.selectors =
-	listPriceValue: '.skuselector-list-price .value'
-	bestPriceValue: '.skuselector-best-price .value'
-	installment: '.skuselector-installment'
-	buyButton: '.skuselector-buy-btn'
-	confirmButton: '.skuselector-confirm-btn'
-	price: '.skuselector-price'
-	priceRange: '.skuselector-price-range'
-	warning: '.skuselector-warning'
-	warnUnavailable: '.skuselector-warn-unavailable'
-
+	selectors:
+		listPriceValue: '.skuselector-list-price .value'
+		bestPriceValue: '.skuselector-best-price .value'
+		installment: '.skuselector-installment'
+		buyButton: '.skuselector-buy-btn'
+		confirmButton: '.skuselector-confirm-btn'
+		price: '.skuselector-price'
+		priceRange: '.skuselector-price-range'
+		warning: '.skuselector-warning'
+		warnUnavailable: '.skuselector-warn-unavailable'
 
 #
 # CLASSES
