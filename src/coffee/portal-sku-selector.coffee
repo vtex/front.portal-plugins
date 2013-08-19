@@ -23,6 +23,15 @@ $.skuSelector =
 		warning: '.skuselector-warning'
 		warnUnavailable: '.skuselector-warn-unavailable'
 
+
+#
+# DUST FILTERS
+#
+_.extend dust.filters,
+	sanitize: (value) -> _.sanitize value
+	spacesToHyphens: (value) -> _.spacesToHyphens value
+
+
 #
 # CLASSES
 #
@@ -35,14 +44,14 @@ class SkuSelector
 
 		i = 0
 		@dimensions = ({
-		index: i++
-		name: dimensionName
-		nameClass: ""
-		values: productData.dimensionsMap[dimensionName]
-		availableValues: (true for value in productData.dimensionsMap[dimensionName])
-		validValues: (true for value in productData.dimensionsMap[dimensionName])
-		selected: undefined
-		inputType: productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio"
+			index: i++
+			name: dimensionName
+			nameClass: ""
+			values: productData.dimensionsMap[dimensionName]
+			availableValues: (true for value in productData.dimensionsMap[dimensionName])
+			validValues: (true for value in productData.dimensionsMap[dimensionName])
+			selected: undefined
+			inputType: productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio"
 		} for dimensionName in productData.dimensions)
 		dim.radio = (dim.inputType == "radio") for dim in @dimensions
 		dim.combo = (dim.inputType == "combo") for dim in @dimensions
@@ -129,7 +138,6 @@ class SkuSelectorRenderer
 		# Build selectors from given select strings.
 		@select = _.mapObj $.skuSelector.selectors, (key, val) =>
 			( => $(val, @context) )
-		console.log @select
 
 		@select.inputs = => $('input, select', @context)
 		@select.itemDimension = (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @context)
@@ -144,7 +152,7 @@ class SkuSelectorRenderer
 	# Renders the DOM elements of the Sku Selector
 	render: =>
 		dust.render "sku-selector", @data, (err, out) =>
-			console.log err if err
+			console.log "Sku Selector Dust error: ", err if err
 			@context.html out
 			@update()
 			@hideProductImage() unless @options.showProductImage
@@ -387,13 +395,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Chaining
 	return this
 
-
-#
-# LIQUID HELPERS
-#
-_.extend dust.filters,
-	sanitize: (value) -> _.sanitize value
-	spacesToHyphens: (value) -> _.spacesToHyphens value
 
 #
 # PLUGIN DEFAULTS
