@@ -190,7 +190,7 @@ class SkuSelectorRenderer
 				@showPrice(selectedSku) if @options.showPrice
 			else
 				@context.trigger 'skuSelected', [selectedSku]
-				@showWarnUnavailable(selectedSku) if @options.warnUnavailable
+				@showWarnUnavailable(selectedSku.sku) if @options.warnUnavailable
 		else if selectableSkus.length > 0
 			@showPriceRange(@data.findPrices(selectableSkus)) if @options.showPrice and @options.showPriceRange
 
