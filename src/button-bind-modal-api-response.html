@@ -1,8 +1,17 @@
-<!-- skuSelectorTemplate -->
+
+<div class="portal-sku-selector-ref"></div>
 
 <script type="text/javascript">
-    var mock = <!-- skuSelectorMock -->;
+  var options = {
+    showBuyButton: true,
+    showProductImage: true,
+    showProductTitle: true,
+    showPrice: true,
+    warnUnavailable: true
+  };
 
-    $('.sku-selector-container').skuSelector(mock);
+  var mock = <!-- skuSelectorMock -->;
+
+  $('.portal-sku-selector-ref').skuSelector(mock, options);
 
 </script>

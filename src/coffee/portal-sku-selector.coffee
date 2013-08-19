@@ -335,8 +335,13 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Handles submission in the warn unavailable form
 	warnUnavailableSubmitHandler = (e) ->
+		e.preventDefault()
 		renderer.select.warnUnavailable().find('#notifymeLoading').show()
 		renderer.select.warnUnavailable().find('form').hide()
+		xhr = options.warnUnavailablePost(e.target)
+		xhr.done -> renderer.select.warnUnavailable().find('#notifymeSuccess').show()
+		xhr.fail -> renderer.select.warnUnavailable().find('#notifymeError').show()
+		xhr.always -> renderer.select.warnUnavailable().find('#notifymeLoading').hide()
 		return false
 
 
@@ -350,11 +355,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	if options.warnUnavailable
 		renderer.select.warnUnavailable().find('form')
 		.on('submit', warnUnavailableSubmitHandler)
-		.on 'submit', ->
-			if notifyMeClick?
-				notifyMeClick()
-			else
-				console.log 'Função notifyMeClick não definida'
 
 	# Select first dimension
 	#	if options.selectOnOpening or selector.findSelectedSku()
