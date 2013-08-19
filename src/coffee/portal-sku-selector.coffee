@@ -1,8 +1,35 @@
 # DEPENDENCIES:
 # jQuery
 # vtex-utils
+# dust
 
 $ = window.jQuery
+
+
+#
+# SHARED FUNCTIONS
+#
+
+$.skuSelector = {}
+
+# Given a product id, return a promise for a request for the sku variations
+$.skuSelector.getSkusForProduct = (productId) ->
+	$.get '/api/catalog_system/pub/products/variations/' + productId
+
+$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
+	"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
+
+$.skuSelector.selectors =
+	listPriceValue: '.skuselector-list-price .value'
+	bestPriceValue: '.skuselector-best-price .value'
+	installment: '.skuselector-installment'
+	buyButton: '.skuselector-buy-btn'
+	confirmButton: '.skuselector-confirm-btn'
+	price: '.skuselector-price'
+	priceRange: '.skuselector-price-range'
+	warning: '.skuselector-warning'
+	warnUnavailable: '.skuselector-warn-unavailable'
+
 
 #
 # CLASSES
@@ -108,8 +135,9 @@ class SkuSelectorRenderer
 		@data.image = @data.skus[0].image
 
 		# Build selectors from given select strings.
-		@select = _.mapObj @options.selectors, (key, val) =>
+		@select = _.mapObj $.skuSelector.selectors, (key, val) =>
 			( => $(val, @context) )
+		console.log @select
 
 		@select.inputs = => $('input, select', @context)
 		@select.itemDimension = (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @context)
@@ -126,8 +154,10 @@ class SkuSelectorRenderer
 		dust.render "sku-selector", @data, (err, out) =>
 			console.log err if err
 			@context.html out
+			@update()
 			@hideProductImage() unless @options.showProductImage
 			@hideProductTitle() unless @options.showProductTitle
+			@context.trigger('vtex.sku.ready')
 
 	update: =>
 		originalSelection = (dim.selected for dim in @data.dimensions)
@@ -360,7 +390,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	#	if options.selectOnOpening or selector.findSelectedSku()
 	#		renderer.selectDimension(selector.dimensions[0])
 
-	$(window).trigger('vtex.sku.ready')
 	this.removeClass('sku-selector-loading')
 
 	# Chaining
@@ -386,16 +415,6 @@ $.fn.skuSelector.defaults =
 	warnUnavailable: false
 	selectOnOpening: false
 	confirmBuy: false
-	selectors:
-		listPriceValue: '.skuselector-list-price .value'
-		bestPriceValue: '.skuselector-best-price .value'
-		installment: '.skuselector-installment'
-		buyButton: '.skuselector-buy-btn'
-		confirmButton: '.skuselector-confirm-btn'
-		price: '.skuselector-price'
-		priceRange: '.skuselector-price-range'
-		warning: '.skuselector-warning'
-		warnUnavailable: '.skuselector-warn-unavailable'
 
 # Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
@@ -404,20 +423,6 @@ $.fn.skuSelector.defaults =
 
 	warnUnavailablePost: (formElement) ->
 		$.post '/no-cache/AviseMe.aspx', $(formElement).serialize()
-
-
-#
-# PLUGIN SHARED FUNCTIONS
-#
-
-$.skuSelector = {}
-
-# Given a product id, return a promise for a request for the sku variations
-$.skuSelector.getSkusForProduct = (productId) ->
-	$.get '/api/catalog_system/pub/products/variations/' + productId
-
-$.skuSelector.getAddUrlForSku = (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
-	"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
 
 
 #
