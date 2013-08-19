@@ -162,7 +162,7 @@ class SkuSelectorRenderer
 				@context.trigger 'skuSelected', [selectedSku]
 				@showWarnUnavailable(selectedSku) if @options.warnUnavailable
 		else if selectableSkus.length > 0
-			@showPriceRange(@data.findPrices(selectableSkus)) if @options.showPrice
+			@showPriceRange(@data.findPrices(selectableSkus)) if @options.showPrice and @options.showPriceRange
 
 	resetDimension: (dimension) =>
 		@select.itemDimensionInput(dimension.name)
@@ -382,10 +382,10 @@ $.fn.skuSelector.defaults =
 	showProductImage: false
 	showProductTitle: false
 	showPrice: false
+	showPriceRange: false
 	warnUnavailable: false
 	selectOnOpening: false
 	confirmBuy: false
-	priceRange: false
 	selectors:
 		listPriceValue: '.skuselector-list-price .value'
 		bestPriceValue: '.skuselector-best-price .value'
