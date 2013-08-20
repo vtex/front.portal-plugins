@@ -135,8 +135,8 @@ module.exports = (grunt) ->
 			compile:
 				files:
 					'build/templates/template-sku-selector.js': 'src/templates/sku-selector.dust'
-          'build/templates/template-minicart.js': 'src/templates/minicart.dust'
-          'build/templates/template-totalizers.js': 'src/templates/totalizers.dust'
+					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
+					'build/templates/template-totalizers.js': 'src/templates/totalizers.dust'
 
 	grunt.loadNpmTasks 'grunt-contrib-connect'
 	grunt.loadNpmTasks 'grunt-contrib-concat'
