@@ -12,9 +12,9 @@
 		"port": 9001
 	},
 	"headers": {
+    "X-VTEX-Environment": "beta"
 	},
 	"bounces":[
-		"lib/.*",
 		"style/.*",
         "templates/.*",
 		"index.html",
@@ -22,10 +22,7 @@
 	],
 	"mapping": true,
 	"mappings": {
-	    ".*portal-totalizers.js.*": "build/js/portal-totalizers.js",
-	    ".*portal-minicart.js.*": "build/js/portal-minicart.js",
-	    ".*portal-sku-selector-product.min.js.*": "build/js/portal-sku-selector-product.dev.js",
-	    ".*portal-sku-selector-popup.min.js.*": "build/js/portal-sku-selector-popup.dev.js",
-        "/api/checkout/pub/orderForm/" : "build/spec/mocks/orderform.json"
+	    ".*portal-minicart-with-template.min.js": "build/js/portal-minicart-with-template.dev.js",
+	    ".*portal-sku-selector-with-template.min.js.*": "build/js/portal-sku-selector-with-template.dev.js"
 	}
 }
