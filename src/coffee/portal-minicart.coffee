@@ -14,9 +14,13 @@ class Minicart
 
 		@base = $('.minicartListBase').remove()
 
-		@bindEvents()
+		@select =
+			amountProducts: => $('.amount-products-em', @context)
+			amountItems: => $('.amount-items-em', @context)
+			totalCart: => $('.total-cart-em', @context)
 
-		@updateData().success @updateCart
+		@bindEvents()
+		@updateCart()
 
 		$(window).trigger "minicartLoaded"
 
@@ -45,90 +49,85 @@ class Minicart
 			, 800
 
 		$(window).on "cartUpdated", (event, cartData, show) =>
-			if cartData?.items?.length is 0
-				$(".vtexsc-cart").slideUp()
-			else if show
-				$(".vtexsc-cart").slideDown()
-				@timeoutToHide = setTimeout ->
-					$(".vtexsc-cart").stop(true, true).slideUp()
-				, 3000
+			if cartData
+				@cartData = cartData
+				@prepareCart()
+				@render()
+
+				if cartData.items.length is 0
+					$(".vtexsc-cart").slideUp()
+				else if show
+					$(".vtexsc-cart").slideDown()
+					@timeoutToHide = setTimeout ->
+						$(".vtexsc-cart").stop(true, true).slideUp()
+					, 3000
+
+			else
+				@getData()
 
 		$(window).on 'productAddedToCart', =>
-			@updateData().success =>
-				@updateCart()
-				$(window).trigger "cartUpdated", [null, true]
+			@updateData()
 
-	updateData: =>
+	updateCart: =>
+		@context.addClass 'amount-items-in-cart-loading'
+
 		$.ajax({
 			url: @getOrderFormURL()
-			data: expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+			data:
+				expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
 		})
-		.done (data) =>
+		.done =>
+			@context.removeClass 'amount-items-in-cart-loading'
+		.success (data) =>
 			@cartData = data
-		.fail (jqXHR, textStatus, errorThrown) ->
-			# console.log "Error Message: " + textStatus
-			# console.log "HTTP Error: " + errorThrown
+			@prepareCart()
+			@render()
 
-	updateCart: () =>
-		@updateValues()
-		@updateItems()
+	prepareCart: =>
+		# Amount Items
+		@cartData.amountItems = 0
+		@cartData.amountItems += item.quantity for item in @cartData.items
 
-	updateValues: =>
+		# Total
 		total = 0
-		for subtotal in @cartData.totalizers when subtotal.id in ['Items', 'Discounts']
-			total += subtotal.value
+		for subtotal in @cartData.totalizers
+			total += subtotal.value if subtotal.id in ['Items', 'Discounts']
+		@cartData.totalCart = @options.valuePrefix + _.formatCurrency(total / 100, @options) + @options.valueSufix
 
-		$(".vtexsc-text", @context).text(@getValueLabel(total))
+		# Item labels
+		for item in @cartData.items
+			item.availabilityMessage = @getAvailabilityMessage(item)
+			item.formattedPrice = @options.valuePrefix + _.formatCurrency(item.price / 100, @options) + @options.valueSufix
 
-	updateItems: =>
-		container = $(".minicartListContainer", @context).empty()
-		for item, i in @cartData.items
-			current = @base.clone()
-
-			current.find('.cartSkuImage a').attr('href', item.detailUrl)
-			current.find('.cartSkuImage img').attr('alt', item.name).attr('src', item.imageUrl)
-			current.find('.cartSkuName a').attr('href', item.detailUrl).text(item.name)
-			current.find('.cartSkuName .availability').text(@getAvailabilityMessage(item)).addClass("availability-#{@getAvailabilityCode(item)}")
-			current.find('.cartSkuPrice .bestPrice').text(@getValueLabel(item.sellingPrice or item.price))
-			current.find('.cartSkuQuantity .cartSkuQttTxt').text(item.quantity)
-
-			current.appendTo(container)
-
-		$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
-			@deleteItem(this)
+	render: () =>
+		dust.render 'minicart', @cartData, (err, out) =>
+			console.log 'Minicart Dust error: ', err if err
+			@context.html out
+			$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
+				@deleteItem(this)
 
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
 
-		data =
-			expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
-			orderItems: [
-				index: $(item).data("index")
-				quantity: 0
-			]
-
 		$.ajax({
 			url: @getOrderFormUpdateURL()
-			data: data
+			data:
+				expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+				orderItems: [
+					index: $(item).data("index")
+					quantity: 0
+				]
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
 		})
 		.success (data) =>
-				@cartData = data
-				@updateCart(data)
-				$(window).trigger "cartUpdated", [data]
-		.done ->
-				$(item).parent().find('.vtexsc-overlay').hide()
-		.fail (jqXHR, textStatus, errorThrown) ->
-				# console.log "Error Message: " + textStatus
-				# console.log "HTTP Error: " + errorThrown
-
-	getValueLabel: (value) =>
-		@options.valuePrefix + _.formatCurrency(value/100, @options) + @options.valueSufix
+			@cartData = data
+			@prepareCart()
+			@render()
 
 	getAvailabilityCode: (item) =>
 		item.availability or "available"
@@ -147,7 +146,6 @@ $.fn.minicart = (options) ->
 	return this
 
 $.fn.minicart.defaults =
-	cartData: {}
 	valuePrefix: "R$ "
 	valueSufix: ""
 	availabilityMessages:

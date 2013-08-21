@@ -16,6 +16,7 @@
 	"bounces":[
 		"lib/.*",
 		"style/.*",
+        "templates/.*",
 		"index.html",
         "minicart.html"
 	],
