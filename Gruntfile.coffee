@@ -109,7 +109,6 @@ module.exports = (grunt) ->
 				files:
 					'build/js/portal-sku-selector.dev.js': 'build/js/portal-sku-selector.js'
 					'build/js/portal-minicart.dev.js': 'build/js/portal-minicart.js'
-					'build/js/portal-totalizers.dev.js': 'build/js/portal-totalizers.js'
 					'build/js/portal-template-as-modal.dev.js': 'build/js/portal-template-as-modal.js'
 
 		uglify:
