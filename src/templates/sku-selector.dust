@@ -17,7 +17,7 @@
             <input type="radio"
                    class="{nameClass} sku-selector skuespec_{.}"
                    data-dimension="{name}"
-                   name="{name|sanitize}"
+                   name="{productId}_{name|sanitize}"
                    value="{.}"
                    specification="{.|sanitize}"
                    id="{productId}_{name|sanitize}_{$idx}"
