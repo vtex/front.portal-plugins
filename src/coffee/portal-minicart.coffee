@@ -74,7 +74,7 @@ class Minicart
 		$.ajax({
 			url: @getOrderFormURL()
 			data:
-				expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+				JSON.stringify expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
@@ -122,11 +122,12 @@ class Minicart
 		$.ajax({
 			url: @getOrderFormUpdateURL()
 			data:
-				expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
-				orderItems: [
-					index: $(item).data("index")
-					quantity: 0
-				]
+				JSON.stringify
+					expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+					orderItems: [
+						index: $(item).data("index")
+						quantity: 0
+					]
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
