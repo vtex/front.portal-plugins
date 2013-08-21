@@ -357,11 +357,11 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 			else
 				$(this).trigger 'vtex.modal.hide'
 				# console.log 'Adding SKU to cart:', sku
-				$.get($.skuSelector.getAddUrlForSku(selectedSku, 1, 1, productData.salesChannel, false))
+				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
 				.done (data) ->
 					$(this).trigger 'productAddedToCart'
 				.fail (jqXHR, status) ->
-					window.location.href = $.skuSelector.getAddUrlForSku(selectedSku, 1, productData.salesChannel)
+					window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, productData.salesChannel)
 				return false
 		else
 			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0].name)
