@@ -99,12 +99,12 @@ class Minicart
 		total = 0
 		for subtotal in @cartData.totalizers
 			total += subtotal.value if subtotal.id in ['Items', 'Discounts']
-		@cartData.totalCart = @options.valuePrefix + _.formatCurrency(total / 100, @options) + @options.valueSufix
+		@cartData.totalCart = _.intAsCurrency(total, @options)
 
 		# Item labels
 		for item in @cartData.items
 			item.availabilityMessage = @getAvailabilityMessage(item)
-			item.formattedPrice = @options.valuePrefix + _.formatCurrency(item.price / 100, @options) + @options.valueSufix
+			item.formattedPrice = _.intAsCurrency(item.price, @options)
 
 	render: () =>
 		dust.render 'minicart', @cartData, (err, out) =>
@@ -150,8 +150,6 @@ $.fn.minicart = (options) ->
 	return this
 
 $.fn.minicart.defaults =
-	valuePrefix: "R$ "
-	valueSufix: ""
 	availabilityMessages:
 		"available": ""
 		"unavailableItemFulfillment": "Este item não está disponível no momento."

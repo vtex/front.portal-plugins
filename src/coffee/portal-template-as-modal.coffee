@@ -36,6 +36,8 @@ openModalFromTemplate = (evt) ->
 	$overlay.on "click", hideModal
 	$(document).on "keyup", hideModalOnEscapeKey
 
+	$(document).on 'vtex.modal.hide', hideModal
+
 	$.get(templateURL).done (content) ->
 		$container.find('.boxPopUp2-content').html $(content)
 

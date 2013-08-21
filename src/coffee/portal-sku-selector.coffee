@@ -291,13 +291,13 @@ class SkuSelectorRenderer
 		@context.find('.vtexsm-prodTitle').hide()
 
 	showBuyButton: (sku) =>
-		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel)).show().parent().show()
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel, @options.redirect)).show().parent().show()
 
 	showConfirmButton: (sku) =>
 		dimensionsText = $.map(sku.dimensions, (k, v) -> k).join(', ')
 
 		@select.confirmButton()
-		.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel))
+		.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel, @options.redirect))
 		.show()
 		.find('.skuselector-confirm-dimensions').text(dimensionsText)
 
@@ -355,7 +355,14 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 				event.preventDefault()
 				renderer.showConfirmButton(selectedSku)
 			else
-				return options.addSkuToCart(selectedSku.sku, context)
+				$(this).trigger 'vtex.modal.hide'
+				# console.log 'Adding SKU to cart:', sku
+				$.get($.skuSelector.getAddUrlForSku(sku, 1, 1, productData.salesChannel, false))
+				.done (data) ->
+					$(window).trigger 'productAddedToCart'
+				.fail (jqXHR, status) ->
+					window.location.href = $.skuSelector.getAddUrlForSku(sku, 1, productData.salesChannel)
+				return false
 		else
 			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0].name)
 			return false
