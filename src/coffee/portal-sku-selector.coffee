@@ -58,6 +58,11 @@ class SkuSelector
 
 		sku.values = (sku.dimensions[dim.name] for dim in @dimensions) for sku in @skus
 
+		@init()
+
+	init: =>
+		@update()
+
 	update: (dimensionName, dimensionValue) =>
 		@setSelectedDimension(dimensionName, dimensionValue) if dimensionName
 
@@ -148,6 +153,11 @@ class SkuSelectorRenderer
 		@select.itemDimensionValueLabel = (dimensionName, valueName) =>	@select.itemDimension(dimensionName).find("label.skuespec_#{_.sanitize(valueName)}")
 		@select.itemDimensionValueOption = (dimensionName, valueName) => @select.itemDimension(dimensionName).find("option[value='#{valueName}']")
 
+		@init()
+
+	init: =>
+		@update()
+		@render()
 
 	# Renders the DOM elements of the Sku Selector
 	render: =>
@@ -323,11 +333,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	selector = new SkuSelector(productData)
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
-	selector.update()
-	# Finds elements and puts SKU information in them
-	renderer.render()
-	renderer.update()
-
 	# Handler for the buy button
 	buyButtonHandler = (event) =>
 		selectedSku = selector.findSelectedSku()
@@ -385,10 +390,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	if options.warnUnavailable
 		renderer.select.warnUnavailable().find('form')
 		.on('submit', warnUnavailableSubmitHandler)
-
-	# Select first dimension
-	#	if options.selectOnOpening or selector.findSelectedSku()
-	#		renderer.selectDimension(selector.dimensions[0])
 
 	this.removeClass('sku-selector-loading')
 
