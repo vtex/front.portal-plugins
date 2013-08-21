@@ -39,7 +39,9 @@ default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs 
 
 ## Dependências
 
+ - [jQuery](http://www.jquery.com)
  - [front.utils](https://github.com/vtex/front.utils)
+ - [Liquid.js](https://github.com/gberger42/liquid.js)
 
 ## Uso
 
@@ -69,3 +71,11 @@ Define as mensagens exibidas para cada código de disponibilidade da API. Defaul
 		"withoutPrice": "Este item não está disponível no momento."
 		"withoutPriceRnB": "Este item não está disponível no momento."
 		"nullPrice": "Este item não está disponível no momento."
+
+### showMinicart
+
+default: `true`. Define se o minicart deve ser mostrado.
+
+### showTotalizers
+
+default: `true`. Define se o totalizers deve ser mostrado.
