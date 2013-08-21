@@ -66,7 +66,7 @@ class Minicart
 				@getData()
 
 		$(window).on 'productAddedToCart', =>
-			@updateData()
+			@updateCart()
 
 	updateCart: =>
 		@context.addClass 'amount-items-in-cart-loading'
