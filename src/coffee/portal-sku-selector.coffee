@@ -99,6 +99,13 @@ class SkuSelector
 	findSelectableSkus: =>
 		(sku for sku in @skus when @isSkuSelectable(sku))
 
+	findSelectedSku: =>
+		all = @findSelectableSkus()
+		if all.length is 1
+			return all[0]
+		else
+			return null
+
 	findPrices: (skus = undefined) =>
 		skus or= @findSelectableSkus()
 		skus = (sku for sku in skus when sku.available)
