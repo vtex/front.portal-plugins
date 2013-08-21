@@ -30,7 +30,23 @@ default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponív
 
 default: `false`. Se `true`, ao clicar no botão de compra é mostrado um botão de confirmação, com as dimensões selecionadas.
 
-### priceRange
+### showBuyButton
+
+default: `false`. Se `true`, mostra o botão de comprar.
+
+### showProductImage
+
+default: `false`. Se `true`, mostra a imagem do produto.
+
+### showProductTitle
+
+default: `false`. Se `true`, mostra o nome do produto
+
+### showPrice
+
+default: `false`. Se `true`, mostra o preço.
+
+### showPriceRange
 
 default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs selecionáveis com as dimensões já selecionadas.
 
