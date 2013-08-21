@@ -117,7 +117,6 @@ module.exports = (grunt) ->
 				files:
 					'build/js/portal-sku-selector.min.js': 'build/js/portal-sku-selector.js'
 					'build/js/portal-minicart.min.js': 'build/js/portal-minicart.js'
-					'build/js/portal-totalizers.min.js': 'build/js/portal-totalizers.js'
 					'build/js/portal-template-as-modal.min.js': 'build/js/portal-template-as-modal.js'
 
 		'string-replace':

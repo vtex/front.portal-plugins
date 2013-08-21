@@ -87,6 +87,10 @@ class Minicart
 			@render()
 
 	prepareCart: =>
+		# Conditionals
+		@cartData.showMinicart = @options.showMinicart
+		@cartData.showTotalizers = @options.showTotalizers
+
 		# Amount Items
 		@cartData.amountItems = 0
 		@cartData.amountItems += item.quantity for item in @cartData.items
@@ -156,6 +160,8 @@ $.fn.minicart.defaults =
 		"withoutPrice": "Este item não está disponível no momento."
 		"withoutPriceRnB": "Este item não está disponível no momento."
 		"nullPrice": "Este item não está disponível no momento."
+	showMinicart: true
+	showTotalizers: true
 
 
 #

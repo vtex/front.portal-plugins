@@ -1,3 +1,4 @@
+{#showTotalizers}
 <div class="cartInfoWrapper">
   <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
   <ul class="cart-info">
@@ -15,7 +16,9 @@
     </li>
   </ul>
 </div>
+{/showTotalizers}
 
+{#showMinicart}
 <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded">
   <div class="vtexsc-bt"></div>
   <div class="vtexsc-center">
@@ -76,3 +79,4 @@
   </div>
   <div class="vtexsc-bb"></div>
 </div>
+{/showMinicart}
