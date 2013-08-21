@@ -20,7 +20,7 @@ Opcional, é um objeto que pode ter as seguintes propriedades
 
 ### selectOnOpening
 
-default: `false`. Se `true`, seleciona o primeiro SKU disponível na inicialização do plugin
+default: `false`. Se `true`, na inicialização do plugin seleciona o primeiro SKU disponível (o primeiro que vier no array).
 
 ### warnUnavailable
 
