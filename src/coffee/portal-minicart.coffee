@@ -93,18 +93,21 @@ class Minicart
 
 		# Amount Items
 		@cartData.amountItems = 0
-		@cartData.amountItems += item.quantity for item in @cartData.items
+		if @cartData.items
+			@cartData.amountItems += item.quantity for item in @cartData.items
 
 		# Total
 		total = 0
-		for subtotal in @cartData.totalizers
-			total += subtotal.value if subtotal.id in ['Items', 'Discounts']
+		if @cartData.totalizers
+			for subtotal in @cartData.totalizers
+				total += subtotal.value if subtotal.id in ['Items', 'Discounts']
 		@cartData.totalCart = _.intAsCurrency(total, @options)
 
 		# Item labels
-		for item in @cartData.items
-			item.availabilityMessage = @getAvailabilityMessage(item)
-			item.formattedPrice = _.intAsCurrency(item.price, @options)
+		if @cartData.items
+			for item in @cartData.items
+				item.availabilityMessage = @getAvailabilityMessage(item)
+				item.formattedPrice = _.intAsCurrency(item.price, @options)
 
 	render: () =>
 		dust.render 'minicart', @cartData, (err, out) =>
