@@ -36,11 +36,12 @@ _.extend dust.filters,
 # CLASSES
 #
 class SkuSelector
-	constructor: (productData) ->
+	constructor: (productData, options) ->
 		@productId = productData.productId
 		@name = productData.name
 		@salesChannel = productData.salesChannel
 		@skus = productData.skus
+		@options = options
 
 		i = 0
 		@dimensions = ({
@@ -62,6 +63,12 @@ class SkuSelector
 
 	init: =>
 		@update()
+
+		if @options.selectOnOpening
+			for sku in @skus
+				if sku.available
+					@selectSku(sku)
+					break
 
 	update: (dimensionName, dimensionValue) =>
 		@setSelectedDimension(dimensionName, dimensionValue) if dimensionName
@@ -330,7 +337,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
 
 	# Instantiate our singletons
-	selector = new SkuSelector(productData)
+	selector = new SkuSelector(productData, options)
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
 	# Handler for the buy button
