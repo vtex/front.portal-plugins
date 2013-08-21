@@ -23,16 +23,17 @@ openModalFromTemplate = (evt) ->
 	$overlay.appendTo($("body")).fadeIn()
 	$container.appendTo($("body")).fadeIn()
 
-	hideModalOnClick = ->
+	hideModal = ->
 		$overlay.fadeOut()
 		$container.remove()
-		$(document).off "click", hideModalOnClick
+		$(document).off "click", hideModal
 
 	hideModalOnEscapeKey = (e) ->
-		hideModal() if e.keyCode is KEYCODE_ESC
-		$(document).off "keyup", hideModalOnEscapeKey
+		if e.keyCode is KEYCODE_ESC
+			hideModal()
+			$(document).off "keyup", hideModalOnEscapeKey
 
-	$overlay.on "click", hideModalOnClick
+	$overlay.on "click", hideModal
 	$(document).on "keyup", hideModalOnEscapeKey
 
 	$.get(templateURL).done (content) ->
