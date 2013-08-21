@@ -359,7 +359,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 				# console.log 'Adding SKU to cart:', sku
 				$.get($.skuSelector.getAddUrlForSku(sku, 1, 1, productData.salesChannel, false))
 				.done (data) ->
-					$(window).trigger 'productAddedToCart'
+					$(this).trigger 'productAddedToCart'
 				.fail (jqXHR, status) ->
 					window.location.href = $.skuSelector.getAddUrlForSku(sku, 1, productData.salesChannel)
 				return false
