@@ -147,9 +147,13 @@ class Minicart
 # Plugin
 #
 $.fn.minicart = (options) ->
-	return this if @hasClass("plugin_minicart")
-	@addClass("plugin_minicart")
-	new Minicart(this, options)
+	for element in this
+		$element = $(element)
+		unless $element.hasClass("plugin_minicart")
+			$element.addClass("plugin_minicart")
+			new Minicart($element, options)
+
+	# Chaining
 	return this
 
 $.fn.minicart.defaults =
