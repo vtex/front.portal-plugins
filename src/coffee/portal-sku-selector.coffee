@@ -325,7 +325,7 @@ class SkuSelectorRenderer
 		$priceRange.find('.highPrice').text(" R$ #{max} ")
 
 	showWarnUnavailable: (sku) =>
-		@select.warnUnavailable().show().find('input#notifymeSkuId').val(sku)
+		@select.warnUnavailable().show().find('input.sku-notifyme-skuid').val(sku)
 
 #
 # PLUGIN ENTRY POINT
@@ -395,12 +395,12 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Handles submission in the warn unavailable form
 	warnUnavailableSubmitHandler = (e) ->
 		e.preventDefault()
-		renderer.select.warnUnavailable().find('#notifymeLoading').show()
+		renderer.select.warnUnavailable().find('.sku-notifyme-loading').show()
 		renderer.select.warnUnavailable().find('form').hide()
 		xhr = options.warnUnavailablePost(e.target)
-		xhr.done -> renderer.select.warnUnavailable().find('#notifymeSuccess').show()
-		xhr.fail -> renderer.select.warnUnavailable().find('#notifymeError').show()
-		xhr.always -> renderer.select.warnUnavailable().find('#notifymeLoading').hide()
+		xhr.done -> renderer.select.warnUnavailable().find('.sku-notifyme-success').show()
+		xhr.fail -> renderer.select.warnUnavailable().find('.sku-notifyme-loading-error').show()
+		xhr.always -> renderer.select.warnUnavailable().find('.sku-notifyme-loading').hide()
 		return false
 
 
