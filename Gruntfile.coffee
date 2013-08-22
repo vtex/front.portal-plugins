@@ -107,7 +107,7 @@ module.exports = (grunt) ->
 		concat:
 			dev:
 				files:
-					'build/js/portal-sku-selector-with-template.min.dev.js': ['build/templates/template-sku-selector.js', 'build/js/portal-sku-selector.js']
+					'build/js/portal-sku-selector-with-template.dev.js': ['build/templates/template-sku-selector.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-minicart-with-template.dev.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
 					'build/js/portal-template-as-modal.dev.js': 'build/js/portal-template-as-modal.js'
 
