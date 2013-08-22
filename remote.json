@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "shoestock.vtexcommercebeta.com.br",
+		"host": "meuamigopet.vtexcommercebeta.com.br",
 		"port": 80
 	},
 	"proxy": {
-		"host": "shoestock.vtexlocal.com.br",
+		"host": "meuamigopet.vtexlocal.com.br",
 		"port": 80
 	},
 	"server": {

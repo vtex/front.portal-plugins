@@ -16,9 +16,10 @@
     "grunt-contrib-watch": "~0.4.0",
     "grunt-string-replace": "~0.2.4",
     "grunt-usemin": "~0.1.10",
-    "coffee-script": "~1.6.2",
-    "remote": "~0.2.5",
-    "grunt-karma": "~0.4.4",
+    "grunt-karma": "~0.6.1",
+    "grunt-vtex-deploy": "~0.2.2",
+    "grunt-concurrent": "~0.3.0",
+    "grunt-remote": "~0.1.1",
     "dustjs-linkedin": "2.0.0",
     "dustjs-helpers": "1.1.1",
     "grunt-dustjs": "~1.1.1"
