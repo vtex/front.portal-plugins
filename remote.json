@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "sapeka.vtexcommercebeta.com.br",
+		"host": "shoestock.vtexcommercebeta.com.br",
 		"port": 80
 	},
 	"proxy": {
-		"host": "sapeka.vtexlocal.com.br",
+		"host": "shoestock.vtexlocal.com.br",
 		"port": 80
 	},
 	"server": {

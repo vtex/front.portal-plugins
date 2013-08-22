@@ -3,6 +3,9 @@
 # vtex-utils
 # dust
 
+# TODO retirar lowerCase do sanitize do vtex utils
+_.sanitize = (value) -> _.plainChars(value.replace(/\s/g, '').replace(/\/|\\/g, '-').replace(/\(|\)|\'|\"/g, '').replace(/\,/g, 'V').replace(/\./g, 'P'))
+
 $ = window.jQuery
 
 #
