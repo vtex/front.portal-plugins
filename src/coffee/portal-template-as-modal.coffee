@@ -13,7 +13,7 @@ openModalFromTemplate = (evt) ->
 		<div class="boxPopUp2 vtexsm-popupContent freeContentMain popupOpened sku-selector" style="position: fixed;">
 			<div class="boxPopUp2-wrap">
 				<div class="boxPopUp2-content vtexsm-popupContent freeContentPopup" style="position: fixed;">
-					Loading...
+					Carregando...
 				</div>
 			</div>
 		</div>"""
