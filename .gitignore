@@ -1,4 +1,5 @@
 build/
+build-raw/
 deploy/
 node_modules/
 .idea/
