@@ -2,7 +2,7 @@ path = require('path')
 fs = require('fs')
 
 module.exports = (grunt) ->
-	pacha = grunt.file.readJSON('pachamama.config')[0]
+	pacha = grunt.file.readJSON('tools/pachamama/pachamama.config')[0]
 	# Project configuration.
 	grunt.initConfig
 		gitCommit: process.env['GIT_COMMIT'] or 'GIT_COMMIT'
