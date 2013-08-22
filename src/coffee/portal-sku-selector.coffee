@@ -334,7 +334,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 		throw new Error('Sku Selector was activated on 0 elements')
 
 	this.addClass('sku-selector-loading')
-	context = this
+	context = $(this)
 
 	# Gather options
 	domOptions = this.data()
@@ -348,18 +348,18 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
 	# Handler for the buy button
-	buyButtonHandler = (event) =>
+	buyButtonHandler = (event) ->
 		selectedSku = selector.findSelectedSku()
 		if selectedSku
 			if options.confirmBuy
 				event.preventDefault()
 				renderer.showConfirmButton(selectedSku)
 			else
-				$(this).trigger 'vtex.modal.hide'
+				context.trigger 'vtex.modal.hide'
 				# console.log 'Adding SKU to cart:', sku
 				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
 				.done (data) ->
-					$(this).trigger 'productAddedToCart'
+					$(window).trigger 'productAddedToCart'
 				.fail (jqXHR, status) ->
 					window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, productData.salesChannel)
 				return false
