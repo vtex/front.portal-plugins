@@ -54,10 +54,10 @@ module.exports = (grunt) ->
 					'build/js/portal-template-as-modal.dev.js': 'build/js/portal-template-as-modal.js'
 
 		useminPrepare:
-			html: ['build-raw/<%= relativePath %>/index.html', 'build-raw/<%= relativePath %>/sku-selector.html']
+			html: ['build-raw/<%= relativePath %>/index.html', 'build-raw/<%= relativePath %>/sku-selector.html', 'build-raw/<%= relativePath %>/modal.html']
 
 		usemin:
-			html: ['build-raw/<%= relativePath %>/index.html', 'build-raw/<%= relativePath %>/sku-selector.html']
+			html: ['build-raw/<%= relativePath %>/index.html', 'build-raw/<%= relativePath %>/sku-selector.html', 'build-raw/<%= relativePath %>/modal.html']
 
 		karma:
 			options:
