@@ -288,7 +288,7 @@ class SkuSelectorRenderer
 		@context.find('.vtexsc-skuProductImage').hide()
 
 	hideProductTitle: =>
-		@context.find('.vtexsm-prodTitle').hide()
+		@context.find('.vtexsm-prodTitle').add('.selectSkuTitle').hide()
 
 	showBuyButton: (sku) =>
 		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel, @options.redirect)).show().parent().show()
