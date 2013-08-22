@@ -91,7 +91,7 @@ module.exports = (grunt) ->
 			dev:
 				options:
 					livereload: true
-				files: ['src/**/*.html', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**']
+				files: ['src/**/*.html', 'src/**/*.dust', 'src/**/*.coffee', 'src/**/*.js', 'src/**/*.less', 'spec/**']
 				tasks: ['dev']
 
 			prod:
