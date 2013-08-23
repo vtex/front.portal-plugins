@@ -5,7 +5,7 @@
   "salesChannel": "1",
   "dimensions": ["Cor/Estampa"],
   "dimensionsInputType": {
-    "Cor/Estampa": "Combo"
+    "Cor/Estampa": "radio"
   },
   "dimensionsMap": {
     "Cor/Estampa": ["Branco", "Marrom", "Rosa Claro", "Vinho", "Areia", "Rose", "Azul Claro", "Cinza", "Verde Cano", "Verde Água", "Creme", "Chumbo", "Verde Fosco", "Bege"]
