@@ -3,9 +3,6 @@
 # vtex-utils
 # dust
 
-# TODO retirar lowerCase do sanitize do vtex utils
-_.sanitize = (value) -> _.plainChars(value.replace(/\s/g, '').replace(/\/|\\/g, '-').replace(/\(|\)|\'|\"/g, '').replace(/\,/g, 'V').replace(/\./g, 'P'))
-
 $ = window.jQuery
 
 #
@@ -50,7 +47,6 @@ class SkuSelector
 		@dimensions = ({
 			index: i++
 			name: dimensionName
-			nameClass: ""
 			values: productData.dimensionsMap[dimensionName]
 			availableValues: (true for value in productData.dimensionsMap[dimensionName])
 			validValues: (true for value in productData.dimensionsMap[dimensionName])
@@ -225,13 +221,13 @@ class SkuSelectorRenderer
 		@select.itemDimensionInput(dimension.name)
 		.removeAttr('checked')
 		.removeAttr('disabled')
-		.removeClass('item_unavaliable sku-picked checked item_unavailable ')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable item_doesnt_exist')
 
 		@select.itemDimensionLabel(dimension.name)
-		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled item_doesnt_exist')
 
 		@select.itemDimensionOption(dimension.name)
-		.removeClass('item_unavaliable sku-picked checked item_unavailable ')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled item_doesnt_exist')
 		.removeAttr('disabled')
 		.removeAttr('selected')
 
@@ -257,19 +253,19 @@ class SkuSelectorRenderer
 
 	disableInvalidValue: (dimension, value) =>
 		@select.itemDimensionValueInput(dimension.name, value)
-		.addClass('disabled')
+		.addClass('item_doesnt_exist')
 		@select.itemDimensionValueLabel(dimension.name, value)
-		.addClass('disabled')
+		.addClass('item_doesnt_exist')
 		@select.itemDimensionValueOption(dimension.name, value)
-		.addClass('disabled')
+		.addClass('item_doesnt_exist')
 
 	disableUnavailableValue: (dimension, value) =>
 		@select.itemDimensionValueInput(dimension.name, value)
 		.addClass('item_unavaliable item_unavailable')
 		@select.itemDimensionValueLabel(dimension.name, value)
-		.addClass('item_unavaliable item_unavailable')
+		.addClass('item_unavaliable item_unavailable disabled')
 		@select.itemDimensionValueOption(dimension.name, value)
-		.addClass('item_unavaliable item_unavailable')
+		.addClass('item_unavaliable item_unavailable disabled')
 
 	hideBuyButton: =>
 		@select.buyButton().attr('href', 'javascript:void(0);').hide()

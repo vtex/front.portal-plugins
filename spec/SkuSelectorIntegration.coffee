@@ -3,7 +3,7 @@ jasmine.getJSONFixtures().fixturesPath = "base/spec/mocks"
 
 describe 'Sku Selector Integration', ->
 	beforeEach ->
-		mockNames = ['oneDimensionAvailable.json', 'threeDimensionsAvailable.json', 'threeDimensionsSomeUnavailable.json']
+		mockNames = ['shoestock.json', 'casaamerica.json']
 		loadJSONFixtures(mockNames...)
 		@mocks = (getJSONFixture(name) for name in mockNames)
 		@mock = @mocks[0]
@@ -25,4 +25,5 @@ describe 'Sku Selector Integration', ->
 
 	describe '$', ->
 		beforeEach ->
-			$('.sku-selector-ref').skuSelector(@mock)
+			@element = $('.sku-selector-ref')
+			@element.skuSelector(@mock)

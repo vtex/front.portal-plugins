@@ -1,92 +1,112 @@
 <div class="selectSkuTitle">
-    Selecione a variação do produto
+  Selecione a variação do produto
 </div>
 <div class="vtexsm-prodTitle">{name}</div>
 <div class="vtexsc-skusWrap">
-    <div class="vtexsc-skuProductImage">
-        <img src="{image}" width="160" height="160" alt="{name}"/>
-    </div>
-    {#dimensions}
-    <ul class="topic {name|sanitize} {nameClass}">
+  <div class="vtexsc-skuProductImage">
+    <img src="{image}" width="160" height="160" alt="{name}"/>
+  </div>
+
+  <!-- MAIN -->
+  <div class="skuSelectionWrapper">
+    <div class="sku-selector-container">
+      {#dimensions}
+      <ul class="topic {name|sanitize}">
         <li class="specification">{name}</li>
         <li class="select skuList item-dimension-{name|sanitize}">
-            {#isRadio}
-            <span class="group_{$idx}">
+          {#isRadio}
+          <span class="group_{$idx} on">
             {#values}
             <input type="radio"
-                   data-dimension="{name}"
                    name="{productId}_{name|sanitize}"
+                   dimension="{name|sanitize}"
+                   data-value="{.}"
+                   data-dimension="{name}"
+                   class="skuselector-specification-label input-dimension-{name|sanitize} sku-selector skuespec_{.|sanitize} change-image"
+                   id="{productId}_{name|sanitize}_{$idx}"
                    value="{.}"
                    specification="{.|sanitize}"
-                   id="{productId}_{name|sanitize}_{$idx}"
-                   class="skuselector-specification-label input-dimension-{name|sanitize} sku-selector skuespec_{.|sanitize} change-image">
+                    >
             <label for="{productId}_{name|sanitize}_{$idx}"
-                   class="dimension-{name|sanitize} espec_{$idx} skuespec_{.|sanitize} skuespec_{name|spacesToHyphens}_opcao_{.|spacesToHyphens}">
-                {.}
+                   class="dimension-{name|sanitize} espec_{index} skuespec_{.|sanitize} skuespec_{name|spacesToHyphens}_opcao_{.|spacesToHyphens}">
+              {.}
             </label>
             {/values}
-            </span>
-            {:else}
-            <select size="1"
-                    id="espec_{index}_opcao_0"
-                    name="espec_{index}"
-                    data-dimension="{name}"
-                    specification="{name|sanitize}"
-                    currentproductid="{productId}"
-                    class="sku-selector">
-                <option value=""></option>
-                {#values}
-                <option class="skuopcao_{$idx}"
-                        value="{.}">
-                    {.}
-                </option>
-                {/values}
-            </select>
-            {/isRadio}
+          </span>
+          {:else}
+          <select id="espec_{index}_opcao_0"
+                  name="espec_{index}"
+                  size="1"
+                  class="sku-selector"
+                  specification="{name|sanitize}"
+                  currentproductid="{productId}"
+                  data-dimension="{name}"
+                  >
+            <option value=""></option>
+            {#values}
+            <option class="skuopcao_{$idx}"
+                    value="{.}">
+              {.}
+            </option>
+            {/values}
+          </select>
+          {/isRadio}
         </li>
-    </ul>
-    {/dimensions}
-    <div class="vtexsc-skuProductPrice skuselector-price" style="display: none;">
-        <div class="regularPrice skuselector-list-price">
-            De: <span class="value"></span>
-        </div>
-        <div class="newPrice skuselector-best-price">
-            Por: <span class="value"></span>
-        </div>
-        <div class="installment"></div>
+      </ul>
+      {/dimensions}
     </div>
-    <div class="skuselector-price-range" style="display: none;">
-        A partir de
-        <span class="lowPrice"></span>
-        até
-        <span class="highPrice"></span>
+  </div>
+  <!--/MAIN -->
+
+  <!-- PREÇOS -->
+  <div class="vtexsc-skuProductPrice skuselector-price" style="display: none;">
+    <div class="regularPrice skuselector-list-price">
+      De: <span class="value"></span>
     </div>
+    <div class="newPrice skuselector-best-price">
+      Por: <span class="value"></span>
+    </div>
+    <div class="installment"></div>
+  </div>
+  <div class="skuselector-price-range" style="display: none;">
+    A partir de
+    <span class="lowPrice"></span>
+    até
+    <span class="highPrice"></span>
+  </div>
+  <!--/PREÇOS -->
+
 </div>
+
+<!-- NOTIFYME -->
 <p class="skuselector-warning" style="display: none;"></p>
 <div class="skuselector-warn-unavailable" style="display: none;">
-    <form action="">
-        <fieldset class="sku-notifyme-form" style="display: block;">
-            <p>
-                Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.
-            </p>
-            <input class="sku-notifyme-client-name" placeholder="Digite seu nome..." size="20"
-                   type="text" name="notifymeClientName">
-            <input class="sku-notifyme-client-email" placeholder="Digite seu e-mail..." size="20"
-                   type="text" name="notifymeClientEmail">
-            <input class="btn-ok sku-notifyme-button-ok" value="ok" type="submit"
-                   name="notifymeButtonOK">
-            <input type="hidden" class="sku-notifyme-skuid" name="notifymeIdSku" value="">
-        </fieldset>
-    </form>
-    <span class="sku-notifyme-loading" style="display: none">Carregando...</span>
-    <span class="sku-notifyme-success" style="display: none">Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</span>
-    <span class="sku-notifyme-error"
-          style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
+  <form action="">
+    <fieldset class="sku-notifyme-form" style="display: block;">
+      <p>
+        Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.
+      </p>
+      <input class="sku-notifyme-client-name" placeholder="Digite seu nome..." size="20"
+             type="text" name="notifymeClientName">
+      <input class="sku-notifyme-client-email" placeholder="Digite seu e-mail..." size="20"
+             type="text" name="notifymeClientEmail">
+      <input class="btn-ok sku-notifyme-button-ok" value="ok" type="submit"
+             name="notifymeButtonOK">
+      <input type="hidden" class="sku-notifyme-skuid" name="notifymeIdSku" value="">
+    </fieldset>
+  </form>
+  <span class="sku-notifyme-loading" style="display: none">Carregando...</span>
+  <span class="sku-notifyme-success" style="display: none">Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</span>
+  <span class="sku-notifyme-error"
+        style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
 </div>
+<!--/NOTIFYME -->
+
+<!-- COMPRAR -->
 <div class="vtexsc-buttonWrap clearfix skuselector-buy-btn-wrap" style="display: none;">
-    <a href="#" class="vtexsc-buyButton skuselector-buy-btn"></a>
+  <a href="#" class="vtexsc-buyButton skuselector-buy-btn"></a>
 </div>
 <div class="vtexsc-buttonWrap clearfix skuselector-confirm-btn-wrap" style="display: none;">
-    <a href="#" class="vtexsc-confirmButton skuselector-confirm-btn">Confirmar<span
-            class="skuselector-confirm-dimensions"></span></a>
+  <a href="#" class="vtexsc-confirmButton skuselector-confirm-btn">Confirmar<span class="skuselector-confirm-dimensions"></span></a>
 </div>
+<!--/COMPRAR -->
