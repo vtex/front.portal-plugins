@@ -121,7 +121,7 @@ module.exports = (grunt) ->
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
-	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'copy:build', 'string-replace', 'server', 'karma:unit', 'watch:main']
+	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'copy:build', 'concat', 'string-replace', 'server', 'karma:unit', 'watch:main']
 	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'useminPrepare', 'concat', 'uglify', 'usemin', 'copy:build', 'string-replace'] # Dist - minifies files
 	grunt.registerTask 'test', ['karma:single']
 	grunt.registerTask 'server', ['connect', 'remote']
