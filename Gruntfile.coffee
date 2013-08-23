@@ -97,7 +97,7 @@ module.exports = (grunt) ->
 				options:
 					livereload: true
 				files: ['src/**/*.html', 'src/**/*.dust', 'src/**/*.coffee', 'spec/**/*.coffee', 'spec/**/*.html', 'src/**/*.js', 'src/**/*.less']
-				tasks: ['clean', 'concurrent:transform', 'string-replace', 'karma:unit:run']
+				tasks: ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace']
 
 		concurrent:
 			transform: ['copy:main', 'copy:mocks', 'coffee', 'less', 'dustjs']
@@ -118,7 +118,7 @@ module.exports = (grunt) ->
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
-	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace', 'server', 'karma:unit', 'watch:main']
+	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace', 'server', 'watch:main']
 	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace'] # Dist - minifies files
 	grunt.registerTask 'test', ['karma:single']
 	grunt.registerTask 'server', ['connect', 'remote']
