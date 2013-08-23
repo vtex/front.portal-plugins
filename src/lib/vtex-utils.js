@@ -323,7 +323,7 @@
     Utils.prototype.plainChars = function(str) {
       var plain, regex, specialChars;
       if (str == null) {
-        return;
+        return '';
       }
       specialChars = "ąàáäâãåæćęèéëêìíïîłńòóöôõøśùúüûñçżź";
       plain = "aaaaaaaaceeeeeiiiilnoooooosuuuunczz";
@@ -336,6 +336,9 @@
 
     Utils.prototype.sanitize = function(str) {
       var s;
+      if (str == null) {
+        return '';
+      }
       s = this.plainChars(str.replace(/\s/g, '').replace(/\/|\\/g, '-').replace(/\(|\)|\'|\"/g, '').toLowerCase().replace(/\,/g, 'V').replace(/\./g, 'P'));
       return s.charAt(0).toUpperCase() + s.slice(1);
     };
