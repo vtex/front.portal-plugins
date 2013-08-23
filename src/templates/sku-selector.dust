@@ -85,9 +85,9 @@
           style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
 </div>
 <div class="vtexsc-buttonWrap clearfix skuselector-buy-btn-wrap" style="display: none;">
-    <a href="#" class="vtexsc-buyButton skuselector-buy-btn">Comprar</a>
+    <a href="#" class="vtexsc-buyButton skuselector-buy-btn"></a>
 </div>
 <div class="vtexsc-buttonWrap clearfix skuselector-confirm-btn-wrap" style="display: none;">
-    <a href="#" class="vtexsc-confirmButton skuselector-confirm-btn">Confirmar - <span
+    <a href="#" class="vtexsc-confirmButton skuselector-confirm-btn">Confirmar<span
             class="skuselector-confirm-dimensions"></span></a>
 </div>
