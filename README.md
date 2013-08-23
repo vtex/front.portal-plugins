@@ -26,14 +26,6 @@ default: `false`. Se `true`, na inicialização do plugin seleciona o primeiro S
 
 default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado
 
-### confirmBuy
-
-default: `false`. Se `true`, ao clicar no botão de compra é mostrado um botão de confirmação, com as dimensões selecionadas.
-
-### showBuyButton
-
-default: `false`. Se `true`, mostra o botão de comprar.
-
 ### showProductImage
 
 default: `false`. Se `true`, mostra a imagem do produto.
