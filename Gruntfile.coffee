@@ -110,7 +110,7 @@ module.exports = (grunt) ->
 			dry:
 				options:
 					buildDirectory: 'build'
-          requireEnvironmentType: 'dryrun'
+					requireEnvironmentType: 'dryrun'
 					dryRun: true
 			walmart:
 				options:
