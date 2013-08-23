@@ -14,15 +14,13 @@ module.exports = (grunt) ->
 
 		copy:
 			main:
-				files: [
-					expand: true
-					cwd: 'src/'
-					src: ['**', '!coffee/**', '!**/*.less']
-					dest: 'build/<%= relativePath %>'
-				,
-					src: ['src/index.html']
-					dest: 'build/<%= relativePath %>/index.debug.html'
-				]
+				expand: true
+				cwd: 'src/'
+				src: ['**', '!coffee/**', '!**/*.less']
+				dest: 'build/<%= relativePath %>'
+			mocks:
+				src: ['spec/mocks/*.json']
+				dest: 'build/<%= relativePath %>/'
 
 		coffee:
 			main:
@@ -40,18 +38,19 @@ module.exports = (grunt) ->
 					'build/<%= relativePath %>/style/portal-sku-selector.css': 'src/style/portal-sku-selector.less'
 					'build/<%= relativePath %>/style/product-listing-mock.css': 'src/style/product-listing-mock.less'
 
+		uglify:
+			main:
+				files:
+					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
+					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
+					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
+
 		concat:
 			dev:
 				files:
-					'build/js/portal-sku-selector-with-template.dev.js': ['build/templates/template-sku-selector.js', 'build/js/portal-sku-selector.js']
-					'build/js/portal-minicart-with-template.dev.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
-					'build/js/portal-template-as-modal.dev.js': 'build/js/portal-template-as-modal.js'
-
-		useminPrepare:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/sku-selector.html', 'build/<%= relativePath %>/modal.html']
-
-		usemin:
-			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/sku-selector.html', 'build/<%= relativePath %>/modal.html']
+					'build/js/portal-sku-selector-with-template.js': ['build/templates/template-sku-selector.js', 'build/js/portal-sku-selector.js']
+					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
+					'build/js/portal-template-as-modal.js': 'build/js/portal-template-as-modal.js'
 
 		karma:
 			options:
@@ -101,7 +100,7 @@ module.exports = (grunt) ->
 				tasks: ['clean', 'concurrent:transform', 'string-replace', 'karma:unit:run']
 
 		concurrent:
-			transform: ['copy:main', 'coffee', 'less', 'dustjs']
+			transform: ['copy:main', 'copy:mocks', 'coffee', 'less', 'dustjs']
 
 		vtex_deploy:
 			main:
@@ -119,7 +118,7 @@ module.exports = (grunt) ->
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
-	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'string-replace', 'server', 'karma:unit', 'watch:main']
-	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'useminPrepare', 'concat', 'uglify', 'string-replace'] # Dist - minifies files
+	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace', 'server', 'karma:unit', 'watch:main']
+	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace'] # Dist - minifies files
 	grunt.registerTask 'test', ['karma:single']
 	grunt.registerTask 'server', ['connect', 'remote']

@@ -13,7 +13,7 @@
     <script src="/lib/dust-core-2.0.0.min.js"></script>
 
     <style type="text/css">
-        .disabled {
+        .item_doesnt_exist {
             color: gray;
         }
     </style>
@@ -22,24 +22,14 @@
 
     <div class="portal-sku-selector-ref2" style="float: right; width: 600px;"></div>
 
-    <!-- build:js js/portal-sku-selector-with-template.min.js -->
-    <script src="/templates/template-sku-selector.js"></script>
-    <script src="js/portal-sku-selector.js"></script>
-    <!-- endbuild -->
-
-    <!-- build:js js/portal-minicart-with-template.min.js -->
-    <script src="/templates/template-minicart.js"></script>
-    <script src="js/portal-minicart.js"></script>
-    <!-- endbuild -->
-
     <script type="text/javascript">
-        var mocks = ['/spec/mocks/twoDimensions.json', '/spec/mocks/threeDimensionsAvailable.json', '/spec/mocks/threeDimensionsSomeUnavailable.json', '/spec/mocks/oneDimensionUnavailable.json', '/spec/mocks/manyDimensionsCombo.json'];
+        var mocks = ['spec/mocks/shoestock.json', 'spec/mocks/casaamerica.json'];
 
-        $.getJSON(mocks[1]).done(function(data){
+        $.getJSON(mocks[0]).done(function(data){
           $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true, showBuyButton: true});
         });
 
-        $.getJSON(mocks[2]).done(function(data){
+        $.getJSON(mocks[1]).done(function(data){
           $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true, showPrice: true, selectOnOpening: true});
         });
     </script>
