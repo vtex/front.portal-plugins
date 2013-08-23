@@ -9,7 +9,7 @@
     {#dimensions}
     <ul class="topic {name|sanitize} {nameClass}">
         <li class="specification">{name}</li>
-        <li class="select skuList">
+        <li class="select skuList item-dimension-{name|sanitize}">
             {#isRadio}
             <span class="group_{$idx}">
             {#values}
