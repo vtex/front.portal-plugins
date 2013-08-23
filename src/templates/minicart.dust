@@ -1,20 +1,22 @@
 {#showTotalizers}
-<div class="cartInfoWrapper">
-  <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
-  <ul class="cart-info">
-    <li class="amount-products">
-      <span id="MostraTextoXml2">Total de Produtos:</span> <em class="amount-products-em">{items.length}</em>
-    </li>
-    <li class="amount-items">
-      <span id="MostraTextoXml3">Itens:</span> <em class="amount-items-em">{amountItems}</em>
-    </li>
-    <li class="amount-kits">
-      <span id="MostraTextoXml4">Total de Kits:</span> <em class="amount-kits-em">{amountKits}</em>
-    </li>
-    <li class="total-cart">
-      <span id="MostraTextoXml5">Valor Total:</span> <em class="total-cart-em">{totalCart}</em>
-    </li>
-  </ul>
+<div class="amount-items-in-cart">
+  <div class="cartInfoWrapper">
+    <span class="title"><span id="MostraTextoXml1">Resumo do Carrinho</span></span>
+    <ul class="cart-info">
+      <li class="amount-products">
+        <strong><span id="MostraTextoXml2">Total de Produtos:</span></strong> <em class="amount-products-em">{items.length}</em>
+      </li>
+      <li class="amount-items">
+        <strong><span id="MostraTextoXml3">Itens:</span></strong> <em class="amount-items-em">{amountItems}</em>
+      </li>
+      <li class="amount-kits">
+        <strong><span id="MostraTextoXml4">Total de Kits:</span></strong> <em class="amount-kits-em">{amountKits}</em>
+      </li>
+      <li class="total-cart">
+        <strong><span id="MostraTextoXml5">Valor Total:</span></strong> <em class="total-cart-em">{totalCart}</em>
+      </li>
+    </ul>
+  </div>
 </div>
 {/showTotalizers}
 
