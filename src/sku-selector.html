@@ -12,25 +12,28 @@
     <script src="/lib/vtex-utils.js"></script>
     <script src="/lib/dust-core-2.0.0.min.js"></script>
 
-    <style type="text/css">
-        .item_doesnt_exist {
-            color: gray;
-        }
-    </style>
+    <style type="text/css">.item_doesnt_exist {color: gray;}</style>
+
 
     <div class="portal-sku-selector-ref"></div>
-
+    <a href="" class="buy-button">COMPRAR</a>
     <div class="portal-sku-selector-ref2" style="float: right; width: 600px;"></div>
+    <a href="" class="buy-button2" style="float: right;">COMPRAR</a>
+
+    <script src='js/portal-sku-selector-with-template.js'></script>
+    <script src='js/portal-buy-button.js'></script>
 
     <script type="text/javascript">
         var mocks = ['spec/mocks/shoestock.json', 'spec/mocks/casaamerica.json'];
 
         $.getJSON(mocks[0]).done(function(data){
-          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true, showBuyButton: true});
+          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true, showBuyButton: false});
+          $('.buy-button').buyButton(data);
         });
 
         $.getJSON(mocks[1]).done(function(data){
-          $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true, showPrice: true, selectOnOpening: true});
+          $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true, showPrice: true, selectOnOpening:false});
+          $('.buy-button2').buyButton(data);
         });
     </script>
 
