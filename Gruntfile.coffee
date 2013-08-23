@@ -2,7 +2,6 @@ module.exports = (grunt) ->
 	pkg = grunt.file.readJSON('package.json')
 
 	replacements =
-		'VTEX_IO_HOST': 'io.vtex.com.br'
 		'VERSION': pkg.version
 
 	# Project configuration.
@@ -11,7 +10,7 @@ module.exports = (grunt) ->
 
 		# Tasks
 		clean:
-			main: ['build', 'build-raw', 'tmp-deploy']
+			main: ['build', 'tmp-deploy']
 
 		copy:
 			main:
@@ -19,16 +18,11 @@ module.exports = (grunt) ->
 					expand: true
 					cwd: 'src/'
 					src: ['**', '!coffee/**', '!**/*.less']
-					dest: 'build-raw/<%= relativePath %>'
+					dest: 'build/<%= relativePath %>'
 				,
 					src: ['src/index.html']
-					dest: 'build-raw/<%= relativePath %>/index.debug.html'
+					dest: 'build/<%= relativePath %>/index.debug.html'
 				]
-			build:
-				expand: true
-				cwd: 'build-raw/'
-				src: '**/*.*'
-				dest: 'build/'
 
 		coffee:
 			main:
@@ -36,7 +30,7 @@ module.exports = (grunt) ->
 					expand: true
 					cwd: 'src/coffee'
 					src: ['**/*.coffee']
-					dest: 'build-raw/<%= relativePath %>/js/'
+					dest: 'build/<%= relativePath %>/js/'
 					ext: '.js'
 				]
 
@@ -54,10 +48,10 @@ module.exports = (grunt) ->
 					'build/js/portal-template-as-modal.dev.js': 'build/js/portal-template-as-modal.js'
 
 		useminPrepare:
-			html: ['build-raw/<%= relativePath %>/index.html', 'build-raw/<%= relativePath %>/sku-selector.html', 'build-raw/<%= relativePath %>/modal.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/sku-selector.html', 'build/<%= relativePath %>/modal.html']
 
 		usemin:
-			html: ['build-raw/<%= relativePath %>/index.html', 'build-raw/<%= relativePath %>/sku-selector.html', 'build-raw/<%= relativePath %>/modal.html']
+			html: ['build/<%= relativePath %>/index.html', 'build/<%= relativePath %>/sku-selector.html', 'build/<%= relativePath %>/modal.html']
 
 		karma:
 			options:
@@ -70,14 +64,14 @@ module.exports = (grunt) ->
 		'string-replace':
 			main:
 				files:
-					'build/<%= relativePath %>/index.html': ['build-raw/<%= relativePath %>/index.html']
-					'build/<%= relativePath %>/index.debug.html': ['build-raw/<%= relativePath %>/index.debug.html']
+					'build/<%= relativePath %>/index.html': ['build/<%= relativePath %>/index.html']
+					'build/<%= relativePath %>/index.debug.html': ['build/<%= relativePath %>/index.debug.html']
 				options:
 					replacements: ({'pattern': new RegExp(key, "g"), 'replacement': value} for key, value of replacements)
 
 			all:
 				files:
-					'build/button-bind-modal-api-response.html': ['build-raw/button-bind-modal-api-response.html']
+					'build/button-bind-modal-api-response.html': ['build/button-bind-modal-api-response.html']
 
 				options:
 					replacements: [
@@ -88,8 +82,8 @@ module.exports = (grunt) ->
 		dustjs:
 			compile:
 				files:
-					'build-raw/templates/template-sku-selector.js': 'src/templates/sku-selector.dust'
-					'build-raw/templates/template-minicart.js': 'src/templates/minicart.dust'
+					'build/templates/template-sku-selector.js': 'src/templates/sku-selector.dust'
+					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
 
 		connect:
 			main:
@@ -104,7 +98,7 @@ module.exports = (grunt) ->
 				options:
 					livereload: true
 				files: ['src/**/*.html', 'src/**/*.dust', 'src/**/*.coffee', 'spec/**/*.coffee', 'src/**/*.js', 'src/**/*.less']
-				tasks: ['clean', 'concurrent:transform', 'copy:build', 'string-replace', 'karma:unit:run']
+				tasks: ['clean', 'concurrent:transform', 'string-replace', 'karma:unit:run']
 
 		concurrent:
 			transform: ['copy:main', 'coffee', 'less', 'dustjs']
@@ -113,15 +107,19 @@ module.exports = (grunt) ->
 			main:
 				options:
 					buildDirectory: 'build'
+			dry:
+				options:
+					buildDirectory: 'build'
+					dryRun: true
 			walmart:
 				options:
-					buildDirectory: 'build-raw'
+					buildDirectory: 'build'
 					bucket: 'vtex-io-walmart'
 					requireEnvironmentType: 'stable'
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
-	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'copy:build', 'concat', 'string-replace', 'server', 'karma:unit', 'watch:main']
-	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'useminPrepare', 'concat', 'uglify', 'usemin', 'copy:build', 'string-replace'] # Dist - minifies files
+	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'string-replace', 'server', 'karma:unit', 'watch:main']
+	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'useminPrepare', 'concat', 'uglify', 'string-replace'] # Dist - minifies files
 	grunt.registerTask 'test', ['karma:single']
 	grunt.registerTask 'server', ['connect', 'remote']
