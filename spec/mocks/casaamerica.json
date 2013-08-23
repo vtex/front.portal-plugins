@@ -1,0 +1,210 @@
+{
+  "url": "http://casaamerica.vtexcommercebeta.com.br/fronha-avulsa-percal-200-fios-com-abas-altenburg-2900805/p",
+  "productId": 10615,
+  "name": "Fronha Avulsa Percal 200 Fios com Abas - Altenburg",
+  "salesChannel": "1",
+  "dimensions": ["Cor/Estampa"],
+  "dimensionsInputType": {
+    "Cor/Estampa": "Combo"
+  },
+  "dimensionsMap": {
+    "Cor/Estampa": ["Branco", "Marrom", "Rosa Claro", "Vinho", "Areia", "Rose", "Azul Claro", "Cinza", "Verde Cano", "Verde Água", "Creme", "Chumbo", "Verde Fosco", "Bege"]
+  },
+  "skus": [{
+    "sku": 10616,
+    "dimensions": {
+      "Cor/Estampa": "Rose"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162169-480-480/fronha-avulsa-percal-rose-altenburg-2900805-RO04.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10617,
+    "dimensions": {
+      "Cor/Estampa": "Cinza"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162176-480-480/fronha-avulsa-percal-cinza-altenburg-2900805-CI03.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10618,
+    "dimensions": {
+      "Cor/Estampa": "Rosa Claro"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162170-480-480/fronha-avulsa-percal-rosa-claro-altenburg-2900805-RO12.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10619,
+    "dimensions": {
+      "Cor/Estampa": "Verde Cano"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162171-480-480/fronha-avulsa-percal-verde-cano-altenburg-2900805-VERD.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10620,
+    "dimensions": {
+      "Cor/Estampa": "Marrom"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162172-480-480/fronha-avulsa-percal-marrom-altenburg-2900805-MA10.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10621,
+    "dimensions": {
+      "Cor/Estampa": "Areia"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162173-480-480/fronha-avulsa-percal-areia-altenburg-2900805-AR01.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10622,
+    "dimensions": {
+      "Cor/Estampa": "Verde Água"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162174-480-480/fronha-avulsa-percal-verde-agua-altenburg-2900805-VER10.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10623,
+    "dimensions": {
+      "Cor/Estampa": "Vinho"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162175-480-480/fronha-avulsa-percal-vinho-altenburg-2900805-VI01.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10624,
+    "dimensions": {
+      "Cor/Estampa": "Creme"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162177-480-480/fronha-avulsa-percal-creme-altenburg-2900805-CR01.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10625,
+    "dimensions": {
+      "Cor/Estampa": "Chumbo"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162178-480-480/fronha-avulsa-percal-chumbo-altenburg-2900805-CH99.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10626,
+    "dimensions": {
+      "Cor/Estampa": "Verde Fosco"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162179-480-480/fronha-avulsa-percal-verde-fosco-altenburg-2900805-VERDF.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10627,
+    "dimensions": {
+      "Cor/Estampa": "Branco"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162180-480-480/fronha-avulsa-percal-branco-altenburg-2900805-BR01.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10628,
+    "dimensions": {
+      "Cor/Estampa": "Azul Claro"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162181-480-480/fronha-avulsa-percal-azul-claro-altenburg-2900805-AZC02.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }, {
+    "sku": 10645,
+    "dimensions": {
+      "Cor/Estampa": "Bege"
+    },
+    "available": true,
+    "listPrice": 1490,
+    "bestPrice": 1490,
+    "installments": 1,
+    "installmentsValue": 1490,
+    "installmentsInsterestRate": 0,
+    "image": "http://casaamerica.vtexcommercebeta.com.br/arquivos/ids/162182-480-480/fronha-avulsa-percal-bege-altenburg-2900805-BE02.jpg",
+    "sellerId": "1",
+    "seller": "CasaAmerica"
+  }]
+}

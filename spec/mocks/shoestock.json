@@ -1,0 +1,140 @@
+{
+  "_url": "http://shoestock.vtexcommercebeta.com.br/sandalia-lez-tumb-15-07-1693-00110/p",
+  "productId": 2010237,
+  "name": "Sandália Tan de Couro",
+  "salesChannel": "1",
+  "dimensions": ["Tamanho"],
+  "dimensionsInputType": {
+    "Tamanho": "Combo"
+  },
+  "dimensionsMap": {
+    "Tamanho": ["33", "34", "35", "36", "37", "38", "39", "40", "41"]
+  },
+  "skus": [{
+    "sku": 2080603,
+    "dimensions": {
+      "Tamanho": "33"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080604,
+    "dimensions": {
+      "Tamanho": "34"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080605,
+    "dimensions": {
+      "Tamanho": "35"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080606,
+    "dimensions": {
+      "Tamanho": "36"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080607,
+    "dimensions": {
+      "Tamanho": "37"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080608,
+    "dimensions": {
+      "Tamanho": "38"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080609,
+    "dimensions": {
+      "Tamanho": "39"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080610,
+    "dimensions": {
+      "Tamanho": "40"
+    },
+    "available": true,
+    "listPrice": 19990,
+    "bestPrice": 19990,
+    "installments": 4,
+    "installmentsValue": 4997,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }, {
+    "sku": 2080611,
+    "dimensions": {
+      "Tamanho": "41"
+    },
+    "available": false,
+    "listPrice": 99998700,
+    "bestPrice": 99998700,
+    "installments": 12,
+    "installmentsValue": 8333225,
+    "installmentsInsterestRate": 0,
+    "image": "http://shoestock.vtexcommercebeta.com.br/arquivos/ids/370693-391-391/15.07.1693.00110_sz1.jpg",
+    "sellerId": "1",
+    "seller": "Shoestock"
+  }]
+}
