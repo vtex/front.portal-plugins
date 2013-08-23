@@ -41,7 +41,7 @@ openModalFromTemplate = (evt) ->
 	$(document).on 'vtex.modal.hide', hideModal
 
 	$.get(templateURL).done (content) ->
-		$container.find('.boxPopUp2-content').html $(content)
+		$container.find('.skuWrap_').html $(content)
 
 $(document).ready(doBind)
 $(document).on('ajaxComplete', doBind)
