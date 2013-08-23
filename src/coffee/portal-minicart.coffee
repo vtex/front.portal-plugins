@@ -110,7 +110,6 @@ class Minicart
 				item.formattedPrice = _.intAsCurrency(item.price, @options)
 
 	render: () =>
-		console.log @cartData
 		dust.render 'minicart', @cartData, (err, out) =>
 			console.log 'Minicart Dust error: ', err if err
 			@context.html out
