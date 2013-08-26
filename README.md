@@ -5,6 +5,9 @@
 - [Buy Button](#buy-button)
 - [Minicart](#minicart)
 
+
+---
+
 # Sku Selector
 
 ## Uso
@@ -76,6 +79,7 @@ O Qty Selector lança os seguintes eventos:
 Adicionalmente, o Qty Selector escuta pelos seguintes eventos:
 
 - <b>`vtex.qty.changed [qty, productId]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+
 
 ---
 
