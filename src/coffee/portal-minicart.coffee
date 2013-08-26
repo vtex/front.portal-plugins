@@ -53,23 +53,7 @@ class Minicart
 				$(".vtexsc-cart").stop(true, true).slideUp()
 			, 800
 
-		$(window).on "cartUpdated", (event, cartData, show) =>
-			if cartData
-				@cartData = cartData
-				@prepareCart()
-				@render()
-
-				if cartData.items.length is 0
-					$(".vtexsc-cart").slideUp()
-				else if show
-					$(".vtexsc-cart").slideDown()
-					@timeoutToHide = setTimeout ->
-						$(".vtexsc-cart").stop(true, true).slideUp()
-					, 3000
-
-			else
-				@updateCart()
-
+		$(window).on "cartUpdated", @updateCart
 		$(window).on 'productAddedToCart', @updateCart
 		$(window).on 'vtex.cart.productAdded', @updateCart
 
@@ -91,6 +75,7 @@ class Minicart
 			@cartData = data
 			@prepareCart()
 			@render()
+			@slide()
 
 	prepareCart: =>
 		# Conditionals
@@ -122,6 +107,15 @@ class Minicart
 			$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
 				@deleteItem(this)
 
+	slide: =>
+		if @cartData.items.length is 0
+			@context.find(".vtexsc-cart").slideUp()
+		else
+			@context.find(".vtexsc-cart").slideDown()
+			@timeoutToHide = setTimeout ->
+				@context.find(".vtexsc-cart").stop(true, true).slideUp()
+			, 3000
+
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
 
@@ -145,6 +139,7 @@ class Minicart
 			@cartData = data
 			@prepareCart()
 			@render()
+			@slide()
 
 	getAvailabilityCode: (item) =>
 		item.availability or "available"
