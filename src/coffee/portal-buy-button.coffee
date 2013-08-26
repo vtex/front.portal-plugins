@@ -3,15 +3,12 @@
 
 $ = window.jQuery
 
-
-#
 # CLASSES
-#
 class BuyButton
-	constructor: (element, buyData, options) ->
+	constructor: (element, productId, buyData = {}, options) ->
 		@element = element
-		@productId = buyData.productId
-		@sku = buyData.sku
+		@productId = productId
+		@sku = buyData.sku || null
 		@qty = buyData.qty || 1
 		@seller = buyData.seller || 1
 		@salesChannel = buyData.salesChannel || 1
@@ -70,10 +67,8 @@ class BuyButton
 		return false
 
 
-#
 # PLUGIN ENTRY POINT
-#
-$.fn.buyButton = (buyData, jsOptions) ->
+$.fn.buyButton = (productId, buyData, jsOptions) ->
 	# Gather options
 	domOptions = this.data()
 	defaultOptions = $.fn.buyButton.defaults
@@ -81,12 +76,10 @@ $.fn.buyButton = (buyData, jsOptions) ->
 	# Deep extending with true, for the selectors
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
 
-	new BuyButton(this, buyData, options)
+	new BuyButton(this, productId, buyData, options)
 
 
-#
 # PLUGIN DEFAULTS
-#
 $.fn.buyButton.defaults =
 	errorMessage: "Por favor, selecione o modelo desejado."
 	redirect: true

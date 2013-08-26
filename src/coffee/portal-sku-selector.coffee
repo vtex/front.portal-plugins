@@ -5,9 +5,7 @@
 
 $ = window.jQuery
 
-#
 # SHARED STUFF
-#
 $.skuSelector =
 	getAddUrlForSku: (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
 		"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
@@ -24,17 +22,13 @@ $.skuSelector =
 		warnUnavailable: '.skuselector-warn-unavailable'
 
 
-#
 # DUST FILTERS
-#
 _.extend dust.filters,
 	sanitize: (value) -> _.sanitize value
 	spacesToHyphens: (value) -> _.spacesToHyphens value
 
 
-#
 # CLASSES
-#
 class SkuSelector
 	constructor: (productData, options) ->
 		@productId = productData.productId
@@ -323,9 +317,8 @@ class SkuSelectorRenderer
 	showWarnUnavailable: (sku) =>
 		@select.warnUnavailable().show().find('input.sku-notifyme-skuid').val(sku)
 
-#
+
 # PLUGIN ENTRY POINT
-#
 $.fn.skuSelector = (productData, jsOptions = {}) ->
 	if this.length > 1
 		throw new Error('Sku Selector should be activated on only one element! To activate many sku selectors, activate it for each element.')
@@ -396,9 +389,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	return this
 
 
-#
 # PLUGIN DEFAULTS
-#
 $.fn.skuSelector.defaults =
 	showProductImage: false
 	showProductTitle: false
@@ -416,20 +407,8 @@ $.fn.skuSelector.defaults =
 		$.post '/no-cache/AviseMe.aspx', $(formElement).serialize()
 
 
-#
-# EXPORTS
-#
-window.vtex or= {}
-vtex.portalPlugins or= {}
-vtex.portalPlugins.SkuSelector = SkuSelector
-vtex.portalPlugins.SkuSelectorRenderer = SkuSelectorRenderer
-
-
-#
-# EVENTS
-#
+# EVENTS (DEPRECATED!)
 $(document).on "vtex.sku.selected", (evt, sku, productData) ->
 	window.FireSkuChangeImage?(sku.sku)
 	#window.FireSkuDataReceived?(sku.sku)
 	window.FireSkuSelectionChanged?(sku.sku)
-

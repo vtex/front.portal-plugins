@@ -1,8 +1,11 @@
+# DEPENDENCIES:
+# jQuery
+# vtex-utils
+# dust
+
 $ = window.jQuery
 
-#
-# Class
-#
+# CLASS
 class Minicart
 	constructor: (context, options) ->
 		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
@@ -150,9 +153,7 @@ class Minicart
 		@options.availabilityMessages[@getAvailabilityCode(item)]
 
 
-#
-# Plugin
-#
+# PLUGIN ENTRY POINT
 $.fn.minicart = (options) ->
 	for element in this
 		$element = $(element)
@@ -163,6 +164,7 @@ $.fn.minicart = (options) ->
 	# Chaining
 	return this
 
+# PLUGIN DEFAULTS
 $.fn.minicart.defaults =
 	availabilityMessages:
 		"available": ""
@@ -174,11 +176,3 @@ $.fn.minicart.defaults =
 		"nullPrice": "Este item não está disponível no momento."
 	showMinicart: true
 	showTotalizers: true
-
-
-#
-# EXPORTS
-#
-window.vtex or= {}
-vtex.portalPlugins or= {}
-vtex.portalPlugins.Minicart = Minicart
