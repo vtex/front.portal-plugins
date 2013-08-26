@@ -34,7 +34,7 @@ class BuyButton
 		@sku = sku.sku
 		@update()
 
-	skuUnselected: (evt, sku, productId) =>
+	skuUnselected: (evt, selectableSkus, productId) =>
 		return unless @check(productId)
 		@sku = null
 		@update()
@@ -77,6 +77,9 @@ $.fn.buyButton = (productId, buyData, jsOptions) ->
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
 
 	new BuyButton(this, productId, buyData, options)
+
+	# Chaining
+	return this
 
 
 # PLUGIN DEFAULTS
