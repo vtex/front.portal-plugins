@@ -33,16 +33,18 @@ class Minicart
 	bindEvents: =>
 		@hoverContext.on 'mouseover', ->
 			$(window).trigger "minicartMouseOver"
+			@context.trigger 'vtex.cart.mouseOver'
 
 		@hoverContext.on 'mouseout', ->
 			$(window).trigger "minicartMouseOut"
+			@context.trigger 'vtex.cart.mouseOut'
 
-		$(window).on "minicartMouseOver", =>
+		$(window).on "vtex.minicart.mouseOver", =>
 			if @cartData.items?.length > 0
 				$(".vtexsc-cart").slideDown()
 				clearTimeout @timeoutToHide
 
-		$(window).on "minicartMouseOut", =>
+		$(window).on "vtex.minicart.mouseOut", =>
 			clearTimeout @timeoutToHide
 			@timeoutToHide = setTimeout ->
 				$(".vtexsc-cart").stop(true, true).slideUp()
@@ -65,8 +67,8 @@ class Minicart
 			else
 				@updateCart()
 
-		$(window).on 'productAddedToCart', =>
-			@updateCart()
+		$(window).on 'productAddedToCart', @updateCart
+		$(window).on 'vtex.cart.productAdded', @updateCart
 
 	updateCart: =>
 		@context.addClass 'amount-items-in-cart-loading'
@@ -81,6 +83,7 @@ class Minicart
 		})
 		.done =>
 			@context.removeClass 'amount-items-in-cart-loading'
+			@context.trigger 'vtex.minicart.updated'
 		.success (data) =>
 			@cartData = data
 			@prepareCart()
@@ -132,7 +135,10 @@ class Minicart
 			contentType: "application/json; charset=utf-8"
 			type: "POST"
 		})
+		.done =>
+			@context.trigger 'vtex.minicart.updated'
 		.success (data) =>
+			@context.trigger 'vtex.cart.productRemoved'
 			@cartData = data
 			@prepareCart()
 			@render()
