@@ -12,33 +12,33 @@ Chame o plugin em uma `div` vazia:
 
     $('.sku-selector-container').skuSelector(data, options);
 
-- **`data`**: deve ser um JSON de SKUs padrão da API
+- <b>`data`</b>: deve ser um JSON de SKUs padrão da API
 
-- **`options`**: opcional, é um objeto que pode ter as seguintes propriedades
-    - **`selectOnOpening`**
+- <b>`options`</b>: opcional, é um objeto que pode ter as seguintes propriedades
+    - <b>`selectOnOpening`</b>
         default: `false`. Se `true`, na inicialização do plugin seleciona o primeiro SKU disponível (o primeiro que vier no array).
 
-    - **`warnUnavailable`**
+    - <b>`warnUnavailable`</b>
         default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado
 
-    - **`showProductImage`**
+    - <b>`showProductImage`</b>
         default: `false`. Se `true`, mostra a imagem do produto.
-        
-    - **`showProductTitle`**
+
+    - <b>`showProductTitle`</b>
         default: `false`. Se `true`, mostra o nome do produto
-        
-    - **`showPrice`**
+
+    - <b>`showPrice`</b>
         default: `false`. Se `true`, mostra o preço.
 
-    - **`showPriceRange`**
+    - <b>`showPriceRange`</b>
         default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs selecionáveis com as dimensões já selecionadas.
 
 ## Eventos
 
-- **`vtex.sku.ready`**: ativado quando o Sku Selector é renderizado
-- **`vtex.sku.dimensionChanged`**: ativado quando uma dimensão é selecionada
-- **`vtex.sku.selected`**: ativado quando um SKU é definido
-- **`vtex.sku.unselected`**: ativado quando o SKU torna-se indefinido
+- <b>`vtex.sku.ready`</b>: ativado quando o Sku Selector é renderizado
+- <b>`vtex.sku.dimensionChanged`</b>: ativado quando uma dimensão é selecionada
+- <b>`vtex.sku.selected`</b>: ativado quando um SKU é definido
+- <b>`vtex.sku.unselected`</b>: ativado quando o SKU torna-se indefinido
 
 ---
 
@@ -47,22 +47,22 @@ Chame o plugin em uma `div` vazia:
 ## Dependências
 
  - [jQuery](http://www.jquery.com)
- 
+
 ## Uso
 
 Chame o plugin na `a` que age como botão de comprar:
 
     $('.buy-button').buyButton(data, options)
-    
-- **`data`**: um objeto que **deve** ter a propriedade **`productId`**, e pode também ter `sku`, `qty`, `seller` e `salesChannel`.
 
-- **`options`**: opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`data`</b>: um objeto que <b>deve</b> ter a propriedade <b>`productId`</b>, e pode também ter `sku`, `qty`, `seller` e `salesChannel`.
 
-    - **`errorMessage`**
+- <b>`options`</b>: opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`errorMessage`</b>
         Mensagem de erro que será alertada se o usuário clicar no botão sem ter escolhido um SKU. Default: *"Por favor, selecione o modelo desejado."*
 
-    - **`redirect`**
-        default: `true`. Determina a propriedade de mesmo nome na querystring. **Deve ser `true` para página de produto, e `false` para modal.**
+    - <b>`redirect`</b>
+        default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.</b>
 
 ---
 
@@ -79,19 +79,19 @@ Chame o plugin na `a` que age como botão de comprar:
 Chame o plugin em uma `div` vazia:
 
     $('.portal-minicart-ref').minicart(options);
-    
-- **`options`**: opcional, é um objeto que pode ter as seguintes propriedades
 
-    - **`valuePrefix`**
+- <b>`options`</b>: opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`valuePrefix`</b>
         default: `"R$ "`. Define o texto a ser exibido antes do valor.
-    
-    - **`valueSufix`**
+
+    - <b>`valueSufix`</b>
         default: `""`. Define o texto a ser exibido depois do valor.
-    
-    - **`availabilityMessages`**
+
+    - <b>`availabilityMessages`</b>
         Define as mensagens exibidas para cada código de disponibilidade da API. Default:
 
-            { 
+            {
     		"available": "",
     		"unavailableItemFulfillment": "Este item não está disponível no momento.",
     		"withoutStock": "Este item não está disponível no momento.",
@@ -100,9 +100,9 @@ Chame o plugin em uma `div` vazia:
     		"withoutPriceRnB": "Este item não está disponível no momento.",
     		"nullPrice": "Este item não está disponível no momento."
             }
-    
-    - **`showMinicart`**
+
+    - <b>`showMinicart`</b>
         default: `true`. Define se o minicart deve ser mostrado.
-    
-    - **`showTotalizers`**
+
+    - <b>`showTotalizers`</b>
         default: `true`. Define se o totalizers deve ser mostrado.
