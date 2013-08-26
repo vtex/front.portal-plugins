@@ -1,11 +1,5 @@
 # Sku Selector
 
-## Dependências
-
- - [jQuery](http://www.jquery.com)
- - [front.utils](https://github.com/vtex/front.utils)
- - [Liquid.js](https://github.com/gberger42/liquid.js)
-
 ## Uso
 
 Chame o plugin em uma `div` vazia:
@@ -35,18 +29,17 @@ Chame o plugin em uma `div` vazia:
 
 ## Eventos
 
+O Sku Selector lança os seguintes eventos:
+
 - <b>`vtex.sku.ready`</b>: ativado quando o Sku Selector é renderizado
 - <b>`vtex.sku.dimensionChanged`</b>: ativado quando uma dimensão é selecionada
 - <b>`vtex.sku.selected`</b>: ativado quando um SKU é definido
 - <b>`vtex.sku.unselected`</b>: ativado quando o SKU torna-se indefinido
 
+
 ---
 
 # Buy Button
-
-## Dependências
-
- - [jQuery](http://www.jquery.com)
 
 ## Uso
 
@@ -64,15 +57,23 @@ Chame o plugin na `a` que age como botão de comprar:
     - <b>`redirect`</b>
         default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.</b>
 
+## Eventos
+
+O Buy Button lança os seguintes eventos:
+
+- <b>`vtex.modal.hide`</b>: quando `redirect=false` e o botão é clicado
+- <b>`vtex.cart.productAdded`</b>: quando `redirect=false`, o botão é clicado e a resposta do AJAX volta
+
+Adicionalmente, o Buy Button escuta pelos seguintes eventos:
+
+- <b>`vtex.sku.selected`</b>
+- <b>`vtex.sku.unselected`</b>
+- <b>`vtex.qty.changed`</b>
+
+
 ---
 
 # Minicart
-
-## Dependências
-
- - [jQuery](http://www.jquery.com)
- - [front.utils](https://github.com/vtex/front.utils)
- - [Liquid.js](https://github.com/gberger42/liquid.js)
 
 ## Uso
 
@@ -106,3 +107,32 @@ Chame o plugin em uma `div` vazia:
 
     - <b>`showTotalizers`</b>
         default: `true`. Define se o totalizers deve ser mostrado.
+
+## Eventos
+
+O Minicart lança os seguintes eventos:
+
+- <b>`vtex.cart.productRemoved`</b>: quando um item é removido pelo minicart
+- <b>`vtex.minicart.mouseOver`</b>
+- <b>`vtex.minicart.mouseOut`</b>
+- <b>`vtex.minicart.updated`</b>
+
+Adicionalmente, o Minicart escuta pelos seguintes eventos:
+
+- <b>`vtex.cart.productAdded`</b>: o Minicart se atualiza
+
+
+---
+
+# Dependências
+
+| Plugin       | [jQuery][] | [front.utils][] | [Dust][]|
+| ------------ | --- | --- | --- |
+| Sku Selector |  ✔  |  ✔  |  ✔  |
+| Buy Button   |  ✔  |  ✗  |  ✗  |
+| Minicart     |  ✔  |  ✔  |  ✔  |
+
+
+  [jQuery]: http://www.jquery.com
+  [front.utils]: https://github.com/vtex/front.utils
+  [Dust]: http://linkedin.github.io/dustjs/
