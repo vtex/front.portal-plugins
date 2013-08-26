@@ -175,6 +175,7 @@ Adicionalmente, o Minicart escuta pelos seguintes eventos:
 | Plugin       | [jQuery][] | [front.utils][] | [Dust][]|
 | ------------ | --- | --- | --- |
 | Sku Selector |  ✔  |  ✔  |  ✔  |
+| Qty Selector |  ✔  |  ✗  |  ✗  |
 | Buy Button   |  ✔  |  ✗  |  ✗  |
 | Minicart     |  ✔  |  ✔  |  ✔  |
 
