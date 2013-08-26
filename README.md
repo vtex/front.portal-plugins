@@ -45,7 +45,7 @@ O Sku Selector lança os seguintes eventos:
 
 Chame o plugin na `a` que age como botão de comprar:
 
-    $('.buy-button').buyButton(data, options)
+    $('.buy-button').buyButton(data, options);
 
 - <b>`data`</b> um objeto que <b>deve</b> ter a propriedade <b>`productId`</b>, e pode também ter `sku`, `qty`, `seller` e `salesChannel`.
 
