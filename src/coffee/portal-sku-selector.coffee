@@ -5,23 +5,6 @@
 
 $ = window.jQuery
 
-# SHARED STUFF
-$.skuSelector =
-	getAddUrlForSku: (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
-		"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
-
-	selectors:
-		listPriceValue: '.skuselector-list-price .value'
-		bestPriceValue: '.skuselector-best-price .value'
-		installment: '.skuselector-installment'
-		buyButton: '.skuselector-buy-btn'
-		confirmButton: '.skuselector-confirm-btn'
-		price: '.skuselector-price'
-		priceRange: '.skuselector-price-range'
-		warning: '.skuselector-warning'
-		warnUnavailable: '.skuselector-warn-unavailable'
-
-
 # DUST FILTERS
 _.extend dust.filters,
 	sanitize: (value) -> _.sanitize value
@@ -355,7 +338,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 		selectableSkus = selector.findSelectableSkus()
 		# Trigger event for interested scripts
-		$this.trigger 'vtex.sku.dimensionChanged', [dimensionName, dimensionValue, productData]
+		$this.trigger 'vtex.sku.dimensionChanged', [dimensionName, dimensionValue, productData.productId]
 		if selectableSkus.length == 1
 			$this.trigger 'vtex.sku.selected', [selectableSkus[0], productData.productId]
 			$this.trigger 'skuSelected', [selectableSkus[0], productData.productId]
@@ -406,6 +389,21 @@ $.fn.skuSelector.defaults =
 	warnUnavailablePost: (formElement) ->
 		$.post '/no-cache/AviseMe.aspx', $(formElement).serialize()
 
+# SHARED STUFF
+$.skuSelector =
+	getAddUrlForSku: (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
+		"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
+
+	selectors:
+		listPriceValue: '.skuselector-list-price .value'
+		bestPriceValue: '.skuselector-best-price .value'
+		installment: '.skuselector-installment'
+		buyButton: '.skuselector-buy-btn'
+		confirmButton: '.skuselector-confirm-btn'
+		price: '.skuselector-price'
+		priceRange: '.skuselector-price-range'
+		warning: '.skuselector-warning'
+		warnUnavailable: '.skuselector-warn-unavailable'
 
 # EVENTS (DEPRECATED!)
 $(document).on "vtex.sku.selected", (evt, sku, productData) ->
