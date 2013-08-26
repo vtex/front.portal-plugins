@@ -1,4 +1,4 @@
-### Ìndice
+### Índice
 
 - [Sku Selector](#sku-selector)
 - [Qty Selector](#qty-selector)
