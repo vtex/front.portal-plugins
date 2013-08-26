@@ -6,20 +6,20 @@ Chame o plugin em uma `div` vazia:
 
     $('.sku-selector-container').skuSelector(data, options);
 
-- <b>`data`</b> deve ser um JSON de SKUs padrão da API
+- <b>`data`</b> deve ser um JSON de SKUs padrão da API.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades:
     - <b>`selectOnOpening`</b>
         default: `false`. Se `true`, na inicialização do plugin seleciona o primeiro SKU disponível (o primeiro que vier no array).
 
     - <b>`warnUnavailable`</b>
-        default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado
+        default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado.
 
     - <b>`showProductImage`</b>
         default: `false`. Se `true`, mostra a imagem do produto.
 
     - <b>`showProductTitle`</b>
-        default: `false`. Se `true`, mostra o nome do produto
+        default: `false`. Se `true`, mostra o nome do produto.
 
     - <b>`showPrice`</b>
         default: `false`. Se `true`, mostra o preço.
@@ -31,11 +31,44 @@ Chame o plugin em uma `div` vazia:
 
 O Sku Selector lança os seguintes eventos:
 
-- <b>`vtex.sku.ready`</b> quando o Sku Selector é renderizado
-- <b>`vtex.sku.dimensionChanged`</b> quando uma dimensão é selecionada
-- <b>`vtex.sku.selected`</b> quando um SKU é definido
-- <b>`vtex.sku.unselected`</b> quando o SKU torna-se indefinido
+- <b>`vtex.sku.ready`</b> quando o Sku Selector é renderizado.
+- <b>`vtex.sku.dimensionChanged`</b> quando uma dimensão é selecionada.
+- <b>`vtex.sku.selected`</b> quando um SKU é definido.
+- <b>`vtex.sku.unselected`</b> quando o SKU torna-se indefinido.
 
+
+---
+
+# Qty Selector
+
+## Uso
+
+Chame o plugin em uma `div` vazia:
+
+    $('.qty-selector-container').skuSelector(productId, qty, options);
+
+- <b>`productId`</b> o ID do produto.
+
+- <b>`qty`</b> a quantidade inicial do produto. Default: `1`.
+
+- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`readonly`</b>
+        default: `true`. Define se o input de quantidade deve ter o atributo readonly.
+
+   - <b>`max`</b>
+        default: `999`. Define a quantidade máxima que pode ser selecionada.
+
+
+## Eventos:
+
+O Qty Selector lança os seguintes eventos:
+
+- <b>`vtex.qty.changed`</b> quando a quantidade é mudada, e também na inicialização.
+
+Adicionalmente, o Qty Selector escuta pelos seguintes eventos:
+
+- <b>`vtex.qty.changed`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
 
 ---
 
@@ -45,9 +78,11 @@ O Sku Selector lança os seguintes eventos:
 
 Chame o plugin na `a` que age como botão de comprar:
 
-    $('.buy-button').buyButton(data, options);
+    $('.buy-button').buyButton(productId, data, options);
 
-- <b>`data`</b> um objeto que <b>deve</b> ter a propriedade <b>`productId`</b>, e pode também ter `sku`, `qty`, `seller` e `salesChannel`.
+- <b>`productId`</b> o ID do produto.
+
+- <b>`data`</b> opcional, é um objeto que pode ter as propriedades `sku`, `qty`, `seller` e `salesChannel`.
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
@@ -61,8 +96,8 @@ Chame o plugin na `a` que age como botão de comprar:
 
 O Buy Button lança os seguintes eventos:
 
-- <b>`vtex.modal.hide`</b> quando `redirect=false` e o botão é clicado
-- <b>`vtex.cart.productAdded`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta
+- <b>`vtex.modal.hide`</b> quando `redirect=false` e o botão é clicado.
+- <b>`vtex.cart.productAdded`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
 
 Adicionalmente, o Buy Button escuta pelos seguintes eventos:
 
@@ -112,14 +147,14 @@ Chame o plugin em uma `div` vazia:
 
 O Minicart lança os seguintes eventos:
 
-- <b>`vtex.cart.productRemoved`</b> quando um item é removido pelo minicart
+- <b>`vtex.cart.productRemoved`</b> quando um item é removido pelo minicart.
 - <b>`vtex.minicart.mouseOver`</b>
 - <b>`vtex.minicart.mouseOut`</b>
 - <b>`vtex.minicart.updated`</b>
 
 Adicionalmente, o Minicart escuta pelos seguintes eventos:
 
-- <b>`vtex.cart.productAdded`</b> o Minicart se atualiza
+- <b>`vtex.cart.productAdded`</b> o Minicart se atualiza.
 
 
 ---
