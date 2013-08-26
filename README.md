@@ -31,10 +31,10 @@ Chame o plugin em uma `div` vazia:
 
 O Sku Selector lança os seguintes eventos:
 
-- <b>`vtex.sku.ready`</b> quando o Sku Selector é renderizado.
-- <b>`vtex.sku.dimensionChanged`</b> quando uma dimensão é selecionada.
-- <b>`vtex.sku.selected`</b> quando um SKU é definido.
-- <b>`vtex.sku.unselected`</b> quando o SKU torna-se indefinido.
+- <b>`vtex.sku.ready []`</b> quando o Sku Selector é renderizado.
+- <b>`vtex.sku.dimensionChanged [name, value, productId]`</b> quando uma dimensão é selecionada.
+- <b>`vtex.sku.selected [sku, productId]`</b> quando um SKU é definido.
+- <b>`vtex.sku.unselected [selectableSkus, productId]`</b> quando o SKU torna-se indefinido.
 
 
 ---
@@ -64,11 +64,11 @@ Chame o plugin em uma `div` vazia:
 
 O Qty Selector lança os seguintes eventos:
 
-- <b>`vtex.qty.changed`</b> quando a quantidade é mudada, e também na inicialização.
+- <b>`vtex.qty.changed [qty, productId]`</b> quando a quantidade é mudada, e também na inicialização.
 
 Adicionalmente, o Qty Selector escuta pelos seguintes eventos:
 
-- <b>`vtex.qty.changed`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+- <b>`vtex.qty.changed [qty, productId]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
 
 ---
 
@@ -96,14 +96,14 @@ Chame o plugin na `a` que age como botão de comprar:
 
 O Buy Button lança os seguintes eventos:
 
-- <b>`vtex.modal.hide`</b> quando `redirect=false` e o botão é clicado.
-- <b>`vtex.cart.productAdded`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
+- <b>`vtex.modal.hide []`</b> quando `redirect=false` e o botão é clicado.
+- <b>`vtex.cart.productAdded []`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
 
 Adicionalmente, o Buy Button escuta pelos seguintes eventos:
 
-- <b>`vtex.sku.selected`</b>
-- <b>`vtex.sku.unselected`</b>
-- <b>`vtex.qty.changed`</b>
+- <b>`vtex.sku.selected [sku, productId]`</b>
+- <b>`vtex.sku.unselected [selectableSkus, productId]`</b>
+- <b>`vtex.qty.changed [qty, productId]`</b>
 
 
 ---
@@ -147,14 +147,14 @@ Chame o plugin em uma `div` vazia:
 
 O Minicart lança os seguintes eventos:
 
-- <b>`vtex.cart.productRemoved`</b> quando um item é removido pelo minicart.
-- <b>`vtex.minicart.mouseOver`</b>
-- <b>`vtex.minicart.mouseOut`</b>
-- <b>`vtex.minicart.updated`</b>
+- <b>`vtex.cart.productRemoved []`</b> quando um item é removido pelo minicart.
+- <b>`vtex.minicart.mouseOver []`</b>
+- <b>`vtex.minicart.mouseOut []`</b>
+- <b>`vtex.minicart.updated []`</b>
 
 Adicionalmente, o Minicart escuta pelos seguintes eventos:
 
-- <b>`vtex.cart.productAdded`</b> o Minicart se atualiza.
+- <b>`vtex.cart.productAdded []`</b> o Minicart se atualiza.
 
 
 ---
