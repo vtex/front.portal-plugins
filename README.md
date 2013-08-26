@@ -1,9 +1,8 @@
+### Ìndice
+
 - [Sku Selector](#sku-selector)
-
 - [Qty Selector](#qty-selector)
-
 - [Buy Button](#buy-button)
-
 - [Minicart](#minicart)
 
 # Sku Selector
