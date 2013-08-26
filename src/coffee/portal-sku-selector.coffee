@@ -355,12 +355,12 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 		selectableSkus = selector.findSelectableSkus()
 		# Trigger event for interested scripts
-		$this.trigger 'vtex.sku.dimensionChanged', [dimensionName, dimensionValue]
+		$this.trigger 'vtex.sku.dimensionChanged', [dimensionName, dimensionValue, productData]
 		if selectableSkus.length == 1
-			$this.trigger 'vtex.sku.selected', [selectableSkus[0], productData]
-			$this.trigger 'skuSelected', [selectableSkus[0], productData]
+			$this.trigger 'vtex.sku.selected', [selectableSkus[0], productData.productId]
+			$this.trigger 'skuSelected', [selectableSkus[0], productData.productId]
 		else
-			$this.trigger 'vtex.sku.unselected', [selectableSkus, productData]
+			$this.trigger 'vtex.sku.unselected', [selectableSkus, productData.productId]
 
 
 	# Handles submission in the warn unavailable form

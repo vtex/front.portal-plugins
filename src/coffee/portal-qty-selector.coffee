@@ -31,8 +31,8 @@ class QtySelector:
 	check: (productId) =>
 		productId == @productId
 
-	qtyChanged: (evt, qty, product) =>
-		return unless @check(product.productId)
+	qtyChanged: (evt, qty, productId) =>
+		return unless @check(productId)
 		@qty = qty
 		@update()
 
