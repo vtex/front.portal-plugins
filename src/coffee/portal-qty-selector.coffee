@@ -16,12 +16,16 @@ class QtySelector
 	init: =>
 		@render()
 		@bindEvents()
+		@element.trigger 'vtex.qty.changed', [@qty, @productId]
 
 	render: =>
 		$template = $($.qtySelector.template)
 		$template.find('.produtoQuantidade').attr('readonly', 'readonly') if @options.readonly
 		$template.find('.produtoQuantidade').val(@qty)
 		@element.html $template
+
+	update: =>
+		@element.find('.produtoQuantidade').val(@qty)
 
 	bindEvents: =>
 		$(window).on 'vtex.qty.changed', @qtyChanged
@@ -34,15 +38,17 @@ class QtySelector
 	qtyChanged: (evt, qty, productId) =>
 		return unless @check(productId)
 		@qty = qty
-		@init()
+		@update()
 
 	decrementQty: =>
 		if @qty > 1
 			@element.trigger 'vtex.qty.changed', [@qty-1, @productId]
+		return false
 
 	incrementQty: =>
 		if @qty < @options.max
 			@element.trigger 'vtex.qty.changed', [@qty+1, @productId]
+		return false
 
 
 # PLUGIN ENTRY POINT
