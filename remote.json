@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "meuamigopet.vtexcommercebeta.com.br",
+		"host": "acme.vtexcommercebeta.com.br",
 		"port": 80
 	},
 	"proxy": {
-		"host": "meuamigopet.vtexlocal.com.br",
+		"host": "acme.vtexlocal.com.br",
 		"port": 80
 	},
 	"server": {
@@ -17,7 +17,7 @@
 	"bounces":[
 		"style/.*",
 		"index.html",
-        "minicart.html"
+    "minicart.html"
 	],
 	"mapping": true,
 	"mappings": {
