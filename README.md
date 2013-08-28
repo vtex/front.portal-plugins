@@ -59,22 +59,29 @@ Chame o plugin em uma `div` vazia:
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`qty`</b> a quantidade inicial do produto. Default: `1`.
+- <b>`qty`</b> default: `1`. A quantidade inicial do produto. .
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
     - <b>`readonly`</b>
         default: `true`. Define se o input de quantidade deve ter o atributo readonly.
 
-   - <b>`max`</b>
-        default: `999`. Define a quantidade máxima que pode ser selecionada.
+    - <b>`max`</b>
+        default: `5`. Define a quantidade máxima que pode ser selecionada.
+
+    - <b>`text`</b>
+        default: `"Selecione a quantidade:"`. Define o texto a ser exibido.
+
+    - <b>`style`</b>
+        default: `"text"`. Define o tipo de input a ser usado. Opções possíveis: `"text"`, `"select"`, `"number"`
 
 
 ## Eventos:
 
 O Qty Selector lança os seguintes eventos:
 
-- <b>`vtex.qty.changed [qty, productId]`</b> quando a quantidade é mudada, e também na inicialização.
+- <b>`vtex.qty.ready [qty, productId]`</b> na inicialização.
+- <b>`vtex.qty.changed [qty, productId]`</b> quando a quantidade é mudada.
 
 Adicionalmente, o Qty Selector escuta pelos seguintes eventos:
 
@@ -172,14 +179,15 @@ Adicionalmente, o Minicart escuta pelos seguintes eventos:
 
 # Dependências
 
-| Plugin       | [jQuery][] | [front.utils][] | [Dust][]|
-| ------------ | --- | --- | --- |
+| Plugin       | [jQuery][] | [front.utils][] | [Dust (core)][]|
+| :----------- | --- | --- | --- |
 | Sku Selector |  ✔  |  ✔  |  ✔  |
-| Qty Selector |  ✔  |  ✗  |  ✗  |
+| Qty Selector |  ✔  |  ✗  |  ✔  |
 | Buy Button   |  ✔  |  ✗  |  ✗  |
 | Minicart     |  ✔  |  ✔  |  ✔  |
 
 
   [jQuery]: http://www.jquery.com
   [front.utils]: https://github.com/vtex/front.utils
-  [Dust]: http://linkedin.github.io/dustjs/
+  [Dust (core)]: http://linkedin.github.io/dustjs/
+  [Dust (helpers)]: https://github.com/linkedin/dustjs-helpers

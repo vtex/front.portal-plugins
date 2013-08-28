@@ -44,12 +44,14 @@ module.exports = (grunt) ->
 					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
+					'build/js/portal-qty-selector-with-template.min.js': ['build/js/portal-qty-selector-with-template.js']
 
 		concat:
 			dev:
 				files:
 					'build/js/portal-sku-selector-with-template.js': ['build/templates/template-sku-selector.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
+					'build/js/portal-qty-selector-with-template.js': ['build/templates/template-qty-selector.js', 'build/js/portal-qty-selector.js']
 					'build/js/portal-template-as-modal.js': 'build/js/portal-template-as-modal.js'
 
 		karma:
@@ -83,6 +85,7 @@ module.exports = (grunt) ->
 				files:
 					'build/templates/template-sku-selector.js': 'src/templates/sku-selector.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
+					'build/templates/template-qty-selector.js': 'src/templates/qty-selector.dust'
 
 		connect:
 			main:

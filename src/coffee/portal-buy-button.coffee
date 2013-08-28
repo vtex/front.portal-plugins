@@ -23,6 +23,7 @@ class BuyButton
 	bindEvents: =>
 		$(window).on 'vtex.sku.selected', @skuSelected
 		$(window).on 'vtex.sku.unselected', @skuUnselected
+		$(window).on 'vtex.qty.ready', @qtyChanged
 		$(window).on 'vtex.qty.changed', @qtyChanged
 		@element.on 'click', @buyButtonHandler
 

@@ -16,13 +16,24 @@ class QtySelector
 	init: =>
 		@render()
 		@bindEvents()
-		@element.trigger 'vtex.qty.changed', [@qty, @productId]
+		@element.trigger 'vtex.qty.ready', [@qty, @productId]
 
 	render: =>
-		$template = $($.qtySelector.template)
-		$template.find('.produtoQuantidade').attr('readonly', 'readonly') if @options.readonly
-		$template.find('.produtoQuantidade').val(@qty)
-		@element.html $template
+		renderData =
+			availableQuantities: [1..@options.max]
+			max: @options.max
+			qty: @qty
+			text: @options.text
+			style:
+				select: @options.style is 'select'
+				text: @options.style is 'text'
+				number: @options.style is 'number'
+			readonly: @options.readonly
+
+		dust.render "qty-selector", renderData, (err, out) =>
+			console.log "Qty Selector Dust error: ", err if err
+			@element.html out
+			@update()
 
 	update: =>
 		@element.find('.produtoQuantidade').val(@qty)
@@ -31,6 +42,9 @@ class QtySelector
 		$(window).on 'vtex.qty.changed', @qtyChanged
 		@element.find('.menos').on 'click', @decrementQty
 		@element.find('.mais').on 'click', @incrementQty
+		@element.find('input,select').on 'change', (evt) =>
+			$el = $(evt.target)
+			$el.trigger 'vtex.qty.changed', [$el.val(), @productId]
 
 	check: (productId) =>
 		productId == @productId
@@ -67,16 +81,7 @@ $.fn.qtySelector = (productId, qty = 1, jsOptions) ->
 
 # PLUGIN DEFAULTS
 $.fn.qtySelector.defaults =
+	text: "Selecione a quantidade:"
+	style: 'text'
 	readonly: true
-	max: 999
-
-# PLUGIN SHARED
-$.qtySelector =
-	template: """
-						<div class="quantidade" style="display: block;">
-						<p class="txtQuantidade">Selecione a quantidade:</p>
-						<a href="#" class="menos">-</a>
-						<input type="text" class="produtoQuantidade">
-						<a href="#" class="mais">+</a>
-						</div>
-						"""
+	max: 5

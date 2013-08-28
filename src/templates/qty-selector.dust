@@ -1,0 +1,23 @@
+<div class="quantidade select-qtd qty-selector" style="display: block;">
+  {#style.text}
+    <p class="txtQuantidade">{text}</p>
+    <a href="#" class="menos">-</a>
+    <input type="text" class="produtoQuantidade" value="{qty}" {#readonly}readonly{/readonly}>
+    <a href="#" class="mais">+</a>
+  {/style.text}
+  {#style.select}
+    <label for="select-qtd">{text}</label>
+    <select id="select-qtd" class="produtoQuantidade">
+      {#availableQuantities}
+        <option value="{.}">{.}</option>
+      {/availableQuantities}
+    </select>
+  {/style.select}
+  {#style.number}
+    <label>
+      <input type="number" class="produtoQuantidade" step="1" min="1" max="{max}"/>
+      {text}
+    </label>
+
+  {/style.number}
+</div>
