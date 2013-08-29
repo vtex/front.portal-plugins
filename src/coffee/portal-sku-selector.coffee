@@ -322,6 +322,26 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	selector = new SkuSelector(productData, options)
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
+	# Handler for the buy button
+	buyButtonHandler = (event) ->
+		selectedSku = selector.findSelectedSku()
+		if selectedSku
+			if options.confirmBuy
+				event.preventDefault()
+				renderer.showConfirmButton(selectedSku)
+			else
+				context.trigger 'vtex.modal.hide'
+				# console.log 'Adding SKU to cart:', sku
+				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
+				.done (data) ->
+					$(window).trigger 'productAddedToCart'
+				.fail (jqXHR, status) ->
+					window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, productData.salesChannel)
+				return false
+		else
+			renderer.select.warning().show().text('Por favor, escolha: ' + selector.findUndefinedDimensions()[0].name)
+			return false
+
 	# Handles changes in the dimension inputs
 	dimensionChangeHandler = (event) ->
 		$this = $(this)
@@ -359,6 +379,9 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 
 	# Binds handlers
+	renderer.select.buyButton()
+	.on 'click', buyButtonHandler
+
 	renderer.select.inputs()
 	.on('change', dimensionChangeHandler)
 
@@ -374,12 +397,14 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 # PLUGIN DEFAULTS
 $.fn.skuSelector.defaults =
+	showBuyButton: false
 	showProductImage: false
 	showProductTitle: false
 	showPrice: false
 	showPriceRange: false
 	warnUnavailable: false
 	selectOnOpening: false
+	confirmBuy: false
 
 # Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
