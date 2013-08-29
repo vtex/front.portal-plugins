@@ -35,10 +35,10 @@
     <script src='js/portal-qty-selector-with-template.js'></script>
 
     <script type="text/javascript">
-        var mocks = ['spec/mocks/shoestock.json', 'spec/mocks/casaamerica.json'];
+        var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
 
         $.getJSON(mocks[0]).done(function(data){
-          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true, showBuyButton: false});
+          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true, showBuyButton: true});
           $('.buy-button').buyButton(data.productId);
           $('.portal-qty-selector-ref').qtySelector(data.productId);
         });

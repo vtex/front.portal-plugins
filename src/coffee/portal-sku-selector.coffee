@@ -93,6 +93,9 @@ class SkuSelector
 	getDimensionByName: (dimensionName) =>
 		@searchDimensions((dim) -> dim.name == dimensionName)[0]
 
+	findUndefinedDimensions: =>
+		@searchDimensions((dim) -> !dim.selected)
+
 	getSelectedDimension: (dimension) =>
 		@getDimensionByName(dimension).selected
 
@@ -157,6 +160,7 @@ class SkuSelectorRenderer
 			@update()
 			@hideProductImage() unless @options.showProductImage
 			@hideProductTitle() unless @options.showProductTitle
+			@showBuyButton() if @options.showBuyButton
 			@context.trigger('vtex.sku.ready')
 
 	update: =>
@@ -177,7 +181,6 @@ class SkuSelectorRenderer
 
 		selectableSkus = @data.findSelectableSkus()
 
-		@hideBuyButton()
 		@hideConfirmButton()
 		@hideWarnUnavailable()
 		@hidePriceRange()
@@ -191,6 +194,7 @@ class SkuSelectorRenderer
 			else
 				@context.trigger 'skuSelected', [selectedSku]
 				@showWarnUnavailable(selectedSku.sku) if @options.warnUnavailable
+				@hideBuyButton()
 		else if selectableSkus.length > 0
 			@showPriceRange(@data.findPrices(selectableSkus)) if @options.showPrice and @options.showPriceRange
 
@@ -267,7 +271,8 @@ class SkuSelectorRenderer
 		@context.find('.vtexsm-prodTitle').add('.selectSkuTitle').hide()
 
 	showBuyButton: (sku) =>
-		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel, @options.redirect)).show().parent().show()
+		@select.buyButton().show().parent().show()
+		@select.buyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @data.salesChannel, @options.redirect)) if sku
 
 	showConfirmButton: (sku) =>
 		dimensionsText = $.map(sku.dimensions, (k, v) -> k).join(', ')
@@ -313,7 +318,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 	# Gather options
 	domOptions = this.data()
-	defaultOptions = $.fn.skuSelector.defaults
+	defaultOptions = $.extend({}, $.fn.skuSelector.defaults)
 	# Build final options object (priority: js, then dom, then default)
 	# Deep extending with true, for the selectors
 	options = $.extend(true, defaultOptions, domOptions, jsOptions)
@@ -321,6 +326,8 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	# Instantiate our singletons
 	selector = new SkuSelector(productData, options)
 	renderer = new SkuSelectorRenderer(this, options, selector)
+
+	context.data('skuSelector', selector)
 
 	# Handler for the buy button
 	buyButtonHandler = (event) ->
