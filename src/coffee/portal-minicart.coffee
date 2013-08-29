@@ -34,11 +34,11 @@ class Minicart
 		@getOrderFormURL() + @cartData.orderFormId + "/items/update/"
 
 	bindEvents: =>
-		@hoverContext.on 'mouseover', ->
+		@hoverContext.on 'mouseover', =>
 			$(window).trigger "minicartMouseOver"
 			@context.trigger 'vtex.cart.mouseOver'
 
-		@hoverContext.on 'mouseout', ->
+		@hoverContext.on 'mouseout', =>
 			$(window).trigger "minicartMouseOut"
 			@context.trigger 'vtex.cart.mouseOut'
 
@@ -112,7 +112,7 @@ class Minicart
 			@context.find(".vtexsc-cart").slideUp()
 		else
 			@context.find(".vtexsc-cart").slideDown()
-			@timeoutToHide = setTimeout ->
+			@timeoutToHide = setTimeout =>
 				@context.find(".vtexsc-cart").stop(true, true).slideUp()
 			, 3000
 
