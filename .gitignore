@@ -3,5 +3,4 @@ build-raw/
 deploy/
 node_modules/
 .idea/
-src/lib/bower_modules
 bower_components
