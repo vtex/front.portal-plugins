@@ -9,7 +9,7 @@
 
   <!-- MAIN -->
   <div class="skuSelectionWrapper">
-    <div class="sku-selector-container">
+    <div class="skuListWrap_">
       {#dimensions}
       <ul class="topic {name|sanitize}">
         <li class="specification">{name}</li>
@@ -82,22 +82,22 @@
 <p class="skuselector-warning" style="display: none;"></p>
 <div class="skuselector-warn-unavailable" style="display: none;">
   <form action="">
-    <fieldset class="sku-notifyme-form" style="display: block;">
+    <fieldset class="sku-notifyme-form notifyme-form" style="display: block;">
       <p>
         Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.
       </p>
-      <input class="sku-notifyme-client-name" placeholder="Digite seu nome..." size="20"
+      <input class="sku-notifyme-client-name notifyme-client-name" placeholder="Digite seu nome..." size="20"
              type="text" name="notifymeClientName">
-      <input class="sku-notifyme-client-email" placeholder="Digite seu e-mail..." size="20"
+      <input class="sku-notifyme-client-email notifyme-client-email" placeholder="Digite seu e-mail..." size="20"
              type="text" name="notifymeClientEmail">
-      <input class="btn-ok sku-notifyme-button-ok" value="ok" type="submit"
+      <input class="btn-ok sku-notifyme-button-ok notifyme-button-ok" value="ok" type="submit"
              name="notifymeButtonOK">
-      <input type="hidden" class="sku-notifyme-skuid" name="notifymeIdSku" value="">
+      <input type="hidden" class="sku-notifyme-skuid notifyme-skuid" name="notifymeIdSku" value="">
     </fieldset>
   </form>
-  <span class="sku-notifyme-loading" style="display: none">Carregando...</span>
-  <span class="sku-notifyme-success" style="display: none">Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</span>
-  <span class="sku-notifyme-error"
+  <span class="sku-notifyme-loading notifyme-loading" style="display: none">Carregando...</span>
+  <span class="sku-notifyme-success notifyme-success" style="display: none">Cadastrado com sucesso, assim que o produto for disponibilizado você receberá um email avisando.</span>
+  <span class="sku-notifyme-error notifyme-error"
         style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
 </div>
 <!--/NOTIFYME -->
