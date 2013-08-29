@@ -36,11 +36,11 @@ class Minicart
 	bindEvents: =>
 		@hoverContext.on 'mouseover', =>
 			$(window).trigger "minicartMouseOver"
-			@context.trigger 'vtex.cart.mouseOver'
+			@context.trigger 'vtex.minicart.mouseOver'
 
 		@hoverContext.on 'mouseout', =>
 			$(window).trigger "minicartMouseOut"
-			@context.trigger 'vtex.cart.mouseOut'
+			@context.trigger 'vtex.minicart.mouseOut'
 
 		$(window).on "vtex.minicart.mouseOver", =>
 			if @cartData.items?.length > 0
