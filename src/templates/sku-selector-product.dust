@@ -16,7 +16,7 @@
                specification="{.|sanitize}"
                 >
         <label for="{productId}_{name|sanitize}_{$idx}"
-               class="dimension-{name|sanitize} espec_{index} skuespec_{.|sanitize} skuespec_{name|spacesToHyphens}_opcao_{.|spacesToHyphens}">
+               class="dimension-{name|sanitize} espec_{index} skuespec_{.|sanitize} skuespec_{name|spacesToHyphens}_opcao_{.|spacesToHyphens} skuespec_{name|sanitize}_opcao_{.|sanitize}">
           {.}
         </label>
         {/values}
