@@ -154,13 +154,12 @@ class SkuSelectorRenderer
 
 	# Renders the DOM elements of the Sku Selector
 	render: =>
-		dust.render "sku-selector", @data, (err, out) =>
+		templateName = if @options.modalLayout then 'sku-selector-modal' else 'sku-selector-product'
+		dust.render templateName, @data, (err, out) =>
 			console.log "Sku Selector Dust error: ", err if err
 			@context.html out
 			@update()
-			@hideProductImage() unless @options.showProductImage
-			@hideProductTitle() unless @options.showProductTitle
-			@showBuyButton() if @options.showBuyButton
+			@showBuyButton()
 			@context.trigger('vtex.sku.ready')
 
 	update: =>
@@ -188,15 +187,15 @@ class SkuSelectorRenderer
 
 		if selectableSkus.length == 1
 			selectedSku = selectableSkus[0]
+			@context.trigger 'skuSelected', [selectedSku]
 			if selectedSku.available
-				@showBuyButton(selectedSku) if @options.showBuyButton
-				@showPrice(selectedSku) if @options.showPrice
+				@showBuyButton(selectedSku)
+				@showPrice(selectedSku)
 			else
-				@context.trigger 'skuSelected', [selectedSku]
 				@showWarnUnavailable(selectedSku.sku) if @options.warnUnavailable
 				@hideBuyButton()
-		else if selectableSkus.length > 0
-			@showPriceRange(@data.findPrices(selectableSkus)) if @options.showPrice and @options.showPriceRange
+		else if selectableSkus.length > 1
+			@showPriceRange(@data.findPrices(selectableSkus))
 
 	resetDimension: (dimension) =>
 		@select.itemDimensionInput(dimension.name)
@@ -263,12 +262,6 @@ class SkuSelectorRenderer
 	hideWarnUnavailable: =>
 		@select.warning().hide()
 		@select.warnUnavailable().filter(':visible').hide()
-
-	hideProductImage: =>
-		@context.find('.vtexsc-skuProductImage').hide()
-
-	hideProductTitle: =>
-		@context.find('.vtexsm-prodTitle').add('.selectSkuTitle').hide()
 
 	showBuyButton: (sku) =>
 		@select.buyButton().show().parent().show()
@@ -404,11 +397,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 
 # PLUGIN DEFAULTS
 $.fn.skuSelector.defaults =
-	showBuyButton: false
-	showProductImage: false
-	showProductTitle: false
-	showPrice: false
-	showPriceRange: false
+	modalLayout: false
 	warnUnavailable: false
 	selectOnOpening: false
 	confirmBuy: false
