@@ -1,17 +1,10 @@
-
 <div class="portal-sku-selector-ref"></div>
 
 <script type="text/javascript">
-  var options = {
-    showBuyButton: true,
-    showProductImage: true,
-    showProductTitle: true,
-    showPrice: true,
-    warnUnavailable: true
-  };
+  var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
 
-  var mock = <!-- skuSelectorMock -->;
-
-  $('.portal-sku-selector-ref').skuSelector(mock, options);
+  $.getJSON(mocks[0]).done(function(data){
+    $('.portal-sku-selector-ref').skuSelector(data, {modalLayout: true, warnUnavailable: true});
+  });
 
 </script>

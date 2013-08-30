@@ -38,13 +38,13 @@
         var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
 
         $.getJSON(mocks[0]).done(function(data){
-          $('.portal-sku-selector-ref').skuSelector(data, {warnUnavailable: true, showPrice: true, showBuyButton: true});
+          $('.portal-sku-selector-ref').skuSelector(data);
           $('.buy-button').buyButton(data.productId);
           $('.portal-qty-selector-ref').qtySelector(data.productId);
         });
 
         $.getJSON(mocks[1]).done(function(data){
-          $('.portal-sku-selector-ref2').skuSelector(data, {warnUnavailable: true, showPrice: true, selectOnOpening:false});
+          $('.portal-sku-selector-ref2').skuSelector(data);
           $('.buy-button2').buyButton(data.productId);
           $('.portal-qty-selector-ref2').qtySelector(data.productId, 3, {style: 'number'});
         });
