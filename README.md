@@ -5,6 +5,8 @@
 - [Buy Button](#buy-button)
 - [Minicart](#minicart)
 
+- [Notas](#notas)
+
 
 ---
 
@@ -27,7 +29,6 @@ Chame o plugin em uma `div` vazia:
 
     - <b>`warnUnavailable`</b>
         default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado.
-
 
 ## Eventos
 
@@ -66,7 +67,6 @@ Chame o plugin em uma `div` vazia:
 
     - <b>`style`</b>
         default: `"text"`. Define o tipo de input a ser usado. Opções possíveis: `"text"`, `"select"`, `"number"`
-
 
 ## Eventos:
 
@@ -169,7 +169,19 @@ Adicionalmente, o Minicart escuta pelos seguintes eventos:
 
 ---
 
-# Dependências
+# Notas
+
+## Notas gerais
+
+As opções podem ser passadas de três jeitos. Eles são, em ordem de prioridade:
+
+1. Por JavaScript, na chamada do plugin.
+2. Com atributos `data-` nos elementos.
+3. Opções padrão (objeto `$.fn.nomeDoPlugin.defaults`).
+
+Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data` (acceso via `$().data()`), uma referência à sua instância do plugin.
+
+## Dependências
 
 | Plugin       | [jQuery][] | [front.utils][] | [Dust (core)][]|
 | :----------- | --- | --- | --- |
