@@ -30,6 +30,9 @@ Chame o plugin em uma `div` vazia:
     - <b>`warnUnavailable`</b>
         default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado.
 
+    - <b>`showPriceRange`</b>
+        default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs selecionáveis com as dimensões já selecionadas.
+
 ## Eventos
 
 O Sku Selector lança os seguintes eventos:

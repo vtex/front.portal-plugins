@@ -194,7 +194,7 @@ class SkuSelectorRenderer
 			else
 				@showWarnUnavailable(selectedSku.sku) if @options.warnUnavailable
 				@hideBuyButton()
-		else if selectableSkus.length > 1
+		else if selectableSkus.length > 1 and @options.showPriceRange
 			@showPriceRange(@data.findPrices(selectableSkus))
 
 	resetDimension: (dimension) =>
@@ -401,6 +401,7 @@ $.fn.skuSelector.defaults =
 	warnUnavailable: false
 	selectOnOpening: false
 	confirmBuy: false
+	showPriceRange: false
 
 # Called when we failed to receive variations.
 	skuVariationsFailHandler: ($el, options, reason) ->
