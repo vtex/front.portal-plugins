@@ -22,30 +22,12 @@ Chame o plugin em uma `div` vazia:
     - <b>`selectOnOpening`</b>
         default: `false`. Se `true`, na inicialização do plugin seleciona o primeiro SKU disponível (o primeiro que vier no array).
 
+    - <b>`modalLayout`</b>
+        default: `false`. Se `true`, usa o template de modal.
+
     - <b>`warnUnavailable`</b>
         default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado.
 
-    - <b>`showProductImage`</b>
-        default: `false`. Se `true`, mostra a imagem do produto.
-
-    - <b>`showProductTitle`</b>
-        default: `false`. Se `true`, mostra o nome do produto.
-
-    - <b>`showPrice`</b>
-        default: `false`. Se `true`, mostra o preço.
-
-    - <b>`showPriceRange`</b>
-        default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs selecionáveis com as dimensões já selecionadas.
-
-### confirmBuy
-
-default: `false`. Se `true`, ao clicar no botão de compra é mostrado um botão de confirmação, com as dimensões selecionadas.
-
-### showBuyButton
-
-default: `false`. Se `true`, mostra o botão de comprar.
-
-### showProductImage
 
 ## Eventos
 
