@@ -70,16 +70,14 @@ class BuyButton
 
 # PLUGIN ENTRY POINT
 $.fn.buyButton = (productId, buyData, jsOptions) ->
-	# Gather options
-	domOptions = this.data()
-	defaultOptions = $.fn.buyButton.defaults
-	# Build final options object (priority: js, then dom, then default)
-	# Deep extending with true, for the selectors
-	options = $.extend(true, defaultOptions, domOptions, jsOptions)
+	defaultOptions = $.extend true, {}, $.fn.buyButton.defaults
+	for element in this
+		$element = $(element)
+		domOptions = $element.data()
+		options = $.extend(true, defaultOptions, domOptions, jsOptions)
+		unless $element.data('buyButton')
+			$element.data('buyButton', new BuyButton($element, productId, buyData, options))
 
-	new BuyButton(this, productId, buyData, options)
-
-	# Chaining
 	return this
 
 

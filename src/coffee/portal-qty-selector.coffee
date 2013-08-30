@@ -67,16 +67,14 @@ class QtySelector
 
 # PLUGIN ENTRY POINT
 $.fn.qtySelector = (productId, qty = 1, jsOptions) ->
-	# Gather options
-	domOptions = this.data()
-	defaultOptions = $.fn.qtySelector.defaults
-	# Build final options object (priority: js, then dom, then default)
-	# Deep extending with true, for the selectors
-	options = $.extend(true, defaultOptions, domOptions, jsOptions)
+	defaultOptions = $.extend true, {}, $.fn.qtySelector.defaults
+	for element in this
+		$element = $(element)
+		domOptions = $element.data()
+		options = $.extend(true, defaultOptions, domOptions, jsOptions)
+		unless $element.data('qtySelector')
+			$element.data('qtySelector', new QtySelector($element, productId, qty, options))
 
-	new QtySelector(this, productId, qty, options)
-
-	# Chaining
 	return this
 
 # PLUGIN DEFAULTS

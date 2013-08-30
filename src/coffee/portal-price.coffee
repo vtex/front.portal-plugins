@@ -35,19 +35,16 @@ class Price
 
 # PLUGIN ENTRY POINT
 $.fn.price = (productId, productData, jsOptions) ->
-	# Gather options
-	domOptions = this.data()
-	defaultOptions = $.fn.buyButton.defaults
-	# Build final options object (priority: js, then dom, then default)
-	# Deep extending with true, for the selectors
-	options = $.extend(true, defaultOptions, domOptions, jsOptions)
+	defaultOptions = $.extend {}, $.fn.price.defaults
+	for element in this
+		$element = $(element)
+		domOptions = $element.data()
+		options = $.extend(true, defaultOptions, domOptions, jsOptions)
+		unless $element.data('price')
+			$element.data('price', new Price($element, productId, productData, options))
 
-	new Price(this, productId, productData, options)
-
-	# Chaining
 	return this
 
 
 # PLUGIN DEFAULTS
-$.fn.price.defaults =
-	a: true
+$.fn.price.defaults = {}

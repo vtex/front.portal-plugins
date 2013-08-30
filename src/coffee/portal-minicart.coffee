@@ -10,7 +10,7 @@ class Minicart
 	constructor: (context, options) ->
 		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
 
-		@options = $.extend {}, $.fn.minicart.defaults, options
+		@options = options
 		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
 		@cartData = {}
@@ -149,14 +149,15 @@ class Minicart
 
 
 # PLUGIN ENTRY POINT
-$.fn.minicart = (options) ->
+$.fn.minicart = (jsOptions) ->
+	defaultOptions = $.extend true, {}, $.fn.minicart.defaults
 	for element in this
 		$element = $(element)
-		unless $element.hasClass("plugin_minicart")
-			$element.addClass("plugin_minicart")
-			new Minicart($element, options)
+		domOptions = $element.data()
+		options = $.extend(true, defaultOptions, domOptions, jsOptions)
+		unless $element.data('minicart')
+			$element.data('minicart', new Minicart($element, options))
 
-	# Chaining
 	return this
 
 # PLUGIN DEFAULTS
