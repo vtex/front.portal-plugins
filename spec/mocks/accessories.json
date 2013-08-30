@@ -1,0 +1,43 @@
+{
+  "productId":9429081,
+  "sku": 2389980
+  "name":"Regressão",
+  "listPrice":1500,
+  "bestPrice":1299,
+  "installments":2,
+  "installmentsValue":649,
+  "installmentsInsterestRate":0,
+  "image":"http://basedevmkp.vtexcommercebeta.com.br/arquivos/ids/168603-292-292/produto_teste.jpg?v=635061174648370000",
+  "sellerId":"1",
+  "seller":"BaseDevMKP",
+  "salesChannel":"1",
+  "accessories":
+  [
+    {
+      "sku": 2389984,
+      "name": "Bracelete Laranjeira, Dourado (Capim dourado) - Solidarium Regressão",
+      "listPrice": 10000,
+      "bestPrice": 8400,
+      "installments": 3,
+      "installmentsValue": 2800,
+      "installmentsInsterestRate": 0,
+      "image": "http://basedevmkp.vtexcommercebeta.com.br/arquivos/ids/168594-130-130/1798224.jpg?v=635013687472100000",
+      "sellerId": "1",
+      "seller": "BaseDevMKP",
+      "salesChannel":"1"
+    },
+    {
+      "name": "Colar Mandala Colorida, Marrom com flores coloridas, feito a mão - Solidarium Regressão",
+      "sku": 2389985,
+      "listPrice": 10000,
+      "bestPrice": 8500,
+      "installments": 3,
+      "installmentsValue": 2833,
+      "installmentsInsterestRate": 0,
+      "image": "http://basedevmkp.vtexcommercebeta.com.br/arquivos/ids/168585-130-130/1798083.jpg?v=635013040117570000",
+      "sellerId": "1",
+      "seller": "BaseDevMKP",
+      "salesChannel":"1"
+    }
+  ]
+}
