@@ -41,6 +41,7 @@ module.exports = (grunt) ->
 		concat:
 			dev:
 				files:
+					'build/js/portal-accessories-selector-with-template.js': ['build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
 					'build/js/portal-sku-selector-with-template.js': ['build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
 					'build/js/portal-qty-selector-with-template.js': ['build/templates/template-qty-selector.js', 'build/js/portal-qty-selector.js']
@@ -49,6 +50,7 @@ module.exports = (grunt) ->
 		uglify:
 			main:
 				files:
+					'build/js/portal-accessories-selector-with-template.min.js': ['build/js/portal-accessories-selector-with-template.js']
 					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
@@ -83,6 +85,7 @@ module.exports = (grunt) ->
 		dustjs:
 			compile:
 				files:
+					'build/templates/template-accessories-selector.js': 'src/templates/accessories-selector.dust'
 					'build/templates/template-sku-selector-modal.js': 'src/templates/sku-selector-modal.dust'
 					'build/templates/template-sku-selector-product.js': 'src/templates/sku-selector-product.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
