@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "acme.vtexcommercebeta.com.br",
+		"host": "casaamerica.vtexcommercebeta.com.br",
 		"port": 80
 	},
 	"proxy": {
-		"host": "acme.vtexlocal.com.br",
+		"host": "localhost",
 		"port": 80
 	},
 	"server": {
@@ -21,8 +21,8 @@
 	],
 	"mapping": true,
 	"mappings": {
-	    ".*portal-minicart-with-template.min.js": "build/js/portal-minicart-with-template.dev.js",
-	    ".*portal-sku-selector-product.min.js": "build/js/portal-sku-selector-with-template.dev.js",
-	    ".*portal-template-as-modal.min.js.*": "build/js/portal-template-as-modal.dev.js"
+	    ".*portal-minicart-with-template.min.js": "build/js/portal-minicart-with-template.js",
+	    ".*portal-sku-selector-with-template.min.js": "build/js/portal-sku-selector-with-template.js",
+	    ".*portal-template-as-modal.min.js.*": "build/js/portal-template-as-modal.js"
 	}
 }
