@@ -11,7 +11,6 @@
     <script src="/lib/jquery-1.8.3.min.js"></script>
     <script src="/lib/vtex-utils.js"></script>
     <script src="/lib/dust-core-2.0.0.min.js"></script>
-    <script src="/lib/dust-helpers-1.1.1.js"></script>
 
     <style type="text/css">.item_doesnt_exist {color: gray;}</style>
 
@@ -30,6 +29,47 @@
       <a href="" class="buy-button2">COMPRAR</a>
     </div>
 
+    <!-- TERCEIRO - MODAL -->
+    <div id="container">
+      <div id="content" style="padding-top: 15px;">
+        <div class="conteudo">
+          <div class="prateleira vitrine n4colunas">
+            <h2>Ofertas Especiais para o seu Pet</h2>
+            <ul>
+              <li layout="ef3fcb99-de72-4251-aa57-71fe5b6e149f" class="produtos-para-caes-|-meu-amigo-pet---tudo-para-seu-cao">
+                <a class="productImage" title="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p"><img src="http://www.meuamigopet.com.br/arquivos/ids/170194-160-160/7897348201113.jpg" width="160" height="160" alt="7897348201113" id=""></a>
+                <h2><a title="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p">Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier</a></h2>
+                <div id="rating-produto-4083" class="rating-produto avaliacao0">0</div>
+                <p class="brand"><a class="texto brand premier" href="http://www.meuamigopet.com.br/premier">Premier</a></p>
+
+                <div class="data">
+                  <div class="discount"></div>
+                  <p class="price">
+                    <a title="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p">
+                      <span class="newPrice"><span>A partir de: </span><em>R$ 27,90</em></span>
+                      <em class="installment">à vista</em>
+                    </a>
+                  </p>
+                  <div class="view">
+                    <a href="http://www.meuamigopet.com.br/RACAO-AMBIENTES-INTERNOS-FILHOTES-1KG---PREMIER-3111028437987/p" alt="Ração Ambientes Internos Filhotes Mini Bits Frango &amp; Salmão - Premier" class="botaoDetalhes" rel="nofollow">Espiar</a>
+                  </div>
+
+                  <div class="wrapper-buy-button-asynchronous">
+                    <!--
+                      data-template define a URL que tem o HTML+JS a ser posto no modal
+                      classe to-bind-modal significa que o elemento ainda nao foi binded (sera removida ao ser binded)
+                    -->
+                    <button data-template="/button-bind-modal-api-response.html" class="btn-modal to-bind-modal btn-add-sku btn btn-add-buy-button-asynchronous btn-not-clicked asynchronousBuyButton actionActivated vtexsm_activated">Comprar Produto sugerido</button>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/portal-template-as-modal.js"></script>
     <script src='js/portal-sku-selector-with-template.js'></script>
     <script src='js/portal-buy-button.js'></script>
     <script src='js/portal-qty-selector-with-template.js'></script>
