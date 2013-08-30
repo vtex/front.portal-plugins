@@ -4,20 +4,20 @@
 $ = window.jQuery
 
 # CLASSES
-class Accessories
+class AccessoriesSelector
 	constructor: (@element, @productId, @accessories, @options) ->
 
 
 
 # PLUGIN ENTRY POINT
-$.fn.accessories = (productId, accessories, jsOptions) ->
-	defaultOptions = $.extend true, {}, $.fn.accessories.defaults
+$.fn.accessoriesSelector = (productId, accessories, jsOptions) ->
+	defaultOptions = $.extend true, {}, $.fn.accessoriesSelector.defaults
 	for element in this
 		$element = $(element)
 		domOptions = $element.data()
 		options = $.extend(true, defaultOptions, domOptions, jsOptions)
-		unless $element.data('accessories')
-			$element.data('accessories', new Accessories($element, productId, accessories, options))
+		unless $element.data('accessoriesSelector')
+			$element.data('accessoriesSelector', new AccessoriesSelector($element, productId, accessories, options))
 
 	return this
 
