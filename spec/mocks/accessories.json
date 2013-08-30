@@ -14,6 +14,7 @@
   "accessories":
   [
     {
+      "productId": 9429085,
       "sku": 2389984,
       "name": "Bracelete Laranjeira, Dourado (Capim dourado) - Solidarium Regressão",
       "listPrice": 10000,
@@ -27,8 +28,9 @@
       "salesChannel":"1"
     },
     {
-      "name": "Colar Mandala Colorida, Marrom com flores coloridas, feito a mão - Solidarium Regressão",
+      "productId": 9429086,
       "sku": 2389985,
+      "name": "Colar Mandala Colorida, Marrom com flores coloridas, feito a mão - Solidarium Regressão",
       "listPrice": 10000,
       "bestPrice": 8500,
       "installments": 3,

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<body>
+<link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/reset.css">
+<link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/estilos.css?v=3">
+<link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/vtex-smartCart.css">
+
+<meta name="vtex-version" content="1.0.0.0">
+
+<script src="http://localhost:35729/livereload.js"></script>
+<script src="/lib/jquery-1.8.3.min.js"></script>
+<script src="/lib/vtex-utils.js"></script>
+<script src="/lib/dust-core-2.0.0.min.js"></script>
+
+<style type="text/css">.item_doesnt_exist {color: gray;}</style>
+
+<div>
+  <div class="portal-sku-selector-ref"></div>
+  <div class="portal-qty-selector-ref"></div>
+  <a href="" class="buy-button">COMPRAR</a>
+  <div class="portal-accessories-ref"></div>
+</div>
+
+
+<script src="js/portal-template-as-modal.js"></script>
+<script src='js/portal-sku-selector-with-template.js'></script>
+<script src='js/portal-buy-button.js'></script>
+<script src='js/portal-qty-selector-with-template.js'></script>
+<script src='js/portal-accessories-selector.js'></script>
+
+<script type="text/javascript">
+  var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
+  var accMock = 'spec/mocks/accessories.json'
+
+  $.getJSON(mocks[0]).done(function(data){
+    $('.portal-sku-selector-ref').skuSelector(data);
+    $('.buy-button').buyButton(data.productId);
+    $('.portal-qty-selector-ref').qtySelector(data.productId);
+
+    $.getJSON(accMock).done(function(accData){
+      $('.portal-accessories-selector-ref').accessoriesSelector(data.productId, accData);
+    });
+  });
+
+
+</script>
+
+</body>
