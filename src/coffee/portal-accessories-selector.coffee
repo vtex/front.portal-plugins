@@ -23,4 +23,4 @@ $.fn.accessoriesSelector = (productId, accessories, jsOptions) ->
 
 
 # PLUGIN DEFAULTS
-$.fn.accessories.defaults = {}
+$.fn.accessoriesSelector.defaults = {}

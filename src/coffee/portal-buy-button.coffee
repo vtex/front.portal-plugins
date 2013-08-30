@@ -11,6 +11,8 @@ class BuyButton
 		@seller = buyData.seller || 1
 		@salesChannel = buyData.salesChannel || 1
 
+		@accessories = []
+
 		@init()
 
 	init: =>
@@ -22,6 +24,7 @@ class BuyButton
 		$(window).on 'vtex.sku.unselected', @skuUnselected
 		$(window).on 'vtex.qty.ready', @qtyChanged
 		$(window).on 'vtex.qty.changed', @qtyChanged
+		$(window).on 'vtex.accessory.selected', @accessorySelected
 		@element.on 'click', @buyButtonHandler
 
 	check: (productId) =>
@@ -42,8 +45,22 @@ class BuyButton
 		@qty = qty
 		@update()
 
+	accessorySelected: (evt, accessory, productId) =>
+		return unless @check(productId)
+		found = false
+		for acc, i in @accessories
+			if acc.productId = accessory.productId
+				@accessories[i] = accessory
+				found = true
+		unless found
+			@accessories.push(accessory)
+		@update()
+
 	getURL: =>
-		"/checkout/cart/add?sku=#{@sku}&qty=#{@qty}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
+		url = "/checkout/cart/add?sku=#{@sku}&qty=#{@qty}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
+		for acc in @accessories when acc.qty > 0
+			url += "&sku=#{acc.sku}&qty=#{acc.qty}&seller=#{acc.sellerId}&sc=#{acc.salesChannel}"
+		return url
 
 	update: =>
 		url = if @sku then @getURL() else "javascript:alert('#{@options.errorMessage}');"
