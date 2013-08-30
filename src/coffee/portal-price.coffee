@@ -5,11 +5,7 @@ $ = window.jQuery
 
 # CLASSES
 class Price
-	constructor: (element, productId, productData, options) ->
-		@element = element
-		@productId = productId
-		@productData = productData
-		@options = options
+	constructor: (@element, @productId, @productData, @options) ->
 		@sku = null
 
 		@init()

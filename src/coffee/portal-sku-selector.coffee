@@ -13,23 +13,22 @@ _.extend dust.filters,
 
 # CLASSES
 class SkuSelector
-	constructor: (productData, options) ->
-		@productId = productData.productId
-		@name = productData.name
-		@salesChannel = productData.salesChannel
-		@skus = productData.skus
-		@options = options
+	constructor: (@productData, @options) ->
+		@productId = @productData.productId
+		@name = @productData.name
+		@salesChannel = @productData.salesChannel
+		@skus = @productData.skus
 
 		i = 0
 		@dimensions = ({
 			index: i++
 			name: dimensionName
-			values: productData.dimensionsMap[dimensionName]
-			availableValues: (true for value in productData.dimensionsMap[dimensionName])
-			validValues: (true for value in productData.dimensionsMap[dimensionName])
+			values: @productData.dimensionsMap[dimensionName]
+			availableValues: (true for value in @productData.dimensionsMap[dimensionName])
+			validValues: (true for value in @productData.dimensionsMap[dimensionName])
 			selected: undefined
-			inputType: productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio"
-		} for dimensionName in productData.dimensions)
+			inputType: @productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio"
+		} for dimensionName in @productData.dimensions)
 		dim.isRadio = (dim.inputType == "radio") for dim in @dimensions
 		dim.isCombo = (dim.inputType == "combo") for dim in @dimensions
 
@@ -125,12 +124,8 @@ class SkuSelector
 
 
 class SkuSelectorRenderer
-	constructor: (context, options, data) ->
-		@context = context
-		@options = options
-
+	constructor: (@context, @options, @data) ->
 		#SkuSelector
-		@data = data
 		@data.image = @data.skus[0].image
 
 		# Build selectors from given select strings.

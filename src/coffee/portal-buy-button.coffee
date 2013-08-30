@@ -5,14 +5,11 @@ $ = window.jQuery
 
 # CLASSES
 class BuyButton
-	constructor: (element, productId, buyData = {}, options) ->
-		@element = element
-		@productId = productId
+	constructor: (@element, @productId, buyData = {}, @options) ->
 		@sku = buyData.sku || null
 		@qty = buyData.qty || 1
 		@seller = buyData.seller || 1
 		@salesChannel = buyData.salesChannel || 1
-		@options = options
 
 		@init()
 

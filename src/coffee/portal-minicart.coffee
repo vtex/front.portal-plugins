@@ -7,11 +7,9 @@ $ = window.jQuery
 
 # CLASS
 class Minicart
-	constructor: (context, options) ->
+	constructor: (@context, @options) ->
 		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
 
-		@options = options
-		@context = context
 		@hoverContext = @context.add('.show-minicart-on-hover')
 		@cartData = {}
 

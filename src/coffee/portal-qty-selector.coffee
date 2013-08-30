@@ -5,12 +5,7 @@ $ = window.jQuery
 
 # CLASS
 class QtySelector
-	constructor: (element, productId, qty = 1, options) ->
-		@element = element
-		@productId = productId
-		@qty = qty
-		@options = options
-
+	constructor: (@element, @productId, @qty = 1, @options) ->
 		@init()
 
 	init: =>
