@@ -5,7 +5,6 @@
 - [Accessories Selector](#accessories-selector)
 - [Buy Button](#buy-button)
 - [Minicart](#minicart)
-
 - [Notas](#notas)
 
 
