@@ -155,7 +155,14 @@ class SkuSelectorRenderer
 			@context.html out
 			@update()
 			@showBuyButton()
+			@buyIfNoVariations()
 			@context.trigger('vtex.sku.ready')
+
+	buyIfNoVariations: =>
+		# ToDo: NOJENTO
+		if @data.skus.length < 2 and @options.modalLayout
+			console.log 'nojo'
+			setTimeout (=> @select.buyButton().click()), 1
 
 	update: =>
 		originalSelection = (dim.selected for dim in @data.dimensions)
@@ -316,6 +323,7 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 	renderer = new SkuSelectorRenderer(this, options, selector)
 
 	context.data('skuSelector', selector)
+	context.data('skuSelectorRenderer', renderer)
 
 	# Handler for the buy button
 	buyButtonHandler = (event) ->
