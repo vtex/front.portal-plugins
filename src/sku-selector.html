@@ -17,7 +17,7 @@
     <!-- PRIMEIRO -->
     <div>
       <div class="portal-sku-selector-ref"></div>
-      <div class="portal-qty-selector-ref"></div>
+      <div class="portal-quantity-selector-ref"></div>
       <a href="" class="buy-button">COMPRAR</a>
     </div>
 
@@ -25,7 +25,7 @@
     <!-- SEGUNDO -->
     <div style="float: right;">
       <div class="portal-sku-selector-ref2" style="width: 600px;"></div>
-      <div class="portal-qty-selector-ref2"></div>
+      <div class="portal-quantity-selector-ref2"></div>
       <a href="" class="buy-button2">COMPRAR</a>
     </div>
 
@@ -72,7 +72,7 @@
     <script src="js/portal-template-as-modal.js"></script>
     <script src='js/portal-sku-selector-with-template.js'></script>
     <script src='js/portal-buy-button.js'></script>
-    <script src='js/portal-qty-selector-with-template.js'></script>
+    <script src='js/portal-quantity-selector-with-template.js'></script>
 
     <script type="text/javascript">
         var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
@@ -80,13 +80,13 @@
         $.getJSON(mocks[0]).done(function(data){
           $('.portal-sku-selector-ref').skuSelector(data);
           $('.buy-button').buyButton(data.productId);
-          $('.portal-qty-selector-ref').qtySelector(data.productId);
+          $('.portal-quantity-selector-ref').quantitySelector(data.productId);
         });
 
         $.getJSON(mocks[1]).done(function(data){
           $('.portal-sku-selector-ref2').skuSelector(data);
           $('.buy-button2').buyButton(data.productId);
-          $('.portal-qty-selector-ref2').qtySelector(data.productId, 3, {style: 'number'});
+          $('.portal-quantity-selector-ref2').quantitySelector(data.productId, 3, {style: 'number'});
         });
     </script>
 

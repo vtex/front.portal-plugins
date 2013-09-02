@@ -416,8 +416,8 @@ $.fn.skuSelector.defaults =
 
 # SHARED STUFF
 $.skuSelector =
-	getAddUrlForSku: (sku, seller = 1, qty = 1, salesChannel = 1, redirect = true) ->
-		"/checkout/cart/add?qty=#{qty}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
+	getAddUrlForSku: (sku, seller = 1, quantity = 1, salesChannel = 1, redirect = true) ->
+		"/checkout/cart/add?qty=#{quantity}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
 
 	selectors:
 		listPriceValue: '.skuselector-list-price .value'

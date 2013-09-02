@@ -27,7 +27,7 @@ class AccessoriesSelector
 	accessorySelected: (evt) =>
 		$element = $(evt.target)
 
-		acc = qty: if $element.attr('checked') then 1 else 0
+		acc = quantity: if $element.attr('checked') then 1 else 0
 		$.extend acc, @accessoriesData.accessories[$element.data('accIndex')]
 
 		$element.trigger 'vtex.accessory.selected', [acc, @productId]

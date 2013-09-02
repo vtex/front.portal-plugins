@@ -21,6 +21,9 @@
 	],
 	"mapping": true,
 	"mappings": {
+	    ".*portal-minicart-with-template.min.js": "build/js/portal-minicart-with-template.js",
+	    ".*portal-sku-selector-with-template.min.js": "build/js/portal-sku-selector-with-template.js",
+	    ".*portal-template-as-modal.min.js.*": "build/js/portal-template-as-modal.js",
       ".*vtex-utils.min.js": "build/lib/vtex-utils.js"
 	}
 }

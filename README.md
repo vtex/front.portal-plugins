@@ -1,7 +1,7 @@
 ### Índice
 
 - [Sku Selector](#sku-selector)
-- [Qty Selector](#qty-selector)
+- [Quantity Selector](#quantity-selector)
 - [Accessories Selector](#accessories-selector)
 - [Buy Button](#buy-button)
 - [Minicart](#minicart)
@@ -46,17 +46,17 @@ O Sku Selector lança os seguintes eventos:
 
 ---
 
-# Qty Selector
+# Quantity Selector
 
 ## Uso
 
 Chame o plugin em uma `div` vazia:
 
-    $('.qty-selector-container').skuSelector(productId, qty, options);
+    $('.quantity-selector-container').skuSelector(productId, quantity, options);
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`qty`</b> default: `1`. A quantidade inicial do produto. .
+- <b>`quantity`</b> default: `1`. A quantidade inicial do produto. .
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
@@ -74,14 +74,14 @@ Chame o plugin em uma `div` vazia:
 
 ## Eventos
 
-O Qty Selector lança os seguintes eventos:
+O Quantity Selector lança os seguintes eventos:
 
-- <b>`vtex.qty.ready [qty, productId]`</b> na inicialização.
-- <b>`vtex.qty.changed [qty, productId]`</b> quando a quantidade é mudada.
+- <b>`vtex.quantity.ready [quantity, productId]`</b> na inicialização.
+- <b>`vtex.quantity.changed [quantity, productId]`</b> quando a quantidade é mudada.
 
-Adicionalmente, o Qty Selector escuta pelos seguintes eventos:
+Adicionalmente, o Quantity Selector escuta pelos seguintes eventos:
 
-- <b>`vtex.qty.changed [qty, productId]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+- <b>`vtex.quantity.changed [quantity, productId]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
 
 
 ---
@@ -104,7 +104,7 @@ Chame o plugin em uma `div` vazia:
 
 O Accessories Selector lança os seguintes eventos:
 
-- <b>`vtex.accessory.selected [accessory, productId]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `qty`, que será 0 ou 1, dependendo do caso.
+- <b>`vtex.accessory.selected [accessory, productId]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `quantity`, que será 0 ou 1, dependendo do caso.
 
 
 ---
@@ -119,7 +119,7 @@ Chame o plugin na `a` que age como botão de comprar:
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`data`</b> opcional, é um objeto que pode ter as propriedades `sku`, `qty`, `seller` e `salesChannel`.
+- <b>`data`</b> opcional, é um objeto que pode ter as propriedades `sku`, `quantity`, `seller` e `salesChannel`.
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
@@ -140,7 +140,7 @@ Adicionalmente, o Buy Button escuta pelos seguintes eventos:
 
 - <b>`vtex.sku.selected [sku, productId]`</b>
 - <b>`vtex.sku.unselected [selectableSkus, productId]`</b>
-- <b>`vtex.qty.changed [qty, productId]`</b>
+- <b>`vtex.quantity.changed [quantity, productId]`</b>
 - <b>`vtex.accessory.selected [accessory, productId]`</b>
 
 
@@ -214,7 +214,7 @@ Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data`
 |        Plugin        | [jQuery][] | [front.utils][] | [Dust (core)][]|
 | :------------------- | --- | --- | --- |
 | Sku Selector         |  ✔  |  ✔  |  ✔  |
-| Qty Selector         |  ✔  |  ✗  |  ✔  |
+| Quantity Selector         |  ✔  |  ✗  |  ✔  |
 | Accessories Selector |  ✔  |  ✗  |  ✔  |
 | Buy Button           |  ✔  |  ✗  |  ✗  |
 | Minicart             |  ✔  |  ✔  |  ✔  |

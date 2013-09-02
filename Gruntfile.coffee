@@ -44,7 +44,7 @@ module.exports = (grunt) ->
 					'build/js/portal-accessories-selector-with-template.js': ['build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
 					'build/js/portal-sku-selector-with-template.js': ['build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
-					'build/js/portal-qty-selector-with-template.js': ['build/templates/template-qty-selector.js', 'build/js/portal-qty-selector.js']
+					'build/js/portal-quantity-selector-with-template.js': ['build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
 					'build/js/portal-template-as-modal.js': 'build/js/portal-template-as-modal.js'
 
 		uglify:
@@ -54,7 +54,7 @@ module.exports = (grunt) ->
 					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
-					'build/js/portal-qty-selector-with-template.min.js': ['build/js/portal-qty-selector-with-template.js']
+					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']
 
 		karma:
 			options:
@@ -89,7 +89,7 @@ module.exports = (grunt) ->
 					'build/templates/template-sku-selector-modal.js': 'src/templates/sku-selector-modal.dust'
 					'build/templates/template-sku-selector-product.js': 'src/templates/sku-selector-product.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
-					'build/templates/template-qty-selector.js': 'src/templates/qty-selector.dust'
+					'build/templates/template-quantity-selector.js': 'src/templates/quantity-selector.dust'
 
 		connect:
 			main:

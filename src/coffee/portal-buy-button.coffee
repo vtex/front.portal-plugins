@@ -7,7 +7,7 @@ $ = window.jQuery
 class BuyButton
 	constructor: (@element, @productId, buyData = {}, @options) ->
 		@sku = buyData.sku || null
-		@qty = buyData.qty || 1
+		@quantity = buyData.quantity || 1
 		@seller = buyData.seller || 1
 		@salesChannel = buyData.salesChannel || 1
 
@@ -22,8 +22,8 @@ class BuyButton
 	bindEvents: =>
 		$(window).on 'vtex.sku.selected', @skuSelected
 		$(window).on 'vtex.sku.unselected', @skuUnselected
-		$(window).on 'vtex.qty.ready', @qtyChanged
-		$(window).on 'vtex.qty.changed', @qtyChanged
+		$(window).on 'vtex.quantity.ready', @quantityChanged
+		$(window).on 'vtex.quantity.changed', @quantityChanged
 		$(window).on 'vtex.accessory.selected', @accessorySelected
 		@element.on 'click', @buyButtonHandler
 
@@ -40,9 +40,9 @@ class BuyButton
 		@sku = null
 		@update()
 
-	qtyChanged: (evt, qty, productId) =>
+	quantityChanged: (evt, quantity, productId) =>
 		return unless @check(productId)
-		@qty = qty
+		@quantity = quantity
 		@update()
 
 	accessorySelected: (evt, accessory, productId) =>
@@ -57,9 +57,9 @@ class BuyButton
 		@update()
 
 	getURL: =>
-		url = "/checkout/cart/add?sku=#{@sku}&qty=#{@qty}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
-		for acc in @accessories when acc.qty > 0
-			url += "&sku=#{acc.sku}&qty=#{acc.qty}&seller=#{acc.sellerId}&sc=#{acc.salesChannel}"
+		url = "/checkout/cart/add?sku=#{@sku}&qty=#{@quantity}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
+		for acc in @accessories when acc.quantity > 0
+			url += "&sku=#{acc.sku}&qty=#{acc.quantity}&seller=#{acc.sellerId}&sc=#{acc.salesChannel}"
 		return url
 
 	update: =>

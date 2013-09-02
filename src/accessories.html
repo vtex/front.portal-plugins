@@ -14,7 +14,7 @@
 
 <div>
   <div class="portal-sku-selector-ref"></div>
-  <div class="portal-qty-selector-ref"></div>
+  <div class="portal-quantity-selector-ref"></div>
   <a href="" class="buy-button">COMPRAR</a>
   <div class="portal-accessories-selector-ref"></div>
 </div>
@@ -23,7 +23,7 @@
 <script src="js/portal-template-as-modal.js"></script>
 <script src='js/portal-sku-selector-with-template.js'></script>
 <script src='js/portal-buy-button.js'></script>
-<script src='js/portal-qty-selector-with-template.js'></script>
+<script src='js/portal-quantity-selector-with-template.js'></script>
 <script src='js/portal-accessories-selector-with-template.js'></script>
 
 <script type="text/javascript">
@@ -33,7 +33,7 @@
   $.getJSON(mocks[0]).done(function(data){
     $('.portal-sku-selector-ref').skuSelector(data);
     $('.buy-button').buyButton(data.productId);
-    $('.portal-qty-selector-ref').qtySelector(data.productId);
+    $('.portal-quantity-selector-ref').quantitySelector(data.productId);
 
     $.getJSON(accMock).done(function(accData){
       $('.portal-accessories-selector-ref').accessoriesSelector(data.productId, accData);
