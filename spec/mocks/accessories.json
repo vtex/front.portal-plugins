@@ -11,6 +11,7 @@
   "sellerId":"1",
   "seller":"BaseDevMKP",
   "salesChannel":"1",
+  "rating": 4,
   "accessories":
   [
     {
@@ -25,7 +26,8 @@
       "image": "http://basedevmkp.vtexcommercebeta.com.br/arquivos/ids/168594-130-130/1798224.jpg?v=635013687472100000",
       "sellerId": "1",
       "seller": "BaseDevMKP",
-      "salesChannel":"1"
+      "salesChannel":"1",
+      "rating": 4
     },
     {
       "productId": 9429086,
@@ -39,7 +41,8 @@
       "image": "http://basedevmkp.vtexcommercebeta.com.br/arquivos/ids/168585-130-130/1798083.jpg?v=635013040117570000",
       "sellerId": "1",
       "seller": "BaseDevMKP",
-      "salesChannel":"1"
+      "salesChannel":"1",
+      "rating": 4
     }
   ]
 }
