@@ -5,10 +5,9 @@ $ = window.jQuery
 
 # CLASSES
 class Example
-	constructor: (context, args, options) ->
-		@context = context
-		@options = options
-		# get args
+	constructor: (@context, args, @options) ->
+		@args.x = args.x # get args ...
+
 
 
 # PLUGIN ENTRY POINT

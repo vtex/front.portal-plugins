@@ -4,12 +4,9 @@
 $ = window.jQuery
 
 # CLASSES
-class Example
-	constructor: (context, args, options) ->
-		@context = context
-		@options = options
-# get args
-
+class NotifyMe
+	constructor: (@context, args, @options) ->
+		#
 
 # PLUGIN ENTRY POINT
 $.fn.notifyMe = (args, jsOptions) ->
