@@ -2,6 +2,7 @@
 
 - [Sku Selector](#sku-selector)
 - [Qty Selector](#qty-selector)
+- [Accessories Selector](#accessories-selector)
 - [Buy Button](#buy-button)
 - [Minicart](#minicart)
 
@@ -71,7 +72,7 @@ Chame o plugin em uma `div` vazia:
     - <b>`style`</b>
         default: `"text"`. Define o tipo de input a ser usado. Opções possíveis: `"text"`, `"select"`, `"number"`
 
-## Eventos:
+## Eventos
 
 O Qty Selector lança os seguintes eventos:
 
@@ -81,6 +82,29 @@ O Qty Selector lança os seguintes eventos:
 Adicionalmente, o Qty Selector escuta pelos seguintes eventos:
 
 - <b>`vtex.qty.changed [qty, productId]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+
+
+---
+
+# Accessories Selector
+
+## Uso
+
+Chame o plugin em uma `div` vazia:
+
+    $('.acc-selector-container').accessoriesSelector(productId, data, options);
+
+- <b>`productId`</b> o ID do produto.
+
+- <b>`data`</b> deve ser um JSON de acessórios padrão da API.
+
+- <b>`options`</b> (nenhuma no momento.)
+
+## Eventos
+
+O Accessories Selector lança os seguintes eventos:
+
+- <b>`vtex.accessory.selected [accessory, productId]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `qty`, que será 0 ou 1, dependendo do caso.
 
 
 ---
@@ -117,6 +141,7 @@ Adicionalmente, o Buy Button escuta pelos seguintes eventos:
 - <b>`vtex.sku.selected [sku, productId]`</b>
 - <b>`vtex.sku.unselected [selectableSkus, productId]`</b>
 - <b>`vtex.qty.changed [qty, productId]`</b>
+- <b>`vtex.accessory.selected [accessory, productId]`</b>
 
 
 ---
@@ -180,18 +205,19 @@ As opções podem ser passadas de três jeitos. Eles são, em ordem de prioridad
 
 1. Por JavaScript, na chamada do plugin.
 2. Com atributos `data-` nos elementos.
-3. Opções padrão (objeto `$.fn.nomeDoPlugin.defaults`).
+3. Modificando as opções padrão (objeto `$.fn.nomeDoPlugin.defaults`).
 
 Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data` (acceso via `$().data()`), uma referência à sua instância do plugin.
 
 ## Dependências
 
-| Plugin       | [jQuery][] | [front.utils][] | [Dust (core)][]|
-| :----------- | --- | --- | --- |
-| Sku Selector |  ✔  |  ✔  |  ✔  |
-| Qty Selector |  ✔  |  ✗  |  ✔  |
-| Buy Button   |  ✔  |  ✗  |  ✗  |
-| Minicart     |  ✔  |  ✔  |  ✔  |
+|        Plugin        | [jQuery][] | [front.utils][] | [Dust (core)][]|
+| :------------------- | --- | --- | --- |
+| Sku Selector         |  ✔  |  ✔  |  ✔  |
+| Qty Selector         |  ✔  |  ✗  |  ✔  |
+| Accessories Selector |  ✔  |  ✗  |  ✔  |
+| Buy Button           |  ✔  |  ✗  |  ✗  |
+| Minicart             |  ✔  |  ✔  |  ✔  |
 
 
   [jQuery]: http://www.jquery.com
