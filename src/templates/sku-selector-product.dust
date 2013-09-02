@@ -1,5 +1,5 @@
 {#dimensions}
-<ul class="topic {name|sanitize}">
+<ul class="topic {name|sanitize} productid-{productId}">
   <li class="specification">{name}</li>
   <li class="select skuList item-dimension-{name|sanitize}">
     {#isRadio}
