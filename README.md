@@ -1,10 +1,16 @@
 ### Índice
 
-- [Sku Selector](#sku-selector)
-- [Quantity Selector](#quantity-selector)
-- [Accessories Selector](#accessories-selector)
-- [Buy Button](#buy-button)
-- [Minicart](#minicart)
+- Plugins
+    - [Sku Selector](#sku-selector)
+    - [Quantity Selector](#quantity-selector)
+    - [Accessories Selector](#accessories-selector)
+    - [Buy Button](#buy-button)
+    - [Minicart](#minicart)
+
+- Coming soon...
+    - NotifyMe
+    - Price
+
 - [Notas](#notas)
 
 
@@ -213,8 +219,8 @@ Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data`
 |        Plugin        | [jQuery][] | [front.utils][] | [Dust (core)][]|
 | :------------------- | --- | --- | --- |
 | Sku Selector         |  ✔  |  ✔  |  ✔  |
-| Quantity Selector         |  ✔  |  ✗  |  ✔  |
-| Accessories Selector |  ✔  |  ✗  |  ✔  |
+| Quantity Selector    |  ✔  |  ✗  |  ✔  |
+| Accessories Selector |  ✔  |  ✔  |  ✔  |
 | Buy Button           |  ✔  |  ✗  |  ✗  |
 | Minicart             |  ✔  |  ✔  |  ✔  |
 
