@@ -1,6 +1,6 @@
 {
   "productId":9429081,
-  "sku": 2389980
+  "sku": 2389980,
   "name":"Regressão",
   "listPrice":1500,
   "bestPrice":1299,
@@ -12,6 +12,7 @@
   "seller":"BaseDevMKP",
   "salesChannel":"1",
   "rating": 4,
+  "url": "http://basedevmkp.vtexcommercebeta.com.br/regressao/p",
   "accessories":
   [
     {
@@ -27,7 +28,8 @@
       "sellerId": "1",
       "seller": "BaseDevMKP",
       "salesChannel":"1",
-      "rating": 4
+      "rating": 4,
+      "url": "http://basedevmkp.vtexcommercebeta.com.br/bracelete-laranjeira-copy-9429085-/p"
     },
     {
       "productId": 9429086,
@@ -42,7 +44,8 @@
       "sellerId": "1",
       "seller": "BaseDevMKP",
       "salesChannel":"1",
-      "rating": 4
+      "rating": 4,
+      "url": "http://basedevmkp.vtexcommercebeta.com.br/colar-mandala-colorida-marrom-com-flores-copy-9429086-/p"
     }
   ]
 }

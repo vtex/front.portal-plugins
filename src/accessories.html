@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 
 <body>
-<link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/reset.css">
-<link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/estilos.css?v=3">
-<link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/vtex-smartCart.css">
 
 <meta name="vtex-version" content="1.0.0.0">
 
@@ -12,13 +9,14 @@
 <script src="/lib/vtex-utils.js"></script>
 <script src="/lib/dust-core-2.0.0.min.js"></script>
 
-<style type="text/css">.item_doesnt_exist {color: gray;}</style>
+<style type="text/css">.item_doesnt_exist {color: gray;}
+.accessory{border: 1px solid black;}</style>
 
 <div>
   <div class="portal-sku-selector-ref"></div>
   <div class="portal-qty-selector-ref"></div>
   <a href="" class="buy-button">COMPRAR</a>
-  <div class="portal-accessories-ref"></div>
+  <div class="portal-accessories-selector-ref"></div>
 </div>
 
 
@@ -26,11 +24,11 @@
 <script src='js/portal-sku-selector-with-template.js'></script>
 <script src='js/portal-buy-button.js'></script>
 <script src='js/portal-qty-selector-with-template.js'></script>
-<script src='js/portal-accessories-selector.js'></script>
+<script src='js/portal-accessories-selector-with-template.js'></script>
 
 <script type="text/javascript">
   var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
-  var accMock = 'spec/mocks/accessories.json'
+  var accMock = '/spec/mocks/accessories.json'
 
   $.getJSON(mocks[0]).done(function(data){
     $('.portal-sku-selector-ref').skuSelector(data);

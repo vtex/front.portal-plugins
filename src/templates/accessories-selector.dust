@@ -1,6 +1,6 @@
-<ul>
+<ul class="accessories-selector">
   {#accessories}
-    <li>
+    <li class="accessory">
       <a class="productImage" href="{url}" title="{name}">
         <img src="{image}" width="130" height="130" >
       </a>
@@ -8,17 +8,25 @@
         <h3>
           <a href="{url}" title="{name}">{name}</a>
         </h3>
-        <div id="rating-produto-9429085" class="rating-produto avaliacao0">0</div>
+        <div id="rating-produto-{productId}" class="rating-produto avaliacao{rating}">{rating}</div>
         <p class="price">
-          <a href="http://basedevmkp.vtexcommercebeta.com.br/bracelete-laranjeira-copy-9429085-/p" title="Bracelete Laranjeira, Dourado (Capim dourado) - Solidarium Regressão">
-          <em class="oldPrice">De: <strong>R$ 100,00</strong></em><br>
-          <em class="newPrice">Por: <strong>R$ 84,00</strong></em>
-          <em class="installment">
-            ou <br>
-            <strong>3x</strong> de <strong>R$ 28,00</strong><br>sem juros
-          </em></a></p>
-        <p></p>
+          <a href="{url}" title="{name}">
+            <em class="oldPrice">De: <strong>{listPrice|intAsCurrency}</strong></em><br>
+            <em class="newPrice">Por: <strong>{bestPrice|intAsCurrency}</strong></em>
+            <em class="installment">
+              ou <br>
+              <strong>{installments}x</strong> de <strong>{installmentsValue|intAsCurrency}</strong><br>
+              sem juros
+            </em>
+          </a>
+        </p>
       </div>
+      <fieldset>
+        <label>
+          <input type="checkbox" class="buy-product-checkbox accessory-checkbox" data-acc-index="{$idx}"/>
+          Selecionar
+        </label>
+      </fieldset>
     </li>
   {/accessories}
 </ul>

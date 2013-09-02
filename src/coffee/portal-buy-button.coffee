@@ -49,7 +49,7 @@ class BuyButton
 		return unless @check(productId)
 		found = false
 		for acc, i in @accessories
-			if acc.productId = accessory.productId
+			if acc.sku == accessory.sku
 				@accessories[i] = accessory
 				found = true
 		unless found
