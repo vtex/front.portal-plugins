@@ -15,7 +15,7 @@
         <li class="specification">{name}</li>
         <li class="select skuList item-dimension-{name|sanitize}">
           {#isRadio}
-            <span class="group_{$idx} on">
+            <span class="group_{$idx}">
               {#values}
               <input type="radio"
                      name="{productId}_{name|sanitize}"
