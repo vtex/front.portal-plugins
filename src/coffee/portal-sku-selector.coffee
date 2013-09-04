@@ -431,7 +431,7 @@ $.skuSelector =
 		warnUnavailable: '.skuselector-warn-unavailable'
 
 # EVENTS (DEPRECATED!)
-$(document).on "vtex.sku.selected", (evt, sku, productData) ->
+$(document).on "vtex.sku.selected", (evt, productData, sku) ->
 	window.FireSkuChangeImage?(sku.sku)
 	#window.FireSkuDataReceived?(sku.sku)
 	window.FireSkuSelectionChanged?(sku.sku)
