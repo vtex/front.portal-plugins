@@ -30,22 +30,22 @@ class BuyButton
 	check: (productId) =>
 		productId == @productId
 
-	skuSelected: (evt, sku, productId) =>
+	skuSelected: (evt, productId, sku) =>
 		return unless @check(productId)
 		@sku = sku.sku
 		@update()
 
-	skuUnselected: (evt, selectableSkus, productId) =>
+	skuUnselected: (evt, productId, selectableSkus) =>
 		return unless @check(productId)
 		@sku = null
 		@update()
 
-	quantityChanged: (evt, quantity, productId) =>
+	quantityChanged: (evt, productId, quantity) =>
 		return unless @check(productId)
 		@quantity = quantity
 		@update()
 
-	accessorySelected: (evt, accessory, productId) =>
+	accessorySelected: (evt, productId, accessory) =>
 		return unless @check(productId)
 		found = false
 		for acc, i in @accessories

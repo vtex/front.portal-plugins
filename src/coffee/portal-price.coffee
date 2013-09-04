@@ -21,10 +21,10 @@ class Price
 	check: (productId) =>
 		productId == @productId
 
-	skuSelected: (evt, sku, productId) =>
+	skuSelected: (evt, productId, sku) =>
 		return unless check(productId)
 
-	skuUnselected: (evt, selectableSkus, productId) =>
+	skuUnselected: (evt, productId, selectableSkus) =>
 		return unless check(productId)
 
 

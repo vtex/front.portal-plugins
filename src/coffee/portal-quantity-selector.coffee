@@ -11,7 +11,7 @@ class QuantitySelector
 	init: =>
 		@render()
 		@bindEvents()
-		@element.trigger 'vtex.quantity.ready', [@quantity, @productId]
+		@element.trigger 'vtex.quantity.ready', [@productId, @quantity]
 
 	render: =>
 		renderData =
@@ -39,24 +39,24 @@ class QuantitySelector
 		@element.find('.mais').on 'click', @incrementQuantity
 		@element.find('input,select').on 'change', (evt) =>
 			$el = $(evt.target)
-			$el.trigger 'vtex.quantity.changed', [$el.val(), @productId]
+			$el.trigger 'vtex.quantity.changed', [@productId, $el.val()]
 
 	check: (productId) =>
 		productId == @productId
 
-	quantityChanged: (evt, quantity, productId) =>
+	quantityChanged: (evt, productId, quantity) =>
 		return unless @check(productId)
 		@quantity = quantity
 		@update()
 
 	decrementQuantity: =>
 		if @quantity > 1
-			@element.trigger 'vtex.quantity.changed', [@quantity-1, @productId]
+			@element.trigger 'vtex.quantity.changed', [@productId, @quantity-1]
 		return false
 
 	incrementQuantity: =>
 		if @quantity < @options.max
-			@element.trigger 'vtex.quantity.changed', [@quantity+1, @productId]
+			@element.trigger 'vtex.quantity.changed', [@productId, @quantity+1]
 		return false
 
 

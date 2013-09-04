@@ -44,9 +44,9 @@ Chame o plugin em uma `div` vazia:
 O Sku Selector lança os seguintes eventos:
 
 - <b>`vtex.sku.ready []`</b> quando o Sku Selector é renderizado.
-- <b>`vtex.sku.dimensionChanged [name, value, productId]`</b> quando uma dimensão é selecionada.
-- <b>`vtex.sku.selected [sku, productId]`</b> quando um SKU é definido.
-- <b>`vtex.sku.unselected [selectableSkus, productId]`</b> quando o SKU torna-se indefinido.
+- <b>`vtex.sku.dimensionChanged [productId, name, value]`</b> quando uma dimensão é selecionada.
+- <b>`vtex.sku.selected [productId, sku]`</b> quando um SKU é definido.
+- <b>`vtex.sku.unselected [productId, selectableSkus]`</b> quando o SKU torna-se indefinido.
 
 
 ---
@@ -81,12 +81,12 @@ Chame o plugin em uma `div` vazia:
 
 O Quantity Selector lança os seguintes eventos:
 
-- <b>`vtex.quantity.ready [quantity, productId]`</b> na inicialização.
-- <b>`vtex.quantity.changed [quantity, productId]`</b> quando a quantidade é mudada.
+- <b>`vtex.quantity.ready [productId, quantity]`</b> na inicialização.
+- <b>`vtex.quantity.changed [productId, quantity]`</b> quando a quantidade é mudada.
 
 Adicionalmente, o Quantity Selector escuta pelos seguintes eventos:
 
-- <b>`vtex.quantity.changed [quantity, productId]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+- <b>`vtex.quantity.changed [productId, quantity]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
 
 
 ---
@@ -109,7 +109,7 @@ Chame o plugin em uma `div` vazia:
 
 O Accessories Selector lança os seguintes eventos:
 
-- <b>`vtex.accessory.selected [accessory, productId]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `quantity`, que será 0 ou 1, dependendo do caso.
+- <b>`vtex.accessory.selected [productId, accessory]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `quantity`, que será 0 ou 1, dependendo do caso.
 
 
 ---
@@ -143,10 +143,10 @@ O Buy Button lança os seguintes eventos:
 
 Adicionalmente, o Buy Button escuta pelos seguintes eventos:
 
-- <b>`vtex.sku.selected [sku, productId]`</b>
-- <b>`vtex.sku.unselected [selectableSkus, productId]`</b>
-- <b>`vtex.quantity.changed [quantity, productId]`</b>
-- <b>`vtex.accessory.selected [accessory, productId]`</b>
+- <b>`vtex.sku.selected [productId, sku]`</b>
+- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
+- <b>`vtex.quantity.changed [productId, quantity]`</b>
+- <b>`vtex.accessory.selected [productId, accessory]`</b>
 
 
 ---

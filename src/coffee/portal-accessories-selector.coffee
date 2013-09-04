@@ -30,7 +30,7 @@ class AccessoriesSelector
 		acc = quantity: if $element.attr('checked') then 1 else 0
 		$.extend acc, @accessoriesData.accessories[$element.data('accIndex')]
 
-		$element.trigger 'vtex.accessory.selected', [acc, @productId]
+		$element.trigger 'vtex.accessory.selected', [@productId, acc]
 
 # PLUGIN ENTRY POINT
 $.fn.accessoriesSelector = (productId, accessoriesData, jsOptions) ->
