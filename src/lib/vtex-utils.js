@@ -1,5 +1,5 @@
 (function() {
-  var Utils, root, utils,
+  var Utils, root, utils, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = {}.hasOwnProperty,
     __slice = [].slice;
@@ -444,7 +444,7 @@
 
   root = typeof exports !== "undefined" && exports !== null ? exports : window;
 
-  if (root._ != null) {
+  if (((_ref = root._) != null ? _ref.mixin : void 0) != null) {
     root._.mixin(utils);
   } else {
     root._ = utils;
