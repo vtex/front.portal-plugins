@@ -100,7 +100,7 @@ class Minicart
 
 	render: () =>
 		dust.render 'minicart', @cartData, (err, out) =>
-			console.log 'Minicart Dust error: ', err if err
+			throw err if err
 			@context.html out
 			$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
 				@deleteItem(this)

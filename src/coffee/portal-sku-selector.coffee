@@ -151,7 +151,7 @@ class SkuSelectorRenderer
 	render: =>
 		templateName = if @options.modalLayout then 'sku-selector-modal' else 'sku-selector-product'
 		dust.render templateName, @data, (err, out) =>
-			console.log "Sku Selector Dust error: ", err if err
+			throw err if err
 			@context.html out
 			@update()
 			@showBuyButton()
@@ -159,9 +159,8 @@ class SkuSelectorRenderer
 			@context.trigger('vtex.sku.ready')
 
 	buyIfNoVariations: =>
-		# ToDo: NOJENTO
+		# TODO: Passar a logica de comprar automaticamente para o botao de comprar da vitrine
 		if @data.skus.length < 2 and @options.modalLayout
-			console.log 'nojo'
 			setTimeout (=> @select.buyButton().click()), 1
 
 	update: =>
