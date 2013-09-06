@@ -45,7 +45,7 @@ module.exports = (grunt) ->
 					'build/js/portal-sku-selector-with-template.js': ['build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
 					'build/js/portal-quantity-selector-with-template.js': ['build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
-					'build/js/portal-template-as-modal.js': 'build/js/portal-template-as-modal.js'
+					'build/js/portal-notify-me-with-template.js': ['build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
 
 		uglify:
 			main:
@@ -55,6 +55,7 @@ module.exports = (grunt) ->
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
 					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']
+					'build/js/portal-notify-me-with-template.min.js': ['build/js/portal-notify-me-with-template.js']
 
 		karma:
 			options:
@@ -90,6 +91,7 @@ module.exports = (grunt) ->
 					'build/templates/template-sku-selector-product.js': 'src/templates/sku-selector-product.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
 					'build/templates/template-quantity-selector.js': 'src/templates/quantity-selector.dust'
+					'build/templates/template-notify-me.js': 'src/templates/notify-me.dust'
 
 		connect:
 			main:
