@@ -32,12 +32,6 @@ module.exports = (grunt) ->
 					ext: '.js'
 				]
 
-		less:
-			main:
-				files:
-					'build/<%= relativePath %>/style/portal-sku-selector.css': 'src/style/portal-sku-selector.less'
-					'build/<%= relativePath %>/style/product-listing-mock.css': 'src/style/product-listing-mock.less'
-
 		concat:
 			dev:
 				files:
@@ -46,6 +40,7 @@ module.exports = (grunt) ->
 					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
 					'build/js/portal-quantity-selector-with-template.js': ['build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
 					'build/js/portal-notify-me-with-template.js': ['build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
+					'build/js/portal-price-with-template.js': ['build/templates/template-price.js', 'build/js/portal-price.js']
 
 		uglify:
 			main:
@@ -92,6 +87,7 @@ module.exports = (grunt) ->
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
 					'build/templates/template-quantity-selector.js': 'src/templates/quantity-selector.dust'
 					'build/templates/template-notify-me.js': 'src/templates/notify-me.dust'
+					'build/templates/template-price.js': 'src/templates/price.dust'
 
 		connect:
 			main:
@@ -109,7 +105,7 @@ module.exports = (grunt) ->
 				tasks: ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace']
 
 		concurrent:
-			transform: ['copy:main', 'copy:mocks', 'coffee', 'less', 'dustjs']
+			transform: ['copy:main', 'copy:mocks', 'coffee', 'dustjs']
 
 		vtex_deploy:
 			main:
