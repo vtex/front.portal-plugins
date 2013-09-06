@@ -15,8 +15,8 @@ class Price extends ProductComponent
 		@update()
 
 	bindEvents: =>
-		@getProductEvent 'vtex.sku.selected', @skuSelected
-		@getProductEvent 'vtex.sku.unselected', @skuUnselected
+		@bindProductEvent 'vtex.sku.selected', @skuSelected
+		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
 
 	skuSelected: (evt, productId, sku) =>
 

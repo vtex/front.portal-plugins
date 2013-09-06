@@ -20,11 +20,11 @@ class BuyButton extends ProductComponent
 		@update()
 
 	bindEvents: =>
-		@getProductEvent 'vtex.sku.selected', @skuSelected
-		@getProductEvent 'vtex.sku.unselected', @skuUnselected
-		@getProductEvent 'vtex.quantity.ready', @quantityChanged
-		@getProductEvent 'vtex.quantity.changed', @quantityChanged
-		@getProductEvent 'vtex.accessory.selected', @accessorySelected
+		@bindProductEvent 'vtex.sku.selected', @skuSelected
+		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
+		@bindProductEvent 'vtex.quantity.ready', @quantityChanged
+		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
+		@bindProductEvent 'vtex.accessory.selected', @accessorySelected
 		@element.on 'click', @buyButtonHandler
 
 	skuSelected: (evt, productId, sku) =>

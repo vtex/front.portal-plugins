@@ -34,7 +34,7 @@ class QuantitySelector extends ProductComponent
 		@element.find('.produtoQuantidade').val(@quantity)
 
 	bindEvents: =>
-		@getProductEvent 'vtex.quantity.changed', @quantityChanged
+		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
 		@element.find('.menos').on 'click', @decrementQuantity
 		@element.find('.mais').on 'click', @incrementQuantity
 		@element.find('input,select').on 'change', (evt) =>

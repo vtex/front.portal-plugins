@@ -22,8 +22,8 @@ class NotifyMe extends ProductComponent
 			@context.html out
 
 	bindEvents: =>
-		@getProductEvent 'vtex.sku.selected', @skuSelected
-		@getProductEvent 'vtex.sku.unselected', @skuUnselected
+		@bindProductEvent 'vtex.sku.selected', @skuSelected
+		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
 		@context.on 'submit', @submit
 
 	skuSelected: (evt, productId, sku) =>

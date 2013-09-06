@@ -1,5 +1,5 @@
 class ProductComponent
-	getProductEvent: (name, handler, productIdIndex = 0) =>
+	bindProductEvent: (name, handler, productIdIndex = 0) =>
 		$(window).on name, (evt, args...) =>
-			return unless @productId == args[productIdIndex]
+			return unless @productId is args[productIdIndex]
 			handler(evt, args...)
