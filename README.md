@@ -5,6 +5,7 @@
     - [Quantity Selector](#quantity-selector)
     - [Accessories Selector](#accessories-selector)
     - [Buy Button](#buy-button)
+    - [Notify Me](#notify-me)
     - [Minicart](#minicart)
 
 - Coming soon...
@@ -81,7 +82,7 @@ Chame o plugin em uma `div` vazia:
 
 O Quantity Selector lança os seguintes eventos:
 
-- <b>`vtex.quantity.ready [productId, quantity]`</b> na inicialização.
+- <b>`vtex.quantity.ready [productId, quantity]`</b> quando o Quantity Selector é renderizado.
 - <b>`vtex.quantity.changed [productId, quantity]`</b> quando a quantidade é mudada.
 
 Adicionalmente, o Quantity Selector escuta pelos seguintes eventos:
@@ -147,6 +148,32 @@ Adicionalmente, o Buy Button escuta pelos seguintes eventos:
 - <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
 - <b>`vtex.quantity.changed [productId, quantity]`</b>
 - <b>`vtex.accessory.selected [productId, accessory]`</b>
+
+
+---
+
+# Notify Me
+
+## Uso
+
+Chame o plugin em uma `div` vazia:
+
+    $('.portal-notify-me-ref').notifyMe(productId, options);
+
+- <b>`productId`</b> o ID do produto.
+
+- <b>`options`</b> (nenhuma no momento.)
+
+## Eventos
+
+O Notify Me lança os seguintes eventos:
+
+- <b>`vtex.notifyMe.submitted [productId, sku, promise]`</b>: quando a form é enviada.
+
+Adicionalmente, o Notify Me escuta pelos seguintes eventos:
+
+- <b>`vtex.sku.selected [productId, sku]`</b>
+- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
 
 
 ---
