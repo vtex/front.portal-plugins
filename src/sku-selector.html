@@ -85,7 +85,7 @@
           $('.portal-sku-selector-ref').skuSelector(data);
           $('.buy-button').buyButton(data.productId);
           $('.portal-quantity-selector-ref').quantitySelector(data.productId);
-          $('.portal-notify-me-ref').notifyMe(data.productId);
+          $('.portal-notify-me-ref').notifyMe(data.productId, {strings: {title: "AVISE-ME"}});
         });
 
         $.getJSON(mocks[1]).done(function(data){
