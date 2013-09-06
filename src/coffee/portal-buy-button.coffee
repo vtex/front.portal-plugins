@@ -4,7 +4,7 @@
 $ = window.jQuery
 
 # CLASSES
-class BuyButton
+class BuyButton extends ProductComponent
 	constructor: (@element, @productId, buyData = {}, @options) ->
 		@sku = buyData.sku || null
 		@quantity = buyData.quantity || 1
@@ -20,33 +20,26 @@ class BuyButton
 		@update()
 
 	bindEvents: =>
-		$(window).on 'vtex.sku.selected', @skuSelected
-		$(window).on 'vtex.sku.unselected', @skuUnselected
-		$(window).on 'vtex.quantity.ready', @quantityChanged
-		$(window).on 'vtex.quantity.changed', @quantityChanged
-		$(window).on 'vtex.accessory.selected', @accessorySelected
+		@getProductEvent 'vtex.sku.selected', @skuSelected
+		@getProductEvent 'vtex.sku.unselected', @skuUnselected
+		@getProductEvent 'vtex.quantity.ready', @quantityChanged
+		@getProductEvent 'vtex.quantity.changed', @quantityChanged
+		@getProductEvent 'vtex.accessory.selected', @accessorySelected
 		@element.on 'click', @buyButtonHandler
 
-	check: (productId) =>
-		productId == @productId
-
 	skuSelected: (evt, productId, sku) =>
-		return unless @check(productId)
 		@sku = sku.sku
 		@update()
 
 	skuUnselected: (evt, productId, selectableSkus) =>
-		return unless @check(productId)
 		@sku = null
 		@update()
 
 	quantityChanged: (evt, productId, quantity) =>
-		return unless @check(productId)
 		@quantity = quantity
 		@update()
 
 	accessorySelected: (evt, productId, accessory) =>
-		return unless @check(productId)
 		found = false
 		for acc, i in @accessories
 			if acc.sku == accessory.sku

@@ -5,7 +5,7 @@
 $ = window.jQuery
 
 # CLASSES
-class NotifyMe
+class NotifyMe extends ProductComponent
 	constructor: (@context, @productId, @options) ->
 		@init()
 		@sku = null
@@ -22,15 +22,11 @@ class NotifyMe
 			@context.html out
 
 	bindEvents: =>
-		$(window).on 'vtex.sku.selected', @skuSelected
-		$(window).on 'vtex.sku.unselected', @skuUnselected
+		@getProductEvent 'vtex.sku.selected', @skuSelected
+		@getProductEvent 'vtex.sku.unselected', @skuUnselected
 		@context.on 'submit', @submit
 
-	check: (productId) =>
-		productId == @productId
-
 	skuSelected: (evt, productId, sku) =>
-		return unless @check(productId)
 		@sku = sku
 		if sku.available
 			@hideAll()
@@ -38,7 +34,6 @@ class NotifyMe
 			@showForm(sku.sku)
 
 	skuUnselected: (evt, productId, skus) =>
-		return unless @check(productId)
 		@sku = null
 		@hideAll()
 		

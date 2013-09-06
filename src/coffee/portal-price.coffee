@@ -4,7 +4,7 @@
 $ = window.jQuery
 
 # CLASSES
-class Price
+class Price extends ProductComponent
 	constructor: (@element, @productId, @productData, @options) ->
 		@sku = null
 
@@ -15,19 +15,12 @@ class Price
 		@update()
 
 	bindEvents: =>
-		$(window).on 'vtex.sku.selected', @skuSelected
-		$(window).on 'vtex.sku.unselected', @skuUnselected
-
-	check: (productId) =>
-		productId == @productId
+		@getProductEvent 'vtex.sku.selected', @skuSelected
+		@getProductEvent 'vtex.sku.unselected', @skuUnselected
 
 	skuSelected: (evt, productId, sku) =>
-		return unless check(productId)
 
 	skuUnselected: (evt, productId, selectableSkus) =>
-		return unless check(productId)
-
-
 
 # PLUGIN ENTRY POINT
 $.fn.price = (productId, productData, jsOptions) ->

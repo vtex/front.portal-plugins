@@ -4,7 +4,7 @@
 $ = window.jQuery
 
 # CLASS
-class QuantitySelector
+class QuantitySelector extends ProductComponent
 	constructor: (@element, @productId, @quantity = 1, @options) ->
 		@init()
 
@@ -34,18 +34,14 @@ class QuantitySelector
 		@element.find('.produtoQuantidade').val(@quantity)
 
 	bindEvents: =>
-		$(window).on 'vtex.quantity.changed', @quantityChanged
+		@getProductEvent 'vtex.quantity.changed', @quantityChanged
 		@element.find('.menos').on 'click', @decrementQuantity
 		@element.find('.mais').on 'click', @incrementQuantity
 		@element.find('input,select').on 'change', (evt) =>
 			$el = $(evt.target)
 			$el.trigger 'vtex.quantity.changed', [@productId, $el.val()]
 
-	check: (productId) =>
-		productId == @productId
-
 	quantityChanged: (evt, productId, quantity) =>
-		return unless @check(productId)
 		@quantity = quantity
 		@update()
 
