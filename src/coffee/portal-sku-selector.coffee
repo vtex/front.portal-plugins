@@ -159,7 +159,7 @@ class SkuSelectorRenderer
 			@context.trigger('vtex.sku.ready')
 
 	buyIfNoVariations: =>
-		# ToDo: NOJENTO
+		# TODO: Passar a logica de comprar automaticamente para o botao de comprar da vitrine
 		if @data.skus.length < 2 and @options.modalLayout
 			setTimeout (=> @select.buyButton().click()), 1
 
