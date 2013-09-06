@@ -162,7 +162,23 @@ Chame o plugin em uma `div` vazia:
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`options`</b> (nenhuma no momento.)
+- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`ajax`</b>
+        default: `true`. Define se o submit do form deve ser feito com AJAX.
+
+    - <b>`strings`</b>
+        Define as mensagens exibidas. Default:
+
+            {
+                "title": "",
+                "explanation": "Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.",
+                "namePlaceholder": "Digite seu nome...",
+                "emailPlaceholder": "Digite seu e-mail...",
+                "loading": "Carregando...",
+                "success": "Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.",
+                "error": "Não foi possível cadastrar. Tente mais tarde."
+            }
 
 ## Eventos
 
@@ -198,13 +214,13 @@ Chame o plugin em uma `div` vazia:
         Define as mensagens exibidas para cada código de disponibilidade da API. Default:
 
             {
-    		"available": "",
-    		"unavailableItemFulfillment": "Este item não está disponível no momento.",
-    		"withoutStock": "Este item não está disponível no momento.",
-    		"cannotBeDelivered": "Este item não está disponível no momento.",
-    		"withoutPrice": "Este item não está disponível no momento.",
-    		"withoutPriceRnB": "Este item não está disponível no momento.",
-    		"nullPrice": "Este item não está disponível no momento."
+                "available": "",
+                "unavailableItemFulfillment": "Este item não está disponível no momento.",
+                "withoutStock": "Este item não está disponível no momento.",
+                "cannotBeDelivered": "Este item não está disponível no momento.",
+                "withoutPrice": "Este item não está disponível no momento.",
+                "withoutPriceRnB": "Este item não está disponível no momento.",
+                "nullPrice": "Este item não está disponível no momento."
             }
 
     - <b>`showMinicart`</b>
@@ -249,6 +265,7 @@ Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data`
 | Quantity Selector    |  ✔  |  ✗  |  ✔  |
 | Accessories Selector |  ✔  |  ✔  |  ✔  |
 | Buy Button           |  ✔  |  ✗  |  ✗  |
+| Notify Me            |  ✔  |  ✗  |  ✔  |
 | Minicart             |  ✔  |  ✔  |  ✔  |
 
 
