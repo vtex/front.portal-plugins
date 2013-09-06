@@ -26,7 +26,7 @@ class QuantitySelector
 			readonly: @options.readonly
 
 		dust.render "quantity-selector", renderData, (err, out) =>
-			console.log "Quantity Selector Dust error: ", err if err
+			throw new Error "Quantity Selector Dust error: #{err}" if err
 			@element.html out
 			@update()
 

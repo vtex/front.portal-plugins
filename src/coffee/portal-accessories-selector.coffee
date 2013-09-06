@@ -1,5 +1,7 @@
 # DEPENDENCIES:
 # jQuery
+# vtex-utils
+# Dust
 
 $ = window.jQuery
 
@@ -17,7 +19,7 @@ class AccessoriesSelector
 
 	render: =>
 		dust.render 'accessories-selector', @accessoriesData, (err, out) =>
-			console.log "Accessories Selector dust error: ", err if err
+			throw new Error "Accessories Selector Dust error: #{err}" if err
 			@element.html out
 			@bindEvents()
 

@@ -151,7 +151,7 @@ class SkuSelectorRenderer
 	render: =>
 		templateName = if @options.modalLayout then 'sku-selector-modal' else 'sku-selector-product'
 		dust.render templateName, @data, (err, out) =>
-			console.log "Sku Selector Dust error: ", err if err
+			throw new Error "Sku Selector Dust error: #{err}" if err
 			@context.html out
 			@update()
 			@showBuyButton()
@@ -161,7 +161,6 @@ class SkuSelectorRenderer
 	buyIfNoVariations: =>
 		# ToDo: NOJENTO
 		if @data.skus.length < 2 and @options.modalLayout
-			console.log 'nojo'
 			setTimeout (=> @select.buyButton().click()), 1
 
 	update: =>
@@ -334,7 +333,6 @@ $.fn.skuSelector = (productData, jsOptions = {}) ->
 				renderer.showConfirmButton(selectedSku)
 			else
 				context.trigger 'vtex.modal.hide'
-				# console.log 'Adding SKU to cart:', sku
 				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
 				.done (data) ->
 					$(window).trigger 'productAddedToCart'
