@@ -8,6 +8,7 @@ $ = window.jQuery
 class NotifyMe
 	constructor: (@context, @productId, @options) ->
 		@init()
+		@sku = null
 
 	POST_URL: '/no-cache/AviseMe.aspx'
 
@@ -30,6 +31,7 @@ class NotifyMe
 
 	skuSelected: (evt, productId, sku) =>
 		return unless @check(productId)
+		@sku = sku
 		if sku.available
 			@hideAll()
 		else
@@ -37,17 +39,21 @@ class NotifyMe
 
 	skuUnselected: (evt, productId, skus) =>
 		return unless @check(productId)
+		@sku = null
 		@hideAll()
 		
 	submit: (evt) =>
 		evt.preventDefault()
+
 		@hideForm()
 		@showLoading()
 
-		$.post(@POST_URL, $(evt.target).serialize())
+		xhr = $.post(@POST_URL, $(evt.target).serialize())
 		.always(=> @hideLoading())
 		.done(=> @showSuccess())
 		.fail(=> @showError())
+
+		@context.trigger 'vtex.notifyMe.submitted', [@productId, @sku, xhr]
 
 		return false
 
