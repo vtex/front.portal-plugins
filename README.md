@@ -97,7 +97,7 @@ Chame o plugin em uma `div` vazia:
 
     $('.acc-selector-container').accessoriesSelector(productId, data, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> o ID do produto que é pai dos acessórios.
 
 - <b>`data`</b> deve ser um JSON de acessórios padrão da API.
 
@@ -107,7 +107,7 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.accessory.selected [productId, accessory]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `quantity`, que será 0 ou 1, dependendo do caso.
+- <b>`vtex.accessories.updated [productId, accessories]`</b> quando um acessório é alterado. O array `accessories` contém os acessórios de um determinado produto, com propriedades como `sku` e `quantity`.
 
 
 ---
@@ -122,7 +122,7 @@ Usa informações padrão de preço quando não há Sku selecionado.
 
 Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando um Sku não estiver definido.
 
-    $('.productPrice').skuSelector(productId, quantity, options);
+    $('.productPrice').price(productId, options);
 
 - <b>`productId`</b> o ID do produto.
 
