@@ -124,16 +124,16 @@ class SkuSelector
 
 
 class SkuSelectorRenderer
-	constructor: (@context, @options, @data) ->
+	constructor: (@element, @options, @data) ->
 		#SkuSelector
 		@data.image = @data.skus[0].image
 
 		# Build selectors from given select strings.
 		@select = _.mapObj $.skuSelector.selectors, (key, val) =>
-			( => $(val, @context) )
+			( => $(val, @element) )
 
-		@select.inputs = => $('input, select', @context)
-		@select.itemDimension = (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @context)
+		@select.inputs = => $('input, select', @element)
+		@select.itemDimension = (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @element)
 		@select.itemDimensionInput = (dimensionName) =>	@select.itemDimension(dimensionName).find('input')
 		@select.itemDimensionLabel = (dimensionName) =>	@select.itemDimension(dimensionName).find('label')
 		@select.itemDimensionOption = (dimensionName) => @select.itemDimension(dimensionName).find('option')
@@ -152,11 +152,11 @@ class SkuSelectorRenderer
 		templateName = if @options.modalLayout then 'sku-selector-modal' else 'sku-selector-product'
 		dust.render templateName, @data, (err, out) =>
 			throw new Error "Sku Selector Dust error: #{err}" if err
-			@context.html out
+			@element.html out
 			@update()
 			@showBuyButton()
 			@buyIfNoVariations()
-			@context.trigger('vtex.sku.ready')
+			@element.trigger('vtex.sku.ready')
 
 	buyIfNoVariations: =>
 		# TODO: Passar a logica de comprar automaticamente para o botao de comprar da vitrine
@@ -188,7 +188,7 @@ class SkuSelectorRenderer
 
 		if selectableSkus.length == 1
 			selectedSku = selectableSkus[0]
-			@context.trigger 'skuSelected', [selectedSku]
+			@element.trigger 'skuSelected', [selectedSku]
 			if selectedSku.available
 				@showBuyButton(selectedSku)
 				@showPrice(selectedSku)

@@ -5,7 +5,7 @@ $ = window.jQuery
 
 # CLASSES
 class Example
-	constructor: (@context, args, @options) ->
+	constructor: (@element, args, @options) ->
 		@args.x = args.x # get args ...
 
 

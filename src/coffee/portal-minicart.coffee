@@ -7,18 +7,18 @@ $ = window.jQuery
 
 # CLASS
 class Minicart
-	constructor: (@context, @options) ->
+	constructor: (@element, @options) ->
 		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
 
-		@hoverContext = @context.add('.show-minicart-on-hover')
+		@hoverContext = @element.add('.show-minicart-on-hover')
 		@cartData = {}
 
 		@base = $('.minicartListBase').remove()
 
 		@select =
-			amountProducts: => $('.amount-products-em', @context)
-			amountItems: => $('.amount-items-em', @context)
-			totalCart: => $('.total-cart-em', @context)
+			amountProducts: => $('.amount-products-em', @element)
+			amountItems: => $('.amount-items-em', @element)
+			totalCart: => $('.total-cart-em', @element)
 
 		@bindEvents()
 		@updateCart()
@@ -34,11 +34,11 @@ class Minicart
 	bindEvents: =>
 		@hoverContext.on 'mouseover', =>
 			$(window).trigger "minicartMouseOver"
-			@context.trigger 'vtex.minicart.mouseOver'
+			@element.trigger 'vtex.minicart.mouseOver'
 
 		@hoverContext.on 'mouseout', =>
 			$(window).trigger "minicartMouseOut"
-			@context.trigger 'vtex.minicart.mouseOut'
+			@element.trigger 'vtex.minicart.mouseOut'
 
 		$(window).on "vtex.minicart.mouseOver", =>
 			if @cartData.items?.length > 0
@@ -57,7 +57,7 @@ class Minicart
 		$(window).on 'vtex.cart.productRemoved', @updateCart
 
 	updateCart: =>
-		@context.addClass 'amount-items-in-cart-loading'
+		@element.addClass 'amount-items-in-cart-loading'
 
 		$.ajax({
 			url: @getOrderFormURL()
@@ -68,8 +68,8 @@ class Minicart
 			type: "POST"
 		})
 		.done =>
-			@context.removeClass 'amount-items-in-cart-loading'
-			@context.trigger 'vtex.minicart.updated'
+			@element.removeClass 'amount-items-in-cart-loading'
+			@element.trigger 'vtex.minicart.updated'
 		.success (data) =>
 			@cartData = data
 			@prepareCart()
@@ -102,17 +102,17 @@ class Minicart
 	render: () =>
 		dust.render 'minicart', @cartData, (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
-			@context.html out
-			$(".vtexsc-productList .cartSkuRemove", @context).on 'click', =>
+			@element.html out
+			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', =>
 				@deleteItem(this)
 
 	slide: =>
 		if @cartData.items.length is 0
-			@context.find(".vtexsc-cart").slideUp()
+			@element.find(".vtexsc-cart").slideUp()
 		else
-			@context.find(".vtexsc-cart").slideDown()
+			@element.find(".vtexsc-cart").slideDown()
 			@timeoutToHide = setTimeout =>
-				@context.find(".vtexsc-cart").stop(true, true).slideUp()
+				@element.find(".vtexsc-cart").stop(true, true).slideUp()
 			, 3000
 
 	deleteItem: (item) =>
@@ -132,9 +132,9 @@ class Minicart
 			type: "POST"
 		})
 		.done =>
-			@context.trigger 'vtex.minicart.updated'
+			@element.trigger 'vtex.minicart.updated'
 		.success (data) =>
-			@context.trigger 'vtex.cart.productRemoved'
+			@element.trigger 'vtex.cart.productRemoved'
 			@cartData = data
 			@prepareCart()
 			@render()

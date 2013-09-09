@@ -6,7 +6,7 @@ $ = window.jQuery
 
 # CLASSES
 class NotifyMe extends ProductComponent
-	constructor: (@context, @productId, @options) ->
+	constructor: (@element, @productId, @options) ->
 		@init()
 		@sku = null
 
@@ -19,12 +19,12 @@ class NotifyMe extends ProductComponent
 	render: =>
 		dust.render 'notify-me', @options, (err, out) =>
 			throw new Error("Notify Me Dust error: #{err}") if err
-			@context.html out
+			@element.html out
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
 		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
-		@context.on 'submit', @submit if @options.ajax
+		@element.on 'submit', @submit if @options.ajax
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku
@@ -49,7 +49,7 @@ class NotifyMe extends ProductComponent
 		.done(=> @showSuccess())
 		.fail(=> @showError())
 
-		@context.trigger 'vtex.notifyMe.submitted', [@productId, @sku, xhr]
+		@element.trigger 'vtex.notifyMe.submitted', [@productId, @sku, xhr]
 
 		return false
 
@@ -60,24 +60,24 @@ class NotifyMe extends ProductComponent
 		@hideSuccess()
 		@hideError()
 
-	findTitle: => @context.find('.notifyme-title')
+	findTitle: => @element.find('.notifyme-title')
 	hideTitle: => @findTitle().hide()
 	showTitle: => @findTitle().show()
 
-	findForm: => @context.find('form')
+	findForm: => @element.find('form')
 	hideForm: => @findForm().hide()
 	showForm: (sku) =>
 		@findForm().show().find('.notifyme-skuid').val(sku)
 
-	findLoading: => @context.find('.notifyme-loading')
+	findLoading: => @element.find('.notifyme-loading')
 	hideLoading: => @findLoading().hide()
 	showLoading: => @findLoading().show()
 
-	findSuccess: => @context.find('.notifyme-success')
+	findSuccess: => @element.find('.notifyme-success')
 	hideSuccess: => @findSuccess().hide()
 	showSuccess: => @findSuccess().show()
 
-	findError: => @context.find('.notifyme-error')
+	findError: => @element.find('.notifyme-error')
 	hideError: => @findError().hide()
 	showError: => @findError().show()
 
