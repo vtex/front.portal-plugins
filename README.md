@@ -9,7 +9,6 @@
     - [Minicart](#minicart)
 
 - Coming soon...
-    - NotifyMe
     - Price
 
 - [Notas](#notas)
@@ -241,6 +240,7 @@ O Minicart lança os seguintes eventos:
 Adicionalmente, o Minicart escuta pelos seguintes eventos:
 
 - <b>`vtex.cart.productAdded []`</b> o Minicart se atualiza.
+- <b>`vtex.cart.productRemoved []`</b> o Minicart se atualiza.
 
 
 ---
