@@ -22,8 +22,8 @@ class Price
 		@bindEvents()
 
 	render: =>
-		if @sku
-			dust.render 'price', @sku, (err, out) =>
+		if @sku or @options.fallback is 'sku'
+			dust.render 'price', @sku or @originalSku, (err, out) =>
 				throw new Error "Price Dust error: #{err}" if err
 				@element.html out
 				@update()
@@ -100,6 +100,5 @@ $.fn.price = (productId, jsOptions) ->
 
 # PLUGIN DEFAULTS
 $.fn.price.defaults =
-	useOriginalHTML: true
-	useOriginalSku: false
+	fallback: 'html'
 	originalSku: null
