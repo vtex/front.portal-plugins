@@ -1,6 +1,6 @@
 <ul class="accessories-selector">
   {#accessories}
-    <li class="accessory">
+    <li class="accessory" data-accessory-index="{$idx}" data-accessory-product-id="{productId}" data-accessory-sku="{sku}">
       <a class="productImage" href="{url}" title="{name}">
         <img src="{image}" width="130" height="130" >
       </a>
@@ -23,7 +23,7 @@
       </div>
       <fieldset>
         <label>
-          <input type="checkbox" class="buy-product-checkbox accessory-checkbox" data-acc-index="{$idx}"/>
+          <input type="checkbox" class="buy-product-checkbox accessory-checkbox" data-accessory-index="{$idx}" data-accessory-product-id="{productId}" data-accessory-sku="{sku}"/>
           Selecionar
         </label>
       </fieldset>

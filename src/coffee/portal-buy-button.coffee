@@ -24,7 +24,7 @@ class BuyButton
 		$(window).on 'vtex.sku.unselected', @skuUnselected
 		$(window).on 'vtex.quantity.ready', @quantityChanged
 		$(window).on 'vtex.quantity.changed', @quantityChanged
-		$(window).on 'vtex.accessory.selected', @accessorySelected
+		$(window).on 'vtex.accessories.updated', @accessoriesUpdated
 		@element.on 'click', @buyButtonHandler
 
 	check: (productId) =>
@@ -45,15 +45,10 @@ class BuyButton
 		@quantity = quantity
 		@update()
 
-	accessorySelected: (evt, productId, accessory) =>
+	accessoriesUpdated: (evt, productId, accessories) =>
 		return unless @check(productId)
-		found = false
-		for acc, i in @accessories
-			if acc.sku == accessory.sku
-				@accessories[i] = accessory
-				found = true
-		unless found
-			@accessories.push(accessory)
+		@accessories = accessories
+		console.log @accessories
 		@update()
 
 	getURL: =>

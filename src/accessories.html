@@ -21,6 +21,7 @@
 
 
 <script src="js/portal-template-as-modal.js"></script>
+<script src="js/portal-price-with-template.js"></script>
 <script src='js/portal-sku-selector-with-template.js'></script>
 <script src='js/portal-buy-button.js'></script>
 <script src='js/portal-quantity-selector-with-template.js'></script>
@@ -36,7 +37,8 @@
     $('.portal-quantity-selector-ref').quantitySelector(data.productId);
 
     $.getJSON(accMock).done(function(accData){
-      $('.portal-accessories-selector-ref').accessoriesSelector(data.productId, accData);
+      var container = $('.portal-accessories-selector-ref')
+      container.accessoriesSelector(data.productId, accData);
     });
   });
 

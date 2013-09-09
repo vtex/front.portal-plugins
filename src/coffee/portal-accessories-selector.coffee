@@ -11,14 +11,23 @@ _.extend dust.filters,
 
 # CLASSES
 class AccessoriesSelector
-	constructor: (@element, @productId, @accessoriesData, @options) ->
+	constructor: (@element, @productId, @productData, @options) ->
+		@accessories = []
+
+		for accessory in @productData.accessories
+			productCopy = $.extend true, {}, accessory
+			delete productCopy.skus
+			for sku in accessory.skus
+				skuCopy = $.extend quantity: 0, sku
+				@accessories.push($.extend {}, productCopy, skuCopy)
+
 		@init()
 
 	init: =>
 		@render()
 
 	render: =>
-		dust.render 'accessories-selector', @accessoriesData, (err, out) =>
+		dust.render 'accessories-selector', accessories: @accessories, (err, out) =>
 			throw new Error "Accessories Selector Dust error: #{err}" if err
 			@element.html out
 			@bindEvents()
@@ -29,20 +38,21 @@ class AccessoriesSelector
 	accessorySelected: (evt) =>
 		$element = $(evt.target)
 
-		acc = quantity: if $element.attr('checked') then 1 else 0
-		$.extend acc, @accessoriesData.accessories[$element.data('accIndex')]
+		index = $element.data('accessory-index')
+		accessory = @accessories[index]
+		accessory.quantity = if $element.attr('checked') then 1 else 0
 
-		$element.trigger 'vtex.accessory.selected', [@productId, acc]
+		$element.trigger 'vtex.accessories.updated', [@productId, @accessories]
 
 # PLUGIN ENTRY POINT
-$.fn.accessoriesSelector = (productId, accessoriesData, jsOptions) ->
+$.fn.accessoriesSelector = (productId, productData, jsOptions) ->
 	defaultOptions = $.extend true, {}, $.fn.accessoriesSelector.defaults
 	for element in this
 		$element = $(element)
 		domOptions = $element.data()
 		options = $.extend(true, defaultOptions, domOptions, jsOptions)
 		unless $element.data('accessoriesSelector')
-			$element.data('accessoriesSelector', new AccessoriesSelector($element, productId, accessoriesData, options))
+			$element.data('accessoriesSelector', new AccessoriesSelector($element, productId, productData, options))
 
 	return this
 
