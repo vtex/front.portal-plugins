@@ -4,13 +4,10 @@
     - [Sku Selector](#sku-selector)
     - [Quantity Selector](#quantity-selector)
     - [Accessories Selector](#accessories-selector)
+    - [Price](#price)
     - [Buy Button](#buy-button)
     - [Notify Me](#notify-me)
     - [Minicart](#minicart)
-
-- Coming soon...
-    - NotifyMe
-    - Price
 
 - [Notas](#notas)
 
@@ -42,7 +39,7 @@ Chame o plugin em uma `div` vazia:
 
 ## Eventos
 
-O Sku Selector lança os seguintes eventos:
+Lança os seguintes eventos:
 
 - <b>`vtex.sku.ready []`</b> quando o Sku Selector é renderizado.
 - <b>`vtex.sku.dimensionChanged [productId, name, value]`</b> quando uma dimensão é selecionada.
@@ -80,12 +77,12 @@ Chame o plugin em uma `div` vazia:
 
 ## Eventos
 
-O Quantity Selector lança os seguintes eventos:
+Lança os seguintes eventos:
 
 - <b>`vtex.quantity.ready [productId, quantity]`</b> quando o Quantity Selector é renderizado.
 - <b>`vtex.quantity.changed [productId, quantity]`</b> quando a quantidade é mudada.
 
-Adicionalmente, o Quantity Selector escuta pelos seguintes eventos:
+Escuta pelos seguintes eventos:
 
 - <b>`vtex.quantity.changed [productId, quantity]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
 
@@ -108,9 +105,41 @@ Chame o plugin em uma `div` vazia:
 
 ## Eventos
 
-O Accessories Selector lança os seguintes eventos:
+Lança os seguintes eventos:
 
 - <b>`vtex.accessory.selected [productId, accessory]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `quantity`, que será 0 ou 1, dependendo do caso.
+
+
+---
+
+# Price
+
+Escuta por mudanças no Sku selecionado e atualiza as labels de preço.
+
+Usa informações padrão de preço quando não há Sku selecionado.
+
+## Uso
+
+Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando um Sku não estiver definido.
+
+    $('.productPrice').skuSelector(productId, quantity, options);
+
+- <b>`productId`</b> o ID do produto.
+
+- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`fallback`</b>
+        default: `html`. Define se o fallback. Pode ser `html` ou `sku`.
+
+    - <b>`originalSku`</b>
+        default: `null`. Deve ser definido se a opção acima for `true`.
+
+## Eventos
+
+Escuta pelos seguintes eventos:
+
+- <b>`vtex.sku.selected [productId, sku]`</b>
+- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
 
 
 ---
@@ -137,12 +166,12 @@ Chame o plugin na `a` que age como botão de comprar:
 
 ## Eventos
 
-O Buy Button lança os seguintes eventos:
+Lança os seguintes eventos:
 
 - <b>`vtex.modal.hide []`</b> quando `redirect=false` e o botão é clicado.
 - <b>`vtex.cart.productAdded []`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
 
-Adicionalmente, o Buy Button escuta pelos seguintes eventos:
+Escuta pelos seguintes eventos:
 
 - <b>`vtex.sku.selected [productId, sku]`</b>
 - <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
@@ -162,15 +191,31 @@ Chame o plugin em uma `div` vazia:
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`options`</b> (nenhuma no momento.)
+- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`ajax`</b>
+        default: `true`. Define se o submit do form deve ser feito com AJAX.
+
+    - <b>`strings`</b>
+        Define as mensagens exibidas. Default:
+
+            {
+                "title": "",
+                "explanation": "Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.",
+                "namePlaceholder": "Digite seu nome...",
+                "emailPlaceholder": "Digite seu e-mail...",
+                "loading": "Carregando...",
+                "success": "Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.",
+                "error": "Não foi possível cadastrar. Tente mais tarde."
+            }
 
 ## Eventos
 
-O Notify Me lança os seguintes eventos:
+Lança os seguintes eventos:
 
 - <b>`vtex.notifyMe.submitted [productId, sku, promise]`</b>: quando a form é enviada.
 
-Adicionalmente, o Notify Me escuta pelos seguintes eventos:
+Escuta pelos seguintes eventos:
 
 - <b>`vtex.sku.selected [productId, sku]`</b>
 - <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
@@ -198,13 +243,13 @@ Chame o plugin em uma `div` vazia:
         Define as mensagens exibidas para cada código de disponibilidade da API. Default:
 
             {
-    		"available": "",
-    		"unavailableItemFulfillment": "Este item não está disponível no momento.",
-    		"withoutStock": "Este item não está disponível no momento.",
-    		"cannotBeDelivered": "Este item não está disponível no momento.",
-    		"withoutPrice": "Este item não está disponível no momento.",
-    		"withoutPriceRnB": "Este item não está disponível no momento.",
-    		"nullPrice": "Este item não está disponível no momento."
+                "available": "",
+                "unavailableItemFulfillment": "Este item não está disponível no momento.",
+                "withoutStock": "Este item não está disponível no momento.",
+                "cannotBeDelivered": "Este item não está disponível no momento.",
+                "withoutPrice": "Este item não está disponível no momento.",
+                "withoutPriceRnB": "Este item não está disponível no momento.",
+                "nullPrice": "Este item não está disponível no momento."
             }
 
     - <b>`showMinicart`</b>
@@ -215,16 +260,17 @@ Chame o plugin em uma `div` vazia:
 
 ## Eventos
 
-O Minicart lança os seguintes eventos:
+Lança os seguintes eventos:
 
 - <b>`vtex.cart.productRemoved []`</b> quando um item é removido pelo minicart.
 - <b>`vtex.minicart.mouseOver []`</b>
 - <b>`vtex.minicart.mouseOut []`</b>
 - <b>`vtex.minicart.updated []`</b>
 
-Adicionalmente, o Minicart escuta pelos seguintes eventos:
+Escuta pelos seguintes eventos:
 
 - <b>`vtex.cart.productAdded []`</b> o Minicart se atualiza.
+- <b>`vtex.cart.productRemoved []`</b> o Minicart se atualiza.
 
 
 ---
@@ -248,7 +294,9 @@ Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data`
 | Sku Selector         |  ✔  |  ✔  |  ✔  |
 | Quantity Selector    |  ✔  |  ✗  |  ✔  |
 | Accessories Selector |  ✔  |  ✔  |  ✔  |
+| Price                |  ✔  |  ✔  |  ✔  |
 | Buy Button           |  ✔  |  ✗  |  ✗  |
+| Notify Me            |  ✔  |  ✗  |  ✔  |
 | Minicart             |  ✔  |  ✔  |  ✔  |
 
 

@@ -54,6 +54,7 @@ class Minicart
 		$(window).on "cartUpdated", @updateCart
 		$(window).on 'productAddedToCart', @updateCart
 		$(window).on 'vtex.cart.productAdded', @updateCart
+		$(window).on 'vtex.cart.productRemoved', @updateCart
 
 	updateCart: =>
 		@context.addClass 'amount-items-in-cart-loading'

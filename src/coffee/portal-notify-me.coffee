@@ -24,13 +24,14 @@ class NotifyMe extends ProductComponent
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
 		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
-		@context.on 'submit', @submit
+		@context.on 'submit', @submit if @options.ajax
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku
 		if sku.available
 			@hideAll()
 		else
+			@showTitle()
 			@showForm(sku.sku)
 
 	skuUnselected: (evt, productId, skus) =>
@@ -53,10 +54,15 @@ class NotifyMe extends ProductComponent
 		return false
 
 	hideAll: =>
+		@hideTitle()
 		@hideForm()
 		@hideLoading()
 		@hideSuccess()
 		@hideError()
+
+	findTitle: => @context.find('.notifyme-title')
+	hideTitle: => @findTitle().hide()
+	showTitle: => @findTitle().show()
 
 	findForm: => @context.find('form')
 	hideForm: => @findForm().hide()
@@ -92,4 +98,12 @@ $.fn.notifyMe = (productId, jsOptions) ->
 
 # PLUGIN DEFAULTS
 $.fn.notifyMe.defaults =
-	something: true
+	ajax: true
+	strings:
+		title: ''
+		explanation: 'Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.'
+		namePlaceholder: 'Digite seu nome...'
+		emailPlaceholder: 'Digite seu e-mail...'
+		loading: 'Carregando...'
+		success: 'Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.'
+		error: 'Não foi possível cadastrar. Tente mais tarde.'

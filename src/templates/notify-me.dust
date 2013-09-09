@@ -1,12 +1,12 @@
-<div class="skuselector-warn-unavailable">
-  <form action="" style="display: none;">
+<div class="skuselector-warn-unavailable notifyme sku-notifyme">
+  <h3 class="notifymetitle notifyme-title" style="display: none;">{strings.title}</h3>
+
+  <form action="/no-cache/AviseMe.aspx" style="display: none;">
     <fieldset class="sku-notifyme-form notifyme-form">
-      <p>
-        Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.
-      </p>
-      <input class="sku-notifyme-client-name notifyme-client-name" placeholder="Digite seu nome..." size="20"
+      <p>{strings.explanation}</p>
+      <input class="sku-notifyme-client-name notifyme-client-name" placeholder="{strings.namePlaceholder}" size="20"
              type="text" name="notifymeClientName">
-      <input class="sku-notifyme-client-email notifyme-client-email" placeholder="Digite seu e-mail..." size="20"
+      <input class="sku-notifyme-client-email notifyme-client-email" placeholder="{strings.emailPlaceholder}" size="20"
              type="email" name="notifymeClientEmail">
       <input class="btn-ok sku-notifyme-button-ok notifyme-button-ok" value="ok"
              type="submit" name="notifymeButtonOK">
@@ -14,9 +14,9 @@
     </fieldset>
   </form>
 
-  <span class="sku-notifyme-loading notifyme-loading" style="display: none">Carregando...</span>
+  <span class="sku-notifyme-loading notifyme-loading" style="display: none">{strings.loading}</span>
 
-  <span class="sku-notifyme-success notifyme-success" style="display: none">Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.</span>
+  <span class="sku-notifyme-success notifyme-success" style="display: none">{strings.success}</span>
 
-  <span class="sku-notifyme-error   notifyme-error"   style="display: none">Não foi possível cadastrar. Tente mais tarde.</span>
+  <span class="sku-notifyme-error   notifyme-error"   style="display: none">{strings.error}</span>
 </div>

@@ -1,0 +1,30 @@
+<div class="productPrice">
+  <p class="descricao-preco">
+    <em class="valor-de price-list-price" style="display: block">
+      De:
+      <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
+    </em>
+    <em class="valor-por price-best-price" style="display: block">
+      Por:
+      <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
+    </em>
+    <em class="valor-dividido price-installments" style="display: block">
+      <span>
+        <span>ou <label class="skuBestInstallmentNumber">{installments}<span class="x">x</span></label> de </span>
+        <strong>
+          <label class="skuBestInstallmentValue">{installmentsValue|intAsCurrency}</label>
+        </strong>
+      </span>
+    </em>
+  </p>
+  <!--
+  <p class="preco-a-vista price-cash" style="display: block">
+    Preço a vista:
+    <strong class="skuPrice">
+      {bestPrice|intAsCurrency}
+    </strong>
+  </p>
+  -->
+  <p>
+  </p>
+</div>
