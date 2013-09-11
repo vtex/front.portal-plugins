@@ -17,7 +17,7 @@ class AccessoriesSelector
 		for accessory in @productData.accessories
 			productCopy = $.extend true, {}, accessory
 			delete productCopy.skus
-			for sku in accessory.skus
+			for sku in accessory.skus when sku.available
 				skuCopy = $.extend quantity: 0, sku
 				@accessories.push($.extend {}, productCopy, skuCopy)
 
