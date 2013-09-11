@@ -5,7 +5,9 @@ $ = window.jQuery
 
 # CLASS
 class QuantitySelector
-	constructor: (@element, @productId, @quantity = 1, @options) ->
+	constructor: (@element, @productId, @productData, @options) ->
+		@units = @productData.unitMultiplier * @options.initialQuantity
+		@quantity = @options.initialQuantity
 		@init()
 
 	init: =>
@@ -15,31 +17,28 @@ class QuantitySelector
 
 	render: =>
 		renderData =
-			availableQuantities: [1..@options.max]
+			unitBased: @options.unitBased
+			units: @units
+			unitMin: @productData.unitMultiplier
+			unitMax: @productData.unitMultiplier * @options.max
+			unitOfMeasurement: @productData.unitOfMeasurement
 			max: @options.max
 			quantity: @quantity
-			text: @options.text
-			style:
-				select: @options.style is 'select'
-				text: @options.style is 'text'
-				number: @options.style is 'number'
-			readonly: @options.readonly
 
 		dust.render "quantity-selector", renderData, (err, out) =>
 			throw new Error "Quantity Selector Dust error: #{err}" if err
 			@element.html out
 			@update()
 
-	update: =>
-		@element.find('.produtoQuantidade').val(@quantity)
-
 	bindEvents: =>
 		$(window).on 'vtex.quantity.changed', @quantityChanged
-		@element.find('.menos').on 'click', @decrementQuantity
-		@element.find('.mais').on 'click', @incrementQuantity
-		@element.find('input,select').on 'change', (evt) =>
-			$el = $(evt.target)
-			$el.trigger 'vtex.quantity.changed', [@productId, $el.val()]
+		@element.find('.unitSelector input').on 'change', @unitInputChanged
+		@element.find('.quantitySelector input').on 'click', @quantityInputChanged
+		@element.trigger 'vtex.quantity.changed', [@productId, @quantity]
+
+	update: =>
+		@element.find('.unitSelector input').val(@units)
+		@element.find('.quantitySelector input').val(@quantity)
 
 	check: (productId) =>
 		productId == @productId
@@ -47,34 +46,43 @@ class QuantitySelector
 	quantityChanged: (evt, productId, quantity) =>
 		return unless @check(productId)
 		@quantity = quantity
+		@calculateUnits()
 		@update()
 
-	decrementQuantity: =>
-		if @quantity > 1
-			@element.trigger 'vtex.quantity.changed', [@productId, @quantity-1]
-		return false
+	unitInputChanged: (evt) =>
+		$element = $(evt.target)
+		@units = $element.val()
+		@quantity = @calculateQuantity()
+		@update()
+		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
 
-	incrementQuantity: =>
-		if @quantity < @options.max
-			@element.trigger 'vtex.quantity.changed', [@productId, @quantity+1]
-		return false
+	calculateQuantity: =>
+		Math.ceil(@units/@productData.unitMultiplier)
 
+	quantityInputChanged: (evt) =>
+		$element = $(evt.target)
+		@quantity = $element.val()
+		@units = @calculateUnits()
+		@update()
+		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
+
+	calculateUnits: =>
+		@quantity * @productData.unitMultiplier
 
 # PLUGIN ENTRY POINT
-$.fn.quantitySelector = (productId, quantity = 1, jsOptions) ->
+$.fn.quantitySelector = (productId, productData, jsOptions) ->
 	defaultOptions = $.extend true, {}, $.fn.quantitySelector.defaults
 	for element in this
 		$element = $(element)
 		domOptions = $element.data()
 		options = $.extend(true, defaultOptions, domOptions, jsOptions)
 		unless $element.data('quantitySelector')
-			$element.data('quantitySelector', new QuantitySelector($element, productId, quantity, options))
+			$element.data('quantitySelector', new QuantitySelector($element, productId, productData, options))
 
 	return this
 
 # PLUGIN DEFAULTS
 $.fn.quantitySelector.defaults =
-	text: "Selecione a quantidade:"
-	style: 'text'
-	readonly: true
-	max: 5
+	initialQuantity: 1
+	unitBased: false
+	max: 10

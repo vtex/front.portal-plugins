@@ -55,25 +55,22 @@ Lança os seguintes eventos:
 
 Chame o plugin em uma `div` vazia:
 
-    $('.quantity-selector-container').skuSelector(productId, quantity, options);
+    $('.quantity-selector-container').skuSelector(productId, productData, options);
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`quantity`</b> default: `1`. A quantidade inicial do produto. .
+- <b>`productData`</b> deve conter as propriedades `unitOfMeasurement` e `unitMultiplier`, se deseja usar seletor a granel.
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
-    - <b>`readonly`</b>
-        default: `true`. Define se o input de quantidade deve ter o atributo readonly.
+    - <b>`unitBased`</b>
+        default: `false`. Define se deseja usar seletor a granel (calculadora de quantidade).
 
     - <b>`max`</b>
-        default: `5`. Define a quantidade máxima que pode ser selecionada.
+        default: `10`. Define a quantidade máxima que pode ser selecionada.
 
-    - <b>`text`</b>
-        default: `"Selecione a quantidade:"`. Define o texto a ser exibido.
-
-    - <b>`style`</b>
-        default: `"text"`. Define o tipo de input a ser usado. Opções possíveis: `"text"`, `"select"`, `"number"`
+    - <b>`initialQuantity`</b>
+        default: `1`. Define a quantidade selecionada inicialmente.
 
 ## Eventos
 
