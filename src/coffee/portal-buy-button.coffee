@@ -30,23 +30,43 @@ class BuyButton
 	check: (productId) =>
 		productId == @productId
 
+	getChangesFromHREF: =>
+		href = @element.attr 'href'
+		if @_url != href
+
+			skuMatch = href.match(/sku=(.*?)&/)
+			if skuMatch and skuMatch[1] and skuMatch[1] != @sku
+				@sku = skuMatch[1]
+				$(window).trigger 'vtex.sku.changed', [@productId, sku: @sku]
+
+			qtyMatch = href.match(/qty=(.*?)&/)
+			if qtyMatch and qtyMatch[1] and qtyMatch[1] != @quantity
+				@quantity = qtyMatch[1]
+				$(window).trigger 'vtex.quantity.changed', [@productId, @quantity]
+
+		@_url = href
+
 	skuSelected: (evt, productId, sku) =>
 		return unless @check(productId)
+		@getChangesFromHREF()
 		@sku = sku.sku
 		@update()
 
 	skuUnselected: (evt, productId, selectableSkus) =>
 		return unless @check(productId)
+		@getChangesFromHREF()
 		@sku = null
 		@update()
 
 	quantityChanged: (evt, productId, quantity) =>
 		return unless @check(productId)
+		@getChangesFromHREF()
 		@quantity = quantity
 		@update()
 
 	accessoriesUpdated: (evt, productId, accessories) =>
 		return unless @check(productId)
+		@getChangesFromHREF()
 		@accessories = accessories
 		console.log @accessories
 		@update()
