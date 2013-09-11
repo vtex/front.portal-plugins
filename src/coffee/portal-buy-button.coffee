@@ -16,6 +16,7 @@ class BuyButton
 		@init()
 
 	init: =>
+		@getChangesFromHREF()
 		@bindEvents()
 		@update()
 
@@ -44,6 +45,14 @@ class BuyButton
 				@quantity = qtyMatch[1]
 				$(window).trigger 'vtex.quantity.changed', [@productId, @quantity]
 
+			sellerMatch = href.match(/seller=(.*?)&/)
+			if sellerMatch and sellerMatch[1] and sellerMatch[1] != @seller
+				@seller = sellerMatch[1]
+
+			salesChannelMatch = href.match(/sc=(.*?)&/)
+			if salesChannelMatch and salesChannelMatch[1] and salesChannelMatch[1] != @salesChannel
+				@salesChannel = salesChannelMatch[1]
+
 		@_url = href
 
 	skuSelected: (evt, productId, sku) =>
@@ -68,7 +77,6 @@ class BuyButton
 		return unless @check(productId)
 		@getChangesFromHREF()
 		@accessories = accessories
-		console.log @accessories
 		@update()
 
 	getURL: =>
