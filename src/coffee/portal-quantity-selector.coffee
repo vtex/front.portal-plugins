@@ -46,7 +46,7 @@ class QuantitySelector
 	quantityChanged: (evt, productId, quantity) =>
 		return unless @check(productId)
 		@quantity = quantity
-		@calculateUnits()
+		@units = @calculateUnits()
 		@update()
 
 	unitInputChanged: (evt) =>
