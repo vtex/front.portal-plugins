@@ -82,7 +82,7 @@ class BuyButton
 	getURL: =>
 		url = "/checkout/cart/add?sku=#{@sku}&qty=#{@quantity}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
 		for acc in @accessories when acc.quantity > 0
-			url += "&sku=#{acc.sku}&qty=#{acc.quantity}&seller=#{acc.sellerId}&sc=#{acc.salesChannel}"
+			url += "&sku=#{acc.sku}&qty=#{acc.quantity}&seller=#{acc.sellerId}"
 		return url
 
 	update: =>
