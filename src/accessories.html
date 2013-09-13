@@ -10,7 +10,11 @@
 <script src="/lib/dust-core-2.0.0.min.js"></script>
 
 <style type="text/css">.item_doesnt_exist {color: gray;}
-.accessory{border: 1px solid black;}</style>
+.accessory {
+  border: 1px solid black;
+  float: left;
+  width: 200px
+}</style>
 
 <div>
   <div class="portal-sku-selector-ref"></div>
@@ -28,8 +32,8 @@
 <script src='js/portal-accessories-selector-with-template.js'></script>
 
 <script type="text/javascript">
-  var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
-  var accMock = '/spec/mocks/accessories.json'
+  var mocks = ['/spec/mocks/electrolux.json'];
+  var accMock = '/spec/mocks/electrolux.json'
 
   $.getJSON(mocks[0]).done(function(data){
     $('.portal-sku-selector-ref').skuSelector(data);
