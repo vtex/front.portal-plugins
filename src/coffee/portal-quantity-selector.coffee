@@ -14,6 +14,7 @@ class QuantitySelector extends ProductComponent
 		@render()
 		@bindEvents()
 		@element.trigger 'vtex.quantity.ready', [@productId, @quantity]
+		@element.trigger 'vtex.quantity.changed', [@productId, @quantity]
 
 	render: =>
 		renderData =
@@ -31,10 +32,9 @@ class QuantitySelector extends ProductComponent
 			@update()
 
 	bindEvents: =>
-		$(window).on 'vtex.quantity.changed', @quantityChanged
+		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
 		@element.find('.unitSelector input').on 'change', @unitInputChanged
 		@element.find('.quantitySelector input').on 'click', @quantityInputChanged
-		@element.trigger 'vtex.quantity.changed', [@productId, @quantity]
 
 	update: =>
 		@element.find('.unitSelector input').val(@units)
