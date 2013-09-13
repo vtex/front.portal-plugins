@@ -1,0 +1,238 @@
+{
+  "accessories": [{
+    "productId": 2000059,
+    "name": "ADEGA ICON WCI49 48GARR",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000191,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 934900,
+      "bestPrice": 934900,
+      "installments": 10,
+      "installmentsValue": 93490,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155940-390-390/WCI49.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 2000059,
+    "name": "ADEGA ICON WCI49 48GARR",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000147,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 934900,
+      "bestPrice": 934900,
+      "installments": 10,
+      "installmentsValue": 93490,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155940-390-390/WCI49.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 12,
+    "name": "ADEGA CLIMATIZ  ACS33",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000190,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 13900,
+      "bestPrice": 3900,
+      "installments": 1,
+      "installmentsValue": 3900,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/156068-390-390/ACS33.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 12,
+    "name": "ADEGA CLIMATIZ  ACS33",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 42667,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 13900,
+      "bestPrice": 3900,
+      "installments": 1,
+      "installmentsValue": 3900,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/156067-390-390/ACS33.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 2000059,
+    "name": "ADEGA ICON WCI49 48GARR",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000191,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 934900,
+      "bestPrice": 934900,
+      "installments": 10,
+      "installmentsValue": 93490,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155940-390-390/WCI49.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 2000059,
+    "name": "ADEGA ICON WCI49 48GARR",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000147,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 934900,
+      "bestPrice": 934900,
+      "installments": 10,
+      "installmentsValue": 93490,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155940-390-390/WCI49.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 12,
+    "name": "ADEGA CLIMATIZ  ACS33",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000190,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 13900,
+      "bestPrice": 3900,
+      "installments": 1,
+      "installmentsValue": 3900,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/156068-390-390/ACS33.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 12,
+    "name": "ADEGA CLIMATIZ  ACS33",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 42667,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 13900,
+      "bestPrice": 3900,
+      "installments": 1,
+      "installmentsValue": 3900,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/156067-390-390/ACS33.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 11,
+    "name": "ADEGA ACS12",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 2000189,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 99900,
+      "bestPrice": 59900,
+      "installments": 10,
+      "installmentsValue": 5990,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155929-390-390/01121WBA189-001.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }, {
+    "productId": 11,
+    "name": "ADEGA ACS12",
+    "salesChannel": "1",
+    "dimensions": [],
+    "dimensionsInputType": null,
+    "dimensionsMap": null,
+    "skus": [{
+      "sku": 42666,
+      "dimensions": {},
+      "available": true,
+      "listPrice": 99900,
+      "bestPrice": 59900,
+      "installments": 10,
+      "installmentsValue": 5990,
+      "installmentsInsterestRate": 0,
+      "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155929-390-390/01121WBA189-001.jpg",
+      "sellerId": "1",
+      "seller": "ElectroluxQA"
+    }]
+  }],
+  "productId": 10,
+  "name": "ADEGA ACS08 127V / 60 HZ",
+  "salesChannel": "1",
+  "dimensions": ["Voltagem"],
+  "dimensionsInputType": null,
+  "dimensionsMap": {"Voltagem": ["127", "220"]},
+  "skus": [{
+    "sku": 42665,
+    "dimensions": {
+      "Voltagem": "127"
+    },
+    "available": true,
+    "listPrice": 3000,
+    "bestPrice": 3000,
+    "installments": 1,
+    "installmentsValue": 3000,
+    "installmentsInsterestRate": 0,
+    "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155928-390-390/01081WBA189-004.jpg",
+    "sellerId": "1",
+    "seller": "ElectroluxQA"
+  }, {
+    "sku": 2000188,
+    "dimensions": {
+      "Voltagem": "220"
+    },
+    "available": true,
+    "listPrice": 3000,
+    "bestPrice": 3000,
+    "installments": 1,
+    "installmentsValue": 3000,
+    "installmentsInsterestRate": 0,
+    "image": "http://electroluxqa.vtexcommercebeta.com.br/arquivos/ids/155925-390-390/01081WBA189-004.jpg",
+    "sellerId": "1",
+    "seller": "ElectroluxQA"
+  }]
+}

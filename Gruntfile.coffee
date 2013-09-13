@@ -50,6 +50,7 @@ module.exports = (grunt) ->
 					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']
 					'build/js/portal-accessories-selector-with-template.min.js': ['build/js/portal-accessories-selector-with-template.js']
 					'build/js/portal-price-with-template.min.js': ['build/js/portal-price-with-template.js']
+					'build/js/portal-buy-button.min.js': ['build/js/portal-buy-button.js']
 					'build/js/portal-notify-me-with-template.min.js': ['build/js/portal-notify-me-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 

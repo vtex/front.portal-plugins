@@ -10,7 +10,11 @@
 <script src="/lib/dust-core-2.0.0.min.js"></script>
 
 <style type="text/css">.item_doesnt_exist {color: gray;}
-.accessory{border: 1px solid black;}</style>
+.accessory {
+  border: 1px solid black;
+  float: left;
+  width: 200px
+}</style>
 
 <div>
   <div class="portal-sku-selector-ref"></div>
@@ -21,22 +25,24 @@
 
 
 <script src="js/portal-template-as-modal.js"></script>
+<script src="js/portal-price-with-template.js"></script>
 <script src='js/portal-sku-selector-with-template.js'></script>
 <script src='js/portal-buy-button.js'></script>
 <script src='js/portal-quantity-selector-with-template.js'></script>
 <script src='js/portal-accessories-selector-with-template.js'></script>
 
 <script type="text/javascript">
-  var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
-  var accMock = '/spec/mocks/accessories.json'
+  var mocks = ['/spec/mocks/electrolux.json'];
+  var accMock = '/spec/mocks/electrolux.json'
 
   $.getJSON(mocks[0]).done(function(data){
     $('.portal-sku-selector-ref').skuSelector(data);
     $('.buy-button').buyButton(data.productId);
-    $('.portal-quantity-selector-ref').quantitySelector(data.productId);
+    $('.portal-quantity-selector-ref').quantitySelector(data.productId, {unitOfMeasurement: "m²", unitMultiplier: 10}, {unitBased: true});
 
     $.getJSON(accMock).done(function(accData){
-      $('.portal-accessories-selector-ref').accessoriesSelector(data.productId, accData);
+      var container = $('.portal-accessories-selector-ref')
+      container.accessoriesSelector(data.productId, accData);
     });
   });
 

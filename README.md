@@ -55,25 +55,22 @@ Lança os seguintes eventos:
 
 Chame o plugin em uma `div` vazia:
 
-    $('.quantity-selector-container').skuSelector(productId, quantity, options);
+    $('.quantity-selector-container').skuSelector(productId, productData, options);
 
 - <b>`productId`</b> o ID do produto.
 
-- <b>`quantity`</b> default: `1`. A quantidade inicial do produto. .
+- <b>`productData`</b> deve conter as propriedades `unitOfMeasurement` e `unitMultiplier`, se deseja usar seletor a granel.
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
-    - <b>`readonly`</b>
-        default: `true`. Define se o input de quantidade deve ter o atributo readonly.
+    - <b>`unitBased`</b>
+        default: `false`. Define se deseja usar seletor a granel (calculadora de quantidade).
 
     - <b>`max`</b>
-        default: `5`. Define a quantidade máxima que pode ser selecionada.
+        default: `10`. Define a quantidade máxima que pode ser selecionada.
 
-    - <b>`text`</b>
-        default: `"Selecione a quantidade:"`. Define o texto a ser exibido.
-
-    - <b>`style`</b>
-        default: `"text"`. Define o tipo de input a ser usado. Opções possíveis: `"text"`, `"select"`, `"number"`
+    - <b>`initialQuantity`</b>
+        default: `1`. Define a quantidade selecionada inicialmente.
 
 ## Eventos
 
@@ -97,7 +94,7 @@ Chame o plugin em uma `div` vazia:
 
     $('.acc-selector-container').accessoriesSelector(productId, data, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> o ID do produto que é pai dos acessórios.
 
 - <b>`data`</b> deve ser um JSON de acessórios padrão da API.
 
@@ -107,7 +104,7 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.accessory.selected [productId, accessory]`</b> quando um acessório é selecionado ou removido. O objeto `accessory` tem a propriedade `quantity`, que será 0 ou 1, dependendo do caso.
+- <b>`vtex.accessories.updated [productId, accessories]`</b> quando um acessório é alterado. O array `accessories` contém os acessórios de um determinado produto, com propriedades como `sku` e `quantity`.
 
 
 ---
@@ -122,7 +119,7 @@ Usa informações padrão de preço quando não há Sku selecionado.
 
 Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando um Sku não estiver definido.
 
-    $('.productPrice').skuSelector(productId, quantity, options);
+    $('.productPrice').price(productId, options);
 
 - <b>`productId`</b> o ID do produto.
 
