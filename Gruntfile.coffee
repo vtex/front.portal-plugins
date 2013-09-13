@@ -35,12 +35,14 @@ module.exports = (grunt) ->
 		concat:
 			dev:
 				files:
-					'build/js/portal-sku-selector-with-template.js': ['build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
-					'build/js/portal-quantity-selector-with-template.js': ['build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
-					'build/js/portal-accessories-selector-with-template.js': ['build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
-					'build/js/portal-price-with-template.js': ['build/templates/template-price.js', 'build/js/portal-price.js']
-					'build/js/portal-notify-me-with-template.js': ['build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
-					'build/js/portal-minicart-with-template.js': ['build/templates/template-minicart.js', 'build/js/portal-minicart.js']
+					'build/js/portal-sku-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
+					'build/js/portal-quantity-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
+					'build/js/portal-accessories-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
+					'build/js/portal-price-with-template.js': ['build/js/product-component.js', 'build/templates/template-price.js', 'build/js/portal-price.js']
+					'build/js/portal-buy-button.js': ['build/js/product-component.js', 'build/js/portal-buy-button.js']
+					'build/js/portal-notify-me-with-template.js': ['build/js/product-component.js', 'build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
+					'build/js/portal-minicart-with-template.js': ['build/js/product-component.js', 'build/templates/template-minicart.js', 'build/js/portal-minicart.js']
+
 
 		uglify:
 			main:

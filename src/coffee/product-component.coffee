@@ -3,3 +3,6 @@ class ProductComponent
 		$(window).on name, (evt, args...) =>
 			return unless @productId is args[productIdIndex]
 			handler(evt, args...)
+
+root = window || exports
+root.ProductComponent = ProductComponent
