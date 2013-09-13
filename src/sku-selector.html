@@ -96,7 +96,7 @@
           $('.portal-price-ref2').price(data.productId);
           $('.portal-sku-selector-ref2').skuSelector(data);
           $('.buy-button2').buyButton(data.productId);
-          $('.portal-quantity-selector-ref2').quantitySelector(data.productId, 3, {style: 'number'});
+          $('.portal-quantity-selector-ref2').quantitySelector(data.productId, {initialQuantity: 3});
           $('.portal-notify-me-ref2').notifyMe(data.productId);
         });
     </script>

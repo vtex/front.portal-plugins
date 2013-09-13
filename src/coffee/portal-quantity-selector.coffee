@@ -5,8 +5,8 @@ $ = window.jQuery
 
 # CLASS
 class QuantitySelector extends ProductComponent
-	constructor: (@element, @productId, @productData, @options) ->
-		@units = @productData.unitMultiplier * @options.initialQuantity
+	constructor: (@element, @productId, @options) ->
+		@units = @options.unitMultiplier * @options.initialQuantity
 		@quantity = @options.initialQuantity
 		@init()
 
@@ -20,9 +20,9 @@ class QuantitySelector extends ProductComponent
 		renderData =
 			unitBased: @options.unitBased
 			units: @units
-			unitMin: @productData.unitMultiplier
-			unitMax: @productData.unitMultiplier * @options.max
-			unitOfMeasurement: @productData.unitOfMeasurement
+			unitMin: @options.unitMultiplier
+			unitMax: @options.unitMultiplier * @options.max
+			unitOfMeasurement: @options.unitOfMeasurement
 			max: @options.max
 			quantity: @quantity
 
@@ -56,7 +56,7 @@ class QuantitySelector extends ProductComponent
 		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
 
 	calculateQuantity: =>
-		Math.ceil(@units/@productData.unitMultiplier)
+		Math.ceil(@units/@options.unitMultiplier)
 
 	quantityInputChanged: (evt) =>
 		$element = $(evt.target)
@@ -66,17 +66,17 @@ class QuantitySelector extends ProductComponent
 		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
 
 	calculateUnits: =>
-		@quantity * @productData.unitMultiplier
+		@quantity * @options.unitMultiplier
 
 # PLUGIN ENTRY POINT
-$.fn.quantitySelector = (productId, productData, jsOptions) ->
+$.fn.quantitySelector = (productId, jsOptions) ->
 	defaultOptions = $.extend true, {}, $.fn.quantitySelector.defaults
 	for element in this
 		$element = $(element)
 		domOptions = $element.data()
 		options = $.extend(true, defaultOptions, domOptions, jsOptions)
 		unless $element.data('quantitySelector')
-			$element.data('quantitySelector', new QuantitySelector($element, productId, productData, options))
+			$element.data('quantitySelector', new QuantitySelector($element, productId, options))
 
 	return this
 
@@ -84,4 +84,6 @@ $.fn.quantitySelector = (productId, productData, jsOptions) ->
 $.fn.quantitySelector.defaults =
 	initialQuantity: 1
 	unitBased: false
+	unitOfMeasurement: ''
+	unitMultiplier: 1
 	max: 10

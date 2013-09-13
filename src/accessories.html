@@ -38,7 +38,7 @@
   $.getJSON(mocks[0]).done(function(data){
     $('.portal-sku-selector-ref').skuSelector(data);
     $('.buy-button').buyButton(data.productId);
-    $('.portal-quantity-selector-ref').quantitySelector(data.productId, {unitOfMeasurement: "m²", unitMultiplier: 10}, {unitBased: true});
+    $('.portal-quantity-selector-ref').quantitySelector(data.productId, {unitOfMeasurement: "m²", unitMultiplier: 10, unitBased: true});
 
     $.getJSON(accMock).done(function(accData){
       var container = $('.portal-accessories-selector-ref')
