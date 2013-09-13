@@ -23,7 +23,12 @@ class Price extends ProductComponent
 
 	render: =>
 		if @sku or @options.fallback is 'sku'
-			dust.render 'price', @sku or @originalSku, (err, out) =>
+			renderData =
+				product: @sku or @originalSku
+				accessories: @getAccessoriesTotal()
+				total: @getTotal()
+
+			dust.render 'price', renderData, (err, out) =>
 				throw new Error "Price Dust error: #{err}" if err
 				@element.html out
 				@update()
@@ -41,8 +46,6 @@ class Price extends ProductComponent
 				
 				if @sku.installments? and @sku.installments > 1
 					@showInstallments()
-				else
-					@showCashPrice()
 
 	findBestPrice: => @element.find('.price-best-price')
 	hideBestPrice: => @findBestPrice().hide()
@@ -56,21 +59,17 @@ class Price extends ProductComponent
 	findInstallments: => @element.find('.price-installments')
 	hideInstallments: => @findInstallments().hide()
 	showInstallments: => @findInstallments().show()
-	findCashPrice: => @element.find('.price-cash')
-	hideCashPrice: => @findCashPrice().hide()
-	showCashPrice: => @findCashPrice().show()
 
 	hideAll: =>
 		@hideBestPrice()
 		@hideListPrice()
 		@hideSavings()
 		@hideInstallments()
-		@hideCashPrice()
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
 		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
-
+		@bindProductEvent 'vtex.accessories.updated', @accessoriesUpdated
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku
@@ -79,6 +78,34 @@ class Price extends ProductComponent
 	skuUnselected: (evt, productId, selectableSkus) =>
 		@sku = null
 		@render()
+
+	accessoriesUpdated: (evt, productId, accessories) =>
+		@accessories = accessories
+		@render()
+
+	getAccessoriesTotal: =>
+		if @accessories?.length
+			total =
+				listPrice: 0
+				bestPrice: 0
+
+			for a in @accessories when a.quantity > 0
+				total.listPrice += a.listPrice
+				total.bestPrice += a.bestPrice
+
+			return total
+
+	getTotal: =>
+		if @accessories?.length
+			total =
+				listPrice: @sku.listPrice or @originalSku.listPrice
+				bestPrice: @sku.bestPrice or @originalSku.bestPrice
+
+			for a in @accessories when a.quantity > 0
+				total.listPrice += a.listPrice
+				total.bestPrice += a.bestPrice
+
+			return total
 
 
 # PLUGIN ENTRY POINT

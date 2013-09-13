@@ -17,6 +17,7 @@
 }</style>
 
 <div>
+  <div class="portal-price-ref"></div>
   <div class="portal-sku-selector-ref"></div>
   <div class="portal-quantity-selector-ref"></div>
   <a href="" class="buy-button">COMPRAR</a>
@@ -36,6 +37,7 @@
   var accMock = '/spec/mocks/electrolux.json'
 
   $.getJSON(mocks[0]).done(function(data){
+    $('.portal-price-ref').price(data.productId)
     $('.portal-sku-selector-ref').skuSelector(data);
     $('.buy-button').buyButton(data.productId);
     $('.portal-quantity-selector-ref').quantitySelector(data.productId, {unitOfMeasurement: "m²", unitMultiplier: 10, unitBased: true});
