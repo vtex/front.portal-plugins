@@ -23,7 +23,7 @@
       </div>
       <fieldset>
         <label>
-          <input type="checkbox" class="buy-product-checkbox accessory-checkbox" data-accessory-index="{$idx}" data-accessory-product-id="{productId}" data-accessory-sku="{sku}"/>
+          <input type="checkbox" class="accessory-checkbox" data-accessory-index="{$idx}" data-accessory-product-id="{productId}" data-accessory-sku="{sku}"/>
           Selecionar
         </label>
       </fieldset>
