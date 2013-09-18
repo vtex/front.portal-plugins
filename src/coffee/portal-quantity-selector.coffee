@@ -45,7 +45,8 @@ class QuantitySelector extends ProductComponent
 
 	quantityChanged: (evt, productId, quantity) =>
 		@quantity = quantity
-		@units = @calculateUnits()
+		unless (@quantity * @options.unitMultiplier) <= @units < ((@quantity+1) * @options.unitMultiplier)
+			@quantity = @calculateQuantity()
 		@update()
 
 	unitInputChanged: (evt) =>
