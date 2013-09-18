@@ -6,12 +6,24 @@ $ = window.jQuery
 # CLASS
 class QuantitySelector extends ProductComponent
 	constructor: (@element, @productId, @options) ->
-		@units = @options.unitMultiplier * @options.initialQuantity
+
+		@unitVariations = {}
+		for v in @options.unitVariations
+			@unitVariations["#{v.skuId}"] =
+				measurementUnit: v.measurementUnit
+				unitMultiplier: v.unitMultiplier
+
+		@sku = null
+		@unitMultiplier = @unitVariations[@options.unitVariations[0]?.skuId]?.unitMultiplier or 1
+		@measurementUnit = @unitVariations[@options.unitVariations[0]?.skuId]?.measurementUnit or 'un.'
+
+		@units = @options.initialQuantity * @unitMultiplier
 		@quantity = @options.initialQuantity
 
 		@generateSelectors
 			UnitSelectorInput: '.unitSelector input'
 			QuantitySelectorInput: '.quantitySelector input'
+			MeasurementUnit: '.measurementUnit'
 
 		@init()
 
@@ -25,54 +37,64 @@ class QuantitySelector extends ProductComponent
 		renderData =
 			unitBased: @options.unitBased
 			units: @units
-			unitMin: @options.unitMultiplier
-			unitMax: @options.unitMultiplier * @options.max
-			unitOfMeasurement: @options.unitOfMeasurement
+			unitMin: @unitMultiplier
+			unitMax: @unitMultiplier * @options.max
+			measurementUnit: @measurementUnit
 			max: @options.max
 			quantity: @quantity
 
 		dust.render "quantity-selector", renderData, (err, out) =>
 			throw new Error "Quantity Selector Dust error: #{err}" if err
 			@element.html out
-			@update()
 
 	bindEvents: =>
+		@bindProductEvent 'vtex.sku.selected', @skuSelected
 		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
 		@findUnitSelectorInput().on 'change', @unitInputChanged
 		@findQuantitySelectorInput().on 'click', @quantityInputChanged
 
 	update: =>
-		@findUnitSelectorInput().val(@units)
+		@findUnitSelectorInput().val(@units).attr('max', @units * @options.max)
 		@findQuantitySelectorInput().val(@quantity)
+		@findMeasurementUnit().text(@measurementUnit)
 
-	check: (productId) =>
-		productId == @productId
+	skuSelected: (evt, productId, sku) =>
+		@sku = sku.sku
+
+		if @options.unitBased
+			@measurementUnit = @unitVariations[@sku].measurementUnit
+			@unitMultiplier = @unitVariations[@sku].unitMultiplier
+
+			@updateUnitsFromQuantity()
+
+			@update()
 
 	quantityChanged: (evt, productId, quantity) =>
 		@quantity = quantity
-		unless (@quantity * @options.unitMultiplier) <= @units < ((@quantity+1) * @options.unitMultiplier)
-			@quantity = @calculateQuantity()
+		@updateQuantityFromUnits()
 		@update()
+
+	updateQuantityFromUnits: =>
+		unless (@quantity * @unitMultiplier) <= @units < ((@quantity+1) * @unitMultiplier)
+			@quantity = Math.ceil(@units/@unitMultiplier)
 
 	unitInputChanged: (evt) =>
 		$element = $(evt.target)
 		@units = $element.val()
-		@quantity = @calculateQuantity()
+		@updateQuantityFromUnits()
 		@update()
 		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
-
-	calculateQuantity: =>
-		Math.ceil(@units/@options.unitMultiplier)
 
 	quantityInputChanged: (evt) =>
 		$element = $(evt.target)
 		@quantity = $element.val()
-		@units = @calculateUnits()
+		@updateUnitsFromQuantity()
 		@update()
 		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
 
-	calculateUnits: =>
-		@quantity * @options.unitMultiplier
+	updateUnitsFromQuantity: =>
+		@units = @quantity * @unitMultiplier
+
 
 # PLUGIN ENTRY POINT
 $.fn.quantitySelector = (productId, jsOptions) ->
@@ -90,6 +112,5 @@ $.fn.quantitySelector = (productId, jsOptions) ->
 $.fn.quantitySelector.defaults =
 	initialQuantity: 1
 	unitBased: false
-	unitOfMeasurement: ''
-	unitMultiplier: 1
+	unitVariations: []
 	max: 10

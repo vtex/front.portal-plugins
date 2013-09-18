@@ -55,7 +55,7 @@ Lança os seguintes eventos:
 
 Chame o plugin em uma `div` vazia:
 
-    $('.quantity-selector-container').skuSelector(productId, options);
+    $('.quantity-selector-container').quantitySelector(productId, options);
 
 - <b>`productId`</b> o ID do produto.
 
@@ -64,11 +64,8 @@ Chame o plugin em uma `div` vazia:
     - <b>`unitBased`</b>
         default: `false`. Define se deseja usar seletor a granel (calculadora de quantidade).
 
-    - <b>`unitOfMeasurement`</b>
-        default: `''`. Define o nome da unidade a ser usada se `unitBased = true`.
-
-    - <b>`unitMultiplier`</b>
-        default: `1`. Define o multiplicador da unidade a ser usado se `unitBased = true`.
+    - <b>`unitVariations`</b>
+        default: `[]`. Se `unitBased == true`, especifica as opções de unidade para cada Sku. É uma coleção de `{skuId: Number, measurementUnit: String, unitMultiplier: Number}`.
 
     - <b>`max`</b>
         default: `10`. Define a quantidade máxima que pode ser selecionada.
