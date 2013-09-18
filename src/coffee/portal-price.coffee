@@ -15,6 +15,14 @@ class Price extends ProductComponent
 	constructor: (@element, @productId, @options) ->
 		@originalHTML = @element.html()
 		@sku = null
+
+		@generateSelectors
+			BestPrice: '.price-best-price'
+			ListPrice: '.price-list-price'
+			Savings: '.price-savings'
+			Installments: '.price-installments'
+			CashPrice: '.price-cash'
+
 		@init()
 
 	init: =>
@@ -46,25 +54,14 @@ class Price extends ProductComponent
 				
 				if @sku.installments? and @sku.installments > 1
 					@showInstallments()
-
-	findBestPrice: => @element.find('.price-best-price')
-	hideBestPrice: => @findBestPrice().hide()
-	showBestPrice: => @findBestPrice().show()
-	findListPrice: => @element.find('.price-list-price')
-	hideListPrice: => @findListPrice().hide()
-	showListPrice: => @findListPrice().show()
-	findSavings: => @element.find('.price-savings')
-	hideSavings: => @findSavings().hide()
-	showSavings: => @findSavings().show()
-	findInstallments: => @element.find('.price-installments')
-	hideInstallments: => @findInstallments().hide()
-	showInstallments: => @findInstallments().show()
+					@showCashPrice()
 
 	hideAll: =>
 		@hideBestPrice()
 		@hideListPrice()
 		@hideSavings()
 		@hideInstallments()
+		@hideCashPrice()
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected

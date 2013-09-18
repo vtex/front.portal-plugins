@@ -10,7 +10,7 @@ _.extend dust.filters,
 	intAsCurrency: (value) -> _.intAsCurrency value
 
 # CLASSES
-class AccessoriesSelector
+class AccessoriesSelector extends ProductComponent
 	constructor: (@element, @productId, @productData, @options) ->
 		@accessories = []
 
@@ -20,6 +20,9 @@ class AccessoriesSelector
 			for sku in accessory.skus when sku.available
 				skuCopy = $.extend quantity: 0, sku
 				@accessories.push($.extend {}, productCopy, skuCopy)
+
+		@generateSelectors
+			AccessoryCheckbox: '.accessory-checkbox'
 
 		@init()
 
@@ -33,7 +36,7 @@ class AccessoriesSelector
 			@bindEvents()
 
 	bindEvents: =>
-		@element.find('.accessory-checkbox').on 'change', @accessorySelected
+		@findAccessoryCheckbox().on 'change', @accessorySelected
 
 	accessorySelected: (evt) =>
 		$element = $(evt.target)

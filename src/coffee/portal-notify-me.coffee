@@ -7,8 +7,16 @@ $ = window.jQuery
 # CLASSES
 class NotifyMe extends ProductComponent
 	constructor: (@element, @productId, @options) ->
-		@init()
 		@sku = null
+
+		@generateSelectors
+			Title: '.notifyme-title'
+			Form: 'form'
+			Loading: '.notifyme-loading'
+			Success: '.notifyme-success'
+			Error: '.notifyme-error'
+
+		@init()
 
 	POST_URL: '/no-cache/AviseMe.aspx'
 
@@ -59,28 +67,6 @@ class NotifyMe extends ProductComponent
 		@hideLoading()
 		@hideSuccess()
 		@hideError()
-
-	findTitle: => @element.find('.notifyme-title')
-	hideTitle: => @findTitle().hide()
-	showTitle: => @findTitle().show()
-
-	findForm: => @element.find('form')
-	hideForm: => @findForm().hide()
-	showForm: (sku) =>
-		@findForm().show().find('.notifyme-skuid').val(sku)
-
-	findLoading: => @element.find('.notifyme-loading')
-	hideLoading: => @findLoading().hide()
-	showLoading: => @findLoading().show()
-
-	findSuccess: => @element.find('.notifyme-success')
-	hideSuccess: => @findSuccess().hide()
-	showSuccess: => @findSuccess().show()
-
-	findError: => @element.find('.notifyme-error')
-	hideError: => @findError().hide()
-	showError: => @findError().show()
-
 
 
 # PLUGIN ENTRY POINT

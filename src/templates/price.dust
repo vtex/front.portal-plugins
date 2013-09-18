@@ -19,7 +19,7 @@
     </em>
   </p>
 
-  <p class="preco-a-vista">
+  <p class="preco-a-vista price-cash">
     Preço a vista:
     <strong class="skuPrice">{bestPrice|intAsCurrency}</strong>
   </p>

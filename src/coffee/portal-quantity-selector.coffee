@@ -8,6 +8,11 @@ class QuantitySelector extends ProductComponent
 	constructor: (@element, @productId, @options) ->
 		@units = @options.unitMultiplier * @options.initialQuantity
 		@quantity = @options.initialQuantity
+
+		@generateSelectors
+			UnitSelectorInput: '.unitSelector input'
+			QuantitySelectorInput: '.quantitySelector input'
+
 		@init()
 
 	init: =>
@@ -33,12 +38,12 @@ class QuantitySelector extends ProductComponent
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
-		@element.find('.unitSelector input').on 'change', @unitInputChanged
-		@element.find('.quantitySelector input').on 'click', @quantityInputChanged
+		@findUnitSelectorInput().on 'change', @unitInputChanged
+		@findQuantitySelectorInput().on 'click', @quantityInputChanged
 
 	update: =>
-		@element.find('.unitSelector input').val(@units)
-		@element.find('.quantitySelector input').val(@quantity)
+		@findUnitSelectorInput().val(@units)
+		@findQuantitySelectorInput().val(@quantity)
 
 	check: (productId) =>
 		productId == @productId
