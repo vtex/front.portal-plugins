@@ -10,49 +10,59 @@ $ = window.jQuery
 _.extend dust.filters,
 	intAsCurrency: (value) -> _.intAsCurrency value
 
+_.currencyToInt = (text) ->
+	+text.replace(/\D/gi, '')
+
+
 # CLASSES
 class Price extends ProductComponent
 	constructor: (@element, @productId, @options) ->
-		@originalHTML = @element.html()
 		@sku = null
 
 		@generateSelectors
-			BestPrice: '.price-best-price'
 			ListPrice: '.price-list-price'
+			BestPrice: '.price-best-price'
 			Savings: '.price-savings'
 			Installments: '.price-installments'
 			CashPrice: '.price-cash'
+			OriginalListPrice: '.skuListPrice'
+			OriginalBestPrice: '.valor-por span'
+			OriginalInstallments: '.valor-dividido span span label'
+			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
-		@init()
-
-	init: =>
-		@render()
 		@bindEvents()
 
-	render: =>
-		if @sku or @options.fallback is 'sku'
-			renderData =
-				product: @sku or @originalSku
-				accessories: @getAccessoriesTotal()
-				total: @getTotal()
+	getSku: =>
+		@sku or {
+			listPrice: _.currencyToInt(@findFirstOriginalListPrice().text())
+			bestPrice: _.currencyToInt(@findFirstOriginalBestPrice().text())
+			installments: @findFirstOriginalInstallments().text()
+			installmentsValue: _.currencyToInt(@findFirstOriginalInstallmentsValue().text())
+			available: true
+		}
 
-			dust.render 'price', renderData, (err, out) =>
-				throw new Error "Price Dust error: #{err}" if err
-				@element.html out
-				@update()
-		else
-			@element.html @originalHTML
+	render: =>
+		renderData =
+			product: @getSku()
+			accessories: @getAccessoriesTotal()
+			total: @getTotal()
+
+		dust.render 'price', renderData, (err, out) =>
+			throw new Error "Price Dust error: #{err}" if err
+			@element.html out
+			@update()
 
 	update: =>
 		@hideAll()
-		if @sku.available
+		sku = @getSku()
+		if sku.available
 				@showBestPrice()
 
-				if @sku.bestPrice? and @sku.bestPrice < @sku.listPrice
+				if sku.bestPrice? and sku.bestPrice < sku.listPrice
 					@showListPrice()
 					@showSavings()
 				
-				if @sku.installments? and @sku.installments > 1
+				if sku.installments? and sku.installments > 1
 					@showInstallments()
 					@showCashPrice()
 
@@ -95,8 +105,8 @@ class Price extends ProductComponent
 	getTotal: =>
 		if @accessories?.length
 			total =
-				listPrice: @sku.listPrice or @originalSku.listPrice
-				bestPrice: @sku.bestPrice or @originalSku.bestPrice
+				listPrice: @getSku().listPrice
+				bestPrice: @getSku().bestPrice
 
 			for a in @accessories when a.quantity > 0
 				total.listPrice += a.listPrice
@@ -120,5 +130,4 @@ $.fn.price = (productId, jsOptions) ->
 
 # PLUGIN DEFAULTS
 $.fn.price.defaults =
-	fallback: 'html'
 	originalSku: null

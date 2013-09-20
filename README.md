@@ -126,9 +126,6 @@ Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando 
 
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
-    - <b>`fallback`</b>
-        default: `html`. Define se o fallback. Pode ser `html` ou `sku`.
-
     - <b>`originalSku`</b>
         default: `null`. Deve ser definido se a opção acima for `true`.
 
