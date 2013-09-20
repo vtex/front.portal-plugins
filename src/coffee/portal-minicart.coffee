@@ -21,7 +21,7 @@ class Minicart
 			totalCart: => $('.total-cart-em', @element)
 
 		@bindEvents()
-		@updateCart()
+		@updateCart(false)
 
 		$(window).trigger "minicartLoaded"
 
@@ -56,7 +56,7 @@ class Minicart
 		$(window).on 'vtex.cart.productAdded', @updateCart
 		$(window).on 'vtex.cart.productRemoved', @updateCart
 
-	updateCart: =>
+	updateCart: (slide = true) =>
 		@element.addClass 'amount-items-in-cart-loading'
 
 		$.ajax({
@@ -74,7 +74,7 @@ class Minicart
 			@cartData = data
 			@prepareCart()
 			@render()
-			@slide()
+			@slide() if slide
 
 	prepareCart: =>
 		# Conditionals
