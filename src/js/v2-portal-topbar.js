@@ -1,4 +1,5 @@
 $(window).load(function() {
+  if(console && console.log) console.log("v2-portal-topbar");
 	if ($('meta[name=vtex-version]').length > 0) {
 		var floatingBar = $(".floatingTopBar");
 		var smartCart = $(".vtexsc-cart");
