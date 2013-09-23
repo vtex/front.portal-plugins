@@ -157,7 +157,13 @@ Chame o plugin na `a` que age como botão de comprar:
         Mensagem de erro que será alertada se o usuário clicar no botão sem ter escolhido um SKU. Default: *"Por favor, selecione o modelo desejado."*
 
     - <b>`redirect`</b>
-        default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.</b>
+        default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.
+
+    - <b>`instaBuy`</b>
+        default: `false`. Se `true`, ao ser selecionado um Sku disponível, o botão se clica.
+
+    - <b>`hide`</b>
+        default: `false`. Se `true`, esconde-se quando não há Sku selecionado ou quando o selecionado está indisponível, e se mostra quando há Sku selecionado disponível.
 
 ## Eventos
 

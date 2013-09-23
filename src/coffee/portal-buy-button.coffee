@@ -54,11 +54,14 @@ class BuyButton extends ProductComponent
 
 	skuSelected: (evt, productId, sku) =>
 		@getChangesFromHREF()
+		@skuData = sku
 		@sku = sku.sku
 		@update()
+		@element.click() if @options.instaBuy
 
 	skuUnselected: (evt, productId, selectableSkus) =>
 		@getChangesFromHREF()
+		@skuData = {}
 		@sku = null
 		@update()
 
@@ -82,17 +85,23 @@ class BuyButton extends ProductComponent
 		url = if @sku then @getURL() else "javascript:alert('#{@options.errorMessage}');"
 		@element.attr('href', url)
 
+		if @options.hide
+			if @skuData?.available
+				@element.show()
+			else
+				@element.hide()
+
 	buyButtonHandler: (evt) =>
 		return true if @redirect
 
-		@element.trigger 'vtex.modal.hide'
+		@context.trigger 'vtex.modal.hide'
 		$.get(@getURL())
 		.done ->
-			$(window).trigger 'vtex.cart.productAdded'
-			$(window).trigger 'productAddedToCart'
+				$(window).trigger 'vtex.cart.productAdded'
+				$(window).trigger 'productAddedToCart'
 		.fail ->
-			@redirect = true
-			window.location.href = @getURL()
+				@redirect = true
+				window.location.href = @getURL()
 
 		evt.preventDefault()
 		return false
@@ -115,3 +124,5 @@ $.fn.buyButton = (productId, buyData, jsOptions) ->
 $.fn.buyButton.defaults =
 	errorMessage: "Por favor, selecione o modelo desejado."
 	redirect: true
+	instaBuy: false
+	hide: false
