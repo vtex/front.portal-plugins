@@ -69,29 +69,37 @@ class SkuSelector extends ProductComponent
 		@bindEvents()
 
 	update: (dimensionName, dimensionValue) =>
-		@setSelectedDimension(dimensionName, dimensionValue) if dimensionName
+		index = -1
+		for dimension, i in @dimensions
+			if dimension.name is dimensionName
+				dimension.selected = dimensionValue
+				index = i
 
-		while @isSelectedInexistent()
-			@unselectLast(dimensionName)
+		for dimension, i in @dimensions by -1
+			break if index is i
+			status = @findSelectionStatus((dim.selected for dim in @dimensions))
+			dimension.selected = null if status is 'invalid'
 
-		if (skus = @findSelectableSkus()).length == 1
-			sku = skus[0]
-			@selectSku(sku)
+		for dimension, i in @dimensions by -1
+			if dimension.selected isnt null or dimension.selected isnt undefined
+				lastSelected = i
 
 		originalSelection = (dim.selected for dim in @dimensions)
 
 		for dimension, i in @dimensions
 			@resetDimension(dimension)
-			@selectValue(dimension)
 
-			for value in dimension.values
-				selection = originalSelection.slice(0)
-				selection[i] = value
-				switch @findSelectionStatus(selection)
-					when "invalid"
-						@disableInvalidValue(dimension, value)
-					when "unavailable"
-						@disableUnavailableValue(dimension, value)
+			if i > lastSelected
+				for value in dimension.values
+					selection = originalSelection.slice(0)
+					selection[i] = value
+					switch @findSelectionStatus(selection)
+						when "invalid"
+							@disableInvalidValue(dimension, value)
+						when "unavailable"
+							@disableUnavailableValue(dimension, value)
+
+			@selectValue(dimension)
 
 		selectableSkus = @findSelectableSkus()
 
@@ -102,7 +110,7 @@ class SkuSelector extends ProductComponent
 		else
 			@element.trigger 'vtex.sku.unselected', [@productId, selectableSkus]
 
-
+		# ToDo remover quando alterar viewpart de modal
 		@hideConfirmButton()
 		@hideWarnUnavailable()
 		@hidePriceRange()
@@ -110,7 +118,6 @@ class SkuSelector extends ProductComponent
 
 		if selectableSkus.length == 1
 			selectedSku = selectableSkus[0]
-			@element.trigger 'skuSelected', [selectedSku]
 			if selectedSku.available
 				@showBuyButton(selectedSku)
 				@showPrice(selectedSku)
@@ -140,23 +147,6 @@ class SkuSelector extends ProductComponent
 		@findbuyButton().on 'click', @buyButtonHandler
 		@findwarnUnavailable().find('form').on 'submit', @warnUnavailableSubmitHandler if @options.warnUnavailable
 
-	buyButtonHandler: (event) =>
-		selectedSku = @findSelectedSku()
-		if selectedSku
-			if @options.confirmBuy
-				event.preventDefault()
-				@showConfirmButton(selectedSku)
-			else
-				$(window).trigger 'vtex.modal.hide'
-				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
-				.done (data) ->
-						$(window).trigger 'productAddedToCart'
-				.fail (jqXHR, status) ->
-						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, productData.salesChannel)
-				return false
-		else
-			@findwarning().show().text('Por favor, escolha: ' + @findUndefinedDimensions()[0].name)
-			return false
 
 	dimensionChangeHandler: (evt) =>
 		$this = $(evt.target)
@@ -165,23 +155,6 @@ class SkuSelector extends ProductComponent
 		dimensionValue = if $this.val() is "" then undefined else $this.val()
 
 		@update(dimensionName, dimensionValue)
-
-	warnUnavailableSubmitHandler: (evt) =>
-		evt.preventDefault()
-		@findwarnUnavailable().find('.sku-notifyme-loading').show()
-		@findwarnUnavailable().find('form').hide()
-		xhr =	$.post '/no-cache/AviseMe.aspx', $(evt.target).serialize()
-		xhr.done -> @findwarnUnavailable().find('.sku-notifyme-success').show()
-		xhr.fail -> @findwarnUnavailable().find('.sku-notifyme-loading-error').show()
-		xhr.always -> @findwarnUnavailable().find('.sku-notifyme-loading').hide()
-		return false
-
-	unselectLast: (exceptDimension) =>
-		for dim in @dimensions by -1
-			if dim.selected isnt undefined and dim.name isnt exceptDimension
-				dim.selected = undefined
-				return true
-		return false
 
 	isSkuSelectable: (sku) =>
 		for dimension in @dimensions when dimension.selected isnt undefined
@@ -198,11 +171,6 @@ class SkuSelector extends ProductComponent
 			return all[0]
 		else
 			return null
-
-	findPrices: (skus = undefined) =>
-		skus or= @findSelectableSkus()
-		skus = (sku for sku in skus when sku.available)
-		$.map(skus, (sku) -> sku.bestPrice).sort( (a,b) -> return parseInt(a) - parseInt(b) )
 
 	searchDimensions: (fn = ()->true) =>
 		$.grep(@dimensions, fn)
@@ -236,35 +204,28 @@ class SkuSelector extends ProductComponent
 
 	skuMatches: (sku, selection) =>
 		for value, i in sku.values
-			if selection[i] isnt undefined and selection[i] isnt value
+			if selection[i] isnt undefined and selection[i] isnt null and selection[i] isnt value
 				return false
 		return true
-
-	# Renders the DOM elements of the Sku Selector
-
-	buyIfNoVariations: =>
-		# TODO: Passar a logica de comprar automaticamente para o botao de comprar da vitrine
-		if @skus.length < 2 and @options.modalLayout
-			setTimeout (=> @findbuyButton().click()), 1
 
 	resetDimension: (dimension) =>
 		@finditemDimensionInput(dimension.name)
 		.removeAttr('checked')
 		.removeAttr('disabled')
-		.removeClass('item_unavaliable sku-picked checked item_unavailable item_doesnt_exist')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable item_doesnt_exist combination_unavaliable')
 
 		@finditemDimensionLabel(dimension.name)
-		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled item_doesnt_exist')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled item_doesnt_exist combination_unavaliable')
 
 		@finditemDimensionOption(dimension.name)
-		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled item_doesnt_exist')
+		.removeClass('item_unavaliable sku-picked checked item_unavailable disabled item_doesnt_exist combination_unavaliable')
 		.removeAttr('disabled')
 		.removeAttr('selected')
 
 	selectValue: (dimension) =>
 		value = dimension.selected
 
-		if value is undefined
+		if value is null or value is undefined
 			@finditemDimensionInput(dimension.name)
 			.removeAttr('checked')
 			@finditemDimensionOption(dimension.name)
@@ -283,11 +244,11 @@ class SkuSelector extends ProductComponent
 
 	disableInvalidValue: (dimension, value) =>
 		@finditemDimensionValueInput(dimension.name, value)
-		.addClass('item_doesnt_exist')
+		.addClass('item_doesnt_exist combination_unavaliable').attr('disabled', 'disabled')
 		@finditemDimensionValueLabel(dimension.name, value)
-		.addClass('item_doesnt_exist')
+		.addClass('item_doesnt_exist combination_unavaliable')
 		@finditemDimensionValueOption(dimension.name, value)
-		.addClass('item_doesnt_exist')
+		.addClass('item_doesnt_exist combination_unavaliable').attr('disabled', 'disabled')
 
 	disableUnavailableValue: (dimension, value) =>
 		@finditemDimensionValueInput(dimension.name, value)
@@ -296,6 +257,45 @@ class SkuSelector extends ProductComponent
 		.addClass('item_unavaliable item_unavailable disabled')
 		@finditemDimensionValueOption(dimension.name, value)
 		.addClass('item_unavaliable item_unavailable disabled')
+
+	# ToDo remover quando alterar viewpart de modal
+	buyButtonHandler: (event) =>
+		selectedSku = @findSelectedSku()
+		if selectedSku
+			if @options.confirmBuy
+				event.preventDefault()
+				@showConfirmButton(selectedSku)
+			else
+				$(window).trigger 'vtex.modal.hide'
+				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
+				.done (data) ->
+						$(window).trigger 'productAddedToCart'
+				.fail (jqXHR, status) ->
+						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, productData.salesChannel)
+				return false
+		else
+			@findwarning().show().text('Por favor, escolha: ' + @findUndefinedDimensions()[0].name)
+			return false
+
+	warnUnavailableSubmitHandler: (evt) =>
+		evt.preventDefault()
+		@findwarnUnavailable().find('.sku-notifyme-loading').show()
+		@findwarnUnavailable().find('form').hide()
+		xhr =	$.post '/no-cache/AviseMe.aspx', $(evt.target).serialize()
+		xhr.done -> @findwarnUnavailable().find('.sku-notifyme-success').show()
+		xhr.fail -> @findwarnUnavailable().find('.sku-notifyme-loading-error').show()
+		xhr.always -> @findwarnUnavailable().find('.sku-notifyme-loading').hide()
+		return false
+
+
+	findPrices: (skus = undefined) =>
+		skus or= @findSelectableSkus()
+		skus = (sku for sku in skus when sku.available)
+		$.map(skus, (sku) -> sku.bestPrice).sort( (a,b) -> return parseInt(a) - parseInt(b) )
+
+	buyIfNoVariations: =>
+		if @skus.length < 2 and @options.modalLayout
+			setTimeout (=> @findbuyButton().click()), 1
 
 	hideBuyButton: =>
 		@findbuyButton().attr('href', 'javascript:void(0);').hide()
@@ -376,13 +376,6 @@ $.fn.skuSelector.defaults =
 	selectOnOpening: false
 	confirmBuy: false
 	showPriceRange: false
-
-# Called when we failed to receive variations.
-	skuVariationsFailHandler: ($el, options, reason) ->
-		$el.removeClass('sku-selector-loading')
-		window.location.href = options.productUrl if options.productUrl
-
-	warnUnavailablePost: (formElement) ->
 
 # SHARED STUFF
 $.skuSelector =

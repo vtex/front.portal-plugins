@@ -1,7 +1,7 @@
 <div class="portal-sku-selector-ref3"></div>
 
 <script type="text/javascript">
-  var M = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
+  var M = ['spec/mocks/casaamerica.json'];
 
   $.getJSON(M[0]).done(function(data){
     $('.portal-sku-selector-ref3').skuSelector(data, {modalLayout: true, warnUnavailable: true});

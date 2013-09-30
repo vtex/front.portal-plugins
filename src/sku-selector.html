@@ -17,7 +17,7 @@
 
     <!-- PRIMEIRO -->
     <div class="mock-case">
-      <div class="portal-price-ref"></div>
+      <div class="portal-price-ref" style="height: 50px"></div>
       <div class="portal-sku-selector-ref"></div>
       <div class="portal-quantity-selector-ref"></div>
       <a href="" class="buy-button">COMPRAR</a>
@@ -82,11 +82,11 @@
     <script src='js/portal-notify-me-with-template.js'></script>
 
     <script type="text/javascript">
-        var mocks = ['spec/mocks/threeDimensionsSomeUnavailable.json', 'spec/mocks/casaamerica.json'];
+        var mocks = ['spec/mocks/twoDimensions.json', 'spec/mocks/casaamerica.json'];
 
         $.getJSON(mocks[0]).done(function(data){
           $('.portal-price-ref').price(data.productId);
-          $('.portal-sku-selector-ref').skuSelector(data);
+          $('.portal-sku-selector-ref').skuSelector(data, {selectOnOpening: false});
           $('.buy-button').buyButton(data.productId);
           $('.portal-quantity-selector-ref').quantitySelector(data.productId);
           $('.portal-notify-me-ref').notifyMe(data.productId, {strings: {title: "AVISE-ME"}});

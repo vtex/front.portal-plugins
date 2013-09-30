@@ -1,6 +1,6 @@
 {
   "productId": 6268,
-  "name": "BOLA CRAVO - AMARELO - SÃO PET",
+  "name": "Camisa",
   "salesChannel": "1",
   "dimensions": ["Tamanho", "Cor"],
   "dimensionsInputType": {
@@ -8,35 +8,95 @@
     "Cor": "radio"
   },
   "dimensionsMap": {
-    "Tamanho": ["G", "GG"],
-    "Cor": ["Amarelo", "unico"]
+    "Tamanho": ["P", "M", "G", "GG"],
+    "Cor": ["branco", "verde"]
   },
   "skus": [{
-    "sku": 6269,
+    "sku": 11,
     "dimensions": {
-      "Tamanho": "GG",
-      "Cor": "unico"
+      "Tamanho": "P",
+      "Cor": "branco"
     },
     "available": true,
-    "listPrice": 99998700,
-    "bestPrice": 99998700,
-    "installments": 3,
-    "installmentsValue": 33332900,
+    "listPrice": 11,
+    "bestPrice": 11,
+    "installments": 1,
+    "installmentsValue": 11,
     "installmentsInsterestRate": 0,
     "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
     "sellerId": "1",
     "seller": "MeuAmigoPet"
   }, {
-    "sku": 7925,
+    "sku": 12,
     "dimensions": {
-      "Tamanho": "G",
-      "Cor": "Amarelo"
+      "Tamanho": "P",
+      "Cor": "verde"
+    },
+    "available": true,
+    "listPrice": 12,
+    "bestPrice": 12,
+    "installments": 1,
+    "installmentsValue": 12,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
+    "sellerId": "1",
+    "seller": "MeuAmigoPet"
+  }, {
+    "sku": 21,
+    "dimensions": {
+      "Tamanho": "M",
+      "Cor": "branco"
+    },
+    "available": true,
+    "listPrice": 21,
+    "bestPrice": 21,
+    "installments": 1,
+    "installmentsValue": 21,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
+    "sellerId": "1",
+    "seller": "MeuAmigoPet"
+  }, {
+    "sku": 22,
+    "dimensions": {
+      "Tamanho": "M",
+      "Cor": "verde"
     },
     "available": false,
-    "listPrice": 99998700,
-    "bestPrice": 99998700,
-    "installments": 3,
-    "installmentsValue": 33332900,
+    "listPrice": 22,
+    "bestPrice": 22,
+    "installments": 1,
+    "installmentsValue": 22,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
+    "sellerId": "1",
+    "seller": "MeuAmigoPet"
+  }, {
+    "sku": 31,
+    "dimensions": {
+      "Tamanho": "G",
+      "Cor": "branco"
+    },
+    "available": true,
+    "listPrice": 31,
+    "bestPrice": 31,
+    "installments": 1,
+    "installmentsValue": 31,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
+    "sellerId": "1",
+    "seller": "MeuAmigoPet"
+  }, {
+    "sku": 42,
+    "dimensions": {
+      "Tamanho": "GG",
+      "Cor": "verde"
+    },
+    "available": false,
+    "listPrice": 42,
+    "bestPrice": 42,
+    "installments": 1,
+    "installmentsValue": 42,
     "installmentsInsterestRate": 0,
     "image": "http://www.meuamigopet.com.br/arquivos/ids/181505-331-331/20120713_113906.jpg",
     "sellerId": "1",
