@@ -40,7 +40,7 @@
     $('.portal-price-ref').price(data.productId)
     $('.portal-sku-selector-ref').skuSelector(data);
     $('.buy-button').buyButton(data.productId);
-    $('.portal-quantity-selector-ref').quantitySelector(data.productId, {unitVariations: [{skuId: 42665, measurementUnit: 'm²', unitMultiplier: 10}, {skuId: 2000188, measurementUnit: 'm²', unitMultiplier: 15}], unitBased: true});
+    $('.portal-quantity-selector-ref').quantitySelector(data.productId, {unitVariations: [{skuId: 42665, measurementUnit: 'm²', unitMultiplier: 10}, {skuId: 2000188, measurementUnit: 'm²', unitMultiplier: 1.65}], unitBased: true});
 
     $.getJSON(accMock).done(function(accData){
       var container = $('.portal-accessories-selector-ref')

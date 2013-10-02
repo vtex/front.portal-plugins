@@ -73,6 +73,10 @@ Chame o plugin em uma `div` vazia:
     - <b>`initialQuantity`</b>
         default: `1`. Define a quantidade selecionada inicialmente.
 
+    - <b>`decimalPlaces`</b>
+        default: `2`. Define a quantidade de casas decimais do input de unidades. Não deve exceder 12.
+
+
 ## Eventos
 
 Lança os seguintes eventos:
