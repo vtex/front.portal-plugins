@@ -1,6 +1,7 @@
 {#product}
 <div class="productPrice">
   <p class="descricao-preco">
+    {#available}
     <em class="valor-de price-list-price" style="display: block">
       De:
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
@@ -17,11 +18,14 @@
         </strong>
       </span>
     </em>
+    {/available}
   </p>
 
   <p class="preco-a-vista price-cash">
+    {#available}
     Preço a vista:
     <strong class="skuPrice">{bestPrice|intAsCurrency}</strong>
+    {/available}
   </p>
 </div>
 {/product}

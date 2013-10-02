@@ -33,19 +33,26 @@ class Price extends ProductComponent
 		@bindEvents()
 
 	getSku: =>
-		@sku or {
+		x = @sku or {
 			listPrice: _.currencyToInt(@findFirstOriginalListPrice().text())
 			bestPrice: _.currencyToInt(@findFirstOriginalBestPrice().text())
 			installments: @findFirstOriginalInstallments().text()
 			installmentsValue: _.currencyToInt(@findFirstOriginalInstallmentsValue().text())
 			available: true
 		}
+		if x.listPrice is 0 or x.bestPrice is 0
+			return null
+		else
+			return x
 
 	render: =>
 		renderData =
 			product: @getSku()
 			accessories: @getAccessoriesTotal()
 			total: @getTotal()
+
+		if renderData.product is null
+			return
 
 		dust.render 'price', renderData, (err, out) =>
 			throw new Error "Price Dust error: #{err}" if err
@@ -55,23 +62,24 @@ class Price extends ProductComponent
 	update: =>
 		@hideAll()
 		sku = @getSku()
-		if sku.available
-				@showBestPrice()
 
-				if sku.bestPrice? and sku.bestPrice < sku.listPrice
-					@showListPrice()
-					@showSavings()
-				
-				if sku.installments? and sku.installments > 1
-					@showInstallments()
-					@showCashPrice()
+		if sku.available
+			@showBestPrice()
+
+			if sku.bestPrice? and sku.bestPrice < sku.listPrice
+				@showListPrice()
+				@showSavings()
+
+			if sku.installments? and sku.installments > 1
+				@showInstallments()
+				@showCashPrice()
 
 	hideAll: =>
 		@hideBestPrice()
 		@hideListPrice()
 		@hideSavings()
-		@hideInstallments()
 		@hideCashPrice()
+		@hideInstallments()
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
