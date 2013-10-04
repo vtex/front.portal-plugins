@@ -59,6 +59,7 @@ class QuantitySelector extends ProductComponent
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
 		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
+		@findUnitSelectorInput().on 'keypress', @handleUnitsKeypress
 		@findUnitSelectorInput().on 'change', @unitInputChanged
 		@findQuantitySelectorInput().on 'keypress', @handleQuantityKeypress
 		@findQuantitySelectorInput().on 'change', @quantityInputChanged
@@ -104,6 +105,13 @@ class QuantitySelector extends ProductComponent
 			alert("Por favor, escolha uma quantidade menor que #{@unitMax()}.")
 		else if @units < @unitMin()
 			@units = @unitMin()
+
+	handleUnitsKeypress: (evt) =>
+		keyCode = evt.keyCode or evt.which
+		console.log keyCode
+		if keyCode < 48 || keyCode > 57
+			if keyCode != 0 && keyCode != 8 && keyCode != 13 && keyCode != 110 && keyCode != 190 && keyCode != 188 && keyCode != 46 && !evt.ctrlKey
+				evt.preventDefault()
 
 	handleQuantityKeypress: (evt) =>
 		keyCode = evt.keyCode or evt.which
