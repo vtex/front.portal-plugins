@@ -351,20 +351,16 @@ class SkuSelector extends ProductComponent
 
 # PLUGIN ENTRY POINT
 $.fn.skuSelector = (productData, jsOptions = {}) ->
-	if this.length > 1
-		throw new Error('Sku Selector should be activated on only one element! To activate many sku selectors, activate it for each element.')
-	else if this.length == 0
-		throw new Error('Sku Selector was activated on 0 elements')
+	defaultOptions = $.extend true, {}, $.fn.skuSelector.defaults
+	for element in this
+		$element = $(element)
+		$element.addClass('sku-selector-loading')
+		domOptions = $element.data()
+		options = $.extend(true, defaultOptions, domOptions, jsOptions)
+		unless $element.data('skuSelector')
+			$element.data('skuSelector', new SkuSelector($element, productData, options))
 
-	this.addClass('sku-selector-loading')
-
-	domOptions = this.data()
-	defaultOptions = $.extend({}, $.fn.skuSelector.defaults)
-	options = $.extend(true, defaultOptions, domOptions, jsOptions)
-
-	this.data('skuSelector', new SkuSelector(this, productData, options))
-
-	this.removeClass('sku-selector-loading')
+		$element.removeClass('sku-selector-loading')
 
 	return this
 
