@@ -109,6 +109,8 @@ class SkuSelector extends ProductComponent
 			@element.trigger 'skuSelected', [@productId, selectableSkus[0]]
 		else
 			@element.trigger 'vtex.sku.unselected', [@productId, selectableSkus]
+			if selectableSkus.length > 1
+				@element.trigger 'vtex.sku.selectable', [@productId, selectableSkus]
 
 		# ToDo remover quando alterar viewpart de modal
 		@hideConfirmButton()
@@ -287,7 +289,6 @@ class SkuSelector extends ProductComponent
 		xhr.always -> @findwarnUnavailable().find('.sku-notifyme-loading').hide()
 		return false
 
-
 	findPrices: (skus = undefined) =>
 		skus or= @findSelectableSkus()
 		skus = (sku for sku in skus when sku.available)
@@ -379,7 +380,10 @@ $.skuSelector =
 		"/checkout/cart/add?qty=#{quantity}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
 
 # EVENTS (DEPRECATED!)
-$(document).on "vtex.sku.selected", (evt, productData, sku) ->
+$(document).on "vtex.sku.selected", (evt, productId, sku) ->
 	window.FireSkuChangeImage?(sku.sku)
 	#window.FireSkuDataReceived?(sku.sku)
 	window.FireSkuSelectionChanged?(sku.sku)
+
+$(document).on 'vtex.sku.selectable', (evt, productId, skus) ->
+	window.FireSkuChangeImage?(skus[0].sku)
