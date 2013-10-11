@@ -166,8 +166,11 @@ Chame o plugin na `a` que age como botão de comprar:
     - <b>`instaBuy`</b>
         default: `false`. Se `true`, ao ser selecionado um Sku disponível, o botão se clica.
 
-    - <b>`hide`</b>
-        default: `false`. Se `true`, esconde-se quando não há Sku selecionado ou quando o selecionado está indisponível, e se mostra quando há Sku selecionado disponível.
+    - <b>`hideUnselected`</b>
+        default: `false`. Se `true`, esconde-se quando não há Sku selecionado.
+
+    - <b>`hideUnavailable`</b>
+        default: `false`. Se `true`, esconde-se quando o Sku selecionado está indisponível.
 
     - <b>`target`</b>
         default: `null`. Define o query parameter `target`. Um valor válido é `"orderform"`.

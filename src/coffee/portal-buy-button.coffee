@@ -87,11 +87,12 @@ class BuyButton extends ProductComponent
 		url = if @sku then @getURL() else "javascript:alert('#{@options.errorMessage}');"
 		@element.attr('href', url)
 
-		if @options.hide
-			if @skuData?.available
-				@element.show()
-			else
-				@element.hide()
+		@element.show()
+
+		if @options.hideUnavailable and @skuData and @skuData.available is false
+			@element.hide()
+		if @options.hideUnselected and not @skuData
+			@element.hide()
 
 	buyButtonHandler: (evt) =>
 		return true if @redirect
@@ -131,5 +132,6 @@ $.fn.buyButton.defaults =
 	addMessage: null
 	errMessage: null
 	instaBuy: false
-	hide: false
+	hideUnselected: false
+	hideUnavailable: false
 	target: null
