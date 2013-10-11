@@ -273,7 +273,7 @@ class SkuSelector extends ProductComponent
 				$(window).trigger 'vtex.modal.hide'
 				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, @productData.salesChannel, false))
 				.done (data) =>
-						@triggerProductEvent 'productAddedToCart'
+						$(window).trigger 'productAddedToCart'
 				.fail (jqXHR, status) =>
 						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, @productData.salesChannel)
 				return false
