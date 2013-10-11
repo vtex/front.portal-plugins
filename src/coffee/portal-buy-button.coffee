@@ -101,9 +101,11 @@ class BuyButton extends ProductComponent
 		.done ->
 				@triggerProductEvent 'vtex.cart.productAdded'
 				@triggerProductEvent 'productAddedToCart'
+				alert @options.addMessage if @options.addMessage
 		.fail ->
 				@redirect = true
 				window.location.href = @getURL()
+				alert @options.errMessage if @options.errMessage
 
 		evt.preventDefault()
 		return false
@@ -126,6 +128,8 @@ $.fn.buyButton = (productId, buyData, jsOptions) ->
 $.fn.buyButton.defaults =
 	errorMessage: "Por favor, selecione o modelo desejado."
 	redirect: true
+	addMessage: null
+	errMessage: null
 	instaBuy: false
 	hide: false
 	target: null
