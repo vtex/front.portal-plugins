@@ -54,8 +54,13 @@ class BuyButton extends ProductComponent
 
 	skuSelected: (evt, productId, sku) =>
 		@getChangesFromHREF()
-		@skuData = sku
-		@sku = sku.sku
+
+		if @productId instaceof Array
+			x
+		else
+			@skuData = sku
+			@sku = sku.sku
+
 		@update()
 		@element.click() if @options.instaBuy
 
@@ -97,7 +102,7 @@ class BuyButton extends ProductComponent
 	buyButtonHandler: (evt) =>
 		return true if @redirect
 
-		@triggerProductEvent 'vtex.modal.hide'
+		$(window).trigger 'vtex.modal.hide'
 		$.get(@getURL())
 		.done =>
 				@triggerProductEvent 'vtex.cart.productAdded'

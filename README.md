@@ -151,7 +151,7 @@ Chame o plugin na `a` que age como botão de comprar:
 
     $('.buy-button').buyButton(productId, data, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> o ID do produto. Pode ser um array de IDs de produto -- neste caso, vai ser um botão que vai servir para comprar todos os produtos ao mesmo tempo.
 
 - <b>`data`</b> opcional, é um objeto que pode ter as propriedades `sku`, `quantity`, `seller` e `salesChannel`.
 
@@ -174,6 +174,9 @@ Chame o plugin na `a` que age como botão de comprar:
 
     - <b>`target`</b>
         default: `null`. Define o query parameter `target`. Um valor válido é `"orderform"`.
+
+    - <b>`requireAllSkus`</b>
+        default: `false`. Se `productId` for um array, essa opção determina se todos os IDs de produto devem ter um Sku selecionado, ou se aceita comprar parcialmente (somente os selecionados).
 
 ## Eventos
 
