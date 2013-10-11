@@ -35,12 +35,12 @@ class BuyButton extends ProductComponent
 			skuMatch = href.match(/sku=(.*?)&/)
 			if skuMatch and skuMatch[1] and skuMatch[1] != @sku
 				@sku = skuMatch[1]
-				$(window).trigger 'vtex.sku.changed', [@productId, sku: @sku]
+				@triggerProductEvent 'vtex.sku.changed', sku: @sku
 
 			qtyMatch = href.match(/qty=(.*?)&/)
 			if qtyMatch and qtyMatch[1] and qtyMatch[1] != @quantity
 				@quantity = qtyMatch[1]
-				$(window).trigger 'vtex.quantity.changed', [@productId, @quantity]
+				@triggerProductEvent 'vtex.quantity.changed', @quantity
 
 			sellerMatch = href.match(/seller=(.*?)&/)
 			if sellerMatch and sellerMatch[1] and sellerMatch[1] != @seller
@@ -96,11 +96,11 @@ class BuyButton extends ProductComponent
 	buyButtonHandler: (evt) =>
 		return true if @redirect
 
-		@context.trigger 'vtex.modal.hide'
+		@triggerProductEvent 'vtex.modal.hide'
 		$.get(@getURL())
 		.done ->
-				$(window).trigger 'vtex.cart.productAdded'
-				$(window).trigger 'productAddedToCart'
+				@triggerProductEvent 'vtex.cart.productAdded'
+				@triggerProductEvent 'productAddedToCart'
 		.fail ->
 				@redirect = true
 				window.location.href = @getURL()

@@ -39,8 +39,8 @@ class QuantitySelector extends ProductComponent
 	init: =>
 		@render()
 		@bindEvents()
-		@element.trigger 'vtex.quantity.ready', [@productId, @quantity]
-		@element.trigger 'vtex.quantity.changed', [@productId, @quantity]
+		@triggerProductEvent 'vtex.quantity.ready', @quantity
+		@triggerProductEvent 'vtex.quantity.changed', @quantity
 
 	render: =>
 		renderData =
@@ -95,7 +95,7 @@ class QuantitySelector extends ProductComponent
 		@cleanUnits()
 		@updateQuantityFromUnits()
 		@update()
-		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
+		@triggerProductEvent 'vtex.quantity.changed', @quantity
 
 	cleanUnits: =>
 		@units = @units.replace(/,/, '.').replace(/[^0-9\.]+/g, '')
@@ -125,7 +125,7 @@ class QuantitySelector extends ProductComponent
 		@cleanQuantity()
 		@updateUnitsFromQuantity()
 		@update()
-		$element.trigger 'vtex.quantity.changed', [@productId, @quantity]
+		@triggerProductEvent 'vtex.quantity.changed', @quantity
 
 	cleanQuantity: =>
 		@quantity = Math.round(@quantity)

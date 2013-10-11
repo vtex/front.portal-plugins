@@ -1,8 +1,24 @@
+root = window || exports
+root.EVENT_HISTORY or= {}
+
 class ProductComponent
 	bindProductEvent: (name, handler, productIdIndex = 0) =>
 		$(window).on name, (evt, args...) =>
-			return unless @productId is args[productIdIndex]
+			productId = args[productIdIndex]
+			return unless @productId is productId
 			handler(evt, args...)
+
+		if EVENT_HISTORY[@productId]?[name]?
+			handler(EVENT_HISTORY[@productId][name]...)
+
+	triggerProductEvent: (name, args...) =>
+		element = @element or ($window)
+		evt = jQuery.Event(name)
+		args2 = [@productId, args...]
+
+		element.trigger evt, args2
+		EVENT_HISTORY[@productId] or= {}
+		EVENT_HISTORY[@productId][name] = [evt, args2...]
 
 	generateSelectors: (selectors) =>
 		for k, v of selectors
@@ -11,5 +27,4 @@ class ProductComponent
 			@["show#{k}"] = do(k) => => @["find#{k}"]().show()
 			@["hide#{k}"] = do(k) => => @["find#{k}"]().hide()
 
-root = window || exports
 root.ProductComponent = ProductComponent

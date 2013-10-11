@@ -1,0 +1,23 @@
+{
+  "productId": 2001159,
+  "name": "kit",
+  "salesChannel": "1",
+  "dimensions": [],
+  "dimensionsInputType": {},
+  "dimensionsMap": {},
+  "skus": [{
+    "sku": 2001366,
+    "skuname": "kit",
+    "dimensions": {},
+    "available": true,
+    "listPrice": 12000,
+    "bestPrice": 550000,
+    "installments": 10,
+    "installmentsValue": 55000,
+    "installmentsInsterestRate": 0,
+    "image": "http://blackbox.vtexlocal.com.br/arquivos/ids/166417-292-292/imagem-produto-kit.png",
+    "sellerId": "1",
+    "seller": "AmbienteQA",
+    "values": []
+  }]
+}

@@ -67,6 +67,8 @@ class SkuSelector extends ProductComponent
 
 		@render()
 		@bindEvents()
+		if @skus.length == 1
+			@triggerProductEvent 'vtex.sku.selected', @skus[0]
 
 	update: (dimensionName, dimensionValue) =>
 		index = -1
@@ -103,14 +105,14 @@ class SkuSelector extends ProductComponent
 
 		selectableSkus = @findSelectableSkus()
 
-		@element.trigger 'vtex.sku.dimensionChanged', [@productId, dimensionName, dimensionValue]
+		@triggerProductEvent 'vtex.sku.dimensionChanged', dimensionName, dimensionValue
 		if selectableSkus.length == 1
-			@element.trigger 'vtex.sku.selected', [@productId, selectableSkus[0]]
-			@element.trigger 'skuSelected', [@productId, selectableSkus[0]]
+			@triggerProductEvent 'vtex.sku.selected', selectableSkus[0]
+			@triggerProductEvent 'skuSelected', selectableSkus[0]
 		else
-			@element.trigger 'vtex.sku.unselected', [@productId, selectableSkus]
+			@triggerProductEvent 'vtex.sku.unselected', selectableSkus
 			if selectableSkus.length > 1
-				@element.trigger 'vtex.sku.selectable', [@productId, selectableSkus]
+				@triggerProductEvent 'vtex.sku.selectable', selectableSkus
 
 		# ToDo remover quando alterar viewpart de modal
 		@hideConfirmButton()
@@ -271,7 +273,7 @@ class SkuSelector extends ProductComponent
 				$(window).trigger 'vtex.modal.hide'
 				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, productData.salesChannel, false))
 				.done (data) ->
-						$(window).trigger 'productAddedToCart'
+						@triggerProductEvent 'productAddedToCart'
 				.fail (jqXHR, status) ->
 						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, 1, productData.salesChannel)
 				return false

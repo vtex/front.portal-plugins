@@ -57,7 +57,7 @@ class NotifyMe extends ProductComponent
 		.done(=> @showSuccess())
 		.fail(=> @showError())
 
-		@element.trigger 'vtex.notifyMe.submitted', [@productId, @sku, xhr]
+		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr
 
 		return false
 

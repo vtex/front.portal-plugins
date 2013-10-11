@@ -33,17 +33,13 @@ class Price extends ProductComponent
 		@bindEvents()
 
 	getSku: =>
-		x = @sku or {
+		@sku or {
 			listPrice: _.currencyToInt(@findFirstOriginalListPrice().text())
 			bestPrice: _.currencyToInt(@findFirstOriginalBestPrice().text())
 			installments: @findFirstOriginalInstallments().text()
 			installmentsValue: _.currencyToInt(@findFirstOriginalInstallmentsValue().text())
 			available: true
 		}
-		if x.listPrice is 0 or x.bestPrice is 0
-			return null
-		else
-			return x
 
 	render: =>
 		renderData =
@@ -51,7 +47,7 @@ class Price extends ProductComponent
 			accessories: @getAccessoriesTotal()
 			total: @getTotal()
 
-		if renderData.product is null
+		if renderData.product is null or renderData.product.listPrice is 0 or renderData.product.bestPrice is 0
 			return
 
 		dust.render 'price', renderData, (err, out) =>
