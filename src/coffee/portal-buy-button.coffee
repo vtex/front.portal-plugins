@@ -79,6 +79,8 @@ class BuyButton extends ProductComponent
 		url = "/checkout/cart/add?sku=#{@sku}&qty=#{@quantity}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
 		for acc in @accessories when acc.quantity > 0
 			url += "&sku=#{acc.sku}&qty=#{acc.quantity}&seller=#{acc.sellerId}"
+		if @options.target
+			url += "&target=#{@options.target}"
 		return url
 
 	update: =>
@@ -126,3 +128,4 @@ $.fn.buyButton.defaults =
 	redirect: true
 	instaBuy: false
 	hide: false
+	target: null

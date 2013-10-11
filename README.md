@@ -169,6 +169,9 @@ Chame o plugin na `a` que age como botão de comprar:
     - <b>`hide`</b>
         default: `false`. Se `true`, esconde-se quando não há Sku selecionado ou quando o selecionado está indisponível, e se mostra quando há Sku selecionado disponível.
 
+    - <b>`target`</b>
+        default: `null`. Define o query parameter `target`. Um valor válido é `"orderform"`.
+
 ## Eventos
 
 Lança os seguintes eventos:
