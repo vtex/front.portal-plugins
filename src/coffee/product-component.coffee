@@ -3,13 +3,20 @@ root.EVENT_HISTORY or= {}
 
 class ProductComponent
 	bindProductEvent: (name, handler, productIdIndex = 0) =>
-		$(window).on name, (evt, args...) =>
-			productId = args[productIdIndex]
-			return unless @productId is productId
-			handler(evt, args...)
+		bindProductId = (name, handler, productId) =>
+			$(window).on name, (evt, args...) =>
+				evtProductId = args[productIdIndex]
+				return unless productId is evtProductId
+				handler(evt, args...)
 
-		if EVENT_HISTORY[@productId]?[name]?
-			handler(EVENT_HISTORY[@productId][name]...)
+			if EVENT_HISTORY[productId]?[name]?
+				handler(EVENT_HISTORY[productId][name]...)
+
+		if @productId instaceof Array
+			for productId in @productId
+				bindProductId(name, handler, productId)
+		else
+			bindProductId(name, handler, @productId)
 
 	triggerProductEvent: (name, args...) =>
 		element = @element or ($window)
