@@ -15,6 +15,12 @@
     <style type="text/css">.item_doesnt_exist {color: gray;}
     .mock-case {border: 1px solid gray}</style>
 
+    <!-- BOTÃO MASTER -->
+    <div class="mock-case">
+      <a href="" class="master-buy">COMPRAR TUDO</a>
+    </div>
+
+
     <!-- PRIMEIRO -->
     <div class="mock-case">
       <div class="portal-price-ref" style="height: 50px"></div>
@@ -84,21 +90,28 @@
     <script type="text/javascript">
         var mocks = ['spec/mocks/twoDimensions.json', 'spec/mocks/casaamerica.json'];
 
+        ids = []
+
         $.getJSON(mocks[0]).done(function(data){
+          ids.push(data.productId)
           $('.portal-price-ref').price(data.productId);
           $('.portal-sku-selector-ref').skuSelector(data, {selectOnOpening: false});
           $('.buy-button').buyButton(data.productId);
           $('.portal-quantity-selector-ref').quantitySelector(data.productId);
           $('.portal-notify-me-ref').notifyMe(data.productId, {strings: {title: "AVISE-ME"}});
+
+          $.getJSON(mocks[1]).done(function(data){
+            ids.push(data.productId)
+            $('.portal-price-ref2').price(data.productId);
+            $('.portal-sku-selector-ref2').skuSelector(data);
+            $('.buy-button2').buyButton(data.productId);
+            $('.portal-quantity-selector-ref2').quantitySelector(data.productId, {initialQuantity: 3});
+            $('.portal-notify-me-ref2').notifyMe(data.productId);
+
+            $('.master-buy').buyButton(ids, {}, {multipleProductIds: true})
+          });
         });
 
-        $.getJSON(mocks[1]).done(function(data){
-          $('.portal-price-ref2').price(data.productId);
-          $('.portal-sku-selector-ref2').skuSelector(data);
-          $('.buy-button2').buyButton(data.productId);
-          $('.portal-quantity-selector-ref2').quantitySelector(data.productId, {initialQuantity: 3});
-          $('.portal-notify-me-ref2').notifyMe(data.productId);
-        });
     </script>
 
 </body>

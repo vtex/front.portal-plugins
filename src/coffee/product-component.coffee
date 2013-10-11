@@ -12,7 +12,7 @@ class ProductComponent
 			if EVENT_HISTORY[productId]?[name]?
 				handler(EVENT_HISTORY[productId][name]...)
 
-		if @productId instaceof Array
+		if @options.multipleProductIds
 			for productId in @productId
 				bindProductId(name, handler, productId)
 		else

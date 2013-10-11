@@ -11,6 +11,14 @@ class BuyButton extends ProductComponent
 		@seller = buyData.seller || 1
 		@salesChannel = buyData.salesChannel || 1
 
+		if @options.multipleProductIds
+			@manyProducts = {}
+			for pid in @productId
+				@manyProducts[pid] =
+					sku: null
+					quantity: 1
+					seller: 1
+
 		@accessories = []
 
 		@init()
@@ -55,8 +63,8 @@ class BuyButton extends ProductComponent
 	skuSelected: (evt, productId, sku) =>
 		@getChangesFromHREF()
 
-		if @productId instaceof Array
-			x
+		if @options.multipleProductIds
+			@manyProducts[productId].sku = sku
 		else
 			@skuData = sku
 			@sku = sku.sku
@@ -66,12 +74,23 @@ class BuyButton extends ProductComponent
 
 	skuUnselected: (evt, productId, selectableSkus) =>
 		@getChangesFromHREF()
-		@skuData = {}
-		@sku = null
+
+		if @options.multipleProductIds
+			@manyProducts[productId].sku = null
+		else
+			@skuData = {}
+			@sku = null
 		@update()
 
 	quantityChanged: (evt, productId, quantity) =>
 		@getChangesFromHREF()
+
+		if @options.multipleProductIds
+			@manyProducts[productId].quantity = quantity
+		else
+			@skuData = {}
+			@sku = null
+
 		@quantity = quantity
 		@update()
 
@@ -81,15 +100,23 @@ class BuyButton extends ProductComponent
 		@update()
 
 	getURL: =>
-		url = "/checkout/cart/add?sku=#{@sku}&qty=#{@quantity}&seller=#{@seller}&sc=#{@salesChannel}&redirect=#{@options.redirect}"
+		url = "/checkout/cart/add?redirect=#{@options.redirect}&sc=#{@salesChannel}"
+
+		if @options.multipleProductIds
+			for id, prod of @manyProducts when prod.sku and prod.sku.available
+				url += "&sku=#{prod.sku.sku}&qty=#{prod.quantity}&seller=#{prod.seller}"
+		else
+			url += "&sku=#{@sku}&qty=#{@quantity}&seller=#{@seller}"
+
 		for acc in @accessories when acc.quantity > 0
 			url += "&sku=#{acc.sku}&qty=#{acc.quantity}&seller=#{acc.sellerId}"
 		if @options.target
 			url += "&target=#{@options.target}"
+
 		return url
 
 	update: =>
-		url = if @sku then @getURL() else "javascript:alert('#{@options.errorMessage}');"
+		url = if @sku or @options.multipleProductIds then @getURL() else "javascript:alert('#{@options.errorMessage}');"
 		@element.attr('href', url)
 
 		@element.show()
@@ -140,3 +167,4 @@ $.fn.buyButton.defaults =
 	hideUnselected: false
 	hideUnavailable: false
 	target: null
+	multipleProductIds: false
