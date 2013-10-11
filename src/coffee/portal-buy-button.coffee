@@ -98,11 +98,11 @@ class BuyButton extends ProductComponent
 
 		@triggerProductEvent 'vtex.modal.hide'
 		$.get(@getURL())
-		.done ->
+		.done =>
 				@triggerProductEvent 'vtex.cart.productAdded'
 				@triggerProductEvent 'productAddedToCart'
 				alert @options.addMessage if @options.addMessage
-		.fail ->
+		.fail =>
 				@redirect = true
 				window.location.href = @getURL()
 				alert @options.errMessage if @options.errMessage
