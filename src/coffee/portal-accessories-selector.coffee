@@ -45,7 +45,7 @@ class AccessoriesSelector extends ProductComponent
 		accessory = @accessories[index]
 		accessory.quantity = if $element.attr('checked') then 1 else 0
 
-		$element.trigger 'vtex.accessories.updated', [@productId, @accessories]
+		@triggerProductEvent 'vtex.accessories.updated', @accessories
 
 # PLUGIN ENTRY POINT
 $.fn.accessoriesSelector = (productId, productData, jsOptions) ->
