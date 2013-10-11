@@ -1,8 +1,5 @@
 KEYCODE_ESC = 27
 
-doBind = ->
-	$('.to-bind-modal').each ->	$(this).removeClass('to-bind-modal').on('click', openModalFromTemplate)
-
 getOverlay = ->
 	template = '<div class="boxPopUp2-overlay boxPopUp2-clickActive" style="display: none;"></div>'
 	if (el = $(".boxPopUp2-overlay")).length > 0 then el else $(template)
@@ -38,10 +35,13 @@ openModalFromTemplate = (evt) ->
 	$overlay.on "click", hideModal
 	$(document).on "keyup", hideModalOnEscapeKey
 
-	$(document).on 'vtex.modal.hide', hideModal
+	$(window).on 'vtex.modal.hide', hideModal
 
 	$.get(templateURL).done (content) ->
 		$container.find('.skuWrap_').html $(content)
+
+doBind = ->
+	$('.to-bind-modal').each ->	$(this).removeClass('to-bind-modal').on('click', openModalFromTemplate)
 
 $(document).ready(doBind)
 $(document).on('ajaxComplete', doBind)
