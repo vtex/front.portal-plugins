@@ -137,7 +137,7 @@ class BuyButton extends ProductComponent
 			@element.hide()
 
 	buyButtonHandler: (evt) =>
-		return true if @redirect
+		return true if @options.redirect
 
 		$(window).trigger 'vtex.modal.hide'
 		$.get(@getURL())
