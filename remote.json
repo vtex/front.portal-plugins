@@ -1,10 +1,10 @@
 {
 	"remote": {
-		"host": "casaamerica.com.adsafasbr",
+		"host": "vtex-io.s3.amazonaws.com",
 		"port": 80
 	},
 	"proxy": {
-		"host": "localhost",
+		"host": "io.vtex.com.br",
 		"port": 80
 	},
 	"server": {
@@ -12,19 +12,17 @@
 		"port": 9001
 	},
 	"headers": {
-    "X-VTEX-Environment": "beta"
+    "Host": "vtex-io.s3.amazonaws.com"
 	},
 	"bounces":[
-		"style/.*",
-		"index.html",
-    "minicart.html"
 	],
 	"mapping": true,
 	"mappings": {
-	    ".*portal-minicart-with-template.min.js": "build/js/portal-minicart-with-template.js",
-	    ".*portal-sku-selector-with-template.min.js": "build/js/portal-sku-selector-with-template.js",
-	    ".*portal-template-as-modal.min.js.*": "build/js/portal-template-as-modal.js",
-      "dust-core-2.0.0.min.js": "build/lib/dust-core-2.0.0.min.js",
-      "vtex-utils.min.js": "build/lib/vtex-utils.min.js"
+    ".*portal-buy-button.min.js.*": "build/js/portal-buy-button.js",
+    ".*portal-minicart-with-template.min.js": "build/js/portal-minicart-with-template.js",
+    ".*portal-price-with-template.min.js.*": "build/js/portal-price-with-template.js",
+    ".*portal-sku-selector-with-template.min.js": "build/js/portal-sku-selector-with-template.js",
+    ".*portal-template-as-modal.min.js.*": "build/js/portal-template-as-modal.js",
+    "vtex-utils.min.js": "build/lib/vtex-utils.min.js"
 	}
 }
