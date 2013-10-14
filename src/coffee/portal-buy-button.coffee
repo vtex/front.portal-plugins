@@ -80,6 +80,7 @@ class BuyButton extends ProductComponent
 		else
 			@skuData = {}
 			@sku = null
+
 		@update()
 
 	quantityChanged: (evt, productId, quantity) =>
@@ -88,10 +89,8 @@ class BuyButton extends ProductComponent
 		if @options.multipleProductIds
 			@manyProducts[productId].quantity = quantity
 		else
-			@skuData = {}
-			@sku = null
+			@quantity = quantity
 
-		@quantity = quantity
 		@update()
 
 	accessoriesUpdated: (evt, productId, accessories) =>
@@ -118,7 +117,7 @@ class BuyButton extends ProductComponent
 	update: =>
 		url = if @sku or @options.multipleProductIds then @getURL() else "javascript:alert('#{@options.errorMessage}');"
 		@element.attr('href', url)
-
+		debugger
 		@element.show()
 
 		if @options.hideUnavailable and @skuData and @skuData.available is false
