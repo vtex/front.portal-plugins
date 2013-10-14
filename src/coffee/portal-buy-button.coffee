@@ -126,8 +126,10 @@ class BuyButton extends ProductComponent
 
 		return url
 
+	valid: => !!(@sku or @options.multipleProductIds)
+
 	update: =>
-		url = if @sku or @options.multipleProductIds then @getURL() else "javascript:alert('#{@options.errorMessage}');"
+		url = if @valid() then @getURL() else "javascript:alert('#{@options.errorMessage}');"
 		@element.attr('href', url)
 		@element.show()
 
@@ -137,7 +139,7 @@ class BuyButton extends ProductComponent
 			@element.hide()
 
 	buyButtonHandler: (evt) =>
-		return true if @options.redirect
+		return true if @options.redirect or not @valid()
 
 		$(window).trigger 'vtex.modal.hide'
 		$.get(@getURL())
