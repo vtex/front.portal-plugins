@@ -12,6 +12,7 @@ class NotifyMe extends ProductComponent
 		@generateSelectors
 			Title: '.notifyme-title'
 			Form: 'form'
+			SkuId: '.notifyme-skuid'
 			Loading: '.notifyme-loading'
 			Success: '.notifyme-success'
 			Error: '.notifyme-error'
@@ -40,7 +41,8 @@ class NotifyMe extends ProductComponent
 			@hideAll()
 		else
 			@showTitle()
-			@showForm(sku.sku)
+			@findSkuId().val(sku.sku)
+			@showForm()
 
 	skuUnselected: (evt, productId, skus) =>
 		@sku = null

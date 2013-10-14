@@ -23,6 +23,7 @@
     ".*portal-price-with-template.min.js.*": "build/js/portal-price-with-template.js",
     ".*portal-sku-selector-with-template.min.js": "build/js/portal-sku-selector-with-template.js",
     ".*portal-template-as-modal.min.js.*": "build/js/portal-template-as-modal.js",
+    ".*portal-notify-me-with-template.min.js.*": "build/js/portal-notify-me-with-template.js",
     "vtex-utils.min.js": "build/lib/vtex-utils.min.js"
 	}
 }
