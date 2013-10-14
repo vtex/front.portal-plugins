@@ -99,18 +99,30 @@ class BuyButton extends ProductComponent
 		@update()
 
 	getURL: =>
-		url = "/checkout/cart/add?redirect=#{@options.redirect}&sc=#{@salesChannel}"
+		queryParams = []
 
 		if @options.multipleProductIds
 			for id, prod of @manyProducts when prod.sku and prod.sku.available
-				url += "&sku=#{prod.sku.sku}&qty=#{prod.quantity}&seller=#{prod.seller}"
+				queryParams.push("sku=#{prod.sku.sku}")
+				queryParams.push("qty=#{prod.quantity}")
+				queryParams.push("sku=#{prod.seller}")
 		else
-			url += "&sku=#{@sku}&qty=#{@quantity}&seller=#{@seller}"
+			queryParams.push("sku=#{@sku}")
+			queryParams.push("qty=#{@quantity}")
+			queryParams.push("seller=#{@seller}")
+
+		queryParams.push("redirect=#{@options.redirect}")
+		queryParams.push("sc=#{@salesChannel}")
 
 		for acc in @accessories when acc.quantity > 0
-			url += "&sku=#{acc.sku}&qty=#{acc.quantity}&seller=#{acc.sellerId}"
+			queryParams.push("sku=#{acc.sku}")
+			queryParams.push("qty=#{acc.quantity}")
+			queryParams.push("sku=#{acc.seller}")
+
 		if @options.target
-			url += "&target=#{@options.target}"
+			queryParams.push("target=#{@options.target}")
+
+		url = "/checkout/cart/add?#{queryParams.join('&')}"
 
 		return url
 
