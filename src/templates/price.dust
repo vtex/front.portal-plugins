@@ -8,7 +8,7 @@
     </em>
     <em class="valor-por price-best-price" style="display: block">
       Por:
-      <span class="skuBestPrice">{bestPrice|intAsCurrency}</span>
+      <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-dividido price-installments" style="display: block">
       <span>
