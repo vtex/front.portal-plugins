@@ -42,6 +42,7 @@ module.exports = (grunt) ->
 					'build/js/portal-buy-button.js': ['build/js/product-component.js', 'build/js/portal-buy-button.js']
 					'build/js/portal-notify-me-with-template.js': ['build/js/product-component.js', 'build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
 					'build/js/portal-minicart-with-template.js': ['build/js/product-component.js', 'build/templates/template-minicart.js', 'build/js/portal-minicart.js']
+					'build/js/portal-sku-measures-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-measures.js', 'build/js/portal-sku-measures.js']
 
 
 		uglify:
@@ -55,6 +56,7 @@ module.exports = (grunt) ->
 					'build/js/portal-buy-button.min.js': ['build/js/portal-buy-button.js']
 					'build/js/portal-notify-me-with-template.min.js': ['build/js/portal-notify-me-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
+					'build/js/portal-sku-measures-with-template.min.js': ['build/js/portal-sku-measures-with-template.js']
 
 		karma:
 			options:
@@ -92,6 +94,7 @@ module.exports = (grunt) ->
 					'build/templates/template-price.js': 'src/templates/price.dust'
 					'build/templates/template-notify-me.js': 'src/templates/notify-me.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
+					'build/templates/template-sku-measures.js': 'src/templates/sku-measures.dust'
 
 		connect:
 			main:

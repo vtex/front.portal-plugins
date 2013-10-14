@@ -1,0 +1,24 @@
+<dl>
+  <dt class="dtSkuCompleteName">{skuname}</dt>
+
+  {#measures}
+
+  {#height}
+  <dd>Altura: <span class="lblAlturaReal">{height}</span> <span class="measures-height">Centímetro</span>s</dd>
+  {/height}
+
+  {#width}
+  <dd>Largura: <span class="lblLarguraReal">{width}</span> <span class="measures-width">Centímetro</span>s</dd>
+  {/width}
+
+  {#length}
+  <dd>Profundidade: <span class="lblComprimentoReal">{length}</span> <span class="measures-length">Centímetro</span>s</dd>
+  {/length}
+
+  {#weight}
+  <dd>Peso: <span class="lblPesoReal">{weight}</span> <span class="measures-weight">Quilograma</span>s</dd>
+  {/weight}
+
+  {/measures}
+
+</dl>

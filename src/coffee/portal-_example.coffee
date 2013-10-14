@@ -4,7 +4,7 @@
 $ = window.jQuery
 
 # CLASSES
-class Example
+class Example extends ProductComponent
 	constructor: (@element, args, @options) ->
 		@args.x = args.x # get args ...
 
