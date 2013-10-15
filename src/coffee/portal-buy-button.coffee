@@ -117,7 +117,7 @@ class BuyButton extends ProductComponent
 		for acc in @accessories when acc.quantity > 0
 			queryParams.push("sku=#{acc.sku}")
 			queryParams.push("qty=#{acc.quantity}")
-			queryParams.push("sku=#{acc.seller}")
+			queryParams.push("seller=#{acc.seller}")
 
 		if @options.target
 			queryParams.push("target=#{@options.target}")

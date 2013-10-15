@@ -44,8 +44,9 @@ module.exports = (grunt) ->
 					'build/js/portal-minicart-with-template.js': ['build/js/product-component.js', 'build/templates/template-minicart.js', 'build/js/portal-minicart.js']
 					'build/js/portal-sku-measures-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-measures.js', 'build/js/portal-sku-measures.js']
 
-
 		uglify:
+			mangle:
+				except: ['$', '_']
 			main:
 				files:
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
@@ -65,24 +66,6 @@ module.exports = (grunt) ->
 				background: true
 			single:
 				singleRun: true
-
-		'string-replace':
-			main:
-				files:
-					'build/<%= relativePath %>/index.html': ['build/<%= relativePath %>/index.html']
-					'build/<%= relativePath %>/index.debug.html': ['build/<%= relativePath %>/index.debug.html']
-				options:
-					replacements: ({'pattern': new RegExp(key, "g"), 'replacement': value} for key, value of replacements)
-
-			all:
-				files:
-					'build/button-bind-modal-api-response.html': ['build/button-bind-modal-api-response.html']
-
-				options:
-					replacements: [
-						pattern: '<!-- skuSelectorMock -->'
-						replacement: grunt.file.read('spec/mocks/threeDimensionsSomeUnavailable.json')
-					]
 
 		dustjs:
 			compile:
@@ -109,7 +92,7 @@ module.exports = (grunt) ->
 				options:
 					livereload: true
 				files: ['src/**/*.html', 'src/**/*.dust', 'src/**/*.coffee', 'spec/**/*.coffee', 'spec/**/*.html', 'src/**/*.js', 'src/**/*.less']
-				tasks: ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace']
+				tasks: ['clean', 'concurrent:transform', 'concat', 'uglify']
 
 		concurrent:
 			transform: ['copy:main', 'copy:mocks', 'coffee', 'dustjs']
@@ -131,7 +114,7 @@ module.exports = (grunt) ->
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
-	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace', 'server', 'watch:main']
-	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify', 'string-replace'] # Dist - minifies files
+	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'server', 'watch:main']
+	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify'] # Dist - minifies files
 	grunt.registerTask 'test', ['karma:single']
 	grunt.registerTask 'server', ['connect', 'remote']
