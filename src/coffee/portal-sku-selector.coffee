@@ -286,9 +286,9 @@ class SkuSelector extends ProductComponent
 		@findwarnUnavailable().find('.sku-notifyme-loading').show()
 		@findwarnUnavailable().find('form').hide()
 		xhr =	$.post '/no-cache/AviseMe.aspx', $(evt.target).serialize()
-		xhr.done -> @findwarnUnavailable().find('.sku-notifyme-success').show()
-		xhr.fail -> @findwarnUnavailable().find('.sku-notifyme-loading-error').show()
-		xhr.always -> @findwarnUnavailable().find('.sku-notifyme-loading').hide()
+		xhr.done => @findwarnUnavailable().find('.sku-notifyme-success').show()
+		xhr.fail => @findwarnUnavailable().find('.sku-notifyme-loading-error').show()
+		xhr.always => @findwarnUnavailable().find('.sku-notifyme-loading').hide()
 		return false
 
 	findPrices: (skus = undefined) =>
