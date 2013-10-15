@@ -1,13 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Portal plugins test</title>
+  <title>Portal Plugins Bootstrap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/vtex-smartCart.css">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+
+  <style>
+    .item_doesnt_exist {
+      color: gray;
+    }
+    ul
+    {
+      list-style-type: none;
+    }
+  </style>
+
+  <script src="http://localhost:35729/livereload.js"></script>
 </head>
-<body>
-<ul>
-    <li><a href="accessories.html">Accessories</a></li>
-    <li><a href="sku-selector.html">Sku Selector</a></li>
-    <li><a href="http://meuamigopet.vtexlocal.com.br/minicart.html">Minicart</a></li>
-</ul>
+<body id="index">
+
+<div class="carrinhoCompras show-minicart-on-hover" style="float:right; position: relative; right: 50px;">
+  <h2><a href="/Site/Carrinho.aspx" title="Concluir Compra"><i class="glyphicon glyphicon-shopping-cart"></i></a></h2>
+  <div class="portal-minicart-ref">
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="masthead">
+    <h1><a href="/" class="text-muted">Portal Plugins</a></h1>
+  </div>
+
+  <div class="jumbotron">
+    <h1>Iu uanti random téxti cara?</h1>
+    <p class="lead">You tá the brinqueichon uite me, cara? You ar a véri mutchi caspa man. Do you nou the number one xampu contra caspa in the uordi. Luqui aqui Capitachion. Rimouve uarandredi porcenti ofi the caspa ande idrateiti ior hair.</p>
+    <p>
+      <a class="btn btn-lg btn-info" target="_blank" href="https://github.com/vtex/front.portal-plugins">GitHub</a>
+      <a class="btn btn-lg btn-info" target="_blank" href="http://pachamama.vtexlab.com.br/project.html?projectId=project480&tab=projectOverview">Pachamama</a>
+      <a class="btn btn-lg btn-info" target="_blank" href="https://app.asana.com/0/6126587030911/6126587030911">Asana</a>
+    </p>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-3 product-box">
+      <h2>Google Nexus 4</h2>
+      <p>
+        <a class="btn btn-success btn-modal to-bind-modal" data-template="modal-template.html" data-json="spec/mocks/0.json" href="#">Compra Rápida</a>
+        <a class="btn btn-primary " href="/product.html?mock=0.json">Ver Detalhes &raquo;</a>
+      </p>
+      <p>Disponível nas cores preto e branco, e nas capacidades 8GB e 16GB. Temos acessórios como capas e carregadores. <small>Sem estoque de branco 16GB. </small></p>
+    </div>
+    <div class="col-lg-3 product-box">
+      <h2>Nintendo 3DS</h2>
+      <p>
+        <a class="btn btn-success btn-modal to-bind-modal" data-template="modal-template.html" data-json="spec/mocks/1.json" href="#">Compra Rápida</a>
+        <a class="btn btn-primary " href="/product.html?mock=1.json">Ver Detalhes &raquo;</a>
+      </p>
+      <p>Disponível em tamanho normal e XL, e em várias cores. Cor "Amarelo Pikachu" somente existe no tamanho XL. </p>
+    </div>
+    <div class="col-lg-3 product-box">
+      <h2>Pokémon X</h2>
+      <p>
+        <a class="btn btn-success btn-modal to-bind-modal" data-template="modal-template.html" data-json="spec/mocks/2.json" href="#">Compra Rápida</a>
+        <a class="btn btn-primary " href="/product.html?mock=2.json">Ver Detalhes &raquo;</a>
+      </p>
+      <p>Become a Pokemon Trainer and set out for adventure in a vast and wondrous new region filled with new Pokemon to catch, trade, and battle.</p>
+    </div>
+    <div class="col-lg-3 product-box">
+      <h2>Vários Produtos</h2>
+      <p>
+        <a class="btn btn-primary btn-block" href="/products.html">Ver Detalhes &raquo;</a>
+      </p>
+      <p>Confira vários produtos de uma só vez!</p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <hr>
+    <p>&copy; <a target="_blank" href="//vtex.com.br">VTEX</a> 2013</p>
+  </footer>
+
+</div>
+
+
+<script src="/lib/jquery-1.8.3.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="/lib/vtex-utils.js"></script>
+<script src="/lib/dust-core-2.0.0.min.js"></script>
+
+<script src="js/portal-minicart-with-template.js"></script>
+
+<script>
+  var preBind = function() {
+    $('.to-bind-modal').each(function() {
+      $(this).on('click', function() {
+        MODAL_JSON_URL = $(this).data('json');
+      });
+    });
+  };
+  $(document).ready(preBind);
+  $(document).on('ajaxComplete', preBind);
+
+  var oldAjax = $.ajax;
+
+  $.ajax = function() {
+    if(arguments[0]) arguments[0].type = "GET";
+    if(arguments[1]) arguments[1].type = "GET";
+    return oldAjax.apply(null, arguments);
+  }
+
+  $('.portal-minicart-ref').minicart({orderFormURL: "spec/mocks/orderform.json"});
+</script>
+
+<script src="js/portal-template-as-modal.js"></script>
+<script src="js/portal-price-with-template.js"></script>
+<script src="js/portal-sku-selector-with-template.js"></script>
+<script src="js/portal-buy-button.js"></script>
+<script src="js/portal-quantity-selector-with-template.js"></script>
+<script src="js/portal-accessories-selector-with-template.js"></script>
+
 </body>
 </html>

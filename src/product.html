@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Portal Plugins Bootstrap</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" type="text/css" href="http://www.meuamigopet.com.br/arquivos/vtex-smartCart.css">
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css">
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+
+  <style>
+    .item_doesnt_exist {
+      color: gray;
+    }
+    ul
+    {
+      list-style-type: none;
+    }
+  </style>
+
+  <script src="http://localhost:35729/livereload.js"></script>
+</head>
+<body id="product">
+
+<div class="carrinhoCompras show-minicart-on-hover" style="float:right; position: relative; right: 50px;">
+  <h2><a href="/checkout"><i class="glyphicon glyphicon-shopping-cart"></i></a></h2>
+  <div class="portal-minicart-ref">
+  </div>
+</div>
+
+<div class="container">
+
+  <div class="masthead">
+    <h1><a href="/" class="text-muted">Portal Plugins</a></h1>
+  </div>
+
+  <h2  class="product-name"></h2>
+  <div class="row well">
+    <div class="row">
+      <div class="col-lg-3">
+        <img class="product-img img-thumbnail" src="" alt=""/>
+      </div>
+      <div class="col-lg-3">
+        <div class="portal-price-ref" style="height: 50px"></div>
+      </div>
+      <div class="col-lg-3">
+        <div class="portal-quantity-selector-ref"></div>
+        <div class="portal-sku-selector-ref"></div>
+      </div>
+      <div class="col-lg-3">
+        <a   class="btn btn-lg btn-success portal-buy-button-ref" href="#">Comprar</a>
+        <div class="portal-notify-me-ref"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="portal-accessories-ref"></div>
+  </div>
+
+  <footer class="footer">
+    <hr>
+    <p>&copy; <a target="_blank" href="//vtex.com.br">VTEX</a> 2013</p>
+  </footer>
+
+</div>
+
+
+<script src="/lib/jquery-1.8.3.min.js"></script>
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="/lib/vtex-utils.js"></script>
+<script src="/lib/dust-core-2.0.0.min.js"></script>
+
+<script src="js/portal-minicart-with-template.js"></script>
+
+<script>
+  var oldAjax = $.ajax;
+
+  $.ajax = function() {
+    if(arguments[0]) arguments[0].type = "GET";
+    if(arguments[1]) arguments[1].type = "GET";
+    return oldAjax.apply(null, arguments);
+  }
+
+  $('.portal-minicart-ref').minicart({orderFormURL: "spec/mocks/orderform.json"});
+</script>
+
+<script src="js/portal-template-as-modal.js"></script>
+
+<script src="js/portal-sku-selector-with-template.js"></script>
+<script src="js/portal-quantity-selector-with-template.js"></script>
+<script src="js/portal-accessories-selector-with-template.js"></script>
+<script src="js/portal-price-with-template.js"></script>
+<script src="js/portal-buy-button.js"></script>
+<script src="js/portal-notify-me-with-template.js"></script>
+
+<script type="text/javascript">
+  var qs = (function(a) {
+    if (a == "") return {};
+    var b = {};
+    for (var i = 0; i < a.length; ++i)
+    {
+      var p=a[i].split('=');
+      if (p.length != 2) continue;
+      b[p[0]] = decodeURIComponent(p[1].replace(/\+/g, " "));
+    }
+    return b;
+  })(window.location.search.substr(1).split('&'));
+
+  var mock = "spec/mocks/" + qs["mock"]
+
+  $.getJSON(mock).done(function(data){
+    $('.product-name').text(data.name);
+    $('.product-img').attr('src', data.skus[0].image)
+
+    $('.portal-sku-selector-ref').skuSelector(data);
+    $('.portal-quantity-selector-ref').quantitySelector(data.productId);
+    $('.portal-buy-button-ref').buyButton(data.productId);
+    $('.portal-price-ref').price(data.productId);
+    $('.portal-notify-me-ref').notifyMe(data.productId);
+
+    if(data.accessories.length > 0){
+      $('.portal-accessories-ref').accessoriesSelector(data.productId, data);
+    }
+  });
+</script>
+
+</body>
+</html>

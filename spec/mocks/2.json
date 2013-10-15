@@ -1,0 +1,23 @@
+{
+  "productId": 3000,
+  "name": "Pokémon X",
+  "salesChannel": "1",
+  "dimensions": [],
+  "dimensionsInputType": {},
+  "dimensionsMap": {},
+  "skus": [{
+    "sku": 3001,
+    "skuname": "Pokémon X",
+    "dimensions": {},
+    "available": true,
+    "listPrice": 4000,
+    "bestPrice": 4000,
+    "installments": 4,
+    "installmentsValue": 1000,
+    "installmentsInsterestRate": 0,
+    "image": "http://ecx.images-amazon.com/images/I/61sOhGzRwYL._SX300_.jpg",
+    "sellerId": "1",
+    "seller": "AmbienteQA",
+    "values": []
+  }]
+}

@@ -1,0 +1,90 @@
+{
+  "productId": 2000,
+  "name": "Nintendo 3DS",
+  "salesChannel": "1",
+  "dimensions": ["Tamanho", "Cor"],
+  "dimensionsInputType": {
+    "Tamanho": "radio",
+    "Cor": "select"
+  },
+  "dimensionsMap": {
+    "Tamanho": ["Normal", "XL"],
+    "Cor": ["Azul", "Vermelho", "Amarelo Pikachu"]
+  },
+  "skus": [{
+    "sku": 2001,
+    "dimensions": {
+      "Tamanho": "Normal",
+      "Cor": "Azul"
+    },
+    "available": true,
+    "listPrice": 20000,
+    "bestPrice": 20000,
+    "installments": 2,
+    "installmentsValue": 10000,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.nerdzy.com/wp-content/uploads/2012/05/nintendo-3ds-blue-open1.png",
+    "sellerId": "1",
+    "seller": "PtPlgBootstrap"
+  }, {
+    "sku": 2002,
+    "dimensions": {
+      "Tamanho": "Normal",
+      "Cor": "Vermelho"
+    },
+    "available": true,
+    "listPrice": 20000,
+    "bestPrice": 20000,
+    "installments": 2,
+    "installmentsValue": 10000,
+    "installmentsInsterestRate": 0,
+    "image": "http://www.blogcdn.com/www.engadget.com/media/2011/08/nintendo-3ds-1312969941.jpg",
+    "sellerId": "1",
+    "seller": "PtPlgBootstrap"
+  }, {
+    "sku": 2003,
+    "dimensions": {
+      "Tamanho": "XL",
+      "Cor": "Vermelho"
+    },
+    "available": true,
+    "listPrice": 22000,
+    "bestPrice": 22000,
+    "installments": 2,
+    "installmentsValue": 11000,
+    "installmentsInsterestRate": 0,
+    "image": "http://nintendo3dsdaily.com/wp-content/uploads/2012/07/3DS_XL_vulcano_red_600x450.jpg",
+    "sellerId": "1",
+    "seller": "PtPlgBootstrap"
+  }, {
+    "sku": 2004,
+    "dimensions": {
+      "Tamanho": "XL",
+      "Cor": "Azul"
+    },
+    "available": false,
+    "listPrice": 22000,
+    "bestPrice": 22000,
+    "installments": 2,
+    "installmentsValue": 11000,
+    "installmentsInsterestRate": 0,
+    "image": "http://media.taw9eel.com/catalog/product/cache/1/image/1000x/9df78eab33525d08d6e5fb8d27136e95/c/o/console-nintendo-3ds-xl-azul.jpg",
+    "sellerId": "1",
+    "seller": "PtPlgBootstrap"
+  }, {
+    "sku": 2005,
+    "dimensions": {
+      "Tamanho": "XL",
+      "Cor": "Amarelo Pikachu"
+    },
+    "available": true,
+    "listPrice": 24000,
+    "bestPrice": 23000,
+    "installments": 2,
+    "installmentsValue": 11500,
+    "installmentsInsterestRate": 0,
+    "image": "http://img1.ak.crunchyroll.com/i/spire3/e55b725e0cb1978078387f70fc4fcd261345183365_full.jpg",
+    "sellerId": "1",
+    "seller": "PtPlgBootstrap"
+  }]
+}
