@@ -105,7 +105,7 @@ class BuyButton extends ProductComponent
 			for id, prod of @manyProducts when prod.sku and prod.sku.available
 				queryParams.push("sku=#{prod.sku.sku}")
 				queryParams.push("qty=#{prod.quantity}")
-				queryParams.push("sku=#{prod.seller}")
+				queryParams.push("seller=#{prod.seller}")
 		else
 			queryParams.push("sku=#{@sku}")
 			queryParams.push("qty=#{@quantity}")
