@@ -26,7 +26,7 @@ class Minicart
 		$(window).trigger "minicartLoaded"
 
 	getOrderFormURL: =>
-		"/api/checkout/pub/orderForm/"
+		@options.orderFormURL
 
 	getOrderFormUpdateURL: =>
 		@getOrderFormURL() + @cartData.orderFormId + "/items/update/"
@@ -171,3 +171,4 @@ $.fn.minicart.defaults =
 		"nullPrice": "Este item não está disponível no momento."
 	showMinicart: true
 	showTotalizers: true
+	orderFormURL: "/api/checkout/pub/orderForm/"
