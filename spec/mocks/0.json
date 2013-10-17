@@ -23,8 +23,8 @@
     "installmentsValue": 9333,
     "installmentsInsterestRate": 0,
     "image": "http://battellemedia.com/wp-content/uploads/2013/01/Nexus-4.jpeg",
-    "sellerId": "1",
-    "seller": "PtPlgBootstrap"
+    "sellerId": "2",
+    "seller": "PtPlgBootstrap 2"
   }, {
     "sku": 1002,
     "dimensions": {
@@ -38,8 +38,8 @@
     "installmentsValue": 9333,
     "installmentsInsterestRate": 0,
     "image": "http://battellemedia.com/wp-content/uploads/2013/01/Nexus-4.jpeg",
-    "sellerId": "1",
-    "seller": "PtPlgBootstrap"
+    "sellerId": "2",
+    "seller": "PtPlgBootstrap 2"
   }, {
     "sku": 1003,
     "dimensions": {
@@ -53,8 +53,8 @@
     "installmentsValue": 12333,
     "installmentsInsterestRate": 0,
     "image": "http://media.ieverythingtech.com/wp-content/uploads/2013/05/LG_nexus_white.jpg",
-    "sellerId": "1",
-    "seller": "PtPlgBootstrap"
+    "sellerId": "2",
+    "seller": "PtPlgBootstrap 2"
   }, {
     "sku": 1004,
     "dimensions": {
@@ -68,8 +68,8 @@
     "installmentsValue": 12333,
     "installmentsInsterestRate": 0,
     "image": "http://media.ieverythingtech.com/wp-content/uploads/2013/05/LG_nexus_white.jpg",
-    "sellerId": "1",
-    "seller": "PtPlgBootstrap"
+    "sellerId": "2",
+    "seller": "PtPlgBootstrap 2"
   }],
   "accessories": [{
     "productId": 1100,
