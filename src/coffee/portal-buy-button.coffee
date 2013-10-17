@@ -133,6 +133,7 @@ class BuyButton extends ProductComponent
 		@element.attr('href', url)
 		@element.show()
 
+		debugger
 		if @options.hideUnavailable and @skuData and @skuData.available is false
 			@element.hide()
 		if @options.hideUnselected and not @skuData
@@ -177,6 +178,6 @@ $.fn.buyButton.defaults =
 	errMessage: null
 	instaBuy: false
 	hideUnselected: false
-	hideUnavailable: false
+	hideUnavailable: true
 	target: null
 	multipleProductIds: false

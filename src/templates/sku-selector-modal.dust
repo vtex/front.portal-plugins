@@ -80,8 +80,8 @@
 
 <!-- NOTIFYME -->
 <p class="skuselector-warning" style="display: none;"></p>
-<div class="skuselector-warn-unavailable" style="display: none;">
-  <form action="">
+<div class="skuselector-warn-unavailable notifyme sku-notifyme">
+  <form action="" style="display: none;">
     <fieldset class="sku-notifyme-form notifyme-form" style="display: block;">
       <p>
         Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.

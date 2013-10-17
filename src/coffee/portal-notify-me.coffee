@@ -17,6 +17,8 @@ class NotifyMe extends ProductComponent
 			Success: '.notifyme-success'
 			Error: '.notifyme-error'
 
+		@history = {}
+
 		@init()
 
 	POST_URL: '/no-cache/AviseMe.aspx'
@@ -37,12 +39,15 @@ class NotifyMe extends ProductComponent
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku
-		if sku.available
-			@hideAll()
-		else
+		@hideAll()
+		if not @sku.available
 			@showTitle()
-			@findSkuId().val(sku.sku)
-			@showForm()
+
+			switch @history[@sku.sku]
+				when 'success' then @showSuccess()
+				else
+					@findSkuId().val(@sku.sku)
+					@showForm()
 
 	skuUnselected: (evt, productId, skus) =>
 		@sku = null
@@ -56,8 +61,8 @@ class NotifyMe extends ProductComponent
 
 		xhr = $.post(@POST_URL, $(evt.target).serialize())
 		.always(=> @hideLoading())
-		.done(=> @showSuccess())
-		.fail(=> @showError())
+		.done(=> @showSuccess(); @history[@sku.sku] = 'success')
+		.fail(=> @showError(); @history[@sku.sku] = 'fail')
 
 		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr
 

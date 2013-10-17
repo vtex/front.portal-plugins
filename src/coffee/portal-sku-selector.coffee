@@ -45,6 +45,12 @@ class SkuSelector extends ProductComponent
 			priceRange: '.skuselector-price-range'
 			warning: '.skuselector-warning'
 			warnUnavailable: '.skuselector-warn-unavailable'
+			NMTitle: '.notifyme-title'
+			NMForm: 'form'
+			NMSkuId: '.notifyme-skuid'
+			NMLoading: '.notifyme-loading'
+			NMSuccess: '.notifyme-success'
+			NMError: '.notifyme-error'
 		@findinputs = => $('input, select', @element)
 		@finditemDimension = (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @element)
 		@finditemDimensionInput = (dimensionName) =>	@finditemDimension(dimensionName).find('input')
@@ -53,6 +59,9 @@ class SkuSelector extends ProductComponent
 		@finditemDimensionValueInput = (dimensionName, valueName) =>	@finditemDimension(dimensionName).find("input[value='#{valueName}']")
 		@finditemDimensionValueLabel = (dimensionName, valueName) =>	@finditemDimension(dimensionName).find("label.skuespec_#{_.sanitize(valueName)}")
 		@finditemDimensionValueOption = (dimensionName, valueName) => @finditemDimension(dimensionName).find("option[value='#{valueName}']")
+
+		# TODO: remover. NM
+		@history = {}
 
 		@init()
 
@@ -116,7 +125,7 @@ class SkuSelector extends ProductComponent
 
 		# ToDo remover quando alterar viewpart de modal
 		@hideConfirmButton()
-		@hideWarnUnavailable()
+		@hideAllNM()
 		@hidePriceRange()
 		@hidePrice()
 
@@ -126,8 +135,15 @@ class SkuSelector extends ProductComponent
 				@showBuyButton(selectedSku)
 				@showPrice(selectedSku)
 			else
-				@showWarnUnavailable(selectedSku.sku) if @options.warnUnavailable
 				@hideBuyButton()
+				if @options.warnUnavailable
+					@showNMTitle()
+					switch @history[selectedSku.sku]
+						when 'success' then @showNMSuccess()
+						else
+							@findNMSkuId().val(selectedSku.sku)
+							@showNMForm()
+
 		else if selectableSkus.length > 1 and @options.showPriceRange
 			@showPriceRange(@findPrices(selectableSkus))
 
@@ -263,6 +279,13 @@ class SkuSelector extends ProductComponent
 		.addClass('item_unavaliable item_unavailable disabled')
 
 	# ToDo remover quando alterar viewpart de modal
+	hideAllNM: =>
+		@hideNMTitle()
+		@hideNMForm()
+		@hideNMLoading()
+		@hideNMSuccess()
+		@hideNMError()
+
 	buyButtonHandler: (event) =>
 		selectedSku = @findSelectedSku()
 		if selectedSku
@@ -282,13 +305,14 @@ class SkuSelector extends ProductComponent
 			return false
 
 	warnUnavailableSubmitHandler: (evt) =>
+		selectedSku = @findSelectedSku()
 		evt.preventDefault()
-		@findwarnUnavailable().find('.sku-notifyme-loading').show()
-		@findwarnUnavailable().find('form').hide()
+		@showNMLoading()
+		@hideNMForm()
 		xhr =	$.post '/no-cache/AviseMe.aspx', $(evt.target).serialize()
-		xhr.done => @findwarnUnavailable().find('.sku-notifyme-success').show()
-		xhr.fail => @findwarnUnavailable().find('.sku-notifyme-loading-error').show()
-		xhr.always => @findwarnUnavailable().find('.sku-notifyme-loading').hide()
+		xhr.done => @showNMSuccess(); @history[selectedSku.sku] = 'success'
+		xhr.fail => @showNMError(); @history[selectedSku.sku] = 'fail'
+		xhr.always => @hideNMLoading()
 		return false
 
 	findPrices: (skus = undefined) =>
