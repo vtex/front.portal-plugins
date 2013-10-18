@@ -177,6 +177,6 @@ $.fn.buyButton.defaults =
 	errMessage: null
 	instaBuy: false
 	hideUnselected: false
-	hideUnavailable: false
+	hideUnavailable: true
 	target: null
 	multipleProductIds: false
