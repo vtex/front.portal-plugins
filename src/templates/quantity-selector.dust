@@ -2,7 +2,9 @@
   {#unitBased}
   <div class="unitSelector">
     <label>
-      <span class="unitText">Eu quero</span> <input type="number" step="1" min="{unitMin}" max="{unitMax}" value="{units}"/> <span class="unitOfMeasurement measurementUnit">{measurementUnit}</span>.
+      <span class="unitText">Eu quero</span> 
+      <input type="tel" min="{unitMin}" max="{unitMax}" value="{units}"/>
+      <span class="unitOfMeasurement measurementUnit">{measurementUnit}</span>.
     </label>
   </div>
   {/unitBased}
