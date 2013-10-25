@@ -75,10 +75,9 @@ class QuantitySelector extends ProductComponent
 		if @options.unitBased
 			@measurementUnit = @unitVariations[@sku].measurementUnit
 			@unitMultiplier = @unitVariations[@sku].unitMultiplier
-
 			@updateUnitsFromQuantity()
 
-			@update()
+		@update()
 
 	quantityChanged: (evt, productId, quantity) =>
 		@quantity = quantity
@@ -86,8 +85,7 @@ class QuantitySelector extends ProductComponent
 		@update()
 
 	updateQuantityFromUnits: =>
-		unless (@quantity * @unitMultiplier) <= @units < ((@quantity+1) * @unitMultiplier)
-			@quantity = Math.ceil(@units/@unitMultiplier)
+		@quantity = Math.ceil(@units/@unitMultiplier)
 
 	unitInputChanged: (evt) =>
 		$element = $(evt.target)
@@ -108,7 +106,6 @@ class QuantitySelector extends ProductComponent
 
 	handleUnitsKeypress: (evt) =>
 		keyCode = evt.keyCode or evt.which
-		console.log keyCode
 		if keyCode < 48 || keyCode > 57
 			if keyCode != 0 && keyCode != 8 && keyCode != 13 && keyCode != 110 && keyCode != 190 && keyCode != 188 && keyCode != 46 && !evt.ctrlKey
 				evt.preventDefault()
