@@ -99,7 +99,6 @@ class SkuSelector extends ProductComponent
 
 		originalSelection = (dim.selected for dim in @dimensions)
 
-		console.log lastSelected
 		for dimension, i in @dimensions
 			@resetDimension(dimension)
 
