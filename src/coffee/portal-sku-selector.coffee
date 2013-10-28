@@ -81,6 +81,8 @@ class SkuSelector extends ProductComponent
 
 	update: (dimensionName, dimensionValue) =>
 		index = -1
+		lastSelected = -1
+		debugger
 		for dimension, i in @dimensions
 			if dimension.name is dimensionName
 				dimension.selected = dimensionValue
@@ -92,7 +94,7 @@ class SkuSelector extends ProductComponent
 			dimension.selected = null if status is 'invalid'
 
 		for dimension, i in @dimensions by -1
-			if dimension.selected isnt null or dimension.selected isnt undefined
+			if dimension.selected isnt null && dimension.selected isnt undefined
 				lastSelected = i
 
 		originalSelection = (dim.selected for dim in @dimensions)
