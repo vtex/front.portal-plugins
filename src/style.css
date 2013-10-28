@@ -23,3 +23,17 @@
 .vtexsc-cart .cartCheckout{background:url("/arquivos/vtexsc-checkout.png") #2F9734; width:197px; height:42px; margin-left:3px;}
 .vtexsc-cart .viewCart{background:url("/arquivos/vtexsc-showCart.png") #982325; width:130px; height:34px;}
 .vtexsc-cart tr.brinde{display:none;}
+
+
+.item_doesnt_exist {
+    color: gray;
+}
+
+ul
+{
+    list-style-type: none;
+}
+
+.item_unavailable {
+    color: darkred;
+}
