@@ -103,8 +103,8 @@ class Minicart
 		dust.render 'minicart', @cartData, (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
 			@element.html out
-			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', =>
-				@deleteItem(this)
+			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', (evt) =>
+				@deleteItem(evt.target)
 
 	slide: =>
 		if @cartData.items.length is 0
@@ -117,6 +117,9 @@ class Minicart
 
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
+
+		console.log $(item)
+		debugger
 
 		$.ajax({
 			url: @getOrderFormUpdateURL()
