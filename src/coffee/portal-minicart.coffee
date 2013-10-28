@@ -97,7 +97,7 @@ class Minicart
 		if @cartData.items
 			for item in @cartData.items
 				item.availabilityMessage = @getAvailabilityMessage(item)
-				item.formattedPrice = _.intAsCurrency(item.price, @options)
+				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
 	render: () =>
 		dust.render 'minicart', @cartData, (err, out) =>
