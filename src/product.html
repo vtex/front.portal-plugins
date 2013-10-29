@@ -114,7 +114,7 @@
       $('.portal-quantity-selector-ref').quantitySelector(data.productId);
     })
 
-    $('.portal-buy-button-ref').buyButton(data.productId);
+    $('.portal-buy-button-ref').buyButton(data.productId, {}, {giftRegistry: 1234});
     $('.portal-price-ref').price(data.productId);
     $('.portal-notify-me-ref').notifyMe(data.productId);
 
