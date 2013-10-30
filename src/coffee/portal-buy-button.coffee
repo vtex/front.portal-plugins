@@ -119,6 +119,9 @@ class BuyButton extends ProductComponent
 			queryParams.push("qty=#{acc.quantity}")
 			queryParams.push("seller=#{acc.sellerId}")
 
+		if @options.giftRegistry
+			queryParams.push("gr=#{@options.giftRegistry}")
+
 		if @options.target
 			queryParams.push("target=#{@options.target}")
 
