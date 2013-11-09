@@ -153,13 +153,18 @@ class SkuSelector extends ProductComponent
 		@findSelectableSkus().length == 0
 
 	render: =>
+		selectableSkus = @findSelectableSkus()
+		
 		templateName = if @options.modalLayout then 'sku-selector-modal' else 'sku-selector-product'
 		dust.render templateName, @, (err, out) =>
 			throw new Error "Sku Selector Dust error: #{err}" if err
-			@element.html out
+			@element.html out	
 			@update()
 			@showBuyButton()
-			@buyIfNoVariations()
+			selectedSku = selectableSkus[0]
+			if selectedSku.available
+				@showBuyButton(selectedSku)
+				@buyIfNoVariations()
 			@element.trigger('vtex.sku.ready')
 
 	bindEvents: =>
