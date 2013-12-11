@@ -49,6 +49,7 @@ module.exports = (grunt) ->
 				except: ['$', '_']
 			main:
 				files:
+					'build/js/catalog-sdk.min.js': ['build/js/catalog-sdk.js']
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
 					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
 					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']

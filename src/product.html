@@ -80,6 +80,7 @@
 
 <script src="js/portal-template-as-modal.js"></script>
 
+<script src="js/catalog-sdk.js"></script>
 <script src="js/portal-sku-selector-with-template.js"></script>
 <script src="js/portal-quantity-selector-with-template.js"></script>
 <script src="js/portal-accessories-selector-with-template.js"></script>
@@ -103,6 +104,8 @@
   var mock = "spec/mocks/" + qs["mock"]
 
   $.getJSON(mock).done(function(data){
+    CATALOG_SDK.setProductWithVariationsCache(data.productId, data);
+
     $('.product-name').text(data.name);
     $('.product-img').attr('src', data.skus[0].image)
 

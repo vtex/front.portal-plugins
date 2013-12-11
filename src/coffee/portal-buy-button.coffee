@@ -6,6 +6,9 @@ $ = window.jQuery
 # CLASSES
 class BuyButton extends ProductComponent
 	constructor: (@element, @productId, buyData = {}, @options) ->
+		@SDK = CATALOG_SDK
+		@productData = @SDK.getProductWithVariations(@productId)
+
 		@sku = buyData.sku || null
 		@quantity = buyData.quantity || 1
 		@seller = buyData.seller || 1
@@ -139,6 +142,8 @@ class BuyButton extends ProductComponent
 		if @options.hideUnavailable and @skuData and @skuData.available is false
 			@element.hide()
 		if @options.hideUnselected and not @skuData
+			@element.hide()
+		if @productData and !@productData.available
 			@element.hide()
 
 	buyButtonHandler: (evt) =>
