@@ -30,13 +30,13 @@ class Price extends ProductComponent
 			OriginalInstallments: '.valor-dividido span span label'
 			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
-		htmlDe = $('.valor-de')
+		htmlDe = $('.valor-de').clone()
 		htmlDe.find('strong').remove()
 		@de = htmlDe.text() or 'De: '
-		htmlPor = $('.valor-por')
+		htmlPor = $('.valor-por').clone()
 		htmlPor.find('strong').remove()
 		@por = htmlPor.text() or 'Por: '
-
+		debugger
 		@bindEvents()
 
 	getSku: =>
