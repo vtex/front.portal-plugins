@@ -6,8 +6,9 @@ $ = window.jQuery
 # CLASSES
 class BuyButton extends ProductComponent
 	constructor: (@element, @productId, buyData = {}, @options) ->
-		@SDK = CATALOG_SDK
-		@productData = @SDK?.getProductWithVariations(@productId)
+		if CATALOG_SDK?
+			@SDK = CATALOG_SDK
+			@productData = @SDK.getProductWithVariations(@productId)
 
 		@sku = buyData.sku || null
 		@quantity = buyData.quantity || 1
