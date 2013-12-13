@@ -30,6 +30,13 @@ class Price extends ProductComponent
 			OriginalInstallments: '.valor-dividido span span label'
 			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
+		htmlDe = $('.valor-de')
+		htmlDe.find('strong').remove()
+		@de = htmlDe.text() or 'De: '
+		htmlPor = $('.valor-por')
+		htmlPor.find('strong').remove()
+		@por = htmlPor.text() or 'Por: '
+
 		@bindEvents()
 
 	getSku: =>
@@ -46,6 +53,8 @@ class Price extends ProductComponent
 			product: @getSku()
 			accessories: @getAccessoriesTotal()
 			total: @getTotal()
+			de: @de
+			por: @por
 
 		if renderData.product is null or renderData.product.listPrice is 0 or renderData.product.bestPrice is 0
 			return

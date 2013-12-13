@@ -3,11 +3,11 @@
   <p class="descricao-preco">
     {#available}
     <em class="valor-de price-list-price" style="display: block">
-      De:
+      {de}
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-por price-best-price" style="display: block">
-      Por:
+      {por}
       <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-dividido price-installments" style="display: block">
@@ -37,11 +37,11 @@
   </em>
   <p class="descricao-preco">
     <em class="valor-de price-list-price" style="display: block">
-      De:
+      {de}
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-por price-best-price" style="display: block">
-      Por:
+      {por}
       <span class="skuBestPrice">{bestPrice|intAsCurrency}</span>
     </em>
   </p>
@@ -55,11 +55,11 @@
   </em>
   <p class="descricao-preco">
     <em class="valor-de price-list-price" style="display: block">
-      De:
+      {de}
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-por price-best-price" style="display: block">
-      Por:
+      {por}
       <span class="skuBestPrice">{bestPrice|intAsCurrency}</span>
     </em>
   </p>
