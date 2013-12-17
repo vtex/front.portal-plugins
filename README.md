@@ -133,6 +133,9 @@ Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando 
     - <b>`originalSku`</b>
         default: `null`. Deve ser definido se a opção acima for `true`.
 
+    - <b>`modalLayout`</b>
+        default: `false`. Se `true`, usa o template de modal.
+
 ## Eventos
 
 Escuta pelos seguintes eventos:

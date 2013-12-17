@@ -1,0 +1,12 @@
+<!-- price modal -->
+{#product}
+    <div class="vtexsc-skuProductPrice skuselector-price">
+        <div class="regularPrice skuselector-list-price price-list-price">
+            De: <span class="value">{listPrice|intAsCurrency}</span>
+        </div>
+        <div class="newPrice skuselector-best-price price-best-price">
+            Por: <span class="value">{bestPrice|intAsCurrency}</span>
+        </div>
+        <div class="installment price-installments">ou até {installments} de {installmentsValue|intAsCurrency}</div>
+    </div>
+{/product}

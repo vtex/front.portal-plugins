@@ -38,7 +38,7 @@ module.exports = (grunt) ->
 					'build/js/portal-sku-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-quantity-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
 					'build/js/portal-accessories-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
-					'build/js/portal-price-with-template.js': ['build/js/product-component.js', 'build/templates/template-price.js', 'build/js/portal-price.js']
+					'build/js/portal-price-with-template.js': ['build/js/product-component.js', 'build/templates/template-price.js', 'build/templates/template-price-modal.js', 'build/js/portal-price.js']
 					'build/js/portal-buy-button.js': ['build/js/product-component.js', 'build/js/portal-buy-button.js']
 					'build/js/portal-notify-me-with-template.js': ['build/js/product-component.js', 'build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
 					'build/js/portal-minicart-with-template.js': ['build/js/product-component.js', 'build/templates/template-minicart.js', 'build/js/portal-minicart.js']
@@ -76,6 +76,7 @@ module.exports = (grunt) ->
 					'build/templates/template-quantity-selector.js': 'src/templates/quantity-selector.dust'
 					'build/templates/template-accessories-selector.js': 'src/templates/accessories-selector.dust'
 					'build/templates/template-price.js': 'src/templates/price.dust'
+					'build/templates/template-price-modal.js': 'src/templates/price-modal.dust'
 					'build/templates/template-notify-me.js': 'src/templates/notify-me.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
 					'build/templates/template-sku-measures.js': 'src/templates/sku-measures.dust'
