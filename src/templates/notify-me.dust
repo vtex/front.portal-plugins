@@ -7,7 +7,7 @@
       <input class="sku-notifyme-client-name notifyme-client-name" placeholder="{strings.namePlaceholder}" size="20"
              type="text" name="notifymeClientName">
       <input class="sku-notifyme-client-email notifyme-client-email" placeholder="{strings.emailPlaceholder}" size="20"
-             type="email" name="notifymeClientEmail">
+             type="text" name="notifymeClientEmail">
       <input class="btn-ok sku-notifyme-button-ok notifyme-button-ok" value="ok"
              type="submit" name="notifymeButtonOK">
       <input type="hidden" class="sku-notifyme-skuid notifyme-skuid" name="notifymeIdSku" value="">
