@@ -8,6 +8,9 @@ $ = window.jQuery
 class NotifyMe extends ProductComponent
 	constructor: (@element, @productId, @options) ->
 		@sku = null
+		if CATALOG_SDK?
+			@SDK = CATALOG_SDK
+			@productData = @SDK.getProductWithVariations(@productId)
 
 		@generateSelectors
 			Title: '.notifyme-title'
@@ -28,9 +31,10 @@ class NotifyMe extends ProductComponent
 		@bindEvents()
 
 	render: =>
-		dust.render 'notify-me', @options, (err, out) =>
-			throw new Error("Notify Me Dust error: #{err}") if err
-			@element.html out
+		unless @productData.displayMode == 'lista'
+			dust.render 'notify-me', @options, (err, out) =>
+				throw new Error("Notify Me Dust error: #{err}") if err
+				@element.html out
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected

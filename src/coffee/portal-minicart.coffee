@@ -119,7 +119,6 @@ class Minicart
 		$(item).parent().find('.vtexsc-overlay').show()
 
 		console.log $(item)
-		debugger
 
 		$.ajax({
 			url: @getOrderFormUpdateURL()
