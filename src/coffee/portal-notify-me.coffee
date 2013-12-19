@@ -31,7 +31,7 @@ class NotifyMe extends ProductComponent
 		@bindEvents()
 
 	render: =>
-		unless @productData.displayMode == 'lista'
+		unless @productData and @productData.displayMode == 'lista'
 			dust.render 'notify-me', @options, (err, out) =>
 				throw new Error("Notify Me Dust error: #{err}") if err
 				@element.html out
