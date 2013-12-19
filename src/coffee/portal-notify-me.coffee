@@ -18,9 +18,9 @@ class NotifyMe extends ProductComponent
 			Name: '.notifyme-client-name'
 			Email: '.notifyme-client-email'
 			SkuId: '.notifyme-skuid'
-			Loading: '.notifyme-loading'
-			Success: '.notifyme-success'
-			Error: '.notifyme-error'
+			Loading: '.notifyme-loading-message'
+			Success: 'fieldset.success'
+			Error: 'fieldset.error'
 
 		@history = {}
 
@@ -57,6 +57,8 @@ class NotifyMe extends ProductComponent
 			else
 				@findSkuId().val(@sku)
 				@showForm()
+				@showName()
+				@showEmail()
 
 	skuUnselected: (evt, productId, skus) =>
 		@sku = null
@@ -76,6 +78,7 @@ class NotifyMe extends ProductComponent
 			return false
 
 		@hideForm()
+		@hideError()
 		@showLoading()
 
 		xhr = $.post(@POST_URL, $(evt.target).serialize())

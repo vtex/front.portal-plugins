@@ -14,15 +14,15 @@
     </fieldset>
   </form>
 
-  <p class="notifyme-loading-message">
-    <span class="sku-notifyme-loading notifyme-loading" style="display: none">{strings.loading}</span>
+  <p class="notifyme-loading-message" style="display: none">
+    <span class="sku-notifyme-loading notifyme-loading">{strings.loading}</span>
   </p>
 
-  <fieldset class="success"><label><em>
-    <span class="sku-notifyme-success notifyme-success" style="display: none">{strings.success}</span>
+  <fieldset class="success" style="display:none;"><label><em>
+    <span class="sku-notifyme-success notifyme-success">{strings.success}</span>
   </em></label></fieldset>
 
-  <fieldset class="error"><label>
-    <span class="sku-notifyme-error   notifyme-error"   style="display: none">{strings.error}</span>
+  <fieldset class="error" style="display: none"><label>
+    <span class="sku-notifyme-error   notifyme-error">{strings.error}</span>
   </label></fieldset>
 </div>
