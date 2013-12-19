@@ -1,4 +1,4 @@
-<div class="skuselector-warn-unavailable notifyme sku-notifyme">
+<div class="notifyme sku-notifyme">
   <h3 class="notifymetitle notifyme-title">{strings.title}</h3>
 
   <form action="/no-cache/AviseMe.aspx" style="display: none;">
