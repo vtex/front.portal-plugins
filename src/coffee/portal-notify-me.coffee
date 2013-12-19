@@ -46,7 +46,7 @@ class NotifyMe extends ProductComponent
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku.sku
 		@hideAll()
-		if @options.sku not sku.available
+		if @options.sku or not sku.available
 			@showNM()
 
 	showNM: =>
