@@ -13,11 +13,12 @@ class NotifyMe extends ProductComponent
 			@productData = @SDK.getProductWithVariations(@productId)
 
 		@generateSelectors
-			Title: '.notifyme-title'
+			Root: '.notifyme'
+			TitleDiv: '.notifyme-title-div'
 			Form: 'form'
 			Name: '.notifyme-client-name'
 			Email: '.notifyme-client-email'
-			SkuId: '.notifyme-skuid'
+			SkuId: 'Title.notifyme-skuid'
 			Loading: '.notifyme-loading-message'
 			Success: 'fieldset.success'
 			Error: 'fieldset.error'
@@ -52,6 +53,8 @@ class NotifyMe extends ProductComponent
 			@showNM()
 
 	showNM: =>
+		@showRoot()
+		@showTitleDiv()
 		switch @history[@sku]
 			when 'success' then @showSuccess()
 			else
