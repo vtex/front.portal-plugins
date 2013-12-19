@@ -213,6 +213,9 @@ Chame o plugin em uma `div` vazia:
     - <b>`ajax`</b>
         default: `true`. Define se o submit do form deve ser feito com AJAX.
 
+    - <b>`sku`</b>
+        defaukt: `null`. Define o sku a ser usado. Se existir, ignora os eventos de seleção de sku.
+
     - <b>`strings`</b>
         Define as mensagens exibidas. Default:
 

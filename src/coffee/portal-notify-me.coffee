@@ -7,7 +7,7 @@ $ = window.jQuery
 # CLASSES
 class NotifyMe extends ProductComponent
 	constructor: (@element, @productId, @options) ->
-		@sku = null
+		@sku = @options.sku
 		if CATALOG_SDK?
 			@SDK = CATALOG_SDK
 			@productData = @SDK.getProductWithVariations(@productId)
@@ -37,20 +37,21 @@ class NotifyMe extends ProductComponent
 				@element.html out
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
-		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
+		unless @options.sku
+			@bindProductEvent 'vtex.sku.selected', @skuSelected
+			@bindProductEvent 'vtex.sku.unselected', @skuUnselected
 		@element.on 'submit', @submit if @options.ajax
 
 	skuSelected: (evt, productId, sku) =>
-		@sku = sku
+		@sku = sku.sku
 		@hideAll()
-		if not @sku.available
+		if not sku.available
 			@showTitle()
 
-			switch @history[@sku.sku]
+			switch @history[@sku]
 				when 'success' then @showSuccess()
 				else
-					@findSkuId().val(@sku.sku)
+					@findSkuId().val(@sku)
 					@showForm()
 
 	skuUnselected: (evt, productId, skus) =>
@@ -65,8 +66,8 @@ class NotifyMe extends ProductComponent
 
 		xhr = $.post(@POST_URL, $(evt.target).serialize())
 		.always(=> @hideLoading())
-		.done(=> @showSuccess(); @history[@sku.sku] = 'success')
-		.fail(=> @showError(); @history[@sku.sku] = 'fail')
+		.done(=> @showSuccess(); @history[@sku] = 'success')
+		.fail(=> @showError(); @history[@sku] = 'fail')
 
 		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr
 
@@ -88,6 +89,7 @@ $.fn.notifyMe = (productId, jsOptions) ->
 # PLUGIN DEFAULTS
 $.fn.notifyMe.defaults =
 	ajax: true
+	sku: null
 	strings:
 		title: ''
 		explanation: 'Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.'
