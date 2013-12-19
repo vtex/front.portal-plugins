@@ -15,6 +15,8 @@ class NotifyMe extends ProductComponent
 		@generateSelectors
 			Title: '.notifyme-title'
 			Form: 'form'
+			Name: '.notifyme-client-name'
+			Email: '.notifyme-client-email'
 			SkuId: '.notifyme-skuid'
 			Loading: '.notifyme-loading'
 			Success: '.notifyme-success'
@@ -65,13 +67,23 @@ class NotifyMe extends ProductComponent
 	submit: (evt) =>
 		evt.preventDefault()
 
+		$name = @findName()
+		if $name.val() is ''
+			$name.focus()
+			return false
+
+		$email = @findEmail()
+		if $email.val() is ''
+			$email.focus()
+			return false
+
 		@hideForm()
 		@showLoading()
 
 		xhr = $.post(@POST_URL, $(evt.target).serialize())
 		.always(=> @hideLoading())
 		.done(=> @showSuccess(); @history[@sku] = 'success')
-		.fail(=> @showError(); @history[@sku] = 'fail')
+		.fail(=> @showForm(); @showError(); @history[@sku] = 'fail')
 
 		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr
 
