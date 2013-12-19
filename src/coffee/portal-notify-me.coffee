@@ -35,6 +35,7 @@ class NotifyMe extends ProductComponent
 			dust.render 'notify-me', @options, (err, out) =>
 				throw new Error("Notify Me Dust error: #{err}") if err
 				@element.html out
+				@showNM() if @options.sku
 
 	bindEvents: =>
 		unless @options.sku
@@ -45,14 +46,17 @@ class NotifyMe extends ProductComponent
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku.sku
 		@hideAll()
-		if not sku.available
-			@showTitle()
+		if @options.sku not sku.available
+			@showNM()
 
-			switch @history[@sku]
-				when 'success' then @showSuccess()
-				else
-					@findSkuId().val(@sku)
-					@showForm()
+	showNM: =>
+		@showTitle()
+
+		switch @history[@sku]
+			when 'success' then @showSuccess()
+			else
+				@findSkuId().val(@sku)
+				@showForm()
 
 	skuUnselected: (evt, productId, skus) =>
 		@sku = null
