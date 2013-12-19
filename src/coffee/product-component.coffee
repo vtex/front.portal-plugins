@@ -34,4 +34,7 @@ class ProductComponent
 			@["show#{k}"] = do(k) => => @["find#{k}"]().show()
 			@["hide#{k}"] = do(k) => => @["find#{k}"]().hide()
 
+		@showAll = do(selectors) => => @["show#{k}"]() for k, v of selectors
+		@hideAll = do(selectors) => => @["hide#{k}"]() for k, v of selectors
+
 root.ProductComponent = ProductComponent

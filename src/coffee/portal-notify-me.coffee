@@ -72,14 +72,6 @@ class NotifyMe extends ProductComponent
 
 		return false
 
-	hideAll: =>
-		@hideTitle()
-		@hideForm()
-		@hideLoading()
-		@hideSuccess()
-		@hideError()
-
-
 # PLUGIN ENTRY POINT
 $.fn.notifyMe = (productId, jsOptions) ->
 	defaultOptions = $.extend {}, $.fn.notifyMe.defaults
