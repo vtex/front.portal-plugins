@@ -52,8 +52,6 @@ class NotifyMe extends ProductComponent
 			@showNM()
 
 	showNM: =>
-		@showTitle()
-
 		switch @history[@sku]
 			when 'success' then @showSuccess()
 			else
