@@ -72,8 +72,15 @@ class Price extends ProductComponent
 				@element.html out
 				@update()
 
+	hideAllPrice: =>
+		@hideBestPrice()
+		@hideListPrice()
+		@hideSavings()
+		@hideCashPrice()
+		@hideInstallments()
+
 	update: =>
-		@hideAll()
+		@hideAllPrice()
 		sku = @getSku()
 
 		if sku.available
@@ -86,13 +93,6 @@ class Price extends ProductComponent
 			if sku.installments? and sku.installments > 1
 				@showInstallments()
 				@showCashPrice()
-
-	hideAll: =>
-		@hideBestPrice()
-		@hideListPrice()
-		@hideSavings()
-		@hideCashPrice()
-		@hideInstallments()
 
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
