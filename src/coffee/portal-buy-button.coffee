@@ -144,7 +144,7 @@ class BuyButton extends ProductComponent
 			@element.hide()
 		if @options.hideUnselected and not @skuData
 			@element.hide()
-		if @productData and (!@productData.available or @productData.displayMode == 'lista')
+		if @productData and (@productData.available == false or @productData.displayMode == 'lista')
 			@element.hide()
 
 	buyButtonHandler: (evt) =>
