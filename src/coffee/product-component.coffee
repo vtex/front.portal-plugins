@@ -29,7 +29,10 @@ class ProductComponent
 
 	generateSelectors: (selectors) =>
 		for k, v of selectors
-			@["find#{k}"] = do(v) => => @element.find(v)
+			if typeof v is 'function'
+				@["find#{k}"] = v
+			else
+				@["find#{k}"] = do(v) => => @element.find(v)
 			@["findFirst#{k}"] = do(k) => => $(@["find#{k}"]()[0])
 			@["show#{k}"] = do(k) => => @["find#{k}"]().show()
 			@["hide#{k}"] = do(k) => => @["find#{k}"]().hide()

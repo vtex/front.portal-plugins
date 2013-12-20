@@ -51,14 +51,14 @@ class SkuSelector extends ProductComponent
 			NMLoading: '.notifyme-loading'
 			NMSuccess: '.notifyme-success'
 			NMError: '.notifyme-error'
-		@findinputs = => $('input, select', @element)
-		@finditemDimension = (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @element)
-		@finditemDimensionInput = (dimensionName) =>	@finditemDimension(dimensionName).find('input')
-		@finditemDimensionLabel = (dimensionName) =>	@finditemDimension(dimensionName).find('label')
-		@finditemDimensionOption = (dimensionName) => @finditemDimension(dimensionName).find('option')
-		@finditemDimensionValueInput = (dimensionName, valueName) =>	@finditemDimension(dimensionName).find("input[value='#{valueName}']")
-		@finditemDimensionValueLabel = (dimensionName, valueName) =>	@finditemDimension(dimensionName).find("label.skuespec_#{_.sanitize(valueName)}")
-		@finditemDimensionValueOption = (dimensionName, valueName) => @finditemDimension(dimensionName).find("option[value='#{valueName}']")
+			inputs: => $('input, select', @element)
+			itemDimension: (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @element)
+			itemDimensionInput: (dimensionName) =>  @finditemDimension(dimensionName).find('input')
+			itemDimensionLabel: (dimensionName) =>  @finditemDimension(dimensionName).find('label')
+			itemDimensionOption: (dimensionName) => @finditemDimension(dimensionName).find('option')
+			itemDimensionValueInput: (dimensionName, valueName) =>  @finditemDimension(dimensionName).find("input[value='#{valueName}']")
+			itemDimensionValueLabel: (dimensionName, valueName) =>  @finditemDimension(dimensionName).find("label.skuespec_#{_.sanitize(valueName)}")
+			itemDimensionValueOption: (dimensionName, valueName) => @finditemDimension(dimensionName).find("option[value='#{valueName}']")
 
 		# TODO: remover. NM
 		@history = {}
@@ -168,7 +168,6 @@ class SkuSelector extends ProductComponent
 		# ToDo remover quando alterar viewpart de modal
 		@findbuyButton().on 'click', @buyButtonHandler
 		@findwarnUnavailable().find('form').on 'submit', @warnUnavailableSubmitHandler if @options.warnUnavailable
-
 
 	dimensionChangeHandler: (evt) =>
 		$this = $(evt.target)
