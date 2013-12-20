@@ -22,6 +22,7 @@ class NotifyMe extends ProductComponent
 			Loading: '.notifyme-loading-message'
 			Success: 'fieldset.success'
 			Error: 'fieldset.error'
+			Button: '.notifyme-button-ok'
 
 		@history = {}
 
@@ -45,6 +46,7 @@ class NotifyMe extends ProductComponent
 			@bindProductEvent 'vtex.sku.selected', @skuSelected
 			@bindProductEvent 'vtex.sku.unselected', @skuUnselected
 		@element.on 'submit', @submit if @options.ajax
+		@findButton().on 'click', @submit if @options.ajax
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku.sku
@@ -62,6 +64,7 @@ class NotifyMe extends ProductComponent
 				@showForm()
 				@showName()
 				@showEmail()
+				@showButton()
 
 	skuUnselected: (evt, productId, skus) =>
 		@sku = null
@@ -84,7 +87,7 @@ class NotifyMe extends ProductComponent
 		@hideError()
 		@showLoading()
 
-		xhr = $.post(@POST_URL, $(evt.target).serialize())
+		xhr = $.post(@POST_URL, @findForm().serialize())
 		.always(=> @hideLoading())
 		.done(=> @showSuccess(); @history[@sku] = 'success')
 		.fail(=> @showForm(); @showError(); @history[@sku] = 'fail')
