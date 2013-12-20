@@ -69,6 +69,9 @@ class NotifyMe extends ProductComponent
 	skuUnselected: (evt, productId, skus) =>
 		@sku = null
 		@hideAll()
+
+	setError: (message) =>
+		@findError().find('span').text(message)
 		
 	submit: (evt) =>
 		evt.preventDefault()
@@ -82,15 +85,27 @@ class NotifyMe extends ProductComponent
 		if $email.val() is ''
 			$email.focus()
 			return false
+		if not $email.val().match(/^.+@.+\..+$/)
+			$email.focus()
+			@setError(@options.strings.emailErrorMessage)
+			@showError()
+			return false
 
 		@hideForm()
 		@hideError()
 		@showLoading()
 
 		xhr = $.post(@POST_URL, @findForm().serialize())
-		.always(=> @hideLoading())
-		.done(=> @showSuccess(); @history[@sku] = 'success')
-		.fail(=> @showForm(); @showError(); @history[@sku] = 'fail')
+		.always =>
+			@hideLoading()
+		.done =>
+			@showSuccess()
+			@history[@sku] = 'success'
+		.fail =>
+			@showForm()
+			@setError(@options.strings.error)
+			@showError()
+			@history[@sku] = 'fail'
 
 		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr
 
@@ -121,3 +136,4 @@ $.fn.notifyMe.defaults =
 		loading: 'Carregando...'
 		success: 'Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.'
 		error: 'Não foi possível cadastrar. Tente mais tarde.'
+		emailErrorMessage: 'Email inválido, digite novamente.'

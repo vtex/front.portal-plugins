@@ -25,6 +25,6 @@
   </em></label></fieldset>
 
   <fieldset class="error" style="display: none"><label>
-    <span class="sku-notifyme-error   notifyme-error">{strings.error}</span>
+    <span class="sku-notifyme-error   notifyme-error"></span>
   </label></fieldset>
 </div>
