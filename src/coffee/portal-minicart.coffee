@@ -118,8 +118,6 @@ class Minicart
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
 
-		console.log $(item)
-
 		$.ajax({
 			url: @getOrderFormUpdateURL()
 			data:

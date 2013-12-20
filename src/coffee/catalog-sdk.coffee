@@ -11,7 +11,7 @@ class CatalogSDK
 		if @cache.productWithVariations[productId]?
 			return @cache.productWithVariations[productId]
 		else
-			console?.log?('Non-cached information -- not supported')
+			throw new Error('CatalogSDK: Non-cached information -- not supported')
 			return null
 
 	setProductWithVariationsCache: (productId, apiResponse) ->
