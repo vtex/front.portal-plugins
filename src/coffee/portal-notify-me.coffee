@@ -18,7 +18,7 @@ class NotifyMe extends ProductComponent
 			Form: 'form'
 			Name: '.notifyme-client-name'
 			Email: '.notifyme-client-email'
-			SkuId: 'Title.notifyme-skuid'
+			SkuId: '.notifyme-skuid'
 			Loading: '.notifyme-loading-message'
 			Success: 'fieldset.success'
 			Error: 'fieldset.error'
