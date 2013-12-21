@@ -3,7 +3,7 @@ module.exports = (config) ->
 		files: [
 			'build/lib/jquery-1.8.3.min.js',
 			'build/lib/vtex-utils.js',
-			'buildhttp://io.vtex.com.br/front-libs/dustjs-linkedin/2.2.2/dust-core-2.2.2.js',
+			'build/lib/dust-core-2.2.2.min.js',
 			'build/js/portal-sku-selector-with-template.js',
 			'build/js/portal-minicart-with-template.js',
 			'build/js/portal-sku-selector-with-template.js',
