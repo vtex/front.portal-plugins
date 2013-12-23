@@ -1,9 +1,6 @@
 module.exports = (grunt) ->
 	pkg = grunt.file.readJSON('package.json')
 
-	replacements =
-		'VERSION': pkg.version
-
 	# Project configuration.
 	grunt.initConfig
 		relativePath: ''
@@ -101,22 +98,14 @@ module.exports = (grunt) ->
 
 		vtex_deploy:
 			main:
-				options:
-					buildDirectory: 'build'
-			dry:
-				options:
-					buildDirectory: 'build'
-					requireEnvironmentType: 'dryrun'
-					dryRun: true
-			walmart:
-				options:
-					buildDirectory: 'build'
-					bucket: 'vtex-io-walmart'
-					requireEnvironmentType: 'stable'
+				cwd: "build/"
+				publish: true
+				upload:
+					"/{{version}}/": "**"
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
 	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'server', 'watch:main']
 	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify'] # Dist - minifies files
-	grunt.registerTask 'test', ['karma:single']
+	grunt.registerTask 'test', -> console.log 'Not implemented... yet'
 	grunt.registerTask 'server', ['connect', 'remote']
