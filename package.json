@@ -1,6 +1,6 @@
 {
-  "name": "front.portal-plugins",
-  "version": "0.1.0",
+  "name": "portal-plugins",
+  "version": "2.2.0",
   "readmeFilename": "README.md",
   "description": "Portal plugins.",
   "dependencies": {
@@ -14,10 +14,11 @@
     "grunt-contrib-watch": "~0.4.0",
     "grunt-usemin": "~0.1.10",
     "grunt-karma": "~0.6.1",
-    "grunt-vtex-deploy": "~0.4.0",
     "grunt-concurrent": "~0.3.0",
     "grunt-remote": "~0.1.1",
-    "grunt-dustjs": "~1.1.1"
+    "grunt-dustjs": "~1.1.1",
+    "grunt-vtex-deploy": "~0.20.3",
+    "grunt-vtex-release": "*"
   },
   "repository": {
     "type": "git",
