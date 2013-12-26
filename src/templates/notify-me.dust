@@ -1,5 +1,5 @@
-<div class="notifyme sku-notifyme">
-  <div class="notifyme-title-div">
+<div class="notifyme sku-notifyme" style="display: none;">
+  <div class="notifyme-title-div" style="display: none;">
     <h3 class="notifymetitle notifyme-title">{strings.title}</h3>
   </div>
 
