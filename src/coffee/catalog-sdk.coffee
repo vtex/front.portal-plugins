@@ -7,14 +7,10 @@ class CatalogSDK
 		@cache = 
 			productWithVariations: {}
 
-	getProductWithVariations: (productId) ->
-		if @cache.productWithVariations[productId]?
-			return @cache.productWithVariations[productId]
-		else
-			throw new Error('CatalogSDK: Non-cached information -- not supported')
-			return null
+	getProductWithVariations: (productId) =>
+		return $.when(@cache.productWithVariations[productId] or $.ajax("#{@BASE_ENDPOINT}/products/variations/#{productId}"))
 
-	setProductWithVariationsCache: (productId, apiResponse) ->
+	setProductWithVariationsCache: (productId, apiResponse) =>
 		@cache.productWithVariations[productId] = apiResponse
 
 window.vtex.catalog.SDK = CatalogSDK

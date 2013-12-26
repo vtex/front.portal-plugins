@@ -8,7 +8,9 @@ class BuyButton extends ProductComponent
 	constructor: (@element, @productId, buyData = {}, @options) ->
 		if CATALOG_SDK?
 			@SDK = CATALOG_SDK
-			@productData = @SDK.getProductWithVariations(@productId)
+			@SDK.getProductWithVariations(@productId).done (json) =>
+				@productData = json
+				@update()
 
 		@sku = buyData.sku || null
 		@quantity = buyData.quantity || 1
@@ -168,7 +170,8 @@ class BuyButton extends ProductComponent
 # PLUGIN ENTRY POINT
 $.fn.buyButton = (productId, buyData, jsOptions) ->
 	defaultOptions = $.extend true, {}, $.fn.buyButton.defaults
-	for element in this
+	element = this[this.length-1]
+	do (element) =>
 		$element = $(element)
 		domOptions = $element.data()
 		options = $.extend(true, defaultOptions, domOptions, jsOptions)

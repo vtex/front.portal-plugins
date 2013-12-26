@@ -10,7 +10,9 @@ class NotifyMe extends ProductComponent
 		@sku = @options.sku
 		if CATALOG_SDK?
 			@SDK = CATALOG_SDK
-			@productData = @SDK.getProductWithVariations(@productId)
+			@SDK.getProductWithVariations(@productId).done (json) =>
+				@productData = json
+				@render()
 
 		@generateSelectors
 			Root: '.notifyme'
