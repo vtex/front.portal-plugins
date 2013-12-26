@@ -12,6 +12,8 @@ class NotifyMe extends ProductComponent
 			@SDK = CATALOG_SDK
 			@SDK.getProductWithVariations(@productId).done (json) =>
 				@productData = json
+				if @productData.skus.length == 1
+					@triggerProductEvent('vtex.sku.selected', @productData.skus[0])
 				@render()
 
 		@generateSelectors

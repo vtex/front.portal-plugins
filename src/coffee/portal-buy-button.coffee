@@ -25,6 +25,8 @@ class BuyButton extends ProductComponent
 			@SDK = CATALOG_SDK
 			@SDK.getProductWithVariations(@productId).done (json) =>
 				@productData = json
+				if @productData.skus.length == 1
+					@triggerProductEvent('vtex.sku.selected', @productData.skus[0])
 				@getChangesFromHREF()
 				@update()
 
@@ -74,7 +76,7 @@ class BuyButton extends ProductComponent
 			@sku = sku.sku
 
 		@update()
-		@element.click() if @options.instaBuy
+		@element.click() if @options.instaBuy and sku.available
 
 	skuUnselected: (evt, productId, selectableSkus) =>
 		@getChangesFromHREF()
