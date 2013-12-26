@@ -28,7 +28,7 @@ class SkuSelector extends ProductComponent
 			availableValues: (true for value in @productData.dimensionsMap[dimensionName])
 			validValues: (true for value in @productData.dimensionsMap[dimensionName])
 			selected: undefined
-			inputType: @productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio"
+			inputType: if @options.forceInputType then @options.forceInputType else (@productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio")
 		} for dimensionName in @productData.dimensions)
 		dim.isRadio = (dim.inputType == "radio") for dim in @dimensions
 		dim.isCombo = (dim.inputType == "combo") for dim in @dimensions
@@ -400,6 +400,7 @@ $.fn.skuSelector.defaults =
 	selectOnOpening: false
 	confirmBuy: false
 	showPriceRange: false
+	forceInputType: null
 
 # SHARED STUFF
 $.skuSelector =

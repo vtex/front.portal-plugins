@@ -37,6 +37,9 @@ Chame o plugin em uma `div` vazia:
     - <b>`showPriceRange`</b>
         default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs selecionáveis com as dimensões já selecionadas.
 
+    - <b>`forceInputType`</b>
+        default: `null`. Se não for falsy, força o inputType de todas as dimensões a serem isso.
+
 ## Eventos
 
 Lança os seguintes eventos:
