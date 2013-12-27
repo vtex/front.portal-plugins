@@ -31,10 +31,10 @@ class Price extends ProductComponent
 			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
 		unless @options.modalLayout
-			htmlDe = $('.valor-de').clone()
+			htmlDe = $($('.valor-de')[0]).clone()
 			htmlDe.find('strong').remove()
 			@de = htmlDe.text() or 'De: '
-			htmlPor = $('.valor-por').clone()
+			htmlPor = $($('.valor-por')[0]).clone()
 			htmlPor.find('strong').remove()
 			@por = htmlPor.text() or 'Por: '
 
