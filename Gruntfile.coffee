@@ -11,10 +11,15 @@ module.exports = (grunt) ->
 
 		copy:
 			main:
-				expand: true
-				cwd: 'src/'
-				src: ['**', '!coffee/**', '!**/*.less']
-				dest: 'build/<%= relativePath %>'
+        files: [
+          expand: true
+          cwd: 'src/'
+          src: ['**', '!coffee/**', '!**/*.less']
+          dest: 'build/<%= relativePath %>'
+        ,
+          src: ['package.json']
+          dest: 'build/<%= relativePath %>/package.json'
+        ]
 			mocks:
 				src: ['spec/mocks/*.json']
 				dest: 'build/<%= relativePath %>/'
