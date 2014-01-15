@@ -5,6 +5,7 @@
     - [Quantity Selector](#quantity-selector)
     - [Accessories Selector](#accessories-selector)
     - [Price](#price)
+    - [ShippingCalculator](#shipping-calculator)
     - [Buy Button](#buy-button)
     - [Notify Me](#notify-me)
     - [Minicart](#minicart)
@@ -145,6 +146,45 @@ Escuta pelos seguintes eventos:
 
 - <b>`vtex.sku.selected [productId, sku]`</b>
 - <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
+
+
+---
+
+# Shipping Calculator
+
+Oferece um formulário para cálculo de frete, além de um botão para mostrá-lo.
+
+## Uso
+
+Chame o plugin em uma `div` vazia.
+
+    $('.shipping-calc-ref').shippingCalculator(productId, options);
+
+- <b>`productId`</b> o ID do produto.
+
+- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+
+    - <b>`strings`</b>
+        Define as mensagens exibidas. Default:
+
+        {
+            "calculateShipping": 'Calcule o valor do frete e prazo de entrega para a sua região:',
+            "enterPostalCode": 'Calcular o valor do frete e verificar disponibilidade:',
+            "requiredPostalCode": 'O CEP deve ser informado.',
+            "invalidPostalCode": 'CEP inválido.',
+            "requiredQuantity": 'É necessário informar a quantidade do mesmo Produto.',
+            "siteName": 'Vtex.Commerce.Web.CommerceContext.Current.WebSite.Name',
+            "close": 'Fechar'
+        }
+
+## Eventos
+
+Escuta pelos seguintes eventos:
+
+- <b>`vtex.sku.selected [productId, sku]`</b>
+- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
+- <b>`vtex.quantity.ready [productId, quantity]`</b>
+- <b>`vtex.quantity.changed [productId, quantity]`</b>
 
 
 ---
