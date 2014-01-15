@@ -80,10 +80,10 @@ $.fn.shippingCalculator = (productId, jsOptions) ->
 $.fn.shippingCalculator.defaults =
 	showCorreiosSearch: true
 	strings:
-		calculateShipping: 'produtoCalculoFrete'
-		enterPostalCode: 'DigiteCep'
-		requiredPostalCode: 'CEPObrigatorio'
-		invalidPostalCode: 'CEPInvalido'
-		requiredQuantity: 'ProdutoQuantidadeObrigatorio'
+		calculateShipping: 'Calcule o valor do frete e prazo de entrega para a sua região:'
+		enterPostalCode: 'Calcular o valor do frete e verificar disponibilidade:'
+		requiredPostalCode: 'O CEP deve ser informado.'
+		invalidPostalCode: 'CEP inválido.'
+		requiredQuantity: 'É necessário informar a quantidade do mesmo Produto.'
 		siteName: 'Vtex.Commerce.Web.CommerceContext.Current.WebSite.Name'
 		close: 'Fechar'
