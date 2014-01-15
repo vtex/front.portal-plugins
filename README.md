@@ -352,15 +352,16 @@ Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data`
 
 ## Dependências
 
-|        Plugin        | [jQuery][] | [front.utils][] | [Dust (core)][]|
-| :------------------- | --- | --- | --- |
-| Sku Selector         |  ✔  |  ✔  |  ✔  |
-| Quantity Selector    |  ✔  |  ✗  |  ✔  |
-| Accessories Selector |  ✔  |  ✔  |  ✔  |
-| Price                |  ✔  |  ✔  |  ✔  |
-| Buy Button           |  ✔  |  ✗  |  ✗  |
-| Notify Me            |  ✔  |  ✗  |  ✔  |
-| Minicart             |  ✔  |  ✔  |  ✔  |
+|        Plugin        | [jQuery][] | [front.utils][] | [Dust (core)][]| Catalog SDK |
+| :------------------- | --- | --- | --- | --- |
+| Sku Selector         |  ✔  |  ✔  |  ✔  |  ✗  |
+| Quantity Selector    |  ✔  |  ✗  |  ✔  |  ✗  |
+| Accessories Selector |  ✔  |  ✔  |  ✔  |  ✗  |
+| Price                |  ✔  |  ✔  |  ✔  |  ✗  |
+| Shipping Calculator  |  ✔  |  ✗  |  ✔  |  ✔  |
+| Buy Button           |  ✔  |  ✗  |  ✗  |  ✔  |
+| Notify Me            |  ✔  |  ✗  |  ✔  |  ✔  |
+| Minicart             |  ✔  |  ✔  |  ✔  |  ✗  |
 
 
   [jQuery]: http://www.jquery.com
