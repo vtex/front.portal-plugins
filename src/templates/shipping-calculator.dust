@@ -1,0 +1,37 @@
+<p id="popupCalculoFreteWrapper" class="frete">
+    <a href="javascript:void(0);" title="{strings.produtoCalculoFrete}" class="shipping-value show-shipping-calculator">
+        {strings.calculateShipping}
+    </a>
+</p>
+
+<div id="calculoFrete" style="display: none;">
+    <div class="contentWrapper">
+        <div class="header">
+            <h1><a href="/" id="ctl00_lnkHome">{strings.siteName}</a></h1>
+            <h2>{strings.enterPostalCode}</h2>
+            <div class="close"><a href="#" class="bt btn-thickbox bt-fechar" title="{strings.close}" id="lnkFechar1">{strings.close}</a></div>
+        </div>
+        <div id="ctl00_Conteudo_upnlContent">
+            <div class="content">
+                <fieldset>
+                    <label class="prefixo">
+                        {strings.enterPostalCode}
+                        <input type="text" class="fitext freight-zip-box" id="txtCep" name="txtCep" value="" />
+                    </label>
+                    <span class="frete-calcular btBordas btBordasInput">
+                        <input type="button" class="bt freight-btn" title="OK" id="btnFreteSimulacao" value="OK" name="btnFreteSimulacao" />
+                        <span class="rdbd bdl"></span>
+                        <span class="rdbd bdr"></span>
+                    </span>
+                    {#showCorreiosSearch}
+                        <span class="cep-busca"><a title="Não sei meu CEP" class="bt lnkExterno" target="_blank" href="http://www.buscacep.correios.com.br/servicos/dnec/menuAction.do?Metodo=menuLogradouro">Não sei meu CEP</a></span>
+                    {/showCorreiosSearch}
+                </fieldset>
+                <div class="freight-values"></div>
+            </div>
+        </div>
+        <div class="footer">
+            <div class="close"><a href="#" class="bt btn-thickbox bt-fechar" title="{strings.close}" id="lnkFechar2">{strings.close}</a></div>
+        </div>
+    </div>
+</div>

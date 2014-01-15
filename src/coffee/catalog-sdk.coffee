@@ -7,22 +7,12 @@ class CatalogSDK
 		@cache = 
 			productWithVariations: {}
 
-#		@methods =
-#			[
-#				name: 'productWithVariations'
-#				endpoint: "#{@BASE_ENDPOINT}/products/variations/:arg"
-#				cacheAjaxResponse: true
-#			]
-#
-#		for method in @methods
-#			capitalize = -> str.charAt(0).toUpperCase() + str.substring(1)
-#			capitalizedName = capitalize(method.name)
-#			@["set#{capitalizedName}Cache"] = do(method) => (arg, response) =>
-#				@cache[method.name][arg] = response
-#			@["get#{capitalizedName}"] = do(method) => (arg) =>
-#				$.when(@cache[method.name][arg] or $.ajax(method.endpoint.replace(':arg', arg)))
-#					.done (response) =>
-#						@["set#{capitalizedName}Cache"](arg, response)
+	getShippingValue: (sku, postalCode, quantity=1) =>
+		endpoint = "/frete/calcula/#{sku}"
+		$.ajax
+			type: 'GET'
+			url: endpoint
+			data: {shippinCep: postalCode, quantity: quantity}
 
 	getProductWithVariations: (productId) =>
 		$.when(@cache.productWithVariations[productId] or $.ajax("#{@BASE_ENDPOINT}/products/variations/#{productId}"))

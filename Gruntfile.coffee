@@ -45,6 +45,7 @@ module.exports = (grunt) ->
 					'build/js/portal-notify-me-with-template.js': ['build/js/product-component.js', 'build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
 					'build/js/portal-minicart-with-template.js': ['build/js/product-component.js', 'build/templates/template-minicart.js', 'build/js/portal-minicart.js']
 					'build/js/portal-sku-measures-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-measures.js', 'build/js/portal-sku-measures.js']
+					'build/js/portal-shipping-calculator-with-template.js': ['build/js/product-component.js', 'build/templates/template-shipping-calculator.js', 'build/js/portal-shipping-calculator.js']
 
 		uglify:
 			mangle:
@@ -57,6 +58,7 @@ module.exports = (grunt) ->
 					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']
 					'build/js/portal-accessories-selector-with-template.min.js': ['build/js/portal-accessories-selector-with-template.js']
 					'build/js/portal-price-with-template.min.js': ['build/js/portal-price-with-template.js']
+					'build/js/portal-shipping-calculator-with-template.min.js': ['build/js/portal-shipping-calculator-with-template.js']
 					'build/js/portal-buy-button.min.js': ['build/js/portal-buy-button.js']
 					'build/js/portal-notify-me-with-template.min.js': ['build/js/portal-notify-me-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
@@ -81,6 +83,7 @@ module.exports = (grunt) ->
 					'build/templates/template-price-modal.js': 'src/templates/price-modal.dust'
 					'build/templates/template-notify-me.js': 'src/templates/notify-me.dust'
 					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
+					'build/templates/template-shipping-calculator.js': 'src/templates/shipping-calculator.dust'
 					'build/templates/template-sku-measures.js': 'src/templates/sku-measures.dust'
 
 		connect:
@@ -88,8 +91,6 @@ module.exports = (grunt) ->
 				options:
 					port: 9001
 					base: 'build/'
-
-		remote: main: {}
 
 		watch:
 			main:
@@ -113,4 +114,4 @@ module.exports = (grunt) ->
 	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'server', 'watch:main']
 	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify'] # Dist - minifies files
 	grunt.registerTask 'test', -> console.log 'Not implemented... yet'
-	grunt.registerTask 'server', ['connect', 'remote']
+	grunt.registerTask 'server', ['connect']
