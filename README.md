@@ -204,7 +204,12 @@ Chame o plugin na `a` que age como botão de comprar:
 - <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
 
     - <b>`errorMessage`</b>
-        Mensagem de erro que será alertada se o usuário clicar no botão sem ter escolhido um SKU. Default: *"Por favor, selecione o modelo desejado."*
+        Mensagem de erro que será alertada se o usuário clicar no botão sem ter escolhido um SKU.
+        Essa mensagem figurará nos parâmetros do evento `vtex.buyButton.failedAttempt`.
+        Default: *"Por favor, selecione o modelo desejado."*
+
+    - <b>`alertOnError`</b>
+        default: `true`. Determina se será exibido um alerta com a `errorMessage`.
 
     - <b>`redirect`</b>
         default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.
@@ -230,6 +235,8 @@ Lança os seguintes eventos:
 
 - <b>`vtex.modal.hide []`</b> quando `redirect=false` e o botão é clicado.
 - <b>`vtex.cart.productAdded []`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
+- <b>`vtex.buyButton.failedAttempt [errorMessage]`</b> quando o botão é clicado mas não há um SKU válido.
+- <b>`vtex.buyButton.through [url]`</b> quando o botão é clicado e há SKU válido.
 
 Escuta pelos seguintes eventos:
 

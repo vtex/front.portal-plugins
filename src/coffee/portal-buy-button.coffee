@@ -105,6 +105,9 @@ class BuyButton extends ProductComponent
 		@update()
 
 	getURL: =>
+		if not @valid()
+			return @getErrorURL()
+
 		queryParams = []
 
 		if @options.multipleProductIds
@@ -135,11 +138,16 @@ class BuyButton extends ProductComponent
 
 		return url
 
+	getErrorURL: =>
+		if @options.alertOnError
+			"javascript:alet(#{@options.errorMessage});"
+		else
+			"javascript:void(0);"
+
 	valid: => !!(@sku or @options.multipleProductIds)
 
 	update: =>
-		url = if @valid() then @getURL() else "javascript:alert('#{@options.errorMessage}');"
-		@element.attr('href', url)
+		@element.attr('href', @getURL())
 		@element.show()
 
 		if @options.hideUnavailable and @skuData and @skuData.available is false
@@ -150,9 +158,17 @@ class BuyButton extends ProductComponent
 			@element.hide()
 
 	buyButtonHandler: (evt) =>
-		return true if @options.redirect or not @valid()
+		if not @valid
+			@triggerProductEvent 'vtex.buyButton.failedAttempt', @options.errorMessage
+			return true
+
+		@triggerProductEvent 'vtex.buyButton.through', @getURL
+
+		if @options.redirect
+			return true
 
 		$(window).trigger 'vtex.modal.hide'
+
 		$.get(@getURL())
 		.done =>
 				@triggerProductEvent 'vtex.cart.productAdded'
@@ -183,6 +199,7 @@ $.fn.buyButton = (productId, buyData, jsOptions) ->
 # PLUGIN DEFAULTS
 $.fn.buyButton.defaults =
 	errorMessage: "Por favor, selecione o modelo desejado."
+	alertOnError: true
 	redirect: true
 	addMessage: null
 	errMessage: null
