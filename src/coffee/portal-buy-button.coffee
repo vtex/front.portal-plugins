@@ -140,7 +140,7 @@ class BuyButton extends ProductComponent
 
 	getErrorURL: =>
 		if @options.alertOnError
-			"javascript:alert(#{@options.errorMessage});"
+			"javascript:alert('#{@options.errorMessage}');"
 		else
 			"javascript:void(0);"
 
