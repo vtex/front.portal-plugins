@@ -158,7 +158,7 @@ class BuyButton extends ProductComponent
 			@element.hide()
 
 	buyButtonHandler: (evt) =>
-		if not @valid
+		if not @valid()
 			@triggerProductEvent 'vtex.buyButton.failedAttempt', @options.errorMessage
 			return true
 
