@@ -55,6 +55,7 @@ class SkuSelector extends ProductComponent
 			itemDimension: (dimensionName) => $(".item-dimension-#{_.sanitize(dimensionName)}", @element)
 			itemDimensionInput: (dimensionName) =>  @finditemDimension(dimensionName).find('input')
 			itemDimensionLabel: (dimensionName) =>  @finditemDimension(dimensionName).find('label')
+			itemDimensionSelect: (dimensionName) => @finditemDimension(dimensionName).find('select')
 			itemDimensionOption: (dimensionName) => @finditemDimension(dimensionName).find('option')
 			itemDimensionValueInput: (dimensionName, valueName) =>  @finditemDimension(dimensionName).find("input[value='#{valueName}']")
 			itemDimensionValueLabel: (dimensionName, valueName) =>  @finditemDimension(dimensionName).find("label.skuespec_#{_.sanitize(valueName)}")
@@ -77,6 +78,7 @@ class SkuSelector extends ProductComponent
 		@render()
 		@bindEvents()
 		if @skus.length == 1
+			@selectSku(@skus[0])
 			@triggerProductEvent 'vtex.sku.selected', @skus[0]
 
 	update: (dimensionName, dimensionValue) =>
@@ -211,6 +213,8 @@ class SkuSelector extends ProductComponent
 	selectSku: (sku) =>
 		for dimension in @dimensions
 			dimension.selected = sku.dimensions[dimension.name]
+			@finditemDimensionValueInput(dimension.name, sku.dimensions[dimension.name]).prop('checked', true)
+			@finditemDimensionOption(dimension.name).val(sku.dimensions[dimension.name])
 
 	findSelectionStatus: (selection) =>
 		foundUnavailable = false
