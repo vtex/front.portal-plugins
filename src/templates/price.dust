@@ -3,11 +3,11 @@
   <p class="descricao-preco">
     {#available}
     <em class="valor-de price-list-price" style="display: block">
-      {de}
+      {strings.listPrice}
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-por price-best-price" style="display: block">
-      {por}
+      {strings.bestPrice}
       <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-dividido price-installments" style="display: block">
@@ -27,6 +27,13 @@
     <strong class="skuPrice">{bestPrice|intAsCurrency}</strong>
     {/available}
   </p>
+
+  {#hasDiscount}
+  <em class="economia-de">
+    {strings.discountOf} 
+    <span class="economia">{discount|intAsCurrency}</span>
+  </em>
+  {/hasDiscount}
 </div>
 {/product}
 
@@ -37,11 +44,11 @@
   </em>
   <p class="descricao-preco">
     <em class="valor-de price-list-price" style="display: block">
-      {de}
+      {string.listPrice}
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-por price-best-price" style="display: block">
-      {por}
+      {string.bestPrice}
       <span class="skuBestPrice">{bestPrice|intAsCurrency}</span>
     </em>
   </p>
@@ -55,11 +62,11 @@
   </em>
   <p class="descricao-preco">
     <em class="valor-de price-list-price" style="display: block">
-      {de}
+      {string.listPrice}
       <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
     </em>
     <em class="valor-por price-best-price" style="display: block">
-      {por}
+      {string.bestPrice}
       <span class="skuBestPrice">{bestPrice|intAsCurrency}</span>
     </em>
   </p>

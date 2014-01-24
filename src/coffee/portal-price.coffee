@@ -31,27 +31,32 @@ class Price extends ProductComponent
 			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
 		unless @options.modalLayout
-			htmlDe = $($('.valor-de')[0]).clone()
-			htmlDe.find('strong').remove()
-			@de = htmlDe.text() or 'De: '
-			htmlPor = $($('.valor-por')[0]).clone()
-			htmlPor.find('strong').remove()
-			@por = htmlPor.text() or 'Por: '
+			@getDefaultStringsFromHtml()
 
 		@bindEvents()
 
+	getDefaultStringsFromHtml: =>
+		htmlDe = $($('.valor-de')[0]).clone()
+		htmlDe.find('strong').remove()
+		@options.strings.listPrice = htmlDe.text() or 'De: '
+		htmlPor = $($('.valor-por')[0]).clone()
+		htmlPor.find('strong').remove()
+		@options.strings.bestPrice = htmlPor.text() or 'Por: '
+
 	getSku: =>
-		@sku or {
+		base = @sku or
 			listPrice: _.currencyToInt(@findFirstOriginalListPrice().text())
 			bestPrice: _.currencyToInt(@findFirstOriginalBestPrice().text())
 			installments: @findFirstOriginalInstallments().text()
 			installmentsValue: _.currencyToInt(@findFirstOriginalInstallmentsValue().text())
 			available: true
-		}
+
+		base.hasDiscount = !!base.bestPrice && (base.discount = base.listPrice - base.bestPrice) > 0
+		return base
 
 	render: =>
 		if @options.modalLayout
-			dust.render 'price-modal', {product: @sku}, (err, out) =>
+			dust.render 'price-modal', {product: @sku, strings: @options.strings}, (err, out) =>
 				throw new Error "Price-modal Dust error: #{err}" if err
 				@element.html out
 				@update()
@@ -61,8 +66,7 @@ class Price extends ProductComponent
 				product: @getSku()
 				accessories: @getAccessoriesTotal()
 				total: @getTotal()
-				de: @de
-				por: @por
+				strings: @options.strings
 
 			if renderData.product is null or renderData.product.listPrice is 0 or renderData.product.bestPrice is 0
 				return
@@ -153,3 +157,7 @@ $.fn.price = (productId, jsOptions) ->
 $.fn.price.defaults =
 	originalSku: null
 	modalLayout: false
+	strings:
+		listPrice: 'De: '
+		bestPrice: 'Por: '
+		discountOf: 'Economia de '
