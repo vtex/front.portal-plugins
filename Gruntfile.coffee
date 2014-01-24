@@ -37,6 +37,7 @@ module.exports = (grunt) ->
 		concat:
 			dev:
 				files:
+					'build/js/portal-image-gallery-with-template.js': ['build/js/product-component.js', 'build/templates/template-image-gallery.js', 'build/templates/template-image-gallery-single.js', 'build/js/portal-image-gallery.js']
 					'build/js/portal-sku-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
 					'build/js/portal-quantity-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
 					'build/js/portal-accessories-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
@@ -53,6 +54,7 @@ module.exports = (grunt) ->
 			main:
 				files:
 					'build/js/catalog-sdk.min.js': ['build/js/catalog-sdk.js']
+					'build/js/portal-image-gallery-with-template.min.js': ['build/js/portal-image-gallery-with-template.js']
 					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
 					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
 					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']
@@ -75,6 +77,8 @@ module.exports = (grunt) ->
 		dustjs:
 			compile:
 				files:
+					'build/templates/template-image-gallery.js': 'src/templates/image-gallery.dust'
+					'build/templates/template-image-gallery-single.js': 'src/templates/image-gallery-single.dust'
 					'build/templates/template-sku-selector-modal.js': 'src/templates/sku-selector-modal.dust'
 					'build/templates/template-sku-selector-product.js': 'src/templates/sku-selector-product.dust'
 					'build/templates/template-quantity-selector.js': 'src/templates/quantity-selector.dust'

@@ -1,0 +1,3 @@
+<a class="image-zoom" href="{zoomUrl}" >
+  <img id="image-main" alt="{name}" src="{mainUrl}" class="sku-rich-image-main" />
+</a>
