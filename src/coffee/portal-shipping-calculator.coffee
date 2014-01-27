@@ -97,7 +97,7 @@ $.fn.shippingCalculator.defaults =
 		requiredPostalCode: 'O CEP deve ser informado.'
 		invalidPostalCode: 'CEP inválido.'
 		requiredQuantity: 'É necessário informar a quantidade do mesmo Produto.'
-		siteName: 'Vtex.Commerce.Web.CommerceContext.Current.WebSite.Name'
+		siteName: ''
 		close: 'Fechar'
 
 # COMPATIBILIDADE (DEPRECATED)
