@@ -1,5 +1,6 @@
 # DEPENDENCIES:
 # jQuery
+# jqzoom
 # Dust
 
 $ = window.jQuery
@@ -38,8 +39,9 @@ class ImageGallery extends ProductComponent
 		dust.render 'image-gallery', {images: @images}, (err, out) =>
 			throw new Error "ImageGallery Dust error: #{err}" if err
 			@element.html out
-			@bindThumbs()
-			@changeCurrentImage(@findThumbs().first())
+			if @images.length > 0
+				@bindThumbs()
+				@changeCurrentImage(@findThumbs().first())
 
 	bindThumbs: =>
 		@findThumbs().on 'click', ->
