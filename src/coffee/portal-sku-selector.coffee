@@ -219,8 +219,8 @@ class SkuSelector extends ProductComponent
 			@selectDimensionValue(dimension.name, sku.dimensions[dimension.name])
 
 	selectDimensionValue: (dimensionName, valueName) =>
-		@finditemDimensionValueInput(dimensionName, valueName).prop('checked', true)
-		@finditemDimensionOption(dimensionName).val(valueName)
+		@finditemDimensionValueInput(dimensionName, valueName).prop('checked', true).trigger('change')
+		@finditemDimensionOption(dimensionName).val(valueName).trigger('change')
 
 	findSelectionStatus: (selection) =>
 		foundUnavailable = false
