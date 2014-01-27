@@ -1,5 +1,6 @@
 # DEPENDENCIES:
 # jQuery
+# Underscore
 
 $ = window.jQuery
 
@@ -29,6 +30,7 @@ class ShippingCalculator extends ProductComponent
 	bindEvents: =>
 		@bindProductEvent 'vtex.sku.selected', @skuSelected
 		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
+		@bindProductEvent 'vtex.sku.selectable', @skuUnselected
 		@bindProductEvent 'vtex.quantity.ready', @quantityChanged
 		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
 		@findShippingCalculatorButton().on 'click', @showShippingCalculatorForm
@@ -42,14 +44,17 @@ class ShippingCalculator extends ProductComponent
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku.sku
-		if sku.available
+		@updateVisibility()
+
+	skuUnselected: (evt, productId, selectableSkus) =>
+		@sku = _.find(selectableSkus, (sku) -> sku.available).sku
+		@updateVisibility()
+
+	updateVisibility: =>
+		if @sku && @sku.available
 			@element.show()
 		else
 			@element.hide()
-
-	skuUnselected: (evt, productId, selectableSkus) =>
-		@sku = null
-		@element.hide()
 
 	quantityChanged: (evt, productId, quantity) =>
 		@quantity = quantity
