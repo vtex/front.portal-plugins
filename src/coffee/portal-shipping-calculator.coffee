@@ -1,8 +1,16 @@
 # DEPENDENCIES:
 # jQuery
-# Underscore
 
 $ = window.jQuery
+
+
+# if we don't have underscore, make our own _.find
+unless _.find
+	_.extend
+		find: (arr, iterator) ->
+			for item in arr
+				if !!iterator(item)
+					return item
 
 # CLASSES
 class ShippingCalculator extends ProductComponent
