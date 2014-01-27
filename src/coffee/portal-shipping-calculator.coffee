@@ -50,11 +50,11 @@ class ShippingCalculator extends ProductComponent
 			@element.html out
 
 	skuSelected: (evt, productId, sku) =>
-		@sku = sku.sku
+		@sku = sku
 		@updateVisibility()
 
 	skuUnselected: (evt, productId, selectableSkus) =>
-		@sku = _.find(selectableSkus, (sku) -> sku.available).sku
+		@sku = _.find(selectableSkus, (sku) -> sku.available)
 		@updateVisibility()
 
 	updateVisibility: =>
@@ -72,7 +72,7 @@ class ShippingCalculator extends ProductComponent
 		if postalCode == ''
 			return alert(@options.strings.requiredPostalCode)
 
-		@SDK.getShippingValue(@sku, postalCode, @quantity or 1)
+		@SDK.getShippingValue(@sku.sku, postalCode, @quantity or 1)
 			.always (data) =>
 				@findCalculationResult().html(data)
 
