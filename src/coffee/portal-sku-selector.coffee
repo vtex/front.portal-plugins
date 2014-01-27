@@ -81,6 +81,10 @@ class SkuSelector extends ProductComponent
 			@selectSku(@skus[0])
 			@triggerProductEvent 'vtex.sku.selected', @skus[0]
 
+		for dimension in @dimensions
+			if dimension.values.length == 1
+				@selectDimensionValue(dimension.name, dimension.values[0])
+
 	update: (dimensionName, dimensionValue) =>
 		index = -1
 		lastSelected = -1
@@ -212,9 +216,11 @@ class SkuSelector extends ProductComponent
 
 	selectSku: (sku) =>
 		for dimension in @dimensions
-			dimension.selected = sku.dimensions[dimension.name]
-			@finditemDimensionValueInput(dimension.name, sku.dimensions[dimension.name]).prop('checked', true)
-			@finditemDimensionOption(dimension.name).val(sku.dimensions[dimension.name])
+			@selectDimensionValue(dimension.name, sku.dimensions[dimension.name])
+
+	selectDimensionValue: (dimensionName, valueName) =>
+		@finditemDimensionValueInput(dimensionName, valueName).prop('checked', true)
+		@finditemDimensionOption(dimensionName).val(valueName)
 
 	findSelectionStatus: (selection) =>
 		foundUnavailable = false
