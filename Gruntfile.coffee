@@ -49,8 +49,9 @@ module.exports = (grunt) ->
 					'build/js/portal-shipping-calculator-with-template.js': ['build/js/product-component.js', 'build/templates/template-shipping-calculator.js', 'build/js/portal-shipping-calculator.js']
 
 		uglify:
-			mangle:
-				except: ['$', '_']
+			options:
+				mangle:
+					except: ['$', '_']
 			main:
 				files:
 					'build/js/catalog-sdk.min.js': ['build/js/catalog-sdk.js']
