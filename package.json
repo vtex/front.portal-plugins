@@ -1,6 +1,6 @@
 {
   "name": "portal-plugins",
-  "version": "2.5.0",
+  "version": "2.5.1-beta",
   "readmeFilename": "README.md",
   "description": "Portal plugins.",
   "backend": "https://io.vtex.com.br/",
