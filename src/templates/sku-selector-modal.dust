@@ -11,7 +11,7 @@
   <div class="skuSelectionWrapper">
     <div class="skuListWrap_">
       {#dimensions}
-      <ul class="topic {name|sanitize} productid-{productId}">
+      <ul class="topic {name|sanitize} productid-{productId} numopt-{values.length}">
         <li class="specification">{name}</li>
         <li class="select skuList item-dimension-{name|sanitize}">
           {#isRadio}
