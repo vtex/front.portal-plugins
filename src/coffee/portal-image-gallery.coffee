@@ -87,6 +87,6 @@ $.fn.imageGallery = (productId, jsOptions) ->
 # PLUGIN DEFAULTS
 $.fn.imageGallery.defaults =
 	jqzoom: true
-	jqzoomOption:
+	jqzoomOptions:
 		preloadText: ""
 		title: false
