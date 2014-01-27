@@ -99,3 +99,7 @@ $.fn.shippingCalculator.defaults =
 		requiredQuantity: 'É necessário informar a quantidade do mesmo Produto.'
 		siteName: 'Vtex.Commerce.Web.CommerceContext.Current.WebSite.Name'
 		close: 'Fechar'
+
+# COMPATIBILIDADE (DEPRECATED)
+window.ShippingValue = ->
+	$('.show-shipping-calculator').click()
