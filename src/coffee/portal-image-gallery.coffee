@@ -66,8 +66,8 @@ class ImageGallery extends ProductComponent
 		dust.render 'image-gallery-single', @images[index], (err, out) =>
 			throw new Error "ImageGallery[single] Dust error: #{err}" if err
 			el = $(out).appendTo(@findImageRoot())
-			if @options.jqzoom
-				el.jqzoom @options.jqzoomOptions
+			if @options.jqzoom && @images[index].zoomUrl
+				el.jqzoom(@options.jqzoomOptions)
 
 
 # EXTENSION

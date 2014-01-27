@@ -9,17 +9,17 @@
 
   <ul class="thumbs">
     {#images}
-    <li>
-      <a rel="{mainUrl}"
-         title="Zoom"
-         href="javascript:void(0);"
-         id="botaoZoom"
-         zoom="{zoomUrl}"
-         data-image-gallery-index="{$idx}">
-        <img title="{name}" alt="{name}"
-             src="{thumbnailUrl}" />
-      </a>
-    </li>
+      <li>
+        <a rel="{mainUrl}"
+           title="Zoom"
+           href="javascript:void(0);"
+           id="botaoZoom"
+           zoom="{zoomUrl}"
+           data-image-gallery-index="{$idx}">
+          <img title="{name}" alt="{name}"
+               src="{thumbnailUrl}" />
+        </a>
+      </li>
     {/images}
   </ul>
 </div>
