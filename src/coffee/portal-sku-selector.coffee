@@ -25,8 +25,6 @@ class SkuSelector extends ProductComponent
 			index: i++
 			name: dimensionName
 			values: @productData.dimensionsMap[dimensionName]
-			availableValues: (true for value in @productData.dimensionsMap[dimensionName])
-			validValues: (true for value in @productData.dimensionsMap[dimensionName])
 			selected: undefined
 			inputType: if @options.forceInputType then @options.forceInputType else (@productData.dimensionsInputType?[dimensionName]?.toLowerCase() || "radio")
 		} for dimensionName in @productData.dimensions)
