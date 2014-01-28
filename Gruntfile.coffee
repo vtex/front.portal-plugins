@@ -116,9 +116,7 @@ module.exports = (grunt) ->
 
 	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
 
-	grunt.registerTask 'transform', ['copy:main', 'copy:mocks', 'coffee', 'dustjs']
-
-	grunt.registerTask 'default', ['clean', 'transform', 'concat', 'uglify', 'server', 'watch:main']
-	grunt.registerTask 'dist', ['clean', 'transform', 'concat', 'uglify'] # Dist - minifies files
+	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'server', 'watch:main']
+	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify'] # Dist - minifies files
 	grunt.registerTask 'test', -> console.log 'Not implemented... yet'
 	grunt.registerTask 'server', ['connect']
