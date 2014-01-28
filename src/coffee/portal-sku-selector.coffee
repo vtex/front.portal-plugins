@@ -220,7 +220,7 @@ class SkuSelector extends ProductComponent
 
 	selectDimensionValue: (dimensionName, valueName) =>
 		@finditemDimensionValueInput(dimensionName, valueName).prop('checked', true).trigger('change')
-		@finditemDimensionOption(dimensionName).val(valueName).trigger('change')
+		@finditemDimensionSelect(dimensionName).val(valueName).trigger('change')
 
 	findSelectionStatus: (selection) =>
 		foundUnavailable = false
@@ -408,6 +408,7 @@ $.fn.skuSelector.defaults =
 	modalLayout: false
 	warnUnavailable: false
 	selectOnOpening: false
+	selectSingleDimensionsOnOpening: true
 	confirmBuy: false
 	showPriceRange: false
 	forceInputType: null
