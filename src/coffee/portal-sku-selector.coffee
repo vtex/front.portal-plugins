@@ -81,9 +81,11 @@ class SkuSelector extends ProductComponent
 			@selectSku(@skus[0])
 			@triggerProductEvent 'vtex.sku.selected', @skus[0]
 
-		for dimension in @dimensions
-			if dimension.values.length == 1
-				@selectDimensionValue(dimension.name, dimension.values[0])
+		# Seleciona dimensoes que tem somente um valor possivel
+		if @options.selectSingleDimensionsOnOpening
+			for dimension in @dimensions
+				if dimension.values.length == 1
+					@selectDimensionValue(dimension.name, dimension.values[0])
 
 	update: (dimensionName, dimensionValue) =>
 		index = -1
