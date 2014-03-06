@@ -170,6 +170,7 @@ class SkuSelector extends ProductComponent
 
 	bindEvents: =>
 		@findinputs().on 'change', @dimensionChangeHandler
+		@bindProductEvent 'vtex.sku.select', @selectSkuHandler
 
 		# ToDo remover quando alterar viewpart de modal
 		@findbuyButton().on 'click', @buyButtonHandler
@@ -213,6 +214,15 @@ class SkuSelector extends ProductComponent
 
 	setSelectedDimension: (dimension, value) =>
 		@getDimensionByName(dimension).selected = value
+
+	skuObjectFromId: (skuId) =>
+		for sku in @skus
+			return sku if +sku.sku == +skuId
+
+	selectSkuHandler: (evt, productId, sku) =>
+		if sku == +sku || sku == sku+''
+			sku = @skuObjectFromId(sku)
+		@selectSku(sku)
 
 	selectSku: (sku) =>
 		for dimension in @dimensions
