@@ -221,7 +221,7 @@ class SkuSelector extends ProductComponent
 
 	selectSkuHandler: (evt, productId, sku) =>
 		if sku == +sku || sku == sku+''
-			sku = @skuObjectFromId(sku)
+			sku = @skuObjectFromId(+sku)
 		@selectSku(sku)
 
 	selectSku: (sku) =>
@@ -427,6 +427,11 @@ $.fn.skuSelector.defaults =
 $.skuSelector =
 	getAddUrlForSku: (sku, seller = 1, quantity = 1, salesChannel = 1, redirect = true) ->
 		"/checkout/cart/add?qty=#{quantity}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
+
+# SKU ON QUERYSTRING
+$(document).ready ->
+	if (idsku = _.urlParams()['idsku'])
+		$(window).trigger('vtex.sku.select', [skuJson.productId, idsku])
 
 # EVENTS (DEPRECATED!)
 $(document).on "vtex.sku.selected", (evt, productId, sku) ->
