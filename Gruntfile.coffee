@@ -67,14 +67,6 @@ module.exports = (grunt) ->
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 					'build/js/portal-sku-measures-with-template.min.js': ['build/js/portal-sku-measures-with-template.js']
 
-		karma:
-			options:
-				configFile: 'karma.conf.coffee'
-			unit:
-				background: true
-			single:
-				singleRun: true
-
 		dustjs:
 			compile:
 				files:
