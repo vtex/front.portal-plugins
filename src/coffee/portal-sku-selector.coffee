@@ -77,7 +77,6 @@ class SkuSelector extends ProductComponent
 		@bindEvents()
 		if @skus.length == 1
 			@selectSku(@skus[0])
-			@triggerProductEvent 'vtex.sku.selected', @skus[0]
 
 		# Seleciona dimensoes que tem somente um valor possivel
 		if @options.selectSingleDimensionsOnOpening
@@ -227,6 +226,7 @@ class SkuSelector extends ProductComponent
 	selectSku: (sku) =>
 		for dimension in @dimensions
 			@selectDimensionValue(dimension.name, sku.dimensions[dimension.name])
+		@triggerProductEvent 'vtex.sku.selected', sku
 
 	selectDimensionValue: (dimensionName, valueName) =>
 		@finditemDimensionValueInput(dimensionName, valueName).prop('checked', true).trigger('change')
