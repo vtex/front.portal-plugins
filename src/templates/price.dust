@@ -2,22 +2,26 @@
 <div class="productPrice">
   <p class="descricao-preco">
     {#available}
-    <em class="valor-de price-list-price" style="display: block">
-      {strings.listPrice}
-      <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
-    </em>
-    <em class="valor-por price-best-price" style="display: block">
-      {strings.bestPrice}
-      <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
-    </em>
-    <em class="valor-dividido price-installments" style="display: block">
-      <span>
-        <span>ou <label class="skuBestInstallmentNumber">{installments}<span class="x">x</span></label> de </span>
-        <strong>
-          <label class="skuBestInstallmentValue">{installmentsValue|intAsCurrency}</label>
-        </strong>
-      </span>
-    </em>
+      {#listPrice}
+        <em class="valor-de price-list-price" style="display: block">
+          {strings.listPrice}
+          <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
+        </em>
+      {/listPrice}
+      {#bestPrice}
+        <em class="valor-por price-best-price" style="display: block">
+          {strings.bestPrice}
+          <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
+        </em>
+      {/bestPrice}
+      <em class="valor-dividido price-installments" style="display: block">
+        <span>
+          <span>ou <label class="skuBestInstallmentNumber">{installments}<span class="x">x</span></label> de </span>
+          <strong>
+            <label class="skuBestInstallmentValue">{installmentsValue|intAsCurrency}</label>
+          </strong>
+        </span>
+      </em>
     {/available}
   </p>
 

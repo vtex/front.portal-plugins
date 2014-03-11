@@ -68,7 +68,7 @@ class Price extends ProductComponent
 				total: @getTotal()
 				strings: @options.strings
 
-			if renderData.product is null or renderData.product.listPrice is 0 or renderData.product.bestPrice is 0
+			if renderData.product is null or (renderData.product.listPrice is 0 and renderData.product.bestPrice is 0)
 				return
 
 			dust.render 'price', renderData, (err, out) =>
