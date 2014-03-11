@@ -26,7 +26,7 @@ class Price extends ProductComponent
 			Installments: '.price-installments'
 			CashPrice: '.price-cash'
 			OriginalListPrice: '.skuListPrice'
-			OriginalBestPrice: '.valor-por span'
+			OriginalBestPrice: '.skuBestPrice'
 			OriginalInstallments: '.valor-dividido span span label'
 			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
@@ -53,6 +53,7 @@ class Price extends ProductComponent
 
 		base.hasDiscount = !!base.bestPrice && (base.discount = base.listPrice - base.bestPrice) > 0
 		base.validListPrice = !!base.listPrice && base.listPrice > base.bestPrice
+		base.validBestPrice = !!base.bestPrice
 		return base
 
 	render: =>

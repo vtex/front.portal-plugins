@@ -8,12 +8,12 @@
           <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
         </em>
       {/validListPrice}
-      {#bestPrice}
+      {#validBestPrice}
         <em class="valor-por price-best-price" style="display: block">
           {strings.bestPrice}
           <strong class="skuBestPrice">{bestPrice|intAsCurrency}</strong>
         </em>
-      {/bestPrice}
+      {/validBestPrice}
       <em class="valor-dividido price-installments" style="display: block">
         <span>
           <span>ou <label class="skuBestInstallmentNumber">{installments}<span class="x">x</span></label> de </span>
