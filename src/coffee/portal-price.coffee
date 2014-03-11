@@ -52,6 +52,7 @@ class Price extends ProductComponent
 			available: true
 
 		base.hasDiscount = !!base.bestPrice && (base.discount = base.listPrice - base.bestPrice) > 0
+		base.validListPrice = !!base.listPrice && base.listPrice > base.bestPrice
 		return base
 
 	render: =>

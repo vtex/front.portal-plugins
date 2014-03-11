@@ -2,12 +2,12 @@
 <div class="productPrice">
   <p class="descricao-preco">
     {#available}
-      {#listPrice}
+      {#validListPrice}
         <em class="valor-de price-list-price" style="display: block">
           {strings.listPrice}
           <strong class="skuListPrice">{listPrice|intAsCurrency}</strong>
         </em>
-      {/listPrice}
+      {/validListPrice}
       {#bestPrice}
         <em class="valor-por price-best-price" style="display: block">
           {strings.bestPrice}
