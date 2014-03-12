@@ -134,6 +134,9 @@ class BuyButton extends ProductComponent
 		if @options.target
 			queryParams.push("target=#{@options.target}")
 
+		for key, value of @options.queryParams
+			queryParams.push("#{key}=#{value}")
+
 		url = "/checkout/cart/add?#{queryParams.join('&')}"
 
 		return url
@@ -208,3 +211,4 @@ $.fn.buyButton.defaults =
 	hideUnavailable: true
 	target: null
 	multipleProductIds: false
+	queryParams: {}
