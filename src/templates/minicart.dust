@@ -76,7 +76,7 @@
           </span>
         </span>
       </div>
-      <a href="/checkout/#/orderform" class="cartCheckout"></a>
+      <a href="/checkout/#{options.checkoutHash}" class="cartCheckout"></a>
     </div>
   </div>
   <div class="vtexsc-bb"></div>

@@ -100,7 +100,7 @@ class Minicart
 				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
 	render: () =>
-		dust.render 'minicart', @cartData, (err, out) =>
+		dust.render 'minicart', $.extend({options: @options}, @cartData), (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
 			@element.html out
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', (evt) =>
@@ -172,3 +172,4 @@ $.fn.minicart.defaults =
 	showMinicart: true
 	showTotalizers: true
 	orderFormURL: "/api/checkout/pub/orderForm/"
+	checkoutHash: '/orderform'
