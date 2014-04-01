@@ -47,7 +47,7 @@ class Price extends ProductComponent
 		base = @sku or
 			listPrice: _.currencyToInt(@findFirstOriginalListPrice().text())
 			bestPrice: _.currencyToInt(@findFirstOriginalBestPrice().text())
-			installments: @findFirstOriginalInstallments().text()
+			installments: parseInt(@findFirstOriginalInstallments().text())
 			installmentsValue: _.currencyToInt(@findFirstOriginalInstallmentsValue().text())
 			available: true
 
