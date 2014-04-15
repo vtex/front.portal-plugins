@@ -51,10 +51,11 @@ class Minicart
 				$(".vtexsc-cart").stop(true, true).slideUp()
 			, 800
 
-		$(window).on "cartUpdated", @updateCart
-		$(window).on 'productAddedToCart', @updateCart
-		$(window).on 'vtex.cart.productAdded', @updateCart
-		$(window).on 'vtex.cart.productRemoved', @updateCart
+		$(window).on "cartUpdated", (evt, args...) => @updateCart(args...)
+		$(window).on 'productAddedToCart', (evt, args...) => @updateCart(args...)
+		$(window).on 'vtex.cart.productAdded', (evt, args...) => @updateCart(args...)
+		$(window).on 'vtex.cart.productRemoved', (evt, args...) => @updateCart(args...)
+#		$(window).on 'vtex.checkout.orderform.update', (evt, args...) => @handleOrderForm(args...)
 
 	updateCart: (slide = true) =>
 		@element.addClass 'amount-items-in-cart-loading'
@@ -71,7 +72,12 @@ class Minicart
 			@element.removeClass 'amount-items-in-cart-loading'
 			@element.trigger 'vtex.minicart.updated'
 		.success (data) =>
-			@cartData = data
+			@handleOrderForm(data, slide)
+
+	handleOrderForm: (orderForm, slide = true) =>
+		console.log 'handling'
+		if orderForm.items?
+			@cartData = orderForm
 			@prepareCart()
 			@render()
 			@slide() if slide
