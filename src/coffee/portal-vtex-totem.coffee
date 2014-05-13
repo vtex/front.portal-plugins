@@ -22,7 +22,7 @@ $ ->
 	$("#vtex-totem-barcode-found").easyModal()
 
 	# Barcode handler
-	barCodeHandler = barCodeHandler(barcode) ->
+	barCodeHandler = (barcode) ->
 		$.ajax({
 			url: '/api/catalog_system/pub/sku/stockkeepingunitByEan/'+barcode
 		}).success (sku) ->
