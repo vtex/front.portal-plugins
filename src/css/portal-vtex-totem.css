@@ -1,0 +1,19 @@
+#vtex-totem-barcode-found { background: #5cb85c; }
+#vtex-totem-barcode-not-found {	background: #f0ad4e; }
+.vtex-totem-message {
+	text-align: center;
+	width: 600px;
+	padding: 5px 0;
+	color: #FFF;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.25);
+	box-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+	font-weight: 600;
+}
+.vtex-totem-text {
+	margin: 10px;
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+	font-weight: 500;	
+	font-size: 30px;
+	line-height: 1.1;
+	height: 30px;
+}

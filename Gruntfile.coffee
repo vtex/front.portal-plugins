@@ -66,6 +66,7 @@ module.exports = (grunt) ->
 					'build/js/portal-notify-me-with-template.min.js': ['build/js/portal-notify-me-with-template.js']
 					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
 					'build/js/portal-sku-measures-with-template.min.js': ['build/js/portal-sku-measures-with-template.js']
+					'build/js/portal-vtex-totem.min.js': ['build/js/portal-vtex-totem.js']
 
 		dustjs:
 			compile:
