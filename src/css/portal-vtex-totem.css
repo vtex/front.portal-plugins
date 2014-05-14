@@ -1,5 +1,8 @@
+#vtex-totem-barcode-found, #vtex-totem-barcode-not-found {
+	z-index: 9999999999 !important;
+}
 #vtex-totem-barcode-found { background: #5cb85c; }
-#vtex-totem-barcode-not-found {	background: #f0ad4e; }
+#vtex-totem-barcode-not-found { background: #f0ad4e; }
 .vtex-totem-message {
 	text-align: center;
 	width: 600px;
