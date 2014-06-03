@@ -39,8 +39,10 @@ class QuantitySelector extends ProductComponent
 	init: =>
 		@render()
 		@bindEvents()
-		@triggerProductEvent 'vtex.quantity.ready', @quantity
-		@triggerProductEvent 'vtex.quantity.changed', @quantity
+		@triggerProductEvent 'vtex.quantity.ready', @quantity #DEPRECATED
+		@triggerProductEvent 'quantityReady.vtex', @quantity
+		@triggerProductEvent 'vtex.quantity.changed', @quantity #DEPRECATED
+		@triggerProductEvent 'quantityChanged.vtex', @quantity #DEPRECATED
 
 	render: =>
 		renderData =
@@ -57,8 +59,8 @@ class QuantitySelector extends ProductComponent
 			@element.html out
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
-		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
+		@bindProductEvent 'skuSelected.vtex', @skuSelected
+		@bindProductEvent 'quantityChanged.vtex', @quantityChanged
 		@findUnitSelectorInput().on 'keypress', @handleUnitsKeypress
 		@findUnitSelectorInput().on 'change', @unitInputChanged
 		@findQuantitySelectorInput().on 'keypress', @handleQuantityKeypress
@@ -93,7 +95,8 @@ class QuantitySelector extends ProductComponent
 		@cleanUnits()
 		@updateQuantityFromUnits()
 		@update()
-		@triggerProductEvent 'vtex.quantity.changed', @quantity
+		@triggerProductEvent 'vtex.quantity.changed', @quantity #DEPRECATED
+		@triggerProductEvent 'quantityChanged.vtex', @quantity
 
 	cleanUnits: =>
 		@units = @units.replace(/,/, '.').replace(/[^0-9\.]+/g, '')
@@ -122,7 +125,8 @@ class QuantitySelector extends ProductComponent
 		@cleanQuantity()
 		@updateUnitsFromQuantity()
 		@update()
-		@triggerProductEvent 'vtex.quantity.changed', @quantity
+		@triggerProductEvent 'vtex.quantity.changed', @quantity #DEPRECATED
+		@triggerProductEvent 'quantityChanged.vtex', @quantity #DEPRECATED
 
 	cleanQuantity: =>
 		@quantity = Math.round(@quantity)

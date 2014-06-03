@@ -26,7 +26,8 @@ class BuyButton extends ProductComponent
 			@SDK.getProductWithVariations(@productId).done (json) =>
 				@productData = json
 				if @productData.skus.length == 1
-					@triggerProductEvent('vtex.sku.selected', @productData.skus[0])
+					@triggerProductEvent 'vtex.sku.selected', @productData.skus[0] #DEPRECATED
+					@triggerProductEvent 'skuSelected.vtex', @productData.skus[0]
 				@getChangesFromHREF()
 				@update()
 
@@ -35,11 +36,11 @@ class BuyButton extends ProductComponent
 		@update()
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
-		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
-		@bindProductEvent 'vtex.quantity.ready', @quantityChanged
-		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
-		@bindProductEvent 'vtex.accessories.updated', @accessoriesUpdated
+		@bindProductEvent 'skuSelected.vtex', @skuSelected
+		@bindProductEvent 'skuUnselected.vtex', @skuUnselected
+		@bindProductEvent 'quantityReady.vtex', @quantityChanged
+		@bindProductEvent 'quantityChanged.vtex', @quantityChanged
+		@bindProductEvent 'accessoriesUpdated.vtex', @accessoriesUpdated
 		@element.on 'click', @buyButtonHandler
 
 	getChangesFromHREF: =>
@@ -49,12 +50,14 @@ class BuyButton extends ProductComponent
 			skuMatch = href.match(/sku=(.*?)&/)
 			if skuMatch and skuMatch[1] and skuMatch[1] != @sku
 				@sku = skuMatch[1]
-				@triggerProductEvent 'vtex.sku.changed', sku: @sku
+				@triggerProductEvent 'vtex.sku.changed', sku: @sku #DEPRECATED
+				@triggerProductEvent 'skuChanged.vtex', sku: @sku
 
 			qtyMatch = href.match(/qty=(.*?)&/)
 			if qtyMatch and qtyMatch[1] and qtyMatch[1] != @quantity
 				@quantity = qtyMatch[1]
-				@triggerProductEvent 'vtex.quantity.changed', @quantity
+				@triggerProductEvent 'vtex.quantity.changed', @quantity #DEPRECATED
+				@triggerProductEvent 'quantityChanged.vtex', @quantity
 
 			sellerMatch = href.match(/seller=(.*?)&/)
 			if sellerMatch and sellerMatch[1] and sellerMatch[1] != @seller
@@ -162,21 +165,25 @@ class BuyButton extends ProductComponent
 
 	buyButtonHandler: (evt) =>
 		if not @valid()
-			@triggerProductEvent 'vtex.buyButton.failedAttempt', @options.errorMessage
+			@triggerProductEvent 'vtex.buyButton.failedAttempt', @options.errorMessage #DEPRECATED
+			@triggerProductEvent 'buyButtonFailedAttempt.vtex', @options.errorMessage
 			return true
 
-		@triggerProductEvent 'vtex.buyButton.through', @getURL
+		@triggerProductEvent 'vtex.buyButton.through', @getURL #DEPRECATED
+		@triggerProductEvent 'buyButtonThrough.vtex', @getURL
 
 		if @options.redirect
 			return true
 
-		$(window).trigger 'vtex.modal.hide'
+		$(window).trigger 'vtex.modal.hide' #DEPRECATED
+		$(window).trigger 'modalHide.vtex'
 
 		$.get(@getURL())
 		.done =>
-				@triggerProductEvent 'vtex.cart.productAdded'
-				@triggerProductEvent 'productAddedToCart'
-				alert @options.addMessage if @options.addMessage
+			@triggerProductEvent 'productAddedToCart' #DEPRECATED
+			@triggerProductEvent 'vtex.cart.productAdded' #DEPRECATED
+			@triggerProductEvent 'cartProductAdded.vtex'
+			alert @options.addMessage if @options.addMessage
 		.fail =>
 				@redirect = true
 				window.location.href = @getURL()

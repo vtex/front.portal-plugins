@@ -45,10 +45,10 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.sku.ready []`</b> quando o Sku Selector é renderizado.
-- <b>`vtex.sku.dimensionChanged [productId, name, value]`</b> quando uma dimensão é selecionada.
-- <b>`vtex.sku.selected [productId, sku]`</b> quando um SKU é definido.
-- <b>`vtex.sku.unselected [productId, selectableSkus]`</b> quando o SKU torna-se indefinido.
+- <b>`skuReady.vtex []`</b> quando o Sku Selector é renderizado.
+- <b>`skuDimensionChanged.vtex [productId, name, value]`</b> quando uma dimensão é selecionada.
+- <b>`skuSelected.vtex [productId, sku]`</b> quando um SKU é definido.
+- <b>`skuUnselected.vtex [productId, selectableSkus]`</b> quando o SKU torna-se indefinido.
 
 
 ---
@@ -85,12 +85,12 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.quantity.ready [productId, quantity]`</b> quando o Quantity Selector é renderizado.
-- <b>`vtex.quantity.changed [productId, quantity]`</b> quando a quantidade é mudada.
+- <b>`quantityReady.vtex [productId, quantity]`</b> quando o Quantity Selector é renderizado.
+- <b>`quantityChanged.vtex [productId, quantity]`</b> quando a quantidade é mudada.
 
 Escuta pelos seguintes eventos:
 
-- <b>`vtex.quantity.changed [productId, quantity]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+- <b>`quantityChanged.vtex [productId, quantity]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
 
 
 ---
@@ -113,7 +113,7 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.accessories.updated [productId, accessories]`</b> quando um acessório é alterado. O array `accessories` contém os acessórios de um determinado produto, com propriedades como `sku` e `quantity`.
+- <b>`accessoriesUpdated.vtex [productId, accessories]`</b> quando um acessório é alterado. O array `accessories` contém os acessórios de um determinado produto, com propriedades como `sku` e `quantity`.
 
 
 ---
@@ -144,8 +144,8 @@ Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando 
 
 Escuta pelos seguintes eventos:
 
-- <b>`vtex.sku.selected [productId, sku]`</b>
-- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
+- <b>`skuSelected.vtex [productId, sku]`</b>
+- <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
 
 
 ---
@@ -181,10 +181,10 @@ Chame o plugin em uma `div` vazia.
 
 Escuta pelos seguintes eventos:
 
-- <b>`vtex.sku.selected [productId, sku]`</b>
-- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
-- <b>`vtex.quantity.ready [productId, quantity]`</b>
-- <b>`vtex.quantity.changed [productId, quantity]`</b>
+- <b>`skuSelected.vtex [productId, sku]`</b>
+- <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
+- <b>`quantityReady.vtex [productId, quantity]`</b>
+- <b>`quantityChanged.vtex [productId, quantity]`</b>
 
 
 ---
@@ -233,17 +233,17 @@ Chame o plugin na `a` que age como botão de comprar:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.modal.hide []`</b> quando `redirect=false` e o botão é clicado.
-- <b>`vtex.cart.productAdded []`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
-- <b>`vtex.buyButton.failedAttempt [errorMessage]`</b> quando o botão é clicado mas não há um SKU válido.
-- <b>`vtex.buyButton.through [url]`</b> quando o botão é clicado e há SKU válido.
+- <b>`modalHide.vtex []`</b> quando `redirect=false` e o botão é clicado.
+- <b>`cartProductAdded.vtex []`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
+- <b>`buyButtonFailedAttempt.vtex [errorMessage]`</b> quando o botão é clicado mas não há um SKU válido.
+- <b>`buyButtonThrough.vtex [url]`</b> quando o botão é clicado e há SKU válido.
 
 Escuta pelos seguintes eventos:
 
-- <b>`vtex.sku.selected [productId, sku]`</b>
-- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
-- <b>`vtex.quantity.changed [productId, quantity]`</b>
-- <b>`vtex.accessory.selected [productId, accessory]`</b>
+- <b>`skuSelected.vtex [productId, sku]`</b>
+- <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
+- <b>`quantityChanged.vtex [productId, quantity]`</b>
+- <b>`accessorySelected.vtex [productId, accessory]`</b>
 
 
 ---
@@ -283,12 +283,12 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.notifyMe.submitted [productId, sku, promise]`</b>: quando a form é enviada.
+- <b>`notifyMeSubmitted.vtex [productId, sku, promise]`</b>: quando a form é enviada.
 
 Escuta pelos seguintes eventos:
 
-- <b>`vtex.sku.selected [productId, sku]`</b>
-- <b>`vtex.sku.unselected [productId, selectableSkus]`</b>
+- <b>`skuSelected.vtex [productId, sku]`</b>
+- <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
 
 
 ---
@@ -332,15 +332,15 @@ Chame o plugin em uma `div` vazia:
 
 Lança os seguintes eventos:
 
-- <b>`vtex.cart.productRemoved []`</b> quando um item é removido pelo minicart.
-- <b>`vtex.minicart.mouseOver []`</b>
-- <b>`vtex.minicart.mouseOut []`</b>
-- <b>`vtex.minicart.updated []`</b>
+- <b>`cartProductRemoved.vtex []`</b> quando um item é removido pelo minicart.
+- <b>`minicartMouseOver.vtex  []`</b>
+- <b>`minicartMouseOut.vtex  []`</b>
+- <b>`minicartUpdated.vtex  []`</b>
 
 Escuta pelos seguintes eventos:
 
-- <b>`vtex.cart.productAdded []`</b> o Minicart se atualiza.
-- <b>`vtex.cart.productRemoved []`</b> o Minicart se atualiza.
+- <b>`cartProductAdded.vtex  []`</b> o Minicart se atualiza.
+- <b>`cartProductRemoved.vtex  []`</b> o Minicart se atualiza.
 
 
 ---

@@ -29,17 +29,18 @@ class ShippingCalculator extends ProductComponent
 		@SDK.getProductWithVariations(@productId).done (json) =>
 			@productData = json
 			if @productData.skus.length == 1
-				@triggerProductEvent('vtex.sku.selected', @productData.skus[0])
+				@triggerProductEvent 'vtex.sku.selected', @productData.skus[0] #DEPRECATED
+				@triggerProductEvent 'skuSelected.vtex', @productData.skus[0]
 
 		@render()
 		@bindEvents()
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
-		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
-		@bindProductEvent 'vtex.sku.selectable', @skuUnselected
-		@bindProductEvent 'vtex.quantity.ready', @quantityChanged
-		@bindProductEvent 'vtex.quantity.changed', @quantityChanged
+		@bindProductEvent 'skuSelected.vtex', @skuSelected
+		@bindProductEvent 'skuUnselected.vtex', @skuUnselected
+		@bindProductEvent 'skuSelectable.vtex', @skuUnselected
+		@bindProductEvent 'quantityReady.vtex', @quantityChanged
+		@bindProductEvent 'quantityChanged.vtex', @quantityChanged
 		@findShippingCalculatorButton().on 'click', @showShippingCalculatorForm
 		@findCloseButton().on 'click', @hideShippingCalculatorForm
 		@findCalculateButton().on 'click', @calculateShipping

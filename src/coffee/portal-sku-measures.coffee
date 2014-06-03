@@ -12,8 +12,8 @@ class SkuMeasures extends ProductComponent
 		@bindEvents()
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
-		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
+		@bindProductEvent 'skuSelected.vtex', @skuSelected
+		@bindProductEvent 'skuUnselected.vtex', @skuUnselected
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku

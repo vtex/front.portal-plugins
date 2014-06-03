@@ -13,7 +13,8 @@ class NotifyMe extends ProductComponent
 			@SDK.getProductWithVariations(@productId).done (json) =>
 				@productData = json
 				if @productData.skus.length == 1
-					@triggerProductEvent('vtex.sku.selected', @productData.skus[0])
+					@triggerProductEvent 'vtex.sku.selected', @productData.skus[0] #DEPRECATED
+					@triggerProductEvent 'skuSelected.vtex', @productData.skus[0]
 				@render()
 
 		@generateSelectors
@@ -47,8 +48,8 @@ class NotifyMe extends ProductComponent
 
 	bindEvents: =>
 		unless @options.sku
-			@bindProductEvent 'vtex.sku.selected', @skuSelected
-			@bindProductEvent 'vtex.sku.unselected', @skuUnselected
+			@bindProductEvent 'skuSelected.vtex', @skuSelected
+			@bindProductEvent 'skuUnselected.vtex', @skuUnselected
 		@element.on 'submit', @submit if @options.ajax
 		@findButton().on 'click', @submit if @options.ajax
 
@@ -111,7 +112,8 @@ class NotifyMe extends ProductComponent
 			@showError()
 			@history[@sku] = 'fail'
 
-		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr
+		@triggerProductEvent 'vtex.notifyMe.submitted', @sku, xhr #DEPRECATED
+		@triggerProductEvent 'notifyMeSubmitted.vtex', @sku, xhr
 
 		return false
 

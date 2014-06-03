@@ -20,8 +20,8 @@ class ImageGallery extends ProductComponent
 		@initializeGallery()
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selectable', @skuSelectable
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
+		@bindProductEvent 'skuSelectable.vtex', @skuSelectable
+		@bindProductEvent 'skuSelected.vtex', @skuSelected
 
 	skuSelected: (evt, productId, sku) =>
 		@images = sku.images

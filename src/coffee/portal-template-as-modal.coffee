@@ -35,7 +35,8 @@ openModalFromTemplate = (evt) ->
 	$overlay.on "click", hideModal
 	$(document).on "keyup", hideModalOnEscapeKey
 
-	$(window).on 'vtex.modal.hide', hideModal
+	$(window).on 'vtex.modal.hide', hideModal #DEPRECATED
+	$(window).on 'modalHide.vtex', hideModal
 
 	$.get(templateURL).done (content) ->
 		$container.find('.skuWrap_').html $(content)

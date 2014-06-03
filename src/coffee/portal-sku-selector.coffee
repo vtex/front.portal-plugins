@@ -121,14 +121,18 @@ class SkuSelector extends ProductComponent
 
 		selectableSkus = @findSelectableSkus()
 
-		@triggerProductEvent 'vtex.sku.dimensionChanged', dimensionName, dimensionValue
+		@triggerProductEvent 'vtex.sku.dimensionChanged', dimensionName, dimensionValue #DEPRECATED
+		@triggerProductEvent 'skuDimensionChanged.vtex', dimensionName, dimensionValue
 		if selectableSkus.length == 1
-			@triggerProductEvent 'vtex.sku.selected', selectableSkus[0]
-			@triggerProductEvent 'skuSelected', selectableSkus[0]
+			@triggerProductEvent 'skuSelected', selectableSkus[0] #DEPRECATED
+			@triggerProductEvent 'vtex.sku.selected', selectableSkus[0] #DEPRECATED
+			@triggerProductEvent 'skuSelected.vtex', selectableSkus[0]
 		else
-			@triggerProductEvent 'vtex.sku.unselected', selectableSkus
+			@triggerProductEvent 'vtex.sku.unselected', selectableSkus #DEPRECATED
+			@triggerProductEvent 'skuUnselected.vtex', selectableSkus
 			if selectableSkus.length > 1
-				@triggerProductEvent 'vtex.sku.selectable', selectableSkus
+				@triggerProductEvent 'vtex.sku.selectable', selectableSkus #DEPRECATED
+				@triggerProductEvent 'skuSelectable.vtex', selectableSkus
 
 		# ToDo remover quando alterar viewpart de modal
 		@hideConfirmButton()
@@ -165,11 +169,12 @@ class SkuSelector extends ProductComponent
 			@update()
 			@showBuyButton()
 			@buyIfNoVariations()
-			@element.trigger('vtex.sku.ready')
+			@element.trigger 'vtex.sku.ready' #DEPRECATED
+			@element.trigger 'skuReady.vtex'
 
 	bindEvents: =>
 		@findinputs().on 'change', @dimensionChangeHandler
-		@bindProductEvent 'vtex.sku.select', @selectSkuHandler
+		@bindProductEvent 'skuSelect.vtex', @selectSkuHandler
 
 		# ToDo remover quando alterar viewpart de modal
 		@findbuyButton().on 'click', @buyButtonHandler
@@ -226,7 +231,8 @@ class SkuSelector extends ProductComponent
 	selectSku: (sku) =>
 		for dimension in @dimensions
 			@selectDimensionValue(dimension.name, sku.dimensions[dimension.name])
-		@triggerProductEvent 'vtex.sku.selected', sku
+		@triggerProductEvent 'vtex.sku.selected', sku #DEPRECATED
+		@triggerProductEvent 'skuSelected.vtex', sku
 
 	selectDimensionValue: (dimensionName, valueName) =>
 		@finditemDimensionValueInput(dimensionName, valueName).prop('checked', true).trigger('change')
@@ -314,7 +320,7 @@ class SkuSelector extends ProductComponent
 				event.preventDefault()
 				@showConfirmButton(selectedSku)
 			else
-				$(window).trigger 'vtex.modal.hide'
+				$(window).trigger 'modalHide.vtex'
 				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, 1, 1, @productData.salesChannel, false))
 				.done (data) =>
 						$(window).trigger 'productAddedToCart'
@@ -431,13 +437,13 @@ $.skuSelector =
 # SKU ON QUERYSTRING
 $(document).ready ->
 	if (idsku = _.urlParams()['idsku'])
-		$(window).trigger('vtex.sku.select', [skuJson.productId, idsku])
+		$(window).trigger 'skuSelect.vtex', [skuJson.productId, idsku]
 
 # EVENTS (DEPRECATED!)
-$(document).on "vtex.sku.selected", (evt, productId, sku) ->
+$(document).on "skuSelected.vtex", (evt, productId, sku) ->
 	window.FireSkuChangeImage?(sku.sku)
 	#window.FireSkuDataReceived?(sku.sku)
 	window.FireSkuSelectionChanged?(sku.sku)
 
-$(document).on 'vtex.sku.selectable', (evt, productId, skus) ->
+$(document).on 'skuSelectable.vtex', (evt, productId, skus) ->
 	window.FireSkuChangeImage?(skus[0].sku)

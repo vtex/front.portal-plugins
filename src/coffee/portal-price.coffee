@@ -101,9 +101,9 @@ class Price extends ProductComponent
 				@showCashPrice()
 
 	bindEvents: =>
-		@bindProductEvent 'vtex.sku.selected', @skuSelected
-		@bindProductEvent 'vtex.sku.unselected', @skuUnselected
-		@bindProductEvent 'vtex.accessories.updated', @accessoriesUpdated
+		@bindProductEvent 'skuSelected.vtex', @skuSelected
+		@bindProductEvent 'skuUnselected.vtex', @skuUnselected
+		@bindProductEvent 'accessoriesUpdated.vtex', @accessoriesUpdated
 
 	skuSelected: (evt, productId, sku) =>
 		@sku = sku

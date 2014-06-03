@@ -33,29 +33,30 @@ class Minicart
 
 	bindEvents: =>
 		@hoverContext.on 'mouseover', =>
-			$(window).trigger "minicartMouseOver"
-			@element.trigger 'vtex.minicart.mouseOver'
+			$(window).trigger "minicartMouseOver" #DEPRECATED
+			@element.trigger 'vtex.minicart.mouseOver' #DEPRECATED
+			$(window).trigger "minicartMouseOver.vtex"
 
 		@hoverContext.on 'mouseout', =>
-			$(window).trigger "minicartMouseOut"
-			@element.trigger 'vtex.minicart.mouseOut'
+			$(window).trigger "minicartMouseOut" #DEPRECATED
+			@element.trigger 'vtex.minicart.mouseOut' #DEPRECATED
+			$(window).trigger "minicartMouseOut.vtex"
 
-		$(window).on "vtex.minicart.mouseOver", =>
+		$(window).on "minicartMouseOver.vtex", =>
 			if @cartData.items?.length > 0
 				$(".vtexsc-cart").slideDown()
 				clearTimeout @timeoutToHide
 
-		$(window).on "vtex.minicart.mouseOut", =>
+		$(window).on "minicartMouseOut.vtex", =>
 			clearTimeout @timeoutToHide
 			@timeoutToHide = setTimeout ->
 				$(".vtexsc-cart").stop(true, true).slideUp()
 			, 800
 
 		$(window).on "cartUpdated", (evt, args...) => @updateCart(args...)
-		$(window).on 'productAddedToCart', (evt, args...) => @updateCart(args...)
-		$(window).on 'vtex.cart.productAdded', (evt, args...) => @updateCart(args...)
-		$(window).on 'vtex.cart.productRemoved', (evt, args...) => @updateCart(args...)
-#		$(window).on 'vtex.checkout.orderform.update', (evt, args...) => @handleOrderForm(args...)
+		$(window).on 'cartProductAdded.vtex', (evt, args...) => @updateCart(args...)
+		$(window).on 'cartProductRemoved.vtex', (evt, args...) => @updateCart(args...)
+		$(window).on 'orderFormUpdated.vtex', (evt, args...) => @handleOrderForm(args...)
 
 	updateCart: (slide = true) =>
 		@element.addClass 'amount-items-in-cart-loading'
@@ -70,14 +71,14 @@ class Minicart
 		})
 		.done =>
 			@element.removeClass 'amount-items-in-cart-loading'
-			@element.trigger 'vtex.minicart.updated'
+			@element.trigger 'vtex.minicart.updated' #DEPRECATED
+			@element.trigger 'minicartUpdated.vtex'
 		.success (data) =>
 			@handleOrderForm(data, slide)
 
 	handleOrderForm: (orderForm, slide = true) =>
-		console.log 'handling'
-		if orderForm.items?
-			@cartData = orderForm
+		if orderForm?.items?
+			@cartData.items = orderForm.items
 			@prepareCart()
 			@render()
 			@slide() if slide
@@ -138,9 +139,11 @@ class Minicart
 			type: "POST"
 		})
 		.done =>
-			@element.trigger 'vtex.minicart.updated'
+			@element.trigger 'vtex.minicart.updated' #DEPRECATED
+			@element.trigger 'minicartUpdated.vtex'
 		.success (data) =>
-			@element.trigger 'vtex.cart.productRemoved'
+			@element.trigger 'vtex.cart.productRemoved' #DEPRECATED
+			@element.trigger 'cartProductRemoved.vtex'
 			@cartData = data
 			@prepareCart()
 			@render()
