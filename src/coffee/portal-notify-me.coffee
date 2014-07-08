@@ -10,11 +10,13 @@ class NotifyMe extends ProductComponent
 		@sku = @options.sku
 		if CATALOG_SDK?
 			@SDK = CATALOG_SDK
-			@SDK.getProductWithVariations(@productId).done (json) =>
-				@productData = json
-				if @productData.skus.length == 1
-					@triggerProductEvent('vtex.sku.selected', @productData.skus[0])
-				@render()
+			if @productId?
+				@SDK.getProductWithVariations(@productId).done (json) =>
+					@productData = json
+					if @productData.skus.length == 1
+						@triggerProductEvent 'vtex.sku.selected', @productData.skus[0] #DEPRECATED
+						@triggerProductEvent 'skuSelected.vtex', @productData.skus[0]
+					@render()
 
 		@generateSelectors
 			Root: '.notifyme'
