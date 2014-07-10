@@ -77,6 +77,7 @@ class BuyButton extends ProductComponent
 		else
 			@skuData = sku
 			@sku = sku.sku
+			@seller = sku.sellerId
 
 		@update()
 		@element.click() if @options.instaBuy and sku.available
