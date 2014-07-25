@@ -77,6 +77,7 @@ class Minicart
 			@handleOrderForm(data, slide)
 
 	handleOrderForm: (orderForm, slide = true) =>
+		@cartData.orderFormId = orderForm?.orderFormId
 		if orderForm?.items?
 			@cartData.items = orderForm.items
 			@prepareCart()
