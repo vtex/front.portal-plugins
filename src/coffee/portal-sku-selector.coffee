@@ -321,11 +321,12 @@ class SkuSelector extends ProductComponent
 				@showConfirmButton(selectedSku)
 			else
 				$(window).trigger 'modalHide.vtex'
-				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, sku.sellerId, 1, @productData.salesChannel, false))
+				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, selectedSku.sellerId, 1, @productData.salesChannel, false))
 				.done (data) =>
-						$(window).trigger 'productAddedToCart'
+						$(window).trigger 'productAddedToCart' # DEPRECATED
+						$(window).trigger 'cartProductAdded.vtex'
 				.fail (jqXHR, status) =>
-						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, sku.sellerId, 1, @productData.salesChannel)
+						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, selectedSku.sellerId, 1, @productData.salesChannel)
 				return false
 		else
 			@findwarning().show().text('Por favor, escolha: ' + @findUndefinedDimensions()[0].name)
