@@ -24,7 +24,7 @@ expirationHandler = (idleTime, url = expirationURL) ->
   DEBUG "Totem time expired. Idle for", idleTime
   vtex.portal.stopExpiration()
   # Clean order form cookie
-  document.cookie = "checkout.vtex.com" + '=; expires=' + Date.now() + '; path=/';
+  document.cookie = "checkout.vtex.com=;expires=Thu, 01 Jan 1970 00:00:00 GMT; domain=.#{window.location.hostname}; path=/;";
   DEBUG "Cleaned order form cookie", document.cookie.split(";")
 # Send to URL
   if url
