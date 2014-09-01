@@ -22,7 +22,15 @@ module.exports = (grunt) ->
     files: ['src/templates/**/*.dust']
     tasks: ['dust', 'concat']
 
-  config.watch.coffee.tasks.push 'concat'
+  config.watch.coffee.tasks.push 'copy:js', 'concat'
+
+  config.copy.js =
+    files: [
+      expand: true
+      cwd: 'build/<%= relativePath %>/script/'
+      src: ['expiration/**/*.js']
+      dest: "build/<%= relativePath %>/js/"
+    ]
 
   # 'js' instead of 'script' for Portal URLs compatibility, e.g. "http://io.vtex.com.br/portal-plugins/2.7.3/js/portal-minicart-with-template.min.js"
   config.concat =
@@ -51,7 +59,7 @@ module.exports = (grunt) ->
 
   tasks =
   # Building block tasks
-    build: ['clean', 'copy:main', 'copy:pkg', 'coffee', 'dust', 'concat']
+    build: ['clean', 'copy:main', 'copy:pkg', 'coffee', 'copy:js','dust', 'concat']
   # Deploy tasks
     dist: ['build', 'uglify:main', 'copy:deploy'] # Dist - minifies files
     test: []

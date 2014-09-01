@@ -9,6 +9,7 @@
     - [Buy Button](#buy-button)
     - [Notify Me](#notify-me)
     - [Minicart](#minicart)
+    - [Expiration](#expiration)
 
 - [Notas](#notas)
 
@@ -345,6 +346,33 @@ Escuta pelos seguintes eventos:
 
 ---
 
+# Expiration
+
+## session-expiration.js
+
+Utilitary expiration timer, reset by events.
+When time expires, the user session is cleaned up (cookies are cleared) and
+the user is redirected to a URL.
+
+### Public functions
+
+#### vtex.portal.startExpiration(url, millis, events)
+
+Start expiration timer.
+
+Parameters and defaults:
+
+- url = '/'
+- millis = 10 * 60 * 1000 (10 minutes)
+- events = ["mousemove", "keyup", "click", "scroll"]
+
+#### vtex.portal.stopExpiration()
+
+Stops current expiration timer.
+
+
+---
+
 # Notas
 
 ## Notas gerais
@@ -369,6 +397,7 @@ Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data`
 | Buy Button           |  ✔  |  ✗  |  ✗  |  ✔  |
 | Notify Me            |  ✔  |  ✗  |  ✔  |  ✔  |
 | Minicart             |  ✔  |  ✔  |  ✔  |  ✗  |
+| Expiration           |  ✔  |  ✗  |  ✗  |  ✗  |
 
 
   [jQuery]: http://www.jquery.com
