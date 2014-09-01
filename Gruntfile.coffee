@@ -1,115 +1,71 @@
+GruntVTEX = require 'grunt-vtex'
+
 module.exports = (grunt) ->
-	pkg = grunt.file.readJSON('package.json')
+  pkg = grunt.file.readJSON 'package.json'
 
-	# Project configuration.
-	grunt.initConfig
-		relativePath: ''
+  config = GruntVTEX.generateConfig grunt, pkg,
+    open: 'http://basedevmkp.vtexlocal.com.br/portal-plugins/'
 
-		# Tasks
-		clean:
-			main: ['build', 'tmp-deploy']
+  config.dust =
+    files:
+      expand: true
+      cwd: 'src/templates/'
+      src: ['**/*.dust']
+      dest: 'build/<%= relativePath %>/templates/'
+      ext: '.js'
+    options:
+      relative: true
+      runtime: false
+      wrapper: false
 
-		copy:
-			main:
-        files: [
-          expand: true
-          cwd: 'src/'
-          src: ['**', '!coffee/**', '!**/*.less']
-          dest: 'build/<%= relativePath %>'
-        ,
-          src: ['package.json']
-          dest: 'build/<%= relativePath %>/package.json'
-        ]
-			mocks:
-				src: ['spec/mocks/*.json']
-				dest: 'build/<%= relativePath %>/'
+  config.watch.dust =
+    files: ['src/templates/**/*.dust']
+    tasks: ['dust', 'concat']
 
-		coffee:
-			main:
-				files: [
-					expand: true
-					cwd: 'src/coffee'
-					src: ['**/*.coffee']
-					dest: 'build/<%= relativePath %>/js/'
-					ext: '.js'
-				]
+  config.watch.coffee.tasks.push 'concat'
 
-		concat:
-			dev:
-				files:
-					'build/js/portal-image-gallery-with-template.js': ['build/js/product-component.js', 'build/templates/template-image-gallery.js', 'build/templates/template-image-gallery-single.js', 'build/js/portal-image-gallery.js']
-					'build/js/portal-sku-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-selector-modal.js', 'build/templates/template-sku-selector-product.js', 'build/js/portal-sku-selector.js']
-					'build/js/portal-quantity-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-quantity-selector.js', 'build/js/portal-quantity-selector.js']
-					'build/js/portal-accessories-selector-with-template.js': ['build/js/product-component.js', 'build/templates/template-accessories-selector.js', 'build/js/portal-accessories-selector.js']
-					'build/js/portal-price-with-template.js': ['build/js/product-component.js', 'build/templates/template-price.js', 'build/templates/template-price-modal.js', 'build/js/portal-price.js']
-					'build/js/portal-buy-button.js': ['build/js/product-component.js', 'build/js/portal-buy-button.js']
-					'build/js/portal-notify-me-with-template.js': ['build/js/product-component.js', 'build/templates/template-notify-me.js', 'build/js/portal-notify-me.js']
-					'build/js/portal-minicart-with-template.js': ['build/js/product-component.js', 'build/templates/template-minicart.js', 'build/js/portal-minicart.js']
-					'build/js/portal-sku-measures-with-template.js': ['build/js/product-component.js', 'build/templates/template-sku-measures.js', 'build/js/portal-sku-measures.js']
-					'build/js/portal-shipping-calculator-with-template.js': ['build/js/product-component.js', 'build/templates/template-shipping-calculator.js', 'build/js/portal-shipping-calculator.js']
+  # 'js' instead of 'script' for Portal URLs compatibility, e.g. "http://io.vtex.com.br/portal-plugins/2.7.3/js/portal-minicart-with-template.min.js"
+  config.concat =
+    main:
+      files:
+        'build/<%= relativePath %>/js/portal-image-gallery-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/image-gallery.js', 'build/<%= relativePath %>/templates/image-gallery-single.js', 'build/<%= relativePath %>/script/portal-image-gallery.js']
+        'build/<%= relativePath %>/js/portal-sku-selector-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/sku-selector-modal.js', 'build/<%= relativePath %>/templates/sku-selector-product.js', 'build/<%= relativePath %>/script/portal-sku-selector.js']
+        'build/<%= relativePath %>/js/portal-quantity-selector-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/quantity-selector.js', 'build/<%= relativePath %>/script/portal-quantity-selector.js']
+        'build/<%= relativePath %>/js/portal-accessories-selector-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/accessories-selector.js', 'build/<%= relativePath %>/script/portal-accessories-selector.js']
+        'build/<%= relativePath %>/js/portal-price-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/price.js', 'build/<%= relativePath %>/templates/price-modal.js', 'build/<%= relativePath %>/script/portal-price.js']
+        'build/<%= relativePath %>/js/portal-buy-button.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/script/portal-buy-button.js']
+        'build/<%= relativePath %>/js/portal-notify-me-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/notify-me.js', 'build/<%= relativePath %>/script/portal-notify-me.js']
+        'build/<%= relativePath %>/js/portal-minicart-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/minicart.js', 'build/<%= relativePath %>/script/portal-minicart.js']
+        'build/<%= relativePath %>/js/portal-sku-measures-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/sku-measures.js', 'build/<%= relativePath %>/script/portal-sku-measures.js']
+        'build/<%= relativePath %>/js/portal-shipping-calculator-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/shipping-calculator.js', 'build/<%= relativePath %>/script/portal-shipping-calculator.js']
 
-		uglify:
-			options:
-				mangle:
-					except: ['$', '_']
-			main:
-				files:
-					'build/js/catalog-sdk.min.js': ['build/js/catalog-sdk.js']
-					'build/js/portal-image-gallery-with-template.min.js': ['build/js/portal-image-gallery-with-template.js']
-					'build/js/portal-template-as-modal.min.js': ['build/js/portal-template-as-modal.js']
-					'build/js/portal-sku-selector-with-template.min.js': ['build/js/portal-sku-selector-with-template.js']
-					'build/js/portal-quantity-selector-with-template.min.js': ['build/js/portal-quantity-selector-with-template.js']
-					'build/js/portal-accessories-selector-with-template.min.js': ['build/js/portal-accessories-selector-with-template.js']
-					'build/js/portal-price-with-template.min.js': ['build/js/portal-price-with-template.js']
-					'build/js/portal-shipping-calculator-with-template.min.js': ['build/js/portal-shipping-calculator-with-template.js']
-					'build/js/portal-buy-button.min.js': ['build/js/portal-buy-button.js']
-					'build/js/portal-notify-me-with-template.min.js': ['build/js/portal-notify-me-with-template.js']
-					'build/js/portal-minicart-with-template.min.js': ['build/js/portal-minicart-with-template.js']
-					'build/js/portal-sku-measures-with-template.min.js': ['build/js/portal-sku-measures-with-template.js']
-					'build/js/portal-vtex-totem.min.js': ['build/js/portal-vtex-totem.js']
+  config.uglify =
+    main:
+      files: [
+        expand: true,
+        cwd: 'build/<%= relativePath %>/js',
+        src: '**/*.js',
+        dest: 'build/<%= relativePath %>/js'
+        rename: (dest, src) -> dest + '/' + src.replace('.js', '.min.js')
+      ]
 
-		dustjs:
-			compile:
-				files:
-					'build/templates/template-image-gallery.js': 'src/templates/image-gallery.dust'
-					'build/templates/template-image-gallery-single.js': 'src/templates/image-gallery-single.dust'
-					'build/templates/template-sku-selector-modal.js': 'src/templates/sku-selector-modal.dust'
-					'build/templates/template-sku-selector-product.js': 'src/templates/sku-selector-product.dust'
-					'build/templates/template-quantity-selector.js': 'src/templates/quantity-selector.dust'
-					'build/templates/template-accessories-selector.js': 'src/templates/accessories-selector.dust'
-					'build/templates/template-price.js': 'src/templates/price.dust'
-					'build/templates/template-price-modal.js': 'src/templates/price-modal.dust'
-					'build/templates/template-notify-me.js': 'src/templates/notify-me.dust'
-					'build/templates/template-minicart.js': 'src/templates/minicart.dust'
-					'build/templates/template-shipping-calculator.js': 'src/templates/shipping-calculator.dust'
-					'build/templates/template-sku-measures.js': 'src/templates/sku-measures.dust'
+  tasks =
+  # Building block tasks
+    build: ['clean', 'copy:main', 'copy:pkg', 'coffee', 'dust', 'concat']
+  # Deploy tasks
+    dist: ['build', 'uglify:main', 'copy:deploy'] # Dist - minifies files
+    test: []
+    vtex_deploy: ['shell:cp']
+  # Development tasks
+    dev: ['nolr', 'build', 'watch']
+    default: ['build', 'connect', 'watch']
+    devmin: ['build', 'min', 'connect:http:keepalive'] # Minifies files and serve
 
-		connect:
-			main:
-				options:
-					port: 9001
-					base: 'build/'
-
-		watch:
-			main:
-				options:
-					livereload: true
-				files: ['src/**/*.html', 'src/**/*.dust', 'src/**/*.coffee', 'spec/**/*.coffee', 'spec/**/*.html', 'src/**/*.js', 'src/**/*.less']
-				tasks: ['clean', 'concurrent:transform', 'concat', 'uglify']
-
-		concurrent:
-			transform: ['copy:main', 'copy:mocks', 'coffee', 'dustjs']
-
-		vtex_deploy:
-			main:
-				cwd: "build/"
-				publish: true
-				upload:
-					"/{{version}}/": "**"
-
-	grunt.loadNpmTasks name for name of pkg.dependencies when name[0..5] is 'grunt-'
-
-	grunt.registerTask 'default', ['clean', 'concurrent:transform', 'concat', 'uglify', 'server', 'watch:main']
-	grunt.registerTask 'dist', ['clean', 'concurrent:transform', 'concat', 'uglify'] # Dist - minifies files
-	grunt.registerTask 'test', -> console.log 'Not implemented... yet'
-	grunt.registerTask 'server', ['connect']
+  # Project configuration.
+  grunt.initConfig config
+  grunt.loadNpmTasks name for name of pkg.devDependencies when name[0..5] is 'grunt-' and name isnt 'grunt-vtex'
+  grunt.registerTask 'nolr', ->
+    # Turn off LiveReload in development mode
+    grunt.config 'watch.options.livereload', false
+    return true
+  grunt.registerTask taskName, taskArray for taskName, taskArray of tasks
