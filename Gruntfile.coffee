@@ -24,11 +24,14 @@ module.exports = (grunt) ->
 
   config.watch.coffee.tasks.push 'copy:js', 'concat'
 
+  config.clean.deploy = 'build/<%= relativePath %>/script/'
+
+  # Copy all to 'js' for Portal URLs compatibility, e.g. "http://io.vtex.com.br/portal-plugins/2.7.3/js/portal-template-as-modal.min.js"
   config.copy.js =
     files: [
       expand: true
       cwd: 'build/<%= relativePath %>/script/'
-      src: ['expiration/**/*.js']
+      src: ['**/*.js']
       dest: "build/<%= relativePath %>/js/"
     ]
 
@@ -61,7 +64,7 @@ module.exports = (grunt) ->
   # Building block tasks
     build: ['clean', 'copy:main', 'copy:pkg', 'coffee', 'copy:js','dust', 'concat']
   # Deploy tasks
-    dist: ['build', 'uglify:main', 'copy:deploy'] # Dist - minifies files
+    dist: ['build', 'uglify:main', 'clean:deploy', 'copy:deploy'] # Dist - minifies files
     test: []
     vtex_deploy: ['shell:cp']
   # Development tasks
