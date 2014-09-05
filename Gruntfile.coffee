@@ -66,7 +66,7 @@ module.exports = (grunt) ->
   # Deploy tasks
     dist: ['build', 'uglify:main', 'clean:deploy', 'copy:deploy'] # Dist - minifies files
     test: []
-    vtex_deploy: ['shell:cp']
+    vtex_deploy: ['shell:cp', 'shell:cp_br']
   # Development tasks
     dev: ['nolr', 'build', 'watch']
     default: ['build', 'connect', 'watch']
