@@ -88,6 +88,10 @@
 <script src="js/portal-minicart-with-template.js"></script>
 
 <script>
+  $('.portal-minicart-ref').minicart({showTotalizers: false});
+</script>
+
+<script>
   var preBind = function() {
     $('.to-bind-modal').each(function() {
       $(this).on('click', function() {
