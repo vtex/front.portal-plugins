@@ -116,6 +116,12 @@ class Minicart
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
 				self.deleteItem(this) # Keep reference to event handler
 
+
+			dependencies = ['js/component/ShippingOptions']
+
+			vtex.curl dependencies, (ShippingOptions) ->
+				ShippingOptions.attachTo('.minicart-shipping-options')
+
 	slide: =>
 		if @cartData.items.length is 0
 			@element.find(".vtexsc-cart").slideUp()
