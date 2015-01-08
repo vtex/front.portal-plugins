@@ -33,8 +33,6 @@
     <p>
       <a class="btn btn-lg btn-info" target="_blank" href="https://github.com/vtex/front.portal-plugins">GitHub</a>
       <a class="btn btn-lg btn-info" target="_blank" href="http://pachamama.vtexlab.com.br/project.html?projectId=project480&tab=projectOverview">Pachamama</a>
-      <a class="btn btn-lg btn-info" target="_blank" href="https://app.asana.com/0/6126587030911/6126587030911">Asana</a>
-      <a class="btn btn-lg btn-info" target="_blank" href="https://vtex.myjetbrains.com/youtrack/issues/UPP">Youtrack</a>
     </p>
   </div>
 
@@ -89,28 +87,6 @@
 
 <script>
   $('.portal-minicart-ref').minicart({showTotalizers: false, showShippingOptions: true});
-</script>
-
-<script>
-  var preBind = function() {
-    $('.to-bind-modal').each(function() {
-      $(this).on('click', function() {
-        MODAL_JSON_URL = $(this).data('json');
-      });
-    });
-  };
-  $(document).ready(preBind);
-  $(document).on('ajaxComplete', preBind);
-
-  var oldAjax = $.ajax;
-
-  $.ajax = function() {
-    if(arguments[0]) arguments[0].type = "GET";
-    if(arguments[1]) arguments[1].type = "GET";
-    return oldAjax.apply(null, arguments);
-  }
-
-  $('.portal-minicart-ref').minicart({orderFormURL: "spec/mocks/orderform.json"});
 </script>
 
 <script src="js/portal-template-as-modal.js"></script>
