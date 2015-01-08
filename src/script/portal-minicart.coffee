@@ -112,8 +112,9 @@ class Minicart
 		dust.render 'minicart', $.extend({options: @options}, @cartData), (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
 			@element.html out
-			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', (evt) =>
-				@deleteItem(evt.target)
+			self = this
+			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
+				self.deleteItem(this) # Keep reference to event handler
 
 	slide: =>
 		if @cartData.items.length is 0
@@ -126,19 +127,18 @@ class Minicart
 
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
-
+		data = JSON.stringify
+			expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
+			orderItems: [
+				index: $(item).data("index")
+				quantity: 0
+			]
 		$.ajax({
+			type: "POST"
 			url: @getOrderFormUpdateURL()
-			data:
-				JSON.stringify
-					expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
-					orderItems: [
-						index: $(item).data("index")
-						quantity: 0
-					]
+			data: data
 			dataType: "json"
 			contentType: "application/json; charset=utf-8"
-			type: "POST"
 		})
 		.done =>
 			@element.trigger 'vtex.minicart.updated' #DEPRECATED

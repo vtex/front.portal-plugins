@@ -25,6 +25,9 @@
   <div class="vtexsc-bt"></div>
   <div class="vtexsc-center">
     <div class="vtexsc-wrap">
+      {#options.showShippingOptions}
+        <h1>SHIPPING OPTIONS</h1>
+      {/options.showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
         <tr>

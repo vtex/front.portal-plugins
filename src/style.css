@@ -37,3 +37,11 @@ ul
 .item_unavailable {
     color: darkred;
 }
+
+.cartSkuRemove a {
+    display: block !important;
+}
+
+.portal-minicart-ref .vtexsc-wrap {
+    max-height: none;
+}
