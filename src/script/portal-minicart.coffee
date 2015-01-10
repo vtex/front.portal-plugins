@@ -8,7 +8,7 @@ $ = window.jQuery
 # CLASS
 class Minicart
 	constructor: (@element, @options) ->
-		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers"]
+		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers", "shippingData", "sellers"]
 
 		@hoverContext = @element.add('.show-minicart-on-hover')
 		@cartData = {}
@@ -79,6 +79,8 @@ class Minicart
 	handleOrderForm: (orderForm, slide = true) =>
 		@cartData.orderFormId = orderForm?.orderFormId
 		@cartData.totalizers = orderForm?.totalizers
+		@cartData.shippingData = orderForm?.shippingData
+		@cartData.sellers = orderForm?.sellers
 		if orderForm?.items?
 			@cartData.items = orderForm.items
 			@prepareCart()
@@ -108,7 +110,7 @@ class Minicart
 				item.availabilityMessage = @getAvailabilityMessage(item)
 				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
-	render: () =>
+	render: =>
 		dust.render 'minicart', $.extend({options: @options}, @cartData), (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
 			@element.html out
@@ -116,11 +118,13 @@ class Minicart
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
 				self.deleteItem(this) # Keep reference to event handler
 
-
 			dependencies = ['js/component/ShippingOptions']
 
-			vtex.curl dependencies, (ShippingOptions) ->
-				ShippingOptions.attachTo('.minicart-shipping-options')
+			if @cartData.shippingData
+				vtex.curl dependencies, (ShippingOptions) =>
+					ShippingOptions.attachTo('.minicart-shipping-options')
+					$('.minicart-shipping-options').trigger('enable.vtex',
+						[@cartData.shippingData.logisticsInfo, @cartData.items, @cartData.sellers])
 
 	slide: =>
 		if @cartData.items.length is 0
