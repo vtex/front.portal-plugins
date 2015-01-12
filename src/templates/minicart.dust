@@ -27,6 +27,18 @@
     <div class="vtexsc-wrap">
       {#options.showShippingOptions}
         <p class="minicart-shipping-options">Próxima janela de entrega disponível: <span class="next-delivery-window">{@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}</span></p>
+        <p class="available-periods">Horários disponíveis para entrega</p>
+        <ul class="available-timetables">
+            {#firstAvailableDeliveryWindow.timetable}
+              <li class="timetable">
+                  <p class="timetable-period">
+                      Das <span class="timetable-start">{@formatMoment date=startDateUtc/}</span>
+                      &nbsp;
+                      às <span class="timetable-end">{@formatMoment date=endDateUtc/}</span>
+                  </p>
+              </li>
+            {/firstAvailableDeliveryWindow.timetable}
+        </ul>
         <p class="checkout-link">
             <a href="/checkout/#/shipping">Verificar outras janelas de entrega</a>
         </p>
