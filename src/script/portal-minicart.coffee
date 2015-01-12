@@ -131,6 +131,14 @@ class Minicart
 					break
 		@cartData.firstAvailableDeliveryWindow = slas[scheduledDeliverySlaId].availableDeliveryWindows[0]
 
+		# Resolve available timetables on the same day of first available delivery window
+		firstAvailableDay = new Date(@cartData.firstAvailableDeliveryWindow.startDateUtc).getDate()
+		@cartData.firstAvailableDeliveryWindow.timetable = []
+		for deliveryWindow in slas[scheduledDeliverySlaId].availableDeliveryWindows
+			date = new Date(deliveryWindow.startDateUtc)
+			if date.getDate() is firstAvailableDay
+				@cartData.firstAvailableDeliveryWindow.timetable.push(deliveryWindow)
+
 	render: =>
 		dust.render 'minicart', $.extend({options: @options}, @cartData), (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
