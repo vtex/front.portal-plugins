@@ -27,6 +27,9 @@
     <div class="vtexsc-wrap">
       {#options.showShippingOptions}
         <p class="minicart-shipping-options">Próxima janela de entrega disponível: <span class="next-delivery-window">{@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}</span></p>
+        <p class="checkout-link">
+            <a href="/checkout/#/shipping">Verificar outras janelas de entrega</a>
+        </p>
       {/options.showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
