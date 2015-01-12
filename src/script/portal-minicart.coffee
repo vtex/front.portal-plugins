@@ -20,10 +20,21 @@ class Minicart
 			amountItems: => $('.amount-items-em', @element)
 			totalCart: => $('.total-cart-em', @element)
 
+		@startHelpers()
 		@bindEvents()
 		@updateCart(false)
 
 		$(window).trigger "minicartLoaded"
+
+	startHelpers: =>
+		dust.helpers.formatDate = (chunk, context, bodies, params) ->
+			timestamp = params.date
+			date = new Date(timestamp)
+			day = date.getDate()
+			month = date.getMonth() + 1
+			fullYear = date.getFullYear()
+
+			return chunk.write("#{day}/#{month}/#{fullYear}")
 
 	getOrderFormURL: =>
 		@options.orderFormURL

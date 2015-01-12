@@ -28,7 +28,7 @@
       {#options.showShippingOptions}
         <p class="minicart-shipping-options">Datas de entrega disponíveis</p>
 
-        {firstAvailableDeliveryWindow}
+        {@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}
       {/options.showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
