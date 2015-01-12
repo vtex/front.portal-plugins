@@ -26,9 +26,7 @@
   <div class="vtexsc-center">
     <div class="vtexsc-wrap">
       {#options.showShippingOptions}
-        <p class="minicart-shipping-options">Datas de entrega disponíveis</p>
-
-        {@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}
+        <p class="minicart-shipping-options">Próxima janela de entrega disponível: <span class="next-delivery-window">{@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}</span></p>
       {/options.showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
