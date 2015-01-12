@@ -27,6 +27,8 @@
     <div class="vtexsc-wrap">
       {#options.showShippingOptions}
         <p class="minicart-shipping-options">Datas de entrega disponíveis</p>
+
+        {firstAvailableDeliveryWindow}
       {/options.showShippingOptions}
       <table class="vtexsc-productList">
         <thead>

@@ -110,6 +110,15 @@ class Minicart
 				item.availabilityMessage = @getAvailabilityMessage(item)
 				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
+		# Resolve first delivery window
+		slas = @cartData.shippingData.logisticsInfo[0].slas
+		for sla, i in slas
+			for deliveryId in sla.deliveryIds
+				if deliveryId.courierName is 'Entrega Agendada'
+					scheduledDeliverySlaId = i
+					break
+		@cartData.firstAvailableDeliveryWindow = slas[scheduledDeliverySlaId].availableDeliveryWindows[0]
+
 	render: =>
 		dust.render 'minicart', $.extend({options: @options}, @cartData), (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
@@ -117,14 +126,6 @@ class Minicart
 			self = this
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
 				self.deleteItem(this) # Keep reference to event handler
-
-			dependencies = ['js/component/ShippingOptions']
-
-			if @cartData.shippingData
-				vtex.curl dependencies, (ShippingOptions) =>
-					ShippingOptions.attachTo('.minicart-shipping-options')
-					$('.minicart-shipping-options').trigger('enable.vtex',
-						[@cartData.shippingData.logisticsInfo, @cartData.items, @cartData.sellers])
 
 	slide: =>
 		if @cartData.items.length is 0
