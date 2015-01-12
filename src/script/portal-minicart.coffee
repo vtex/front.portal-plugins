@@ -33,8 +33,9 @@ class Minicart
 			day = date.getDate()
 			month = date.getMonth() + 1
 			fullYear = date.getFullYear()
+			twoDigitsMonth = ("0" + month).slice(-2)
 
-			return chunk.write("#{day}/#{month}/#{fullYear}")
+			return chunk.write("#{day}/#{twoDigitsMonth}/#{fullYear}")
 
 	getOrderFormURL: =>
 		@options.orderFormURL
