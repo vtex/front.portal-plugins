@@ -33,8 +33,9 @@ class Minicart
 			day = date.getDate()
 			month = date.getMonth() + 1
 			fullYear = date.getFullYear()
+			twoDigitsDay = ("0" + day).slice(-2)
 			twoDigitsMonth = ("0" + month).slice(-2)
-			return chunk.write("#{day}/#{twoDigitsMonth}/#{fullYear}")
+			return chunk.write("#{twoDigitsDay}/#{twoDigitsMonth}/#{fullYear}")
 
 		dust.helpers.formatMoment = (chunk, context, bodies, params) ->
 			timestamp = params.date
