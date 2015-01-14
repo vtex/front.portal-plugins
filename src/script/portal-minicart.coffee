@@ -118,7 +118,43 @@ class Minicart
 			@cartData.items = orderForm.items
 			@prepareCart()
 			@render()
+			@prepareDeliveryOptionsSelectors()
 			@slide() if slide
+
+	prepareDeliveryOptionsSelectors: =>
+		_this = this
+
+		availableDates = $('.available-dates')
+		availableDates.hide()
+
+		availableTimetables = $('.available-timetables')
+		availableTimetables.hide()
+
+		$('.available-delivery-options').on 'change', ->
+			if $(this).val() is 'Entrega Agendad'
+				availableDates.show()
+				availableTimetables.show()
+			else
+				availableDates.hide()
+				availableTimetables.hide()
+
+		availableDates.on 'change', ->
+			selectedDay = $(this).val()
+			selectedDate = new Date(selectedDay)
+
+			timetablesList = _.toArray _.filter _this.cartData.deliveryWindows, (dw) ->
+				date = new Date(dw.startDateUtc)
+				return date.getDate() is selectedDate.getDate()
+
+			availableTimetables.empty()
+
+			_.each timetablesList, (timetable) ->
+				startTime = formatMoment(timetable.startDateUtc)
+				endTime = formatMoment(timetable.endDateUtc)
+				text = "Das #{startTime} às #{endTime}"
+				optionNode = $("<option>").text(text)
+				availableTimetables.append(optionNode)
+
 
 	prepareCart: =>
 		# Conditionals
