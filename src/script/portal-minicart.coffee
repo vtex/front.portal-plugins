@@ -144,18 +144,19 @@ class Minicart
 				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
 		# Resolve first delivery window
-		slas = @cartData.shippingData.logisticsInfo[0].slas
-		for sla, i in slas
+		@cartData.slas = @cartData.shippingData.logisticsInfo[0].slas
+		for sla, i in @cartData.slas
 			for deliveryId in sla.deliveryIds
 				if deliveryId.courierName is 'Entrega Agendada'
 					scheduledDeliverySlaId = i
 					break
-		@cartData.firstAvailableDeliveryWindow = slas[scheduledDeliverySlaId].availableDeliveryWindows[0]
+		@cartData.deliveryWindows = @cartData.slas[scheduledDeliverySlaId].availableDeliveryWindows
+		@cartData.firstAvailableDeliveryWindow = @cartData.deliveryWindows[0]
 
 		# Resolve available timetables on the same day of first available delivery window
 		firstAvailableDay = new Date(@cartData.firstAvailableDeliveryWindow.startDateUtc).getDate()
 		@cartData.firstAvailableDeliveryWindow.timetable = []
-		for deliveryWindow in slas[scheduledDeliverySlaId].availableDeliveryWindows
+		for deliveryWindow in @cartData.deliveryWindows
 			date = new Date(deliveryWindow.startDateUtc)
 			if date.getDate() is firstAvailableDay
 				@cartData.firstAvailableDeliveryWindow.timetable.push(deliveryWindow)
