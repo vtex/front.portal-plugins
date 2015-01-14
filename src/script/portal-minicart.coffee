@@ -29,22 +29,28 @@ class Minicart
 	startHelpers: =>
 		dust.helpers.formatDate = (chunk, context, bodies, params) ->
 			timestamp = params.date
-			date = new Date(timestamp)
-			day = date.getDate()
-			month = date.getMonth() + 1
-			fullYear = date.getFullYear()
-			twoDigitsDay = ("0" + day).slice(-2)
-			twoDigitsMonth = ("0" + month).slice(-2)
-			return chunk.write("#{twoDigitsDay}/#{twoDigitsMonth}/#{fullYear}")
+			return chunk.write(formatDate(timestamp))
 
 		dust.helpers.formatMoment = (chunk, context, bodies, params) ->
 			timestamp = params.date
-			date = new Date(timestamp)
-			hour = date.getHours()
-			minutes = date.getMinutes()
-			twoDigitsHour = ("0" + hour).slice(-2)
-			twoDigitsMinutes = ("0" + minutes).slice(-2)
-			return chunk.write("#{twoDigitsHour}:#{twoDigitsMinutes}")
+			return chunk.write(formatMoment(timestamp))
+
+	formatMoment = (timestamp) =>
+		date = new Date(timestamp)
+		hour = date.getHours()
+		minutes = date.getMinutes()
+		twoDigitsHour = ("0" + hour).slice(-2)
+		twoDigitsMinutes = ("0" + minutes).slice(-2)
+		return "#{twoDigitsHour}:#{twoDigitsMinutes}"
+
+	formatDate = (timestamp) =>
+		date = new Date(timestamp)
+		day = date.getDate()
+		month = date.getMonth() + 1
+		fullYear = date.getFullYear()
+		twoDigitsDay = ("0" + day).slice(-2)
+		twoDigitsMonth = ("0" + month).slice(-2)
+		return "#{twoDigitsDay}/#{twoDigitsMonth}/#{fullYear}"
 
 	getOrderFormURL: =>
 		@options.orderFormURL
