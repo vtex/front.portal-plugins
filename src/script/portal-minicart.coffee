@@ -35,6 +35,12 @@ class Minicart
 			timestamp = params.date
 			return chunk.write(formatMoment(timestamp))
 
+		dust.helpers.cond_write = (chunk, context, bodies, params) ->
+			if params.key == params.value
+				return chunk.write bodies.block(chunk, context)
+			else
+				return chunk.write ""
+
 	formatMoment = (timestamp) =>
 		date = new Date(timestamp)
 		hour = date.getHours()
