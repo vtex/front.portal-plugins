@@ -153,6 +153,20 @@ class Minicart
 		@cartData.deliveryWindows = @cartData.slas[scheduledDeliverySlaId].availableDeliveryWindows
 		@cartData.firstAvailableDeliveryWindow = @cartData.deliveryWindows[0]
 
+		# Groups timetables by days
+		availableMonths = _.toArray _.groupBy @cartData.deliveryWindows, (dw) ->
+			date = new Date(dw.startDateUtc)
+			day = date.getDate()
+			month = date.getMonth()
+			return month
+
+		@cartData.availableMonths = _.map availableMonths, (month) ->
+			days = _.groupBy month, (timetable) ->
+				date = new Date(timetable.startDateUtc)
+				day = date.getDate()
+
+			_.toArray days
+
 		# Resolve available timetables on the same day of first available delivery window
 		firstAvailableDay = new Date(@cartData.firstAvailableDeliveryWindow.startDateUtc).getDate()
 		@cartData.firstAvailableDeliveryWindow.timetable = []
