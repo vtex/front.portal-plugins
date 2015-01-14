@@ -28,17 +28,31 @@
       {#options.showShippingOptions}
         <p class="minicart-shipping-options">Próxima janela de entrega disponível: <span class="next-delivery-window">{@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}</span></p>
         <p class="available-periods">Horários disponíveis para entrega</p>
-        <ul class="available-timetables">
+
+        <select class="available-delivery-options">
+          {#slas}
+            <option value="{id}">{name}</option>
+          {/slas}
+        </select>
+
+        <select class="available-dates">
+            {#availableMonths}
+              {#.}
+                {#.}
+                  {@cond_write key=$idx value=0 }
+                    <option value="{startDateUtc}">{@formatDate date=startDateUtc /}</option>
+                  {/cond_write}
+                {/.}
+              {/.}
+            {/availableMonths}
+        </select>
+
+        <select class="available-timetables">
             {#firstAvailableDeliveryWindow.timetable}
-              <li class="timetable">
-                  <p class="timetable-period">
-                      Das <span class="timetable-start">{@formatMoment date=startDateUtc/}</span>
-                      &nbsp;
-                      às <span class="timetable-end">{@formatMoment date=endDateUtc/}</span>
-                  </p>
-              </li>
+              <option value="{$idx}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
             {/firstAvailableDeliveryWindow.timetable}
-        </ul>
+        </select>
+      
         <p class="checkout-link">
             <a href="/checkout/#/shipping">Verificar outras janelas de entrega</a>
         </p>
