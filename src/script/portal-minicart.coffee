@@ -94,20 +94,13 @@ class Minicart
 	updateCart: (slide = true) =>
 		@element.addClass 'amount-items-in-cart-loading'
 
-		$.ajax({
-			url: @getOrderFormURL()
-			data:
-				JSON.stringify expectedOrderFormSections: @EXPECTED_ORDER_FORM_SECTIONS
-			dataType: "json"
-			contentType: "application/json; charset=utf-8"
-			type: "POST"
-		})
-		.done =>
-			@element.removeClass 'amount-items-in-cart-loading'
-			@element.trigger 'vtex.minicart.updated' #DEPRECATED
-			@element.trigger 'minicartUpdated.vtex'
-		.success (data) =>
-			@handleOrderForm(data, slide)
+		vtexjs.checkout.getOrderForm(@EXPECTED_ORDER_FORM_SECTIONS)
+			.done =>
+				@element.removeClass 'amount-items-in-cart-loading'
+				@element.trigger 'vtex.minicart.updated' #DEPRECATED
+				@element.trigger 'minicartUpdated.vtex'
+			.success (data) =>
+				@handleOrderForm(data, slide)
 
 	handleOrderForm: (orderForm, slide = true) =>
 		@cartData.orderFormId = orderForm?.orderFormId
@@ -119,10 +112,34 @@ class Minicart
 			@prepareCart()
 			@render()
 			@prepareDeliveryOptionsSelectors()
+			@setDeliveryOptionsSelectorsState()
 			@slide() if slide
+
+	setDeliveryOptionsSelectorsState: =>
+		return unless @cartData.shippingData?.logisticsInfo?.length > 0
+
+		availableDeliveryOptions = $('.available-delivery-options')
+		availableDates = $('.available-dates')
+		availableTimetables = $('.available-timetables')
+
+		logisticsInfo = @cartData.shippingData.logisticsInfo
+
+		availableDeliveryOptions.val logisticsInfo[0].selectedSla
+
+		### TODO: usar `usar deliveryWindows.length > 0` para decidir se é entrega agendada ao invés de valor hardcoded
+
+		if availableDeliveryOptions.val() is 'Entrega Agendad'
+			selectedDeliveryWindow = @cartData.scheduledDelivery.deliveryWindow
+			availableDates = formatDate selectedDeliveryWindow.startDateUtc
+			availableTimetables = formatMoment selectedDeliveryWindow.startDateUtc
+			availableDates.show()
+			availableTimetables.show()
+		###
 
 	prepareDeliveryOptionsSelectors: =>
 		_this = this
+
+		availableDeliveryOptions = $('.available-delivery-options')
 
 		availableDates = $('.available-dates')
 		availableDates.hide()
@@ -130,7 +147,7 @@ class Minicart
 		availableTimetables = $('.available-timetables')
 		availableTimetables.hide()
 
-		$('.available-delivery-options').on 'change', ->
+		availableDeliveryOptions.on 'change', ->
 			if $(this).val() is 'Entrega Agendad'
 				availableDates.show()
 				availableTimetables.show()
@@ -155,11 +172,39 @@ class Minicart
 				optionNode = $("<option>").text(text)
 				availableTimetables.append(optionNode)
 
+		availableDeliveryOptions.on 'change', ->
+			_this.sendShippingDataAttachment()
+
+		availableDates.on 'change', ->
+			_this.sendShippingDataAttachment()
+
+		availableTimetables.on 'change', ->
+			_this.sendShippingDataAttachment()
+
+	sendShippingDataAttachment: =>
+
+		selectedDeliveryOption = $('.available-delivery-options').val()
+		selectedDeliveryWindow = $('.available-timetables').val()
+
+		attachment =
+			address: _.clone @cartData.shippingData.address
+			logisticsInfo: _.map @cartData.items, (item, index) ->
+				itemIndex: index
+				selectedSla: selectedDeliveryOption
+
+		### TODO: usar `usar deliveryWindows.length > 0` para decidir se é entrega agendada ao invés de valor hardcoded
+		if selectedDeliveryOption is 'Entrega Agendad'
+			attachment.logisticsInfo.deliveryWindow = @cartData.deliveryWindows[selectedDeliveryWindow]
+
+		###
+
+		return vtexjs.checkout.sendAttachment('shippingData', attachment)
 
 	prepareCart: =>
 		# Conditionals
 		@cartData.showMinicart = @options.showMinicart
 		@cartData.showTotalizers = @options.showTotalizers
+		@cartData.showShippingOptions = @options.showShippingOptions
 
 		# Amount Items
 		@cartData.amountItems = 0
@@ -180,39 +225,46 @@ class Minicart
 				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
 		# Resolve first delivery window
-		@cartData.slas = @cartData.shippingData.logisticsInfo[0].slas
-		for sla, i in @cartData.slas
-			for deliveryId in sla.deliveryIds
-				if deliveryId.courierName is 'Entrega Agendada'
-					scheduledDeliverySlaId = i
-					break
-		@cartData.deliveryWindows = @cartData.slas[scheduledDeliverySlaId].availableDeliveryWindows
-		@cartData.firstAvailableDeliveryWindow = @cartData.deliveryWindows[0]
+		if @cartData.shippingData?.logisticsInfo?.length > 0
+			@cartData.slas = @cartData.shippingData.logisticsInfo[0].slas
+			### TODO use `deliveryWindow.length > 0`
+  		for sla, i in @cartData.slas
+				for deliveryId in sla.deliveryIds
+					if deliveryId.courierName is 'Entrega Agendada'
+						scheduledDeliverySlaId = i
+						break
+			@cartData.scheduledDelivery = @cartData.slas[scheduledDeliverySlaId]
+			@cartData.deliveryWindows = @cartData.slas[scheduledDeliverySlaId].availableDeliveryWindows
+			@cartData.firstAvailableDeliveryWindow = @cartData.deliveryWindows[0]
 
-		# Groups timetables by days
-		availableMonths = _.toArray _.groupBy @cartData.deliveryWindows, (dw) ->
-			date = new Date(dw.startDateUtc)
-			day = date.getDate()
-			month = date.getMonth()
-			return month
-
-		@cartData.availableMonths = _.map availableMonths, (month) ->
-			days = _.groupBy month, (timetable) ->
-				date = new Date(timetable.startDateUtc)
+			# Groups timetables by days
+			availableMonths = _.toArray _.groupBy @cartData.deliveryWindows, (dw) ->
+				date = new Date(dw.startDateUtc)
 				day = date.getDate()
+				month = date.getMonth()
+				return month
 
-			_.toArray days
+			@cartData.availableMonths = _.map availableMonths, (month) ->
+				days = _.groupBy month, (timetable) ->
+					date = new Date(timetable.startDateUtc)
+					day = date.getDate()
 
-		# Resolve available timetables on the same day of first available delivery window
-		firstAvailableDay = new Date(@cartData.firstAvailableDeliveryWindow.startDateUtc).getDate()
-		@cartData.firstAvailableDeliveryWindow.timetable = []
-		for deliveryWindow in @cartData.deliveryWindows
-			date = new Date(deliveryWindow.startDateUtc)
-			if date.getDate() is firstAvailableDay
-				@cartData.firstAvailableDeliveryWindow.timetable.push(deliveryWindow)
+				_.toArray days
+
+			# Resolve available timetables on the same day of first available delivery window
+			firstAvailableDay = new Date(@cartData.firstAvailableDeliveryWindow.startDateUtc).getDate()
+			@cartData.firstAvailableDeliveryWindow.timetable = []
+			for deliveryWindow in @cartData.deliveryWindows
+				date = new Date(deliveryWindow.startDateUtc)
+				if date.getDate() is firstAvailableDay
+					@cartData.firstAvailableDeliveryWindow.timetable.push(deliveryWindow)###
 
 	render: =>
-		dust.render 'minicart', $.extend({options: @options}, @cartData), (err, out) =>
+		data = $.extend({options: @options}, @cartData)
+		if @cartData.shippingData?.logisticsInfo?.length is 0 or
+				@cartData.shippingData?.logisticsInfo?[0].slas?.length is 0
+			data.showShippingOptions = false
+		dust.render 'minicart', data, (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
 			@element.html out
 			self = this
