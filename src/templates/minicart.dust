@@ -25,9 +25,35 @@
   <div class="vtexsc-bt"></div>
   <div class="vtexsc-center">
     <div class="vtexsc-wrap">
-      {#options.showShippingOptions}
-        <h1>SHIPPING OPTIONS</h1>
-      {/options.showShippingOptions}
+      {#showShippingOptions}
+
+        <select class="available-delivery-options">
+          {#slas}
+            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{name}</option>
+          {/slas}
+        </select>
+
+        {#isScheduledSla}
+          <select class="available-dates">
+              {#availableDays}
+                <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
+              {/availableDays}
+          </select>
+
+          {#selectedDeliveryWindow}
+            <select class="available-timetables">
+                {#timetable}
+                  <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
+                {/timetable}
+            </select>
+          {/selectedDeliveryWindow}
+        {/isScheduledSla}
+
+        <p class="congirm-shipping-options">
+          <a href="#" class="confirm-shipping-options-button">Confirmar opções de entrega</a>
+        </p>
+
+      {/showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
         <tr>
