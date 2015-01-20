@@ -26,36 +26,33 @@
   <div class="vtexsc-center">
     <div class="vtexsc-wrap">
       {#showShippingOptions}
-        <p class="minicart-shipping-options">Próxima janela de entrega disponível: <span class="next-delivery-window">{@formatDate date=firstAvailableDeliveryWindow.startDateUtc/}</span></p>
-        <p class="available-periods">Horários disponíveis para entrega</p>
 
         <select class="available-delivery-options">
           {#slas}
-            <option value="{id}">{name}</option>
+            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{name}</option>
           {/slas}
         </select>
 
-        <select class="available-dates">
-            {#availableMonths}
-              {#.}
-                {#.}
-                  {@cond_write key=$idx value=0 }
-                    <option value="{startDateUtc}">{@formatDate date=startDateUtc /}</option>
-                  {/cond_write}
-                {/.}
-              {/.}
-            {/availableMonths}
-        </select>
+        {#isScheduledSla}
+          <select class="available-dates">
+              {#availableDays}
+                <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
+              {/availableDays}
+          </select>
 
-        <select class="available-timetables">
-            {#firstAvailableDeliveryWindow.timetable}
-              <option value="{$idx}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
-            {/firstAvailableDeliveryWindow.timetable}
-        </select>
-      
-        <p class="checkout-link">
-            <a href="/checkout/#/shipping">Verificar outras janelas de entrega</a>
+          {#selectedDeliveryWindow}
+            <select class="available-timetables">
+                {#timetable}
+                  <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
+                {/timetable}
+            </select>
+          {/selectedDeliveryWindow}
+        {/isScheduledSla}
+
+        <p class="congirm-shipping-options">
+          <a href="#" class="confirm-shipping-options-button">Confirmar opções de entrega</a>
         </p>
+
       {/showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
