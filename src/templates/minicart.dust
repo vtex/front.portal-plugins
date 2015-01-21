@@ -42,11 +42,17 @@
           </select>
 
           {#selectedDeliveryWindow}
-            <select class="available-timetables">
+            {@cond_write key=timetable.length value=1 }
+              {#timetable}
+                <span class="available-timetable">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</span>
+              {/timetable}
+            {:else}
+              <select class="available-timetables">
                 {#timetable}
-                  <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
+                    <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
                 {/timetable}
-            </select>
+              </select>
+            {/cond_write}
           {/selectedDeliveryWindow}
         {/isScheduledSla}
 

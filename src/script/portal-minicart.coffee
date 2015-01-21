@@ -37,9 +37,9 @@ class Minicart
 
 		dust.helpers.cond_write = (chunk, context, bodies, params) ->
 			if params.key == params.value
-				return chunk.write bodies.block(chunk, context)
+				return bodies.block(chunk, context)
 			else
-				return chunk.write ""
+				return bodies.else(chunk, context)
 
 	formatMoment = (timestamp) =>
 		date = new Date(timestamp)
