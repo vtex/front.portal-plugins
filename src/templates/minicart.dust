@@ -34,7 +34,8 @@
         </select>
 
         {#isScheduledSla}
-          <select class="available-dates">
+            <select class="available-dates">
+              <option>Escolha uma data</option>
               {#availableDays}
                 <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
               {/availableDays}
