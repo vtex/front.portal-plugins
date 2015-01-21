@@ -201,18 +201,32 @@ class Minicart
 				parcialSelectedDay = selectedDay.startDateUtc.split('T')[0]
 				return parcialAvailableDay == parcialSelectedDay
 
-			timetable = _.filter self.cartData.availableDeliveryWindows, (dw) =>
+			self.cartData.timetableForSelectedDay = _.filter self.cartData.availableDeliveryWindows, (dw) =>
 				parcialDWDate = dw.startDateUtc.split('T')[0]
 				parcialDay = self.cartData.selectedDay.startDateUtc.split('T')[0]
 				return parcialDay == parcialDWDate
 
-			self.cartData.selectedTimetable = _.find timetable, (tt) =>
+			self.cartData.selectedTimetable = _.find self.cartData.timetableForSelectedDay, (tt) =>
 				return self.cartData.selectedDay.startDateUtc == tt.startDateUtc
 
 			self.cartData.selectedDeliveryWindow =
-				timetable: timetable
+				timetable: self.cartData.timetableForSelectedDay
 
 			self.render()
+
+		availableDeliveryOptions.on 'change', ->
+			selectedSlaPosition = $(this).val()
+			selectedSla = self.cartData.slas[selectedSlaPosition]
+
+			if selectedSla.availableDeliveryWindows.length == 0
+				self.sendShippingDataAttachment()
+
+		availableDates.on 'change', ->
+			if self.cartData.timetableForSelectedDay.length == 1
+				self.sendShippingDataAttachment()
+
+		availableTimetables.on 'change', ->
+			self.sendShippingDataAttachment()
 
 	sendShippingDataAttachment: =>
 
@@ -289,12 +303,10 @@ class Minicart
 			@prepareDeliveryOptionsSelectors()
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
 				self.deleteItem(this) # Keep reference to event handler
-			$('.confirm-shipping-options-button').on 'click', ->
-				self.sendShippingDataAttachment()
 
 	slide: =>
 		if @cartData.items.length is 0
-			@element.find(".vtexsc-cart").slideUp()
+			@element.find(".vtexsc-cart").slideUp()@prepareSlasTexts()
 		else
 			@element.find(".vtexsc-cart").slideDown()
 			@timeoutToHide = setTimeout =>

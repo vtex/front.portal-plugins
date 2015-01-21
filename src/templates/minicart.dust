@@ -60,10 +60,6 @@
             <span class="loading-message">Carregando...</span>
         {/isLoading}
 
-        <p class="congirm-shipping-options">
-          <a href="#" class="confirm-shipping-options-button">Confirmar opções de entrega</a>
-        </p>
-
       {/showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
