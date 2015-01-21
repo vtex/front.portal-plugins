@@ -235,10 +235,13 @@ class Minicart
 			_.each attachment.logisticsInfo, (li) ->
 				li.deliveryWindow = deliveryWindow
 
-		return vtexjs.checkout.sendAttachment('shippingData', attachment)
+		@cartData.isLoading = true
+		vtexjs.checkout.sendAttachment('shippingData', attachment)
+		@render()
 
 	prepareCart: =>
 		# Conditionals
+		@cartData.isLoading = false
 		@cartData.showMinicart = @options.showMinicart
 		@cartData.showTotalizers = @options.showTotalizers
 		@cartData.showShippingOptions = @options.showShippingOptions

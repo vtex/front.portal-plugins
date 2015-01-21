@@ -24,17 +24,17 @@
 <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded">
   <div class="vtexsc-bt"></div>
   <div class="vtexsc-center">
-    <div class="vtexsc-wrap">
+    <div class="vtexsc-wrap {#isLoading}loading-minicart{/isLoading}">
       {#showShippingOptions}
 
-        <select class="available-delivery-options">
+        <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading}>
           {#slas}
             <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{name}</option>
           {/slas}
         </select>
 
         {#isScheduledSla}
-            <select class="available-dates">
+            <select class="available-dates" {#isLoading}disabled="disabled"{/isLoading}>
               <option>Escolha uma data</option>
               {#availableDays}
                 <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
@@ -44,10 +44,10 @@
           {#selectedDeliveryWindow}
             {@cond_write key=timetable.length value=1 }
               {#timetable}
-                <span class="available-timetable">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</span>
+                <span class="available-timetable">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}  </span>
               {/timetable}
             {:else}
-              <select class="available-timetables">
+              <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>
                 {#timetable}
                     <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
                 {/timetable}
@@ -55,6 +55,10 @@
             {/cond_write}
           {/selectedDeliveryWindow}
         {/isScheduledSla}
+
+        {#isLoading}
+            <span class="loading-message">Carregando...</span>
+        {/isLoading}
 
         <p class="congirm-shipping-options">
           <a href="#" class="confirm-shipping-options-button">Confirmar opções de entrega</a>
