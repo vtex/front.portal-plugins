@@ -44,7 +44,7 @@
           {#selectedDeliveryWindow}
             {@cond_write key=timetable.length value=1 }
               {#timetable}
-                <span class="available-timetable">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}  </span>
+                <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}  </span>
               {/timetable}
             {:else}
               <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>

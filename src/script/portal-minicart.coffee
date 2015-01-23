@@ -231,7 +231,7 @@ class Minicart
 	sendShippingDataAttachment: =>
 
 		selectedDeliveryOption = $('.available-delivery-options').val()
-		selectedDeliveryWindow = $('.available-timetables').val()
+		selectedDeliveryWindow = $('.available-timetables').val() or $('.available-timetable').data('value')
 
 		selectedSla = @cartData.slas[selectedDeliveryOption]
 
@@ -306,7 +306,7 @@ class Minicart
 
 	slide: =>
 		if @cartData.items.length is 0
-			@element.find(".vtexsc-cart").slideUp()@prepareSlasTexts()
+			@element.find(".vtexsc-cart").slideUp()
 		else
 			@element.find(".vtexsc-cart").slideDown()
 			@timeoutToHide = setTimeout =>
