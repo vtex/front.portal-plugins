@@ -24,34 +24,41 @@
 <div class="v2-vtexsc-cart vtexsc-cart mouseActivated preLoaded">
   <div class="vtexsc-bt"></div>
   <div class="vtexsc-center">
-    <div class="vtexsc-wrap">
+    <div class="vtexsc-wrap {#isLoading}loading-minicart{/isLoading}">
       {#showShippingOptions}
 
-        <select class="available-delivery-options">
+        <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading}>
           {#slas}
-            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{name}</option>
+            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{label}</option>
           {/slas}
         </select>
 
         {#isScheduledSla}
-          <select class="available-dates">
+            <select class="available-dates" {#isLoading}disabled="disabled"{/isLoading}>
+              <option>Escolha uma data</option>
               {#availableDays}
                 <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
               {/availableDays}
           </select>
 
           {#selectedDeliveryWindow}
-            <select class="available-timetables">
+            {@cond_write key=timetable.length value=1 }
+              {#timetable}
+                <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</span>
+              {/timetable}
+            {:else}
+              <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>
                 {#timetable}
-                  <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
+                    <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
                 {/timetable}
-            </select>
+              </select>
+            {/cond_write}
           {/selectedDeliveryWindow}
         {/isScheduledSla}
 
-        <p class="congirm-shipping-options">
-          <a href="#" class="confirm-shipping-options-button">Confirmar opções de entrega</a>
-        </p>
+        {#isLoading}
+            <span class="loading-message">Carregando...</span>
+        {/isLoading}
 
       {/showShippingOptions}
       <table class="vtexsc-productList">

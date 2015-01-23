@@ -37,9 +37,9 @@ class Minicart
 
 		dust.helpers.cond_write = (chunk, context, bodies, params) ->
 			if params.key == params.value
-				return chunk.write bodies.block(chunk, context)
+				return bodies.block(chunk, context)
 			else
-				return chunk.write ""
+				return bodies.else(chunk, context)
 
 	formatMoment = (timestamp) =>
 		date = new Date(timestamp)
@@ -51,13 +51,39 @@ class Minicart
 		return "#{hour}:#{minutes}"
 
 	formatDate = (timestamp) =>
+		weekDaysTranslationMap =
+			"Sun": "Domingo"
+			"Mon": "Segunda-feira"
+			"Tue": "Terça-feira"
+			"Wed": "Quarta-feira"
+			"Thu": "Quinta-feira"
+			"Fri": "Sexta-feira"
+			"Sat": "Sábado"
+
+		monthsTranslationMap =
+			"Jan": "Janeiro"
+			"Feb": "Fevereiro"
+			"Mar": "Março"
+			"Apr": "Abril"
+			"May": "Maio"
+			"Jun": "Junho"
+			"Jul": "Julho"
+			"Aug": "Agosto"
+			"Sep": "Setembro"
+			"Oct": "Outubro"
+			"Nov": "Novembro"
+			"Dec": "Dezembro"
+
 		date = new Date(timestamp)
-		day = date.getDate()
-		month = date.getMonth() + 1
-		fullYear = date.getFullYear()
-		twoDigitsDay = ("0" + day).slice(-2)
-		twoDigitsMonth = ("0" + month).slice(-2)
-		return "#{twoDigitsDay}/#{twoDigitsMonth}/#{fullYear}"
+		dateInfo = date.toString().split(' ')
+		weekDay = dateInfo[0]
+		ptWeekDay = weekDaysTranslationMap[weekDay]
+		month = dateInfo[1]
+		ptMonth = monthsTranslationMap[month]
+		day = dateInfo[2]
+		year = dateInfo[3]
+
+		return "#{ptWeekDay}, #{day} de #{ptMonth} de #{year}"
 
 	getOrderFormURL: =>
  		@options.orderFormURL
@@ -201,23 +227,37 @@ class Minicart
 				parcialSelectedDay = selectedDay.startDateUtc.split('T')[0]
 				return parcialAvailableDay == parcialSelectedDay
 
-			timetable = _.filter self.cartData.availableDeliveryWindows, (dw) =>
+			self.cartData.timetableForSelectedDay = _.filter self.cartData.availableDeliveryWindows, (dw) =>
 				parcialDWDate = dw.startDateUtc.split('T')[0]
 				parcialDay = self.cartData.selectedDay.startDateUtc.split('T')[0]
 				return parcialDay == parcialDWDate
 
-			self.cartData.selectedTimetable = _.find timetable, (tt) =>
+			self.cartData.selectedTimetable = _.find self.cartData.timetableForSelectedDay, (tt) =>
 				return self.cartData.selectedDay.startDateUtc == tt.startDateUtc
 
 			self.cartData.selectedDeliveryWindow =
-				timetable: timetable
+				timetable: self.cartData.timetableForSelectedDay
 
 			self.render()
+
+		availableDeliveryOptions.on 'change', ->
+			selectedSlaPosition = $(this).val()
+			selectedSla = self.cartData.slas[selectedSlaPosition]
+
+			if selectedSla.availableDeliveryWindows.length == 0
+				self.sendShippingDataAttachment()
+
+		availableDates.on 'change', ->
+			if self.cartData.timetableForSelectedDay.length == 1
+				self.sendShippingDataAttachment()
+
+		availableTimetables.on 'change', ->
+			self.sendShippingDataAttachment()
 
 	sendShippingDataAttachment: =>
 
 		selectedDeliveryOption = $('.available-delivery-options').val()
-		selectedDeliveryWindow = $('.available-timetables').val()
+		selectedDeliveryWindow = $('.available-timetables').val() or $('.available-timetable').data('value')
 
 		selectedSla = @cartData.slas[selectedDeliveryOption]
 
@@ -235,10 +275,13 @@ class Minicart
 			_.each attachment.logisticsInfo, (li) ->
 				li.deliveryWindow = deliveryWindow
 
-		return vtexjs.checkout.sendAttachment('shippingData', attachment)
+		@cartData.isLoading = true
+		vtexjs.checkout.sendAttachment('shippingData', attachment)
+		@render()
 
 	prepareCart: =>
 		# Conditionals
+		@cartData.isLoading = false
 		@cartData.showMinicart = @options.showMinicart
 		@cartData.showTotalizers = @options.showTotalizers
 		@cartData.showShippingOptions = @options.showShippingOptions
@@ -268,8 +311,22 @@ class Minicart
       @cartData.scheduledDeliverySla = _.find @cartData.slas, (sla) ->
         return sla.availableDeliveryWindows.length > 0
 
+			_.each @cartData.slas, (sla) ->
+				sla.priceInCurrency = _.intAsCurrency sla.price
+				if sla.availableDeliveryWindows.length > 0
+					sla.label = "#{sla.name} - A partir de #{sla.priceInCurrency}"
+				else
+					estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
+					sla.estimateDeliveryLabel = "Até #{estimateDelivery} dia"
+					sla.estimateDeliveryLabel += "s" if estimateDelivery > 1
+					sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
+
 			if @cartData.scheduledDeliverySla?
 				@cartData.availableDeliveryWindows = @cartData.scheduledDeliverySla.availableDeliveryWindows
+
+				_.each @.cartData.availableDeliveryWindows, (dw) =>
+					dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
+					dw.totalPriceInCurrency = _.intAsCurrency dw.totalPrice
 
 				@cartData.availableDays = _.uniq @cartData.availableDeliveryWindows, (dw) ->
 					return dw.startDateUtc.split('T')[0]
@@ -286,8 +343,6 @@ class Minicart
 			@prepareDeliveryOptionsSelectors()
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
 				self.deleteItem(this) # Keep reference to event handler
-			$('.confirm-shipping-options-button').on 'click', ->
-				self.sendShippingDataAttachment()
 
 	slide: =>
 		if @cartData.items.length is 0
