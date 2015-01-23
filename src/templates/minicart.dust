@@ -29,7 +29,7 @@
 
         <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading}>
           {#slas}
-            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{name}</option>
+            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{label}</option>
           {/slas}
         </select>
 
@@ -44,12 +44,12 @@
           {#selectedDeliveryWindow}
             {@cond_write key=timetable.length value=1 }
               {#timetable}
-                <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}  </span>
+                <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</span>
               {/timetable}
             {:else}
               <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>
                 {#timetable}
-                    <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/}</option>
+                    <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
                 {/timetable}
               </select>
             {/cond_write}

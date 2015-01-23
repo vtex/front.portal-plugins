@@ -311,8 +311,22 @@ class Minicart
       @cartData.scheduledDeliverySla = _.find @cartData.slas, (sla) ->
         return sla.availableDeliveryWindows.length > 0
 
+			_.each @cartData.slas, (sla) ->
+				sla.priceInCurrency = _.intAsCurrency sla.price
+				if sla.availableDeliveryWindows.length > 0
+					sla.label = "#{sla.name} - A partir de #{sla.priceInCurrency}"
+				else
+					estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
+					sla.estimateDeliveryLabel = "Até #{estimateDelivery} dia"
+					sla.estimateDeliveryLabel += "s" if estimateDelivery > 1
+					sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
+
 			if @cartData.scheduledDeliverySla?
 				@cartData.availableDeliveryWindows = @cartData.scheduledDeliverySla.availableDeliveryWindows
+
+				_.each @.cartData.availableDeliveryWindows, (dw) =>
+					dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
+					dw.totalPriceInCurrency = _.intAsCurrency dw.totalPrice
 
 				@cartData.availableDays = _.uniq @cartData.availableDeliveryWindows, (dw) ->
 					return dw.startDateUtc.split('T')[0]
