@@ -51,13 +51,39 @@ class Minicart
 		return "#{hour}:#{minutes}"
 
 	formatDate = (timestamp) =>
+		weekDaysTranslationMap =
+			"Sun": "Domingo"
+			"Mon": "Segunda-feira"
+			"Tue": "Terça-feira"
+			"Wed": "Quarta-feira"
+			"Thu": "Quinta-feira"
+			"Fri": "Sexta-feira"
+			"Sat": "Sábado"
+
+		monthsTranslationMap =
+			"Jan": "Janeiro"
+			"Feb": "Fevereiro"
+			"Mar": "Março"
+			"Apr": "Abril"
+			"May": "Maio"
+			"Jun": "Junho"
+			"Jul": "Julho"
+			"Aug": "Agosto"
+			"Sep": "Setembro"
+			"Oct": "Outubro"
+			"Nov": "Novembro"
+			"Dec": "Dezembro"
+
 		date = new Date(timestamp)
-		day = date.getDate()
-		month = date.getMonth() + 1
-		fullYear = date.getFullYear()
-		twoDigitsDay = ("0" + day).slice(-2)
-		twoDigitsMonth = ("0" + month).slice(-2)
-		return "#{twoDigitsDay}/#{twoDigitsMonth}/#{fullYear}"
+		dateInfo = date.toString().split(' ')
+		weekDay = dateInfo[0]
+		ptWeekDay = weekDaysTranslationMap[weekDay]
+		month = dateInfo[1]
+		ptMonth = monthsTranslationMap[month]
+		day = dateInfo[2]
+		year = dateInfo[3]
+
+		return "#{ptWeekDay}, #{day} de #{ptMonth} de #{year}"
 
 	getOrderFormURL: =>
  		@options.orderFormURL
