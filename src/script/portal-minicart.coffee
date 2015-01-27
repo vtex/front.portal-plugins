@@ -248,8 +248,7 @@ class Minicart
 				self.sendShippingDataAttachment()
 
 		availableDates.on 'change', ->
-			if self.cartData.timetableForSelectedDay.length == 1
-				self.sendShippingDataAttachment()
+			self.sendShippingDataAttachment()
 
 		availableTimetables.on 'change', ->
 			self.sendShippingDataAttachment()
@@ -281,6 +280,8 @@ class Minicart
 
 	prepareCart: =>
 		# Conditionals
+		@cartData.selectedTimetable = null
+		@cartData.selectedDeliveryWindow = null
 		@cartData.isLoading = false
 		@cartData.showMinicart = @options.showMinicart
 		@cartData.showTotalizers = @options.showTotalizers
@@ -313,12 +314,17 @@ class Minicart
 
 			_.each @cartData.slas, (sla) ->
 				sla.priceInCurrency = _.intAsCurrency sla.price
+				estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
+
 				if sla.availableDeliveryWindows.length > 0
-					sla.label = "#{sla.name} - A partir de #{sla.priceInCurrency}"
+					sla.estimateDeliveryLabel = formatDate sla.availableDeliveryWindows[0].startDateUtc
 				else
-					estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
 					sla.estimateDeliveryLabel = "Até #{estimateDelivery} dia"
 					sla.estimateDeliveryLabel += "s" if estimateDelivery > 1
+
+				if sla.availableDeliveryWindows.length > 0
+					sla.label = "#{sla.name}"
+				else
 					sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
 
 			if @cartData.scheduledDeliverySla?
