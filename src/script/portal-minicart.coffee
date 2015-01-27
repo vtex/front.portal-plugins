@@ -248,8 +248,7 @@ class Minicart
 				self.sendShippingDataAttachment()
 
 		availableDates.on 'change', ->
-			if self.cartData.timetableForSelectedDay.length == 1
-				self.sendShippingDataAttachment()
+			self.sendShippingDataAttachment()
 
 		availableTimetables.on 'change', ->
 			self.sendShippingDataAttachment()
