@@ -27,32 +27,38 @@
     <div class="vtexsc-wrap {#isLoading}loading-minicart{/isLoading}">
       {#showShippingOptions}
 
-        <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading}>
-          {#slas}
-            <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{label}</option>
-          {/slas}
-        </select>
+        <p class="shipping-options-selector">
+          <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading}>
+            {#slas}
+              <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{label}</option>
+            {/slas}
+          </select>
+        </p>
 
         {#isScheduledSla}
+          <p class="shipping-options-selector">
             <select class="available-dates" {#isLoading}disabled="disabled"{/isLoading}>
               <option>Escolha uma data</option>
               {#availableDays}
                 <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
               {/availableDays}
-          </select>
+            </select>
+          </p>
 
           {#selectedDeliveryWindow}
-            {@cond_write key=timetable.length value=1 }
-              {#timetable}
-                <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</span>
-              {/timetable}
-            {:else}
-              <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>
+            <p class="shipping-options-selector">
+              {@cond_write key=timetable.length value=1 }
                 {#timetable}
-                    <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
+                  <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</span>
                 {/timetable}
-              </select>
-            {/cond_write}
+              {:else}
+                <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>
+                  {#timetable}
+                      <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
+                  {/timetable}
+                </select>
+              {/cond_write}
+            </p>
           {/selectedDeliveryWindow}
         {/isScheduledSla}
 
