@@ -28,7 +28,8 @@
       {#showShippingOptions}
 
         <p class="shipping-options-selector">
-          <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading}>
+          <label for="available-delivery-options">Opções de entrega disponíveis:</label>
+          <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading} id="available-delivery-options">
             {#slas}
               <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{label}</option>
             {/slas}
@@ -37,7 +38,8 @@
 
         {#isScheduledSla}
           <p class="shipping-options-selector">
-            <select class="available-dates" {#isLoading}disabled="disabled"{/isLoading}>
+            <label for="available-dates">Dias disponíveis:</label>
+            <select class="available-dates" {#isLoading}disabled="disabled"{/isLoading} id="available-dates">
               <option>Escolha uma data</option>
               {#availableDays}
                 <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
@@ -49,10 +51,12 @@
             <p class="shipping-options-selector">
               {@cond_write key=timetable.length value=1 }
                 {#timetable}
-                  <span class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</span>
+                  <label>Horário disponível:</label>
+                  <p class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</p>
                 {/timetable}
               {:else}
-                <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading}>
+                <label for="available-timetables">Horários disponíveis:</label>
+                <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading} id="available-timetables">
                   {#timetable}
                       <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
                   {/timetable}
