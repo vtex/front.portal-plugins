@@ -281,6 +281,8 @@ class Minicart
 
 	prepareCart: =>
 		# Conditionals
+		@cartData.selectedTimetable = null
+		@cartData.selectedDeliveryWindow = null
 		@cartData.isLoading = false
 		@cartData.showMinicart = @options.showMinicart
 		@cartData.showTotalizers = @options.showTotalizers
