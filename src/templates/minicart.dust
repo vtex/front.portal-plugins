@@ -70,6 +70,13 @@
             <span class="loading-message">Carregando...</span>
         {/isLoading}
 
+        <div class="next-delivery-windows">
+          <p class="next-delivery-windows-title">Próximas entregas disponíveis:</p>
+          {#slas}
+            <p>{name}: {estimateDeliveryLabel}</p>
+          {/slas}
+        </div>
+
       {/showShippingOptions}
       <table class="vtexsc-productList">
         <thead>
