@@ -315,7 +315,7 @@ class Minicart
 			_.each @cartData.slas, (sla) ->
 				sla.priceInCurrency = _.intAsCurrency sla.price
 				if sla.availableDeliveryWindows.length > 0
-					sla.label = "#{sla.name} - A partir de #{sla.priceInCurrency}"
+					sla.label = "#{sla.name}"
 				else
 					estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
 					sla.estimateDeliveryLabel = "Até #{estimateDelivery} dia"
