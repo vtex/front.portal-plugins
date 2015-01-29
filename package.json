@@ -36,7 +36,7 @@
     "grunt-contrib-uglify": "~0.3.0",
     "grunt-contrib-concat": "~0.4.0",
     "grunt-contrib-watch": "~0.5.1",
-    "grunt-dust": "^0.9.2",
+    "grunt-dust": "0.9.2",
     "grunt-shell": "^1.0.1",
     "grunt-vtex": "^0.12.0"
   }
