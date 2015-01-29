@@ -139,7 +139,7 @@ class Minicart
 
 	setupMinicart: (slide = true) =>
 		@prepareCart()
-		@setDeliveryOptionsSelectorsState()
+		@setDeliveryOptionsSelectorsState() if @cartData.showShippingOptions
 		@render()
 		@slide() if slide
 
@@ -306,36 +306,37 @@ class Minicart
 				item.formattedPrice = _.intAsCurrency(item.sellingPrice, @options) + if item.measurementUnit and item.measurementUnit != 'un' then " (por cada #{item.unitMultiplier} #{item.measurementUnit})" else ''
 
 		# Shipping Options
-    if @cartData.shippingData?.logisticsInfo?.length > 0
-      @cartData.slas = @cartData.shippingData.logisticsInfo[0].slas
+    if @cartData.showShippingOptions
+      if @cartData.shippingData?.logisticsInfo?.length > 0
+        @cartData.slas = @cartData.shippingData.logisticsInfo[0].slas
 
-      @cartData.scheduledDeliverySla = _.find @cartData.slas, (sla) ->
-        return sla.availableDeliveryWindows.length > 0
+        @cartData.scheduledDeliverySla = _.find @cartData.slas, (sla) ->
+          return sla.availableDeliveryWindows.length > 0
 
-			_.each @cartData.slas, (sla) ->
-				sla.priceInCurrency = _.intAsCurrency sla.price
-				estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
+        _.each @cartData.slas, (sla) ->
+          sla.priceInCurrency = _.intAsCurrency sla.price
+          estimateDelivery = parseInt sla.shippingEstimate.match(/\d+/)[0]
 
-				if sla.availableDeliveryWindows.length > 0
-					sla.estimateDeliveryLabel = formatDate sla.availableDeliveryWindows[0].startDateUtc
-				else
-					sla.estimateDeliveryLabel = "Até #{estimateDelivery} dia"
-					sla.estimateDeliveryLabel += "s" if estimateDelivery > 1
+          if sla.availableDeliveryWindows.length > 0
+            sla.estimateDeliveryLabel = formatDate sla.availableDeliveryWindows[0].startDateUtc
+          else
+            sla.estimateDeliveryLabel = "Até #{estimateDelivery} dia"
+            sla.estimateDeliveryLabel += "s" if estimateDelivery > 1
 
-				if sla.availableDeliveryWindows.length > 0
-					sla.label = "#{sla.name}"
-				else
-					sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
+          if sla.availableDeliveryWindows.length > 0
+            sla.label = "#{sla.name}"
+          else
+            sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
 
-			if @cartData.scheduledDeliverySla?
-				@cartData.availableDeliveryWindows = @cartData.scheduledDeliverySla.availableDeliveryWindows
+        if @cartData.scheduledDeliverySla?
+          @cartData.availableDeliveryWindows = @cartData.scheduledDeliverySla.availableDeliveryWindows
 
-				_.each @.cartData.availableDeliveryWindows, (dw) =>
-					dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
-					dw.totalPriceInCurrency = _.intAsCurrency dw.totalPrice
+          _.each @.cartData.availableDeliveryWindows, (dw) =>
+            dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
+            dw.totalPriceInCurrency = _.intAsCurrency dw.totalPrice
 
-				@cartData.availableDays = _.uniq @cartData.availableDeliveryWindows, (dw) ->
-					return dw.startDateUtc.split('T')[0]
+          @cartData.availableDays = _.uniq @cartData.availableDeliveryWindows, (dw) ->
+            return dw.startDateUtc.split('T')[0]
 
 	render: =>
 		data = $.extend({options: @options}, @cartData)
