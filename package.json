@@ -1,6 +1,6 @@
 {
   "name": "portal-plugins",
-  "version": "2.9.6",
+  "version": "2.9.7-beta",
   "readmeFilename": "README.md",
   "description": "Portal plugins.",
   "paths": [
