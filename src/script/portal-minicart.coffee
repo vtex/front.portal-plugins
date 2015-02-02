@@ -330,7 +330,7 @@ class Minicart
             sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
 
         if @cartData.scheduledDeliverySla?
-          @cartData.availableDeliveryWindows = @cartData.selectedSla.availableDeliveryWindows
+          @cartData.availableDeliveryWindows = @cartData.selectedSla?.availableDeliveryWindows or @cartData.scheduledDeliverySla.availableDeliveryWindows
 
           _.each @.cartData.availableDeliveryWindows, (dw) =>
             dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
