@@ -213,6 +213,7 @@ class Minicart
 			selectedSla.isSelected = true
 			self.cartData.selectedSla = selectedSla
 			self.cartData.isScheduledSla = selectedSla.availableDeliveryWindows.length > 0 ? true : false
+			self.prepareCart()
 			self.render()
 
 		availableDates.on 'change', ->
@@ -329,7 +330,7 @@ class Minicart
             sla.label = "#{sla.name} - #{sla.priceInCurrency} - #{sla.estimateDeliveryLabel}"
 
         if @cartData.scheduledDeliverySla?
-          @cartData.availableDeliveryWindows = @cartData.scheduledDeliverySla.availableDeliveryWindows
+          @cartData.availableDeliveryWindows = @cartData.selectedSla.availableDeliveryWindows
 
           _.each @.cartData.availableDeliveryWindows, (dw) =>
             dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
