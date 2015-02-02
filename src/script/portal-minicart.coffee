@@ -175,6 +175,7 @@ class Minicart
 
 			if selectedSla.deliveryWindow?
 				@cartData.isScheduledSla = true
+				@cartData.availableDeliveryWindows = selectedSla.availableDeliveryWindows
 
 				selectedDay = selectedSla.deliveryWindow.startDateUtc
 				@cartData.selectedDay = _.find @cartData.availableDays, (availableDay) ->
@@ -195,6 +196,10 @@ class Minicart
 
 				@cartData.selectedTimetable.isSelected = true
 				@cartData.selectedDay.isSelected = true
+
+				_.each @.cartData.availableDeliveryWindows, (dw) =>
+					dw.totalPrice = dw.price + @cartData.scheduledDeliverySla.price
+					dw.totalPriceInCurrency = _.intAsCurrency dw.totalPrice
 
 			else
 				@cartData.isScheduledSla = false
