@@ -369,13 +369,11 @@ class Minicart
 	deleteItem: (item) =>
 		$(item).parent().find('.vtexsc-overlay').show()
 
-		orderItems =
+		removedItem =
 			index: $(item).data("index")
 			quantity: 0
 
-		item = @cartData.items[orderItems.index]
-
-		vtexjs.checkout.removeItems([item])
+		vtexjs.checkout.removeItems([removedItem])
 			.done (data) =>
 				@element.trigger 'vtex.minicart.updated' #DEPRECATED
 				@element.trigger 'minicartUpdated.vtex'
