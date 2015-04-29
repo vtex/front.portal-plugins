@@ -27,7 +27,7 @@ class Price extends ProductComponent
 			CashPrice: '.price-cash'
 			OriginalListPrice: '.skuListPrice'
 			OriginalBestPrice: '.skuBestPrice'
-			OriginalInstallments: '.valor-dividido span span label'
+			OriginalInstallments: '.skuBestInstallmentNumber'
 			OriginalInstallmentsValue: '.skuBestInstallmentValue'
 
 		unless @options.modalLayout
