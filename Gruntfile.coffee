@@ -22,7 +22,7 @@ module.exports = (grunt) ->
     files: ['src/templates/**/*.dust']
     tasks: ['dust', 'concat']
 
-  config.watch.coffee.tasks.push 'copy:js', 'concat'
+  config.watch.coffee.tasks = ['coffee', 'copy:js', 'concat']
 
   config.clean.deploy = 'build/<%= relativePath %>/script/'
 
