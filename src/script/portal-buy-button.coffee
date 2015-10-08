@@ -10,6 +10,8 @@ class BuyButton extends ProductComponent
 		@quantity = buyData.quantity || 1
 		@seller = buyData.seller || 1
 		@salesChannel = buyData.salesChannel || 1
+		@bestPrice = buyData.bestPrice
+		@cacheVersionUsedToCallCheckout = buyData.cacheVersionUsedToCallCheckout
 
 		if @options.multipleProductIds
 			@manyProducts = {}
@@ -18,6 +20,8 @@ class BuyButton extends ProductComponent
 					sku: null
 					quantity: 1
 					seller: 1
+					bestPrice: null
+					cacheVersionUsedToCallCheckout: null
 
 		@accessories = []
 
@@ -67,6 +71,14 @@ class BuyButton extends ProductComponent
 			if salesChannelMatch and salesChannelMatch[1] and salesChannelMatch[1] != @salesChannel
 				@salesChannel = salesChannelMatch[1]
 
+			bestPriceMatch = href.match(/price=(.*?)&/)
+			if bestPriceMatch and bestPriceMatch[1] and bestPriceMatch[1] != @bestPrice
+				@bestPrice = bestPriceMatch[1]
+
+			cvMatch = href.match(/cv=(.*?)&/)
+			if cvMatch and cvMatch[1] and cvMatch[1] != @cacheVersionUsedToCallCheckout
+				@cacheVersionUsedToCallCheckout = cvMatch[1]
+
 		@_url = href
 
 	skuSelected: (evt, productId, sku) =>
@@ -78,6 +90,8 @@ class BuyButton extends ProductComponent
 			@skuData = sku
 			@sku = sku.sku
 			@seller = sku.sellerId
+			@bestPrice = sku.bestPrice
+			@cacheVersionUsedToCallCheckout = sku.cacheVersionUsedToCallCheckout
 
 		@update()
 		@element.click() if @options.instaBuy and sku.available
@@ -90,6 +104,8 @@ class BuyButton extends ProductComponent
 		else
 			@skuData = {}
 			@sku = null
+			@bestPrice = null
+			@cacheVersionUsedToCallCheckout = null
 
 		@update()
 
@@ -119,10 +135,14 @@ class BuyButton extends ProductComponent
 				queryParams.push("sku=#{prod.sku.sku}")
 				queryParams.push("qty=#{prod.quantity}")
 				queryParams.push("seller=#{prod.seller}")
+				queryParams.push("price=#{prod.sku.bestPrice}")
+				queryParams.push("cv=#{prod.sku.cacheVersionUsedToCallCheckout}")
 		else
 			queryParams.push("sku=#{@sku}")
 			queryParams.push("qty=#{@quantity}")
 			queryParams.push("seller=#{@seller}")
+			queryParams.push("price=#{@bestPrice}")
+			queryParams.push("cv=#{@cacheVersionUsedToCallCheckout}")
 
 		queryParams.push("redirect=#{@options.redirect}")
 		queryParams.push("sc=#{@salesChannel}")
@@ -131,6 +151,8 @@ class BuyButton extends ProductComponent
 			queryParams.push("sku=#{acc.sku}")
 			queryParams.push("qty=#{acc.quantity}")
 			queryParams.push("seller=#{acc.sellerId}")
+			queryParams.push("price=#{acc.bestPrice}")
+			queryParams.push("cv=#{acc.cacheVersionUsedToCallCheckout}")
 
 		if @options.giftRegistry
 			queryParams.push("gr=#{@options.giftRegistry}")
