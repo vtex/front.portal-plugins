@@ -145,26 +145,26 @@
   }
 
   mocks.forEach(function(v, i){
-  })
-  $.getJSON(v).done(function(data){
-    var section = $('#p' + i);
+    $.getJSON(v).done(function(data){
+      var section = $('#p' + i);
 
-    $('.product-name', section).text(data.name);
-    $('.product-img', section).attr('src', data.skus[0].image)
+      $('.product-name', section).text(data.name);
+      $('.product-img', section).attr('src', data.skus[0].image)
 
-    $('.portal-sku-selector-ref', section).skuSelector(data);
+      $('.portal-sku-selector-ref', section).skuSelector(data);
 
-    $.getJSON(v.replace('.json', 'qty.json')).done(function(qdata){
-      $('.portal-quantity-selector-ref', section).quantitySelector(data.productId, {unitBased: true, unitVariations: qdata});
-    }).fail(function(){
-      $('.portal-quantity-selector-ref', section).quantitySelector(data.productId);
-    })
+      $.getJSON(v.replace('.json', 'qty.json')).done(function(qdata){
+        $('.portal-quantity-selector-ref', section).quantitySelector(data.productId, {unitBased: true, unitVariations: qdata});
+      }).fail(function(){
+        $('.portal-quantity-selector-ref', section).quantitySelector(data.productId);
+      })
 
-    $('.portal-buy-button-ref', section).buyButton(data.productId);
-    $('.portal-price-ref', section).price(data.productId);
-    $('.portal-notify-me-ref', section).notifyMe(data.productId);
+      $('.portal-buy-button-ref', section).buyButton(data.productId);
+      $('.portal-price-ref', section).price(data.productId);
+      $('.portal-notify-me-ref', section).notifyMe(data.productId);
 
-    addId(data.productId);
+      addId(data.productId);
+    });
   });
 
 
