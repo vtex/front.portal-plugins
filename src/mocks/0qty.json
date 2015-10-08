@@ -1,0 +1,17 @@
+[
+  {
+    "skuId": 1001,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  },
+  {
+    "skuId": 1002,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  },
+  {
+    "skuId": 1003,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  }
+]

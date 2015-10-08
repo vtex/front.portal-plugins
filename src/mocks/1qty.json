@@ -1,0 +1,27 @@
+[
+  {
+    "skuId": 2001,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  },
+  {
+    "skuId": 2002,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  },
+  {
+    "skuId": 2003,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  },
+  {
+    "skuId": 2004,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  },
+  {
+    "skuId": 2005,
+    "measurementUnit": "un",
+    "unitMultiplier": 1
+  }
+]

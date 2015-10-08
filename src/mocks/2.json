@@ -12,6 +12,7 @@
     "available": true,
     "listPrice": 4000,
     "bestPrice": 4000,
+    "cacheVersionUsedToCallCheckout": "24632fbd6368b8bcdab5159e8c52e85c_",
     "installments": 4,
     "installmentsValue": 1000,
     "installmentsInsterestRate": 0,
