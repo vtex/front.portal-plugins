@@ -321,12 +321,12 @@ class SkuSelector extends ProductComponent
 				@showConfirmButton(selectedSku)
 			else
 				$(window).trigger 'modalHide.vtex'
-				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, selectedSku.sellerId, 1, @productData.salesChannel, false))
+				$.get($.skuSelector.getAddUrlForSku(selectedSku.sku, selectedSku.sellerId, 1, @productData.salesChannel, false, selectedSku.bestPrice, selectedSku.cacheVersionUsedToCallCheckout))
 				.done (data) =>
 						$(window).trigger 'productAddedToCart' # DEPRECATED
 						$(window).trigger 'cartProductAdded.vtex'
 				.fail (jqXHR, status) =>
-						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, selectedSku.sellerId, 1, @productData.salesChannel)
+						window.location.href = $.skuSelector.getAddUrlForSku(selectedSku.sku, selectedSku.sellerId, 1, @productData.salesChannel, true, selectedSku.bestPrice, selectedSku.cacheVersionUsedToCallCheckout)
 				return false
 		else
 			@findwarning().show().text('Por favor, escolha: ' + @findUndefinedDimensions()[0].name)
@@ -370,13 +370,13 @@ class SkuSelector extends ProductComponent
 
 	showBuyButton: (sku) =>
 		@findbuyButton().show().parent().show()
-		@findbuyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @salesChannel, @options.redirect)) if sku
+		@findbuyButton().attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @salesChannel, @options.redirect, sku.bestPrice, sku.cacheVersionUsedToCallCheckout)) if sku
 
 	showConfirmButton: (sku) =>
 		dimensionsText = $.map(sku.dimensions, (k, v) -> k).join(', ')
 
 		@findconfirmButton()
-		.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @salesChannel, @options.redirect))
+		.attr('href', $.skuSelector.getAddUrlForSku(sku.sku, sku.sellerId, 1, @salesChannel, @options.redirect, sku.bestPrice, sku.cacheVersionUsedToCallCheckout))
 		.show()
 		.find('.skuselector-confirm-dimensions').text(dimensionsText)
 
@@ -432,8 +432,10 @@ $.fn.skuSelector.defaults =
 
 # SHARED STUFF
 $.skuSelector =
-	getAddUrlForSku: (sku, seller = 1, quantity = 1, salesChannel = 1, redirect = true) ->
-		"/checkout/cart/add?qty=#{quantity}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
+	getAddUrlForSku: (sku, seller = 1, quantity = 1, salesChannel = 1, redirect = true, price, cv) ->
+		if price and cv
+			return "/checkout/cart/add?qty=#{quantity}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}&price=#{price}&cv=#{cv}"
+		return "/checkout/cart/add?qty=#{quantity}&seller=#{seller}&sku=#{sku}&sc=#{salesChannel}&redirect=#{redirect}"
 
 # SKU ON QUERYSTRING
 $(document).ready ->
