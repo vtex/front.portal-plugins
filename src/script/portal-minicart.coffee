@@ -8,6 +8,18 @@ $ = window.jQuery
 # CLASS
 class Minicart
 	constructor: (@element, @options) ->
+		@locale = $('html').attr('lang') or $('meta[name="language"]').attr('content') or 'pt-BR'
+		i18n.init
+			customLoad: (lng, ns, options, loadComplete) ->
+				dictionary = vtex.i18n[lng]
+				if dictionary
+					loadComplete null, dictionary
+				else
+					loadComplete null, vtex.i18n['pt-BR']
+			lng: @locale
+			load: 'current'
+			fallbackLng: 'pt-BR'
+
 		@EXPECTED_ORDER_FORM_SECTIONS = ["items", "paymentData", "totalizers", "shippingData", "sellers"]
 
 		@hoverContext = @element.add('.show-minicart-on-hover')
@@ -51,39 +63,17 @@ class Minicart
 		return "#{hour}:#{minutes}"
 
 	formatDate = (timestamp) =>
-		weekDaysTranslationMap =
-			"Sun": "Domingo"
-			"Mon": "Segunda-feira"
-			"Tue": "Terça-feira"
-			"Wed": "Quarta-feira"
-			"Thu": "Quinta-feira"
-			"Fri": "Sexta-feira"
-			"Sat": "Sábado"
-
-		monthsTranslationMap =
-			"Jan": "Janeiro"
-			"Feb": "Fevereiro"
-			"Mar": "Março"
-			"Apr": "Abril"
-			"May": "Maio"
-			"Jun": "Junho"
-			"Jul": "Julho"
-			"Aug": "Agosto"
-			"Sep": "Setembro"
-			"Oct": "Outubro"
-			"Nov": "Novembro"
-			"Dec": "Dezembro"
-
 		date = new Date(timestamp)
 		dateInfo = date.toString().split(' ')
 		weekDay = dateInfo[0]
-		ptWeekDay = weekDaysTranslationMap[weekDay]
+		ptWeekDay = i18n.t(weekDay)
 		month = dateInfo[1]
-		ptMonth = monthsTranslationMap[month]
+		ptMonth = i18n.t(month)
 		day = dateInfo[2]
 		year = dateInfo[3]
+		tOf = i18n.t("minicartPlugin.of")
 
-		return "#{ptWeekDay}, #{day} de #{ptMonth} de #{year}"
+		return "#{ptWeekDay}, #{day} #{tOf} #{ptMonth} #{tOf} #{year}"
 
 	getOrderFormURL: =>
  		@options.orderFormURL
@@ -351,7 +341,8 @@ class Minicart
 			data.showShippingOptions = false
 		dust.render 'minicart', data, (err, out) =>
 			throw new Error "Minicart Dust error: #{err}" if err
-			@element.html out
+			translatedOut = $(out).i18n()
+			@element.html translatedOut
 			self = this
 			@prepareDeliveryOptionsSelectors()
 			$(".vtexsc-productList .cartSkuRemove", @element).on 'click', ->
