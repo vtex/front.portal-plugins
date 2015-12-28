@@ -45,16 +45,62 @@ module.exports = (grunt) ->
   config.concat =
     main:
       files:
-        'build/<%= relativePath %>/js/portal-image-gallery-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/image-gallery.js', 'build/<%= relativePath %>/templates/image-gallery-single.js', 'build/<%= relativePath %>/script/portal-image-gallery.js']
-        'build/<%= relativePath %>/js/portal-sku-selector-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/sku-selector-modal.js', 'build/<%= relativePath %>/templates/sku-selector-product.js', 'build/<%= relativePath %>/script/portal-sku-selector.js']
-        'build/<%= relativePath %>/js/portal-quantity-selector-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/quantity-selector.js', 'build/<%= relativePath %>/script/portal-quantity-selector.js']
-        'build/<%= relativePath %>/js/portal-accessories-selector-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/accessories-selector.js', 'build/<%= relativePath %>/script/portal-accessories-selector.js']
-        'build/<%= relativePath %>/js/portal-price-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/price.js', 'build/<%= relativePath %>/templates/price-modal.js', 'build/<%= relativePath %>/script/portal-price.js']
-        'build/<%= relativePath %>/js/portal-buy-button.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/script/portal-buy-button.js']
-        'build/<%= relativePath %>/js/portal-notify-me-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/notify-me.js', 'build/<%= relativePath %>/script/portal-notify-me.js']
-        'build/<%= relativePath %>/js/portal-minicart-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/minicart.js', 'build/<%= relativePath %>/script/portal-minicart.js']
-        'build/<%= relativePath %>/js/portal-sku-measures-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/sku-measures.js', 'build/<%= relativePath %>/script/portal-sku-measures.js']
-        'build/<%= relativePath %>/js/portal-shipping-calculator-with-template.js': ['build/<%= relativePath %>/script/product-component.js', 'build/<%= relativePath %>/templates/shipping-calculator.js', 'build/<%= relativePath %>/script/portal-shipping-calculator.js']
+        'build/<%= relativePath %>/js/portal-image-gallery-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/image-gallery.js',
+          'build/<%= relativePath %>/templates/image-gallery-single.js',
+          'build/<%= relativePath %>/script/portal-image-gallery.js'
+        ]
+        'build/<%= relativePath %>/js/portal-sku-selector-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/sku-selector-modal.js',
+          'build/<%= relativePath %>/templates/sku-selector-product.js',
+          'build/<%= relativePath %>/script/portal-sku-selector.js'
+        ]
+        'build/<%= relativePath %>/js/portal-quantity-selector-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/quantity-selector.js',
+          'build/<%= relativePath %>/script/portal-quantity-selector.js'
+        ]
+        'build/<%= relativePath %>/js/portal-accessories-selector-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/accessories-selector.js',
+          'build/<%= relativePath %>/script/portal-accessories-selector.js'
+        ]
+        'build/<%= relativePath %>/js/portal-price-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/price.js',
+          'build/<%= relativePath %>/templates/price-modal.js',
+          'build/<%= relativePath %>/script/portal-price.js'
+        ]
+        'build/<%= relativePath %>/js/portal-buy-button.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/script/portal-buy-button.js'
+        ]
+        'build/<%= relativePath %>/js/portal-notify-me-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/notify-me.js',
+          'build/<%= relativePath %>/script/portal-notify-me.js'
+        ]
+        'build/<%= relativePath %>/js/portal-minicart-with-template.js': [
+          'build/<%= relativePath %>/lib/i18next.min.js',
+          'build/<%= relativePath %>/script/locale/pt-BR.js',
+          'build/<%= relativePath %>/script/locale/en.js',
+          'build/<%= relativePath %>/script/locale/es.js',
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/minicart.js',
+          'build/<%= relativePath %>/script/portal-minicart.js'
+        ]
+        'build/<%= relativePath %>/js/portal-sku-measures-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/sku-measures.js',
+          'build/<%= relativePath %>/script/portal-sku-measures.js'
+        ]
+        'build/<%= relativePath %>/js/portal-shipping-calculator-with-template.js': [
+          'build/<%= relativePath %>/script/product-component.js',
+          'build/<%= relativePath %>/templates/shipping-calculator.js',
+          'build/<%= relativePath %>/script/portal-shipping-calculator.js'
+        ]
 
   config.uglify =
     main:
