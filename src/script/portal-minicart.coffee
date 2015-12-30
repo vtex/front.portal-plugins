@@ -8,7 +8,13 @@ $ = window.jQuery
 # CLASS
 class Minicart
 	constructor: (@element, @options) ->
-		@locale = $('html').attr('lang') or $('meta[name="language"]').attr('content') or 'pt-BR'
+		@locale = $('meta[name="language"]').attr('content')
+
+		if @locale
+			@locale = @locale.split('-')[0]
+		else
+			@locale = 'pt-BR'
+
 		i18n.init
 			customLoad: (lng, ns, options, loadComplete) ->
 				dictionary = vtex.i18n[lng]
