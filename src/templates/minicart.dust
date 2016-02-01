@@ -52,13 +52,13 @@
               {@cond_write key=timetable.length value=1 }
                 {#timetable}
                   <label data-i18n="minicartPlugin.availableHour"></label>
-                  <p class="available-timetable" data-value="{startDateUtc}"><span data-i18n="minicartPlugin.from" /> {@formatMoment date=startDateUtc/} <span data-i18n="minicartPlugin.to" /> {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</p>
+                  <p class="available-timetable" data-value="{startDateUtc}"><span data-i18n="minicartPlugin.from"></span> {@formatMoment date=startDateUtc/} <span data-i18n="minicartPlugin.to"></span> {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</p>
                 {/timetable}
               {:else}
                 <label for="available-timetables" data-i18n="minicartPlugin.availableHour"></label>
                 <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading} id="available-timetables">
                   {#timetable}
-                      <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}><span data-i18n="minicartPlugin.from" /> {@formatMoment date=startDateUtc/} <span data-i18n="minicartPlugin.to" /> {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
+                      <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}><span data-i18n="minicartPlugin.from"></span> {@formatMoment date=startDateUtc/} <span data-i18n="minicartPlugin.to"></span> {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
                   {/timetable}
                 </select>
               {/cond_write}
