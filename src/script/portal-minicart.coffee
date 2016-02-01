@@ -72,12 +72,12 @@ class Minicart
 		date = new Date(timestamp)
 		dateInfo = date.toString().split(' ')
 		weekDay = dateInfo[0]
-		ptWeekDay = i18n.t(weekDay)
+		ptWeekDay = i18n.t("minicartPlugin.#{weekDay}")
 		month = dateInfo[1]
-		ptMonth = i18n.t(month)
+		ptMonth = i18n.t("minicartPlugin.#{month}")
 		day = dateInfo[2]
 		year = dateInfo[3]
-		tOf = i18n.t("minicartPlugin.of")
+		tOf = i18n.t('minicartPlugin.of')
 
 		return "#{ptWeekDay}, #{day} #{tOf} #{ptMonth} #{tOf} #{year}"
 

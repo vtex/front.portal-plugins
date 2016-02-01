@@ -34,6 +34,6 @@ minicartLang =
     "Dec": "Dezembro"
 
 if window.vtex.i18n["pt-BR"]
-  window.vtex.i18n["pt-BR"] = $.extend(window.vtex.i18n["pt-BR"], minicartLang)
+  window.vtex.i18n["pt-BR"] = $.extend({}, window.vtex.i18n["pt-BR"], minicartLang)
 else
   window.vtex.i18n["pt-BR"] = minicartLang
