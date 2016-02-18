@@ -22,9 +22,15 @@ module.exports = (grunt) ->
     files: ['src/templates/**/*.dust']
     tasks: ['dust', 'concat']
 
-  config.watch.coffee.tasks.push 'copy:js', 'concat'
+  config.watch.coffee.tasks = ['coffee', 'copy:js', 'concat']
 
   config.clean.deploy = 'build/<%= relativePath %>/script/'
+
+  config.karma =
+    options:
+      configFile: 'karma.conf.js'
+    unit:
+      singleRun: true
 
   # Copy all to 'js' for Portal URLs compatibility, e.g. "http://io.vtex.com.br/portal-plugins/2.7.3/js/portal-template-as-modal.min.js"
   config.copy.js =
@@ -62,10 +68,10 @@ module.exports = (grunt) ->
 
   tasks =
   # Building block tasks
-    build: ['clean', 'copy:main', 'copy:pkg', 'coffee', 'copy:js','dust', 'concat']
+    build: ['clean', 'copy:main', 'copy:pkg', 'coffee', 'copy:js', 'dust', 'concat']
   # Deploy tasks
     dist: ['build', 'uglify:main', 'clean:deploy', 'copy:deploy'] # Dist - minifies files
-    test: []
+    test: ['dust', 'karma:unit']
     vtex_deploy: ['shell:cp', 'shell:cp_br']
   # Development tasks
     dev: ['nolr', 'build', 'watch']

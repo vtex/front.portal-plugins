@@ -24,7 +24,7 @@
 <div class="container">
 
   <div class="masthead">
-    <h1><a href="/" class="text-muted">Portal Plugins</a></h1>
+    <h1><a href="/portal-plugins/" class="text-muted">Portal Plugins</a></h1>
     <a   class="btn btn-lg btn-success all-buy" href="#" disabled="disabled">Comprar todos os válidos</a>
   </div>
 
@@ -106,6 +106,7 @@
 <script src="http://io.vtex.com.br/front-libs/bootstrap/3.0.3/js/bootstrap.min.js"></script>
 <script src="http://io.vtex.com.br/front-libs/front-utils/1.2.0/vtex-utils.min.js"></script>
 <script src="http://io.vtex.com.br/front-libs/dustjs-linkedin/2.3.5/dust-core-2.3.5.js"></script>
+<script src="http://io.vtex.com.br/vtex.js/1.0.0/vtex.min.js?v=1.4.430.918"></script>
 
 <script src="js/portal-minicart-with-template.js"></script>
 
@@ -132,7 +133,7 @@
 <script src="js/portal-notify-me-with-template.js"></script>
 
 <script type="text/javascript">
-  var mocks = ["0.json", "1.json", "2.json"].map(function(v){return '/spec/mocks/' + v;});
+  var mocks = ["0.json", "1.json", "2.json"].map(function(v){return 'mocks/' + v;});
   var length = mocks.length;
   var ids = [];
 
@@ -144,26 +145,26 @@
   }
 
   mocks.forEach(function(v, i){
-  })
-  $.getJSON(v).done(function(data){
-    var section = $('#p' + i);
+    $.getJSON(v).done(function(data){
+      var section = $('#p' + i);
 
-    $('.product-name', section).text(data.name);
-    $('.product-img', section).attr('src', data.skus[0].image)
+      $('.product-name', section).text(data.name);
+      $('.product-img', section).attr('src', data.skus[0].image)
 
-    $('.portal-sku-selector-ref', section).skuSelector(data);
+      $('.portal-sku-selector-ref', section).skuSelector(data);
 
-    $.getJSON(v.replace('.json', 'qty.json')).done(function(qdata){
-      $('.portal-quantity-selector-ref', section).quantitySelector(data.productId, {unitBased: true, unitVariations: qdata});
-    }).fail(function(){
-      $('.portal-quantity-selector-ref', section).quantitySelector(data.productId);
-    })
+      $.getJSON(v.replace('.json', 'qty.json')).done(function(qdata){
+        $('.portal-quantity-selector-ref', section).quantitySelector(data.productId, {unitBased: true, unitVariations: qdata});
+      }).fail(function(){
+        $('.portal-quantity-selector-ref', section).quantitySelector(data.productId);
+      })
 
-    $('.portal-buy-button-ref', section).buyButton(data.productId);
-    $('.portal-price-ref', section).price(data.productId);
-    $('.portal-notify-me-ref', section).notifyMe(data.productId);
+      $('.portal-buy-button-ref', section).buyButton(data.productId);
+      $('.portal-price-ref', section).price(data.productId);
+      $('.portal-notify-me-ref', section).notifyMe(data.productId);
 
-    addId(data.productId);
+      addId(data.productId);
+    });
   });
 
 

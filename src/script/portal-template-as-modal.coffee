@@ -1,19 +1,17 @@
 KEYCODE_ESC = 27
 
 getOverlay = ->
-	template = '<div class="boxPopUp2-overlay boxPopUp2-clickActive" style="display: none;"></div>'
-	if (el = $(".boxPopUp2-overlay")).length > 0 then el else $(template)
+	template = '<div class="TB_overlay" style="display: none;"></div>'
+	if (el = $(".TB_overlay")).length > 0 then el else $(template)
 
 openModalFromTemplate = (evt) ->
+	evt.preventDefault()
 	templateURL = $(this).data("template")
+	dataJSON = $(this).data("json")
 	containerTemplate = """
-		<div class="boxPopUp2 vtexsm-popupContent freeContentMain popupOpened sku-selector" style="position: fixed;">
-			<div class="boxPopUp2-wrap">
-				<div class="boxPopUp2-content vtexsm-popupContent freeContentPopup" style="position: fixed;">
-					<div class="skuWrap_ freeContent vtexsc-selectSku">
-						Carregando...
-					</div>
-				</div>
+		<div class="TB_window sku-selector">
+			<div class="skuWrap_">
+				Carregando...
 			</div>
 		</div>"""
 	$overlay = getOverlay()
@@ -39,7 +37,11 @@ openModalFromTemplate = (evt) ->
 	$(window).on 'modalHide.vtex', hideModal
 
 	$.get(templateURL).done (content) ->
-		$container.find('.skuWrap_').html $(content)
+		$container.find('.skuWrap_').html('<div class="portal-sku-selector-ref"></div>')
+		$.getJSON(dataJSON).done (data) ->
+			$('.portal-sku-selector-ref').skuSelector(data, {modalLayout: true, warnUnavailable: true, redirect: false})
+			$('.skuselector-buy-btn').buyButton(data.productId, {}, {giftRegistry: 1234});
+			$('.skuselector-price').price(data.productId);
 
 doBind = ->
 	$('.to-bind-modal').each ->	$(this).removeClass('to-bind-modal').on('click', openModalFromTemplate)
