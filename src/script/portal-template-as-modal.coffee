@@ -1,17 +1,21 @@
 KEYCODE_ESC = 27
 
 getOverlay = ->
-	template = '<div class="TB_overlay" style="display: none;"></div>'
-	if (el = $(".TB_overlay")).length > 0 then el else $(template)
+	template = '<div class="boxPopUp2-overlay boxPopUp2-clickActive" style="display: none;"></div>'
+	if (el = $(".boxPopUp2-overlay")).length > 0 then el else $(template)
 
-openModalFromTemplate = (evt) ->
-	evt.preventDefault()
+openModalFromTemplate = (ev) ->
+	ev.preventDefault()
 	templateURL = $(this).data("template")
 	dataJSON = $(this).data("json")
 	containerTemplate = """
-		<div class="TB_window sku-selector">
-			<div class="skuWrap_">
-				Carregando...
+		<div class="boxPopUp2 vtexsm-popupContent freeContentMain popupOpened sku-selector" style="position: fixed;">
+			<div class="boxPopUp2-wrap">
+				<div class="boxPopUp2-content vtexsm-popupContent freeContentPopup">
+					<div class="skuWrap_ freeContent vtexsc-selectSku">
+						Carregando...
+					</div>
+				</div>
 			</div>
 		</div>"""
 	$overlay = getOverlay()

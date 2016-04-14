@@ -46,7 +46,7 @@ ul
     max-height: none;
 }
 
-.TB_window {
+.boxPopUp2 {
   position: fixed;
   top: 10%;
   left: 50%;
@@ -68,7 +68,7 @@ ul
   outline: none;
 }
 
-.TB_overlay {
+.boxPopUp2-overlay {
   position: fixed;
   top: 0;
   right: 0;
