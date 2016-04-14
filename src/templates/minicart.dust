@@ -28,7 +28,7 @@
       {#showShippingOptions}
 
         <p class="shipping-options-selector">
-          <label for="available-delivery-options">Opções de entrega disponíveis:</label>
+          <label for="available-delivery-options" data-i18n="minicartPlugin.availableShippingOptions"></label>
           <select class="available-delivery-options" {#isLoading}disabled="disabled"{/isLoading} id="available-delivery-options">
             {#slas}
               <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{label}</option>
@@ -38,9 +38,9 @@
 
         {#isScheduledSla}
           <p class="shipping-options-selector">
-            <label for="available-dates">Dias disponíveis:</label>
+            <label for="available-dates" data-i18n="minicartPlugin.availableDays"></label>
             <select class="available-dates" {#isLoading}disabled="disabled"{/isLoading} id="available-dates">
-              <option>Escolha uma data</option>
+              <option data-i18n="minicartPlugin.chooseDate"></option>
               {#availableDays}
                 <option value="{$idx}" {#isSelected}selected="selected"{/isSelected}>{@formatDate date=startDateUtc /}</option>
               {/availableDays}
@@ -51,14 +51,14 @@
             <p class="shipping-options-selector">
               {@cond_write key=timetable.length value=1 }
                 {#timetable}
-                  <label>Horário disponível:</label>
-                  <p class="available-timetable" data-value="{startDateUtc}">Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</p>
+                  <label data-i18n="minicartPlugin.availableHour"></label>
+                  <p class="available-timetable" data-value="{startDateUtc}"><span data-i18n="minicartPlugin.from" /> {@formatMoment date=startDateUtc/} <span data-i18n="minicartPlugin.to" /> {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</p>
                 {/timetable}
               {:else}
-                <label for="available-timetables">Horários disponíveis:</label>
+                <label for="available-timetables" data-i18n="minicartPlugin.availableHour"></label>
                 <select class="available-timetables" {#isLoading}disabled="disabled"{/isLoading} id="available-timetables">
                   {#timetable}
-                      <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}>Das {@formatMoment date=startDateUtc/} às {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
+                      <option value="{startDateUtc}" {#isSelected}selected="selected"{/isSelected}><span data-i18n="minicartPlugin.from" /> {@formatMoment date=startDateUtc/} <span data-i18n="minicartPlugin.to" /> {@formatMoment date=endDateUtc/} - {totalPriceInCurrency}</option>
                   {/timetable}
                 </select>
               {/cond_write}
@@ -67,11 +67,11 @@
         {/isScheduledSla}
 
         {#isLoading}
-            <span class="loading-message">Carregando...</span>
+            <span class="loading-message" data-i18n="minicartPlugin.loading"></span>
         {/isLoading}
 
         <div class="next-delivery-windows">
-          <p class="next-delivery-windows-title">Próximas entregas disponíveis:</p>
+          <p class="next-delivery-windows-title" data-i18n="minicartPlugin.nextAvailableWindows"></p>
           {#slas}
             <p>{name}: {estimateDeliveryLabel}</p>
           {/slas}

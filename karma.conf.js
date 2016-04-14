@@ -46,6 +46,12 @@ module.exports = function(config) {
         included: true
       },
       {
+        pattern: 'http://io.vtex.com.br/front-libs/i18next/1.7.2/i18next.min.js',
+        watched: false,
+        served: false,
+        included: true
+      },
+      {
         pattern: 'http://io.vtex.com.br/vtex.js/1.0.0/vtex.min.js',
         watched: false,
         served: false,
@@ -56,6 +62,12 @@ module.exports = function(config) {
         watched: false,
         served: false,
         included: true
+      },
+      {
+        pattern: 'src/script/locale/*.coffee',
+        watched: true,
+        included: true,
+        served: true
       },
       {
         pattern: 'build/portal-plugins/templates/*.js',
