@@ -213,7 +213,7 @@ Chame o plugin na `a` que age como botão de comprar:
         default: `true`. Determina se será exibido um alerta com a `errorMessage`.
 
     - <b>`redirect`</b>
-        default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.
+        default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.</b>
 
     - <b>`instaBuy`</b>
         default: `false`. Se `true`, ao ser selecionado um Sku disponível, o botão se clica.
