@@ -1,4 +1,4 @@
-### Índice
+### Table of contents
 
 - Plugins
     - [Sku Selector](#sku-selector)
@@ -11,139 +11,143 @@
     - [Minicart](#minicart)
     - [Expiration](#expiration)
 
-- [Notas](#notas)
+- [Notes](#notas)
 
+
+---
+
+See also in [Portuguese](https://github.com/vtex/front.portal-plugins/blob/master/README.pt-BR.md).
 
 ---
 
 # Sku Selector
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div` vazia:
+Call the plugin in an empty `div`:
 
     $('.sku-selector-container').skuSelector(data, options);
 
-- <b>`data`</b> deve ser um JSON de SKUs padrão da API.
+- <b>`data`</b> must be a JSON with API standard SKUs.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades:
+- <b>`options`</b>  (optional) is an object that may have the following properties:
     - <b>`selectOnOpening`</b>
-        default: `false`. Se `true`, na inicialização do plugin seleciona o primeiro SKU disponível (o primeiro que vier no array).
+        default: `false`. If `true`, at initialization the plugin selects the first available SKU (the first one that comes in the array).
 
     - <b>`modalLayout`</b>
-        default: `false`. Se `true`, usa o template de modal.
+        default: `false`. If `true`, it uses the modal template.
 
     - <b>`warnUnavailable`</b>
-        default: `false`. Se `true`, mostra form de "avise-me" quando um SKU indisponível for selecionado.
+        default: `false`. If `true`, it shows "notify me" form when an unavailable SKU is selected.
 
     - <b>`showPriceRange`</b>
-        default: `false`. Se `true`, mostra o preço mínimo e o máximo dentre os SKUs selecionáveis com as dimensões já selecionadas.
+        default: `false`. If `true`, it shows the minimum and maximum price among the selectable SKUs with the dimensions already selected.
 
     - <b>`forceInputType`</b>
-        default: `null`. Se não for falsy, força o inputType de todas as dimensões a serem isso.
+        default: `null`. If not falsy, it forces the inputType of all dimensions to be that.
 
-## Eventos
+## Events
 
-Lança os seguintes eventos:
+Triggers the following events:
 
-- <b>`skuReady.vtex []`</b> quando o Sku Selector é renderizado.
-- <b>`skuDimensionChanged.vtex [productId, name, value]`</b> quando uma dimensão é selecionada.
-- <b>`skuSelected.vtex [productId, sku]`</b> quando um SKU é definido.
-- <b>`skuUnselected.vtex [productId, selectableSkus]`</b> quando o SKU torna-se indefinido.
+- <b>`skuReady.vtex []`</b> when the SKU Selector is rendered.
+- <b>`skuDimensionChanged.vtex [productId, name, value]`</b> when a dimension is selected.
+- <b>`skuSelected.vtex [productId, sku]`</b> when an SKU is defined.
+- <b>`skuUnselected.vtex [productId, selectableSkus]`</b> when the SKU becomes undefined.
 
 
 ---
 
 # Quantity Selector
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div` vazia:
+Call the plugin in an empty `div`:
 
     $('.quantity-selector-container').quantitySelector(productId, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> the product ID.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> (optional) is an object that may have the following properties:
 
     - <b>`unitBased`</b>
-        default: `false`. Define se deseja usar seletor a granel (calculadora de quantidade).
+        default: `false`. Defines whether to use bulk selector (quantity calculator).
 
     - <b>`unitVariations`</b>
-        default: `[]`. Se `unitBased == true`, especifica as opções de unidade para cada Sku. É uma coleção de `{skuId: Number, measurementUnit: String, unitMultiplier: Number}`.
+        default: `[]`. If `unitBased == true`, specifies the unit options for each SKU. It is a collection of `{skuId: Number, measurementUnit: String, unitMultiplier: Number}`.
 
     - <b>`max`</b>
-        default: `10`. Define a quantidade máxima que pode ser selecionada.
+        default: `10`. Defines the maximum amount that can be selected.
 
     - <b>`initialQuantity`</b>
-        default: `1`. Define a quantidade selecionada inicialmente.
+        default: `1`. Sets the quantity initially selected.
 
     - <b>`decimalPlaces`</b>
-        default: `2`. Define a quantidade de casas decimais do input de unidades. Não deve exceder 12.
+        default: `2`. Sets the number of decimal places for the units input. It should not exceed 12.
 
 
-## Eventos
+## Events
 
-Lança os seguintes eventos:
+Triggers the following events:
 
-- <b>`quantityReady.vtex [productId, quantity]`</b> quando o Quantity Selector é renderizado.
-- <b>`quantityChanged.vtex [productId, quantity]`</b> quando a quantidade é mudada.
+- <b>`quantityReady.vtex [productId, quantity]`</b> when the Quantity Selector is rendered.
+- <b>`quantityChanged.vtex [productId, quantity]`</b> when quantity is changed.
 
-Escuta pelos seguintes eventos:
+It listens for the following events:
 
-- <b>`quantityChanged.vtex [productId, quantity]`</b> a quantidade pode ser mudada por meio de scripts externos e o plugin se atualizará.
+- <b>`quantityChanged.vtex [productId, quantity]`</b> The quantity can be changed through external scripts and the plugin will be updated.
 
 
 ---
 
 # Accessories Selector
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div` vazia:
+Call the plugin in an empty `div`:
 
     $('.acc-selector-container').accessoriesSelector(productId, data, options);
 
-- <b>`productId`</b> o ID do produto que é pai dos acessórios.
+- <b>`productId`</b> the product ID which is the accessories’ parent.
 
-- <b>`data`</b> deve ser um JSON de acessórios padrão da API.
+- <b>`data`</b> must be a JSON with API standard accessories.
 
-- <b>`options`</b> (nenhuma no momento.)
+- <b>`options`</b> (none currently.)
 
-## Eventos
+## Events
 
-Lança os seguintes eventos:
+Triggers the following events:
 
-- <b>`accessoriesUpdated.vtex [productId, accessories]`</b> quando um acessório é alterado. O array `accessories` contém os acessórios de um determinado produto, com propriedades como `sku` e `quantity`.
+- <b>`accessoriesUpdated.vtex [productId, accessories]`</b> when an accessory is changed. The `accessories` array contains the accessories of a particular product, with properties like `sku` and `quantity`.
 
 
 ---
 
 # Price
 
-Escuta por mudanças no Sku selecionado e atualiza as labels de preço.
+Listens for changes in the selected SKU and updates the price labels.
 
-Usa informações padrão de preço quando não há Sku selecionado.
+Uses standard price information when there is no SKU selected.
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div`. Se esta conter algum HTML, este será usado quando um Sku não estiver definido.
+Call the plugin in an empty `div`. If it contains some HTML, it will be used when a Sku is not defined.
 
     $('.productPrice').price(productId, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> the product ID.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> (optional) is an object that can have the following properties
 
     - <b>`originalSku`</b>
-        default: `null`. Deve ser definido se a opção acima for `true`.
+        default: `null`. Must be set if the above option is `true`.
 
     - <b>`modalLayout`</b>
-        default: `false`. Se `true`, usa o template de modal.
+        default: `false`. If `true`, it uses the modal template.
 
-## Eventos
+## Events
 
-Escuta pelos seguintes eventos:
+Listens for the following events:
 
 - <b>`skuSelected.vtex [productId, sku]`</b>
 - <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
@@ -153,21 +157,23 @@ Escuta pelos seguintes eventos:
 
 # Shipping Calculator
 
-Oferece um formulário para cálculo de frete, além de um botão para mostrá-lo.
+Offers a form for calculating shipping, plus a button to show it.
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div` vazia.
+Call the plugin in an empty `div`.
 
     $('.shipping-calc-ref').shippingCalculator(productId, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> the product ID.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> (optional) is an object that can have the following properties:
 
     - <b>`strings`</b>
-        Define as mensagens exibidas. Default:
-
+        Sets the messages to be displayed.
+        
+        Default:
+        ```
         {
             "calculateShipping": 'Calcule o valor do frete e prazo de entrega para a sua região:',
             "enterPostalCode": 'Calcular o valor do frete e verificar disponibilidade:',
@@ -177,10 +183,24 @@ Chame o plugin em uma `div` vazia.
             "siteName": 'Vtex.Commerce.Web.CommerceContext.Current.WebSite.Name',
             "close": 'Fechar'
         }
+        ```
+        
+        Suggested english version:
+        ```
+        {
+            "calculateShipping": 'Calculate the shipping value and delivery deadline for your region:',
+            "enterPostalCode": 'Calculate the shipping value and check availability:',
+            'requiredPostalCode': 'The ZIP code must be informed.',
+            'invalidPostalCode': 'Invalid ZIP code.',
+            'requiredQuantity': 'You must enter the quantity of the same Product.',
+            "siteName": 'Vtex.Commerce.Web.CommerceContext.Current.WebSite.Name',
+            "close": 'Close'
+        }
+        ```
 
-## Eventos
+## Events
 
-Escuta pelos seguintes eventos:
+Listens for the following events:
 
 - <b>`skuSelected.vtex [productId, sku]`</b>
 - <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
@@ -192,54 +212,53 @@ Escuta pelos seguintes eventos:
 
 # Buy Button
 
-## Uso
+## Usage
 
-Chame o plugin na `a` que age como botão de comprar:
+Call the plugin on the `a` that acts as a buy button:
 
     $('.buy-button').buyButton(productId, data, options);
 
-- <b>`productId`</b> o ID do produto. Pode ser um array de IDs de produto -- neste caso, vai ser um botão que vai servir para comprar todos os produtos ao mesmo tempo.
+- <b>`productId`</b> the product ID. It may be an array of product IDs - in such case, it will be a button that enables buying all products at the same time.
 
-- <b>`data`</b> opcional, é um objeto que pode ter as propriedades `sku`, `quantity`, `seller` e `salesChannel`.
+- <b>`data`</b> (optional) is an object that can have the `sku`, `quantity`, `seller` and `salesChannel` properties.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> (optional) is an object that may have the following properties.
 
     - <b>`errorMessage`</b>
-        Mensagem de erro que será alertada se o usuário clicar no botão sem ter escolhido um SKU.
-        Essa mensagem figurará nos parâmetros do evento `vtex.buyButton.failedAttempt`.
-        Default: *"Por favor, selecione o modelo desejado."*
+        Error message to be triggered if the user clicks the button without having chosen an SKU. This message will appear in the parameters of the `vtex.buyButton.failedAttempt` event.
+        Default: *"Please select the desired template."*
 
     - <b>`alertOnError`</b>
-        default: `true`. Determina se será exibido um alerta com a `errorMessage`.
+        default: `true`. Determines whether to display an alert with the `errorMessage`.
 
     - <b>`redirect`</b>
-        default: `true`. Determina a propriedade de mesmo nome na querystring. <b>Deve ser `true` para página de produto, e `false` para modal.</b>
+        default: `true`. Sets the `Redirect` property in the querystring. <b>Must be `true` for product page, and `false` for modal.</b>
 
     - <b>`instaBuy`</b>
-        default: `false`. Se `true`, ao ser selecionado um Sku disponível, o botão se clica.
+        default: `false`. If `true`, when an available SKU is selected, the button is clicked.
 
     - <b>`hideUnselected`</b>
-        default: `false`. Se `true`, esconde-se quando não há Sku selecionado.
+        default: `false`. If `true`, it is hidden when there is no SKU selected.
 
     - <b>`hideUnavailable`</b>
-        default: `false`. Se `true`, esconde-se quando o Sku selecionado está indisponível.
+        default: `false`. If `true`, it is hidden when the selected SKU is unavailable.
 
     - <b>`target`</b>
-        default: `null`. Define o query parameter `target`. Um valor válido é `"orderform"`.
+        default: `null`. Sets the `target` query parameter. A valid value is `"orderform"`.
 
     - <b>`requireAllSkus`</b>
-        default: `false`. Se `productId` for um array, essa opção determina se todos os IDs de produto devem ter um Sku selecionado, ou se aceita comprar parcialmente (somente os selecionados).
+        default: `false`. If `productId` is an array, this option determines whether all product IDs must have an SKU selected, or whether partial purchases are accepted (only for those selected).
 
-## Eventos
+## Events
 
-Lança os seguintes eventos:
+Triggers the following events:
 
-- <b>`modalHide.vtex []`</b> quando `redirect=false` e o botão é clicado.
-- <b>`cartProductAdded.vtex []`</b> quando `redirect=false`, o botão é clicado e a resposta do AJAX volta.
-- <b>`buyButtonFailedAttempt.vtex [errorMessage]`</b> quando o botão é clicado mas não há um SKU válido.
-- <b>`buyButtonThrough.vtex [url]`</b> quando o botão é clicado e há SKU válido.
+- <b>`modalHide.vtex []`</b>  when `redirect=false` and the button is clicked.
+- <b>`cartProductAdded.vtex []`</b> when `redirect=false`, the button is clicked and the AJAX response is returned.
+- <b>`buyButtonFailedAttempt.vtex [errorMessage]`</b> when the button is clicked but there’s no valid SKU.
+- <b>`buyButtonThrough.vtex [url]`</b> when the button is clicked and there is a valid SKU.
 
-Escuta pelos seguintes eventos:
+Listens for the following events:
 
 - <b>`skuSelected.vtex [productId, sku]`</b>
 - <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
@@ -251,42 +270,58 @@ Escuta pelos seguintes eventos:
 
 # Notify Me
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div` vazia:
+Call the plugin in an empty `div`:
 
     $('.portal-notify-me-ref').notifyMe(productId, options);
 
-- <b>`productId`</b> o ID do produto.
+- <b>`productId`</b> the product ID.
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> (opcional) is an object that may have the following properties.
 
     - <b>`ajax`</b>
-        default: `true`. Define se o submit do form deve ser feito com AJAX.
+        default: `true`. Defines whether the form submit should be done with AJAX.
 
     - <b>`sku`</b>
-        default: `null`. Define o sku a ser usado. Se existir, ignora os eventos de seleção de sku.
+        default: `null`. Sets the SKU to be used. If it exists, it ignores SKU selection events.
 
     - <b>`strings`</b>
-        Define as mensagens exibidas. Default:
+        Sets the messages to be displayed.
+        
+        Default:
+        ```
+        {
+            "title": "",
+            "explanation": "Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.",
+            "namePlaceholder": "Digite seu nome...",
+            "emailPlaceholder": "Digite seu e-mail...",
+            "loading": "Carregando...",
+            "success": "Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.",
+            "error": "Não foi possível cadastrar. Tente mais tarde."
+        }
+        ```
+        
+        Suggested english version:
+        ```
+        {
+            "title": "",
+            "explanation": "To be notified of the availability of this Product, just fill in the fields below.",
+            "namePlaceholder": "Enter your name...",
+            "emailPlaceholder": "Enter your email...",
+            "loading": "Loading...",
+            "success": "Successfully registered. As soon as the product is made available you will receive an email notifying you.",
+            "error": "Registration failed, please try again later."
+        }
+        ```
 
-            {
-                "title": "",
-                "explanation": "Para ser avisado da disponibilidade deste Produto, basta preencher os campos abaixo.",
-                "namePlaceholder": "Digite seu nome...",
-                "emailPlaceholder": "Digite seu e-mail...",
-                "loading": "Carregando...",
-                "success": "Cadastrado com sucesso. Assim que o produto for disponibilizado você receberá um email avisando.",
-                "error": "Não foi possível cadastrar. Tente mais tarde."
-            }
+## Events
 
-## Eventos
+Triggers the following events:
 
-Lança os seguintes eventos:
+- <b>`notifyMeSubmitted.vtex [productId, sku, promise]`</b>: when the form is sent.
 
-- <b>`notifyMeSubmitted.vtex [productId, sku, promise]`</b>: quando a form é enviada.
-
-Escuta pelos seguintes eventos:
+Listens for the following events:
 
 - <b>`skuSelected.vtex [productId, sku]`</b>
 - <b>`skuUnselected.vtex [productId, selectableSkus]`</b>
@@ -296,52 +331,67 @@ Escuta pelos seguintes eventos:
 
 # Minicart
 
-## Uso
+## Usage
 
-Chame o plugin em uma `div` vazia:
+Call the plugin in an empty `div`:
 
     $('.portal-minicart-ref').minicart(options);
 
-- <b>`options`</b> opcional, é um objeto que pode ter as seguintes propriedades
+- <b>`options`</b> (optional) is an object that may have the following properties
 
     - <b>`valuePrefix`</b>
-        default: `"R$ "`. Define o texto a ser exibido antes do valor.
+        default: `"R$ "`. Sets the text to be displayed before the value.
 
     - <b>`valueSufix`</b>
-        default: `""`. Define o texto a ser exibido depois do valor.
+        default: `""`. Sets the text to be displayed after the value.
 
     - <b>`availabilityMessages`</b>
-        Define as mensagens exibidas para cada código de disponibilidade da API. Default:
-
-            {
-                "available": "",
-                "unavailableItemFulfillment": "Este item não está disponível no momento.",
-                "withoutStock": "Este item não está disponível no momento.",
-                "cannotBeDelivered": "Este item não está disponível no momento.",
-                "withoutPrice": "Este item não está disponível no momento.",
-                "withoutPriceRnB": "Este item não está disponível no momento.",
-                "nullPrice": "Este item não está disponível no momento."
-            }
+        Sets the messages displayed for each API availability code.
+        
+        Default:
+        ```
+        {
+            "available": "",
+            "unavailableItemFulfillment": "Este item não está disponível no momento.",
+            "withoutStock": "Este item não está disponível no momento.",
+            "cannotBeDelivered": "Este item não está disponível no momento.",
+            "withoutPrice": "Este item não está disponível no momento.",
+            "withoutPriceRnB": "Este item não está disponível no momento.",
+            "nullPrice": "Este item não está disponível no momento."
+        }
+        ```
+        Suggested english version:
+        ```
+        {
+            "available": "",
+            "unavailableItemFulfillment": "This item is currently unavailable.",
+            "withoutStock": "This item is currently unavailable.",
+            "cannotBeDelivered": "This item is currently unavailable.",
+            "withoutPrice": "This item is currently unavailable.",
+            "withoutPriceRnB": "This item is currently unavailable.",
+            "nullPrice": "This item is currently unavailable."
+        }
+        ```
 
     - <b>`showMinicart`</b>
-        default: `true`. Define se o minicart deve ser mostrado.
+        default: `true`. Defines whether the minicart should be displayed.
 
     - <b>`showTotalizers`</b>
-        default: `true`. Define se o totalizers deve ser mostrado.
+        default: `true`. Defines whether the totalizers should be displayed.
 
-## Eventos
+## Events
 
-Lança os seguintes eventos:
+Triggers the following events:
 
-- <b>`cartProductRemoved.vtex []`</b> quando um item é removido pelo minicart.
+- <b>`cartProductRemoved.vtex []`</b> when an item is removed by the minicart.
 - <b>`minicartMouseOver.vtex  []`</b>
 - <b>`minicartMouseOut.vtex  []`</b>
 - <b>`minicartUpdated.vtex  []`</b>
 
-Escuta pelos seguintes eventos:
+Listens for the following events:
 
-- <b>`cartProductAdded.vtex  []`</b> o Minicart se atualiza.
-- <b>`cartProductRemoved.vtex  []`</b> o Minicart se atualiza.
+- <b>`cartProductAdded.vtex  []`</b> the Minicart is updated.
+- <b>`cartProductRemoved.vtex  []`</b> the Minicart is updated.
 
 
 ---
@@ -350,9 +400,7 @@ Escuta pelos seguintes eventos:
 
 ## session-expiration.js
 
-Utilitary expiration timer, reset by events.
-When time expires, the user session is cleaned up (cookies are cleared) and
-the user is redirected to a URL.
+Utilitary expiration timer, reset by events. When time expires, the user session is cleaned up (cookies are cleared) and the user is redirected to a URL.
 
 ### Public functions
 
@@ -373,17 +421,17 @@ Stops current expiration timer.
 
 ---
 
-# Notas
+# Notes
 
-## Notas gerais
+## General notes
 
-As opções podem ser passadas de três jeitos. Eles são, em ordem de prioridade:
+The options can be passed in three ways. They are, in order of priority:
 
-1. Por JavaScript, na chamada do plugin.
-2. Com atributos `data-` nos elementos.
-3. Modificando as opções padrão (objeto `$.fn.nomeDoPlugin.defaults`).
+1. Through JavaScript, in the plugin request.
+2. With `data-` attributes in the elements..
+3. Changing the default options (object `$.fn.nomeDoPlugin.default`).
 
-Após um plugin ser inicializado, o elemento-alvo conterá, em seu objeto `data` (acceso via `$().data()`), uma referência à sua instância do plugin.
+After a plugin is initialized, the target element will contain, in its `data` object (access via `$().data())`, a reference to its plugin instance.
 
 ## Dependências
 
