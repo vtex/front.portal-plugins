@@ -1,4 +1,4 @@
-### Table of content
+### Table of contents
 
 - Plugins
     - [Sku Selector](#sku-selector)
@@ -16,7 +16,7 @@
 
 ---
 
-See also in [portuguese](https://github.com/vtex/front.portal-plugins/blob/master/README.pt-BR.md).
+See also in [Portuguese](https://github.com/vtex/front.portal-plugins/blob/master/README.pt-BR.md).
 
 ---
 
@@ -48,7 +48,7 @@ Call the plugin in an empty `div`:
 
 ## Events
 
-Launches the following events:
+Triggers the following events:
 
 - <b>`skuReady.vtex []`</b> when the SKU Selector is rendered.
 - <b>`skuDimensionChanged.vtex [productId, name, value]`</b> when a dimension is selected.
@@ -88,7 +88,7 @@ Call the plugin in an empty `div`:
 
 ## Events
 
-Launches the following events:
+Triggers the following events:
 
 - <b>`quantityReady.vtex [productId, quantity]`</b> when the Quantity Selector is rendered.
 - <b>`quantityChanged.vtex [productId, quantity]`</b> when quantity is changed.
@@ -116,7 +116,7 @@ Call the plugin in an empty `div`:
 
 ## Events
 
-Launches the following events:
+Triggers the following events:
 
 - <b>`accessoriesUpdated.vtex [productId, accessories]`</b> when an accessory is changed. The `accessories` array contains the accessories of a particular product, with properties like `sku` and `quantity`.
 
@@ -131,7 +131,7 @@ Uses standard price information when there is no SKU selected.
 
 ## Usage
 
-Chame o plugin em uma `div`.If it contains some HTML, it will be used when a Sku is not defined.
+Call the plugin in an empty `div`. If it contains some HTML, it will be used when a Sku is not defined.
 
     $('.productPrice').price(productId, options);
 
@@ -251,7 +251,7 @@ Call the plugin on the `a` that acts as a buy button:
 
 ## Events
 
-Launches the following events:
+Triggers the following events:
 
 - <b>`modalHide.vtex []`</b>  when `redirect=false` and the button is clicked.
 - <b>`cartProductAdded.vtex []`</b> when `redirect=false`, the button is clicked and the AJAX response is returned.
@@ -317,7 +317,7 @@ Call the plugin in an empty `div`:
 
 ## Events
 
-Launches the following events:
+Triggers the following events:
 
 - <b>`notifyMeSubmitted.vtex [productId, sku, promise]`</b>: when the form is sent.
 
@@ -381,7 +381,7 @@ Call the plugin in an empty `div`:
 
 ## Events
 
-Launches the following events:
+Triggers the following events:
 
 - <b>`cartProductRemoved.vtex []`</b> when an item is removed by the minicart.
 - <b>`minicartMouseOver.vtex  []`</b>
