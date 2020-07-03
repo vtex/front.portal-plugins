@@ -108,11 +108,11 @@ Call the plugin in an empty `div`:
 
     $('.acc-selector-container').accessoriesSelector(productId, data, options);
 
-- <b>`productId`</b> the product ID which is the accessories’ parent.
+- <b>`productId`</b> the product ID which is the accessories parent.
 
 - <b>`data`</b> must be a JSON with API standard accessories.
 
-- <b>`options`</b> (none currently.)
+- <b>`options`</b> (none currently).
 
 ## Events
 
